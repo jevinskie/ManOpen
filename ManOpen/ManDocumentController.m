@@ -173,9 +173,6 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     }
     [task waitUntilExit];
     [pipe release];
-#ifdef OPENSTEP
-    [[task arguments] release]; //NeXT bug
-#endif
     [task release];
 
     return output;

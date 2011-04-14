@@ -74,16 +74,18 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ManOpen</string>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.5.2</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>MnOp</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleURLName</key>
 			<string>Man Page URL</string>
 			<key>CFBundleURLSchemes</key>
@@ -93,7 +95,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.5.2</string>
+	<string>2.5.3</string>
 	<key>NSAppVersion</key>
 	<string>Version 2.5</string>
 	<key>NSAppleScriptEnabled</key>
@@ -107,7 +109,7 @@
 	<key>NSInfoPlistVersion</key>
 	<string>5.0</string>
 	<key>NSMainNibFile</key>
-	<string>ManOpen-macos.nib</string>
+	<string>ManOpen-macos</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSServices</key>
@@ -176,80 +178,9 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
-			<key>NSDOSExtensions</key>
-			<array>
-				<string>man</string>
-			</array>
-			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
-			<key>NSHumanReadableName</key>
-			<string>Man page (nroff source)</string>
-			<key>NSName</key>
-			<string>man</string>
-			<key>NSRole</key>
-			<string>Viewer</string>
-			<key>NSUnixExtensions</key>
-			<array>
-				<string>man</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
-			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
-			<key>NSHumanReadableName</key>
-			<string>Man page (nroff source), gzipped</string>
-			<key>NSName</key>
-			<string>mangz</string>
-			<key>NSRole</key>
-			<string>Viewer</string>
-			<key>NSUnixExtensions</key>
-			<array>
-				<string>man.gz</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
-			<key>NSDOSExtensions</key>
-			<array>
-				<string>cat</string>
-			</array>
-			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
-			<key>NSHumanReadableName</key>
-			<string>Cat file (plain text)</string>
-			<key>NSName</key>
-			<string>cat</string>
-			<key>NSRole</key>
-			<string>Viewer</string>
-			<key>NSUnixExtensions</key>
-			<array>
-				<string>cat</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
-			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
-			<key>NSHumanReadableName</key>
-			<string>Cat file (plain text), gzipped</string>
-			<key>NSName</key>
-			<string>catgz</string>
-			<key>NSRole</key>
-			<string>Viewer</string>
-			<key>NSUnixExtensions</key>
-			<array>
-				<string>cat.gz</string>
-			</array>
-		</dict>
-	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array/>
+	<key>UTImportedTypeDeclarations</key>
+	<array/>
 </dict>
 </plist>

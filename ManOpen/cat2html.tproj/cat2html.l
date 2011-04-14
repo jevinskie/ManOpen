@@ -16,11 +16,6 @@
 
     #include <string.h>
     
-    #ifdef yywrap
-    #undef yywrap
-    #endif
-    #define yywrap() (1)
-
     #define BOLDFLAG    1
     #define ULINEFLAG    2
 
@@ -338,7 +333,6 @@ void usage() {
     exit(1); 
 }
 
-extern int getopt (int argc, char **argv, char *optstring);
 extern char *optarg;
 extern int optind;
 

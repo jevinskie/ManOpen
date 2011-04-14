@@ -1,6 +1,7 @@
 /* Localizations for the type names so that RCDefaultApp shows them well */
-man = "Man Page";
-cat = "Preformatted Man Page";
-mangz = "Compressed Man Page";
-catgz = "Compressed Preformatted Man Page";
-
+"man" = "Man Page";
+"cat" = "Preformatted Man Page";
+"mangz" = "Compressed Man Page";
+"catgz" = "Compressed Preformatted Man Page";
+"Man Page URL" = "Man Page URL";
+NSHumanReadableCopyright = "Copyright (c) 1999-2004 Carl Lindberg, 2010 Jan Weiß";

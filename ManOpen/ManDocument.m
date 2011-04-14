@@ -318,15 +318,7 @@
     [self performSelector:@selector(showData) withObject:nil afterDelay:0.0];
 
     [[textView window] makeFirstResponder:textView];
-#ifndef OPENSTEP
-    /* 
-     * On OPENSTEP, the NSWindowController *must* be the window delegate, so
-     * don't set it. It's OK though since our OPENSTEP implementation for it
-     * forwards any unknown messages (including the delegate methods we need)
-     * through to us.
-     */
     [[textView window] setDelegate:self];
-#endif
 
 }
 
@@ -402,10 +394,8 @@
     /* On Tiger, NSURL, Panther and before, NSString */
     if ([link isKindOfClass:[NSString class]] && [link hasPrefix:@"manpage:"])
         page = [link substringFromIndex:8];
-#ifndef OPENSTEP
     if ([link isKindOfClass:[NSURL class]])
         page = [link resourceSpecifier];
-#endif
 
     if (page == nil)
         return NO;
@@ -511,11 +501,7 @@ static NSCursor *linkCursor = nil;
         NSDictionary *attribs = [storage attributesAtIndex:currIndex effectiveRange:&currRange];
         BOOL isLinkSection;
 
-#ifdef OPENSTEP
-        isLinkSection = [attribs objectForKey:NSAttachmentAttributeName] != nil;
-#else
         isLinkSection = [attribs objectForKey:NSLinkAttributeName] != nil;
-#endif
         if (isLinkSection)
         {
             NSRect *rects;

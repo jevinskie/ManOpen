@@ -4,14 +4,6 @@
 #import <ctype.h> // for isdigit()
 #import "ManOpenProtocol.h"
 
-/*
- * The FOUNDATION_STATIC_INLINE #define appeared in Rhapsody, so if it's
- * not there we're on OPENSTEP.
- */
-#ifndef FOUNDATION_STATIC_INLINE
-#define OPENSTEP_ONLY
-#endif
-
 NSString *MakeAbsolutePath(const char *filename)
 {
     NSString *currFile = [NSString stringWithCString:filename encoding:NSUTF8StringEncoding];
@@ -27,11 +19,7 @@ NSString *MakeAbsolutePath(const char *filename)
 
 void usage(const char *progname)
 {
-#ifdef OPENSTEP_ONLY
-    fprintf(stderr,"%s: [-bk] [-M path] [-f file] [section] [title ...]\n", progname);
-#else
     fprintf(stderr,"%s: [-bk] [-M path] [-f file] [section] [name ...]\n", progname);
-#endif
 }
 
 int main (int argc, char * const *argv)
@@ -92,11 +80,6 @@ int main (int argc, char * const *argv)
         NSString *tmp = [NSString stringWithCString:argv[optind] encoding:NSUTF8StringEncoding];
 
         if (isdigit(argv[optind][0])          ||
-#ifdef OPENSTEP_ONLY
-            [tmp isEqualToString:@"public"]   ||
-            [tmp isEqualToString:@"new"]      ||
-            [tmp isEqualToString:@"old"]      ||
-#else
             /* These are configurable in /etc/man.conf; these are just the default strings.  Hm, they are invalid as of Panther. */
             [tmp isEqualToString:@"system"]   ||
             [tmp isEqualToString:@"commands"] ||
@@ -109,7 +92,6 @@ int main (int argc, char * const *argv)
             [tmp isEqualToString:@"misc"]     ||
             [tmp isEqualToString:@"admin"]    ||
             [tmp isEqualToString:@"n"]        || // Tcl pages on >= Panther
-#endif
             [tmp isEqualToString:@"local"])
         {
             section = tmp;
@@ -121,13 +103,9 @@ int main (int argc, char * const *argv)
     {
         if ([section length] > 0)
         {
-#ifdef OPENSTEP_ONLY
-            fprintf(stderr, "But what do you want from section %s?\n", [section cString]);
-#else
             /* MacOS X assumes it's a man page name */
             section = nil;
             optind--;
-#endif
         }
 
         if (optind >= argc && [files count] <= 0)

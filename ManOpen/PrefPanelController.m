@@ -85,13 +85,8 @@ void RegisterManDefaults()
 {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSDictionary *defaults;
-#ifdef OPENSTEP
-    NSString *nroff   = @"tbl '%@' | nroff -man";
-    NSString *manpath = @"/usr/local/man:/usr/man";
-#else
     NSString *nroff   = @"nroff -mandoc '%@'";
     NSString *manpath = @"/usr/local/man:/usr/share/man";
-#endif
 
     if ([manager fileExistsAtPath:@"/sw/share/man"])
         manpath = [@"/sw/share/man:" stringByAppendingString:manpath];
@@ -204,7 +199,7 @@ void RegisterManDefaults()
     [linkColorWell setColor:ManLinkColor()];
 
     manPathEnum = [[ManPath() componentsSeparatedByString:@":"] objectEnumerator];
-    while (path = [manPathEnum nextObject])
+    while ((path = [manPathEnum nextObject]))
     {
         [manPathArray addObject:[path stringByAbbreviatingWithTildeInPath]];
     }

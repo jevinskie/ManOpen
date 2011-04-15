@@ -2,9 +2,6 @@
 
 #import <AppKit/AppKit.h>
 
-@class NSMutableArray;
-@class NSTableColumn, NSTableView;
-
 @interface AproposDocument : NSDocument
 {
     NSString *title;

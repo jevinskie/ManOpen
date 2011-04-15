@@ -2,7 +2,6 @@
 #import <AppKit/AppKit.h>
 
 @class ManTextView;
-@class NSTextField, NSText, NSButton, NSPopUpButton;
 
 @interface ManDocument : NSDocument <NSWindowDelegate>
 {

@@ -1,8 +1,6 @@
 
 #import <AppKit/AppKit.h>
 
-@class NSText, NSTextField, NSButton;
-
 @interface FindPanelController : NSWindowController
 {
     IBOutlet NSTextField *stringField;

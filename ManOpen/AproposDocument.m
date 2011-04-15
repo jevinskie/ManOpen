@@ -17,7 +17,7 @@
 
     titles = [[NSMutableArray alloc] init];
     descriptions = [[NSMutableArray alloc] init];
-    title = [aTitle retain];
+    title = [aTitle copy];
     [self setFileType:@"apropos"];
 
     [command appendString:@" -k"];

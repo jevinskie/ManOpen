@@ -3,9 +3,6 @@
 
 #import "ManOpenProtocol.h"
 
-@class NSPanel, NSTextField, NSPopUpButton, NSFont;
-@class NSData, NSMutableString;
-
 extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 
 @interface ManDocumentController : NSDocumentController <ManOpen>

@@ -2,10 +2,6 @@
 
 #import <AppKit/AppKit.h>
 
-@class NSMutableArray;
-@class NSFont, NSColor;
-@class NSTableView, NSTextField, NSButton, NSPopUpButton, NSColorWell, NSView, NSBox;
-
 @interface PrefPanelController : NSWindowController
 {
     NSMutableArray *manPathArray;

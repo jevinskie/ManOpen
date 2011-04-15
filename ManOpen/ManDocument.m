@@ -1,6 +1,5 @@
 
 #import "ManDocument.h"
-#import <AppKit/AppKit.h>
 #import "ManDocumentController.h"
 #import "PrefPanelController.h"
 #import "FindPanelController.h"

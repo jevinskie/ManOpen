@@ -2,25 +2,6 @@
 
 #import "PrefPanelController.h"
 #import <stdlib.h> //for NULL
-#import <Foundation/NSUserDefaults.h>
-#import <Foundation/NSPathUtilities.h>
-#import <Foundation/NSData.h>
-#import <Foundation/NSArray.h>
-#import <Foundation/NSEnumerator.h>
-#import <Foundation/NSArchiver.h>
-#import <Foundation/NSDictionary.h>
-#import <Foundation/NSFileManager.h>
-#import <AppKit/NSBox.h>
-#import <AppKit/NSTableView.h>
-#import <AppKit/NSTextField.h>
-#import <AppKit/NSButton.h>
-#import <AppKit/NSOpenPanel.h>
-#import <AppKit/NSColor.h>
-#import <AppKit/NSColorWell.h>
-#import <AppKit/NSFont.h>
-#import <AppKit/NSFontManager.h>
-#import <AppKit/NSFontPanel.h>
-#import <AppKit/NSPopUpButton.h>
 #import "ManDocumentController.h"
 
 static NSColor *ColorForKey(NSString *key)
@@ -349,8 +330,6 @@ void RegisterManDefaults()
 {
 }
 
-@end
-
 /* 
  * Add a preference pane so that the user can set the default x-man-page
  * application. Under Panther (10.3), Terminal.app supports this, so we should
@@ -358,11 +337,6 @@ void RegisterManDefaults()
  * and undocumented.
  */
 #import <ApplicationServices/ApplicationServices.h>
-#import <Foundation/NSURL.h>
-#import <Foundation/NSBundle.h>
-#import <AppKit/NSOpenPanel.h>
-#import <AppKit/NSWorkspace.h>
-#import <AppKit/NSImage.h>
 
 static NSString *NiceNameForApp(NSString *bundleID)
 {
@@ -383,9 +357,6 @@ static NSString *NiceNameForApp(NSString *bundleID)
 static NSMutableArray *availableApps;
 static NSMutableArray *appNames;
 static NSString *currentApp = nil;
-
-
-@implementation PrefPanelController (DefaultManApp)
 
 - (void)setAppPopupToCurrent
 {

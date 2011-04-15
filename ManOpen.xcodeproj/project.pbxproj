@@ -40,10 +40,10 @@
 		3D64E79C0DFBF0190058D167 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D64E7940DFBF0190058D167 /* AppKit.framework */; };
 		3D64E79D0DFBF0190058D167 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D64E7950DFBF0190058D167 /* Foundation.framework */; };
 		3DDFB61D0DFBF1DC00AE5191 /* openman in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D64E5CF0DFBEAE60058D167 /* openman */; };
+		55077BC21358BED600F3C83C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55077BC01358BED600F3C83C /* InfoPlist.strings */; };
 		55AE2FB21357918A00660B82 /* cat2html.l in Sources */ = {isa = PBXBuildFile; fileRef = 55AE2FB11357918A00660B82 /* cat2html.l */; };
 		55AE2FB41357919B00660B82 /* cat2rtf.l in Sources */ = {isa = PBXBuildFile; fileRef = 55AE2FB31357919B00660B82 /* cat2rtf.l */; };
 		55AE2FB51357952E00660B82 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55AE2FB71357952E00660B82 /* ManOpen.scriptTerminology */; };
-		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,7 +86,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ManOpen/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* ManOpen-Universal_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ManOpen-Universal_Prefix.pch"; sourceTree = "<group>"; };
 		3D519C4B121448440067F7CB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "ManOpen/English.lproj/ManOpen-macos.xib"; sourceTree = "<group>"; };
 		3D519C5212144C960067F7CB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = ManOpen/English.lproj/PrefPanel.xib; sourceTree = "<group>"; };
@@ -125,6 +124,7 @@
 		3D64E5DE0DFBEB0E0058D167 /* openman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = openman.m; path = openman.tproj/openman.m; sourceTree = SOURCE_ROOT; };
 		3D64E7940DFBF0190058D167 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		3D64E7950DFBF0190058D167 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		55077BC11358BED600F3C83C /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = ManOpen/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55AE2FB11357918A00660B82 /* cat2html.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = cat2html.l; path = ManOpen/cat2html.tproj/cat2html.l; sourceTree = "<group>"; };
 		55AE2FB31357919B00660B82 /* cat2rtf.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = cat2rtf.l; path = ManOpen/cat2rtf.tproj/cat2rtf.l; sourceTree = "<group>"; };
 		55AE2FB61357952E00660B82 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = English; path = English.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 				3D64E54A0DFBE63C0058D167 /* ManOpen.icns */,
 				3D64E54B0DFBE63C0058D167 /* ManOpen.tiff */,
 				8D1107310486CEB800E47090 /* Info.plist */,
-				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				55077BC01358BED600F3C83C /* InfoPlist.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -368,6 +368,7 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* ManOpen-Universal */;
 			projectDirPath = "";
@@ -386,7 +387,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				3D64E54C0DFBE63C0058D167 /* LinkCursor.tiff in Resources */,
 				3D64E54D0DFBE63C0058D167 /* ManOpen.icns in Resources */,
 				3D64E54E0DFBE63C0058D167 /* ManOpen.tiff in Resources */,
@@ -405,6 +405,7 @@
 				3D519C7F12144F900067F7CB /* FindLibrarian.tiff in Resources */,
 				3D519C8012144F900067F7CB /* helpQMark.tiff in Resources */,
 				3D519C8112144F900067F7CB /* up.tiff in Resources */,
+				55077BC21358BED600F3C83C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,14 +471,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				089C165DFE840E0CC02AAC07 /* InfoPlist.strings */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		3D519C4A121448440067F7CB /* ManOpen-macos.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -541,6 +534,14 @@
 			);
 			name = Credits.rtf;
 			sourceTree = SOURCE_ROOT;
+		};
+		55077BC01358BED600F3C83C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55077BC11358BED600F3C83C /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
 		};
 		55AE2FB71357952E00660B82 /* ManOpen.scriptTerminology */ = {
 			isa = PBXVariantGroup;

@@ -63,7 +63,7 @@ int main (int argc, char * const *argv)
             case '?':
             default:
                 usage(argv[0]);
-                [pool release];
+                [pool drain];
                 exit(0);
         }
     }
@@ -169,7 +169,7 @@ int main (int argc, char * const *argv)
             [server openName:currFile section:section manPath:manPath forceToFront:forceToFront];
     }
 
-    [pool release];
+    [pool drain];
     exit(0);       // insure the process exit status is 0
     return 0;      // ...and make main fit the ANSI spec.
 }

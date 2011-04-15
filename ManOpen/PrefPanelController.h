@@ -46,9 +46,6 @@
 
 - (IBAction)openFontPanel:(id)sender;
 
-@end
-
-@interface PrefPanelController (DefaultManApp)
 - (IBAction)chooseNewApp:(id)sender;
 @end
 

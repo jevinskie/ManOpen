@@ -1,24 +1,5 @@
 
 #import "ManDocumentController.h"
-#import <Foundation/NSPathUtilities.h>
-#import <Foundation/NSScanner.h>
-#import <Foundation/NSCharacterSet.h>
-#import <Foundation/NSArray.h>
-#import <Foundation/NSConnection.h>
-#import <Foundation/NSTask.h>
-#import <Foundation/NSFileHandle.h>
-#import <Foundation/NSFileManager.h>
-#import <Foundation/NSUserDefaults.h>
-#import <Foundation/NSProcessInfo.h>
-#import <Foundation/NSRunLoop.h>
-#import <AppKit/NSPasteboard.h>
-#import <AppKit/NSOpenPanel.h>
-#import <AppKit/NSApplication.h>
-#import <AppKit/NSTextField.h>
-#import <AppKit/NSPopUpButton.h>
-#import <AppKit/NSNibLoading.h>
-#import <AppKit/NSFont.h>
-#import <AppKit/NSPageLayout.h>
 #import "ManDocument.h"
 #import "AproposDocument.h"
 #import "NSData+Utils.h"

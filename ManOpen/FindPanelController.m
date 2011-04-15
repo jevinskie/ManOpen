@@ -1,17 +1,6 @@
  
 #import "FindPanelController.h"
 #import <stdlib.h>
-#import <Foundation/NSString.h>
-#import <Foundation/NSException.h>
-#import <Foundation/NSArray.h>
-#import <AppKit/NSText.h>
-#import <AppKit/NSPasteboard.h>
-#import <AppKit/NSWindow.h>
-#import <AppKit/NSTextField.h>
-#import <AppKit/NSButton.h>
-#import <AppKit/NSApplication.h>
-#import <AppKit/NSMenuItem.h>
-#import <AppKit/NSColor.h>
 #import "ManDocumentController.h"
 #import "ManDocument.h"
 

@@ -30,11 +30,11 @@ int main (int argc, char * const *argv)
     NSMutableArray    *files = [NSMutableArray array];
     BOOL              aproposMode = NO;
     BOOL              forceToFront = YES;
-    NSInteger               i;
+    NSInteger         i;
     char              c;
     NSDistantObject <ManOpen>  *server;
-    NSInteger               maxConnectTries;
-    NSInteger               connectCount;
+    NSInteger         maxConnectTries;
+    NSInteger         connectCount;
 
     while ((c = getopt(argc,argv,"hbm:M:f:kaCcw")) != EOF)
     {
@@ -64,15 +64,17 @@ int main (int argc, char * const *argv)
             default:
                 usage(argv[0]);
                 [pool drain];
-                exit(0);
+                //exit(0);
+				return 0;
         }
     }
 
     if (optind >= argc && [files count] <= 0)
     {
         usage(argv[0]);
-        [pool release];
-        exit(0);
+        [pool drain];
+        //exit(0);
+		return 0;
     }
 
     if (optind < argc && !aproposMode)
@@ -110,8 +112,9 @@ int main (int argc, char * const *argv)
 
         if (optind >= argc && [files count] <= 0)
         {
-            [pool release];
-            exit(0);
+            [pool drain];
+            //exit(0);
+			return 0;
         }
     }
 
@@ -146,8 +149,9 @@ int main (int argc, char * const *argv)
     if (server == nil)
     {
         fprintf(stderr,"Could not open connection to ManOpen\n");
-        [pool release];
-        exit(1);
+        [pool drain];
+        //exit(1);
+        return 1;
     }
 
     [server setProtocolForProxy:@protocol(ManOpen)];
@@ -170,6 +174,6 @@ int main (int argc, char * const *argv)
     }
 
     [pool drain];
-    exit(0);       // insure the process exit status is 0
+    //exit(0);       // insure the process exit status is 0
     return 0;      // ...and make main fit the ANSI spec.
 }

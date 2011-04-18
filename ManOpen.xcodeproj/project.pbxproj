@@ -121,7 +121,7 @@
 		3D64E59E0DFBE9480058D167 /* cat2rtf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2rtf; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D64E5B20DFBE9E60058D167 /* cat2html */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2html; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D64E5CF0DFBEAE60058D167 /* openman */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = openman; sourceTree = BUILT_PRODUCTS_DIR; };
-		3D64E5DE0DFBEB0E0058D167 /* openman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = openman.m; path = openman.tproj/openman.m; sourceTree = SOURCE_ROOT; };
+		3D64E5DE0DFBEB0E0058D167 /* openman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = openman.m; path = openman.tproj/openman.m; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		3D64E7940DFBF0190058D167 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		3D64E7950DFBF0190058D167 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		55077BC11358BED600F3C83C /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = ManOpen/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };

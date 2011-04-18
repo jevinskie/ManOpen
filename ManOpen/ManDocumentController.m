@@ -381,7 +381,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     }
 
     document = [self openDocumentWithName:base section:section manPath:ManPath()];
-    [pool release];
+    [pool drain];
     return document;
 }
 

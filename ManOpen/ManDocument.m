@@ -201,7 +201,7 @@
     // no need to keep around rtf data
     [taskData release];
     taskData = nil;
-    [pool release];
+    [pool drain];
 }
 
 - (NSString *)filterCommand

@@ -336,14 +336,14 @@ _\010{ALLBUTUL}        {
         if (yytext[yyleng-1] != '\010') {
             char *backspace = index(yytext, '\010');
             if (backspace != NULL) {
-                emitUnicode(decodeUTF8(backspace+1, (yyleng - (backspace-yytext) - 1)));
+                emitUnicode(decodeUTF8((unsigned char*)backspace+1, (yyleng - (backspace-yytext) - 1)));
             }
         }
     }
 
   /* If we find a UTF8 sequence, decode it */
 {UTF8SEQ} {
-    emitUnicode(decodeUTF8(yytext, yyleng));
+    emitUnicode(decodeUTF8((unsigned char*)yytext, yyleng));
 }
 
     /*

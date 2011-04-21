@@ -36,7 +36,6 @@
 		3D64E6D20DFBEF030058D167 /* cat2html in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D64E5B20DFBE9E60058D167 /* cat2html */; };
 		3D64E7960DFBF0190058D167 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D64E7940DFBF0190058D167 /* AppKit.framework */; };
 		3D64E7970DFBF0190058D167 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D64E7950DFBF0190058D167 /* Foundation.framework */; };
-		3D64E79B0DFBF0190058D167 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D64E7950DFBF0190058D167 /* Foundation.framework */; };
 		3D64E79C0DFBF0190058D167 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D64E7940DFBF0190058D167 /* AppKit.framework */; };
 		3D64E79D0DFBF0190058D167 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D64E7950DFBF0190058D167 /* Foundation.framework */; };
 		3DDFB61D0DFBF1DC00AE5191 /* openman in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D64E5CF0DFBEAE60058D167 /* openman */; };
@@ -137,7 +136,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D64E79B0DFBF0190058D167 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,8 +337,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "ManOpen" */;
 			buildPhases = (
-				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
+				8D1107290486CEB800E47090 /* Resources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				3D64E6CD0DFBEEF10058D167 /* CopyFiles */,
 			);

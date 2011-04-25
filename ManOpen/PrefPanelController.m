@@ -339,7 +339,8 @@ void RegisterManDefaults()
 
 static NSString *NiceNameForApp(NSString *bundleID)
 {
-    NSBundle *appBundle = [NSBundle bundleWithIdentifier:bundleID];
+	NSURL *fileURL = [[NSWorkspace sharedWorkspace] URLForApplicationWithBundleIdentifier:bundleID];
+	NSBundle *appBundle = [NSBundle bundleWithURL:fileURL];
     NSMutableDictionary *infoDict = [NSMutableDictionary dictionary];
     [infoDict addEntriesFromDictionary:[appBundle infoDictionary]];
     [infoDict addEntriesFromDictionary:[appBundle localizedInfoDictionary]];
@@ -387,7 +388,7 @@ static NSString *currentApp = nil;
 
     for (i=0; i<[availableApps count]; i++)
     {
-        NSString *currPath = [[availableApps objectAtIndex:i] path];
+        NSString *currPath = [workspace absolutePathForAppBundleWithIdentifier:[availableApps objectAtIndex:i]];
         NSImage *image = [[workspace iconForFile:currPath] copy];
         NSString *niceName = [appNames objectAtIndex:i];
         NSString *displayName = niceName;
@@ -414,7 +415,7 @@ static NSString *currentApp = nil;
 {
     CFStringRef currentBundleID = nil;
 
-    currentBundleID = LSCopyDefaultHandlerForURLScheme(URL_SCHEME);
+    currentBundleID = LSCopyDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME);
 	if (currentBundleID != nil)
     {
         BOOL resetPopup = (currentApp == nil); //first time

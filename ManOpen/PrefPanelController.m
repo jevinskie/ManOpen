@@ -338,12 +338,19 @@ void RegisterManDefaults()
  */
 #import <ApplicationServices/ApplicationServices.h>
 
-static NSString *NiceNameForApp(NSString *bundleID)
+static NSString *NiceNameForApp(NSURL *bundleID)
 {
-    NSBundle *appBundle = [NSBundle bundleWithIdentifier:bundleID];
-    NSDictionary *infoDict = [appBundle localizedInfoDictionary];
+    NSBundle *appBundle = [NSBundle bundleWithURL:bundleID];
+    NSMutableDictionary *infoDict = [NSMutableDictionary dictionary];
+    [infoDict addEntriesFromDictionary:[appBundle infoDictionary]];
+    [infoDict addEntriesFromDictionary:[appBundle localizedInfoDictionary]];
     NSString *appVersion = [infoDict objectForKey:@"CFBundleShortVersionString"];
     NSString *niceName = [infoDict objectForKey:@"CFBundleDisplayName"];
+    
+    if (niceName == nil)
+    {
+        niceName = [infoDict objectForKey:(NSString*)kCFBundleNameKey];
+    }
 
     if (appVersion != nil)
         niceName = [NSString stringWithFormat:@"%@ (%@)", niceName, appVersion];
@@ -431,9 +438,9 @@ static NSString *currentApp = nil;
 
 - (void)setManPageViewer:(NSString *)app
 {
-    NSInteger error;
+    OSStatus error;
     if ((error = LSSetDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME, (CFStringRef)app)) != 0)
-        NSLog(@"Could not set default " URL_SCHEME_PREFIX @" app: Launch Services error %ld", (long)error);
+        NSLog(@"Could not set default " URL_SCHEME_PREFIX @" app: Launch Services error %d", error);
 
     [self resetCurrentApp];
 }
@@ -451,11 +458,13 @@ static NSString *currentApp = nil;
 		
         if (apps != nil)
         {
+            CFMakeCollectable(apps);
             [availableApps setArray:apps];
             [apps release];
+            apps = nil;
 
             [appNames removeAllObjects];
-            for (NSString *thisApp in availableApps) {
+            for (NSURL *thisApp in availableApps) {
                 [appNames addObject:NiceNameForApp(thisApp)];
 			}
         }

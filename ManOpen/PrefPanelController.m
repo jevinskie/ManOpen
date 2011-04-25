@@ -337,8 +337,9 @@ void RegisterManDefaults()
  */
 #import <ApplicationServices/ApplicationServices.h>
 
-static NSString *NiceNameForBundle(NSBundle *appBundle)
+static NSString *NiceNameForApp(NSString *bundleID)
 {
+    NSBundle *appBundle = [NSBundle bundleWithIdentifier:bundleID];
     NSMutableDictionary *infoDict = [NSMutableDictionary dictionary];
     [infoDict addEntriesFromDictionary:[appBundle infoDictionary]];
     [infoDict addEntriesFromDictionary:[appBundle localizedInfoDictionary]];
@@ -356,20 +357,6 @@ static NSString *NiceNameForBundle(NSBundle *appBundle)
     return niceName;
 
 }
-
-static NSString *NiceNameForURL(NSURL *bundleURL)
-{
-    NSBundle *appBundle = [NSBundle bundleWithURL:bundleURL];
-    return NiceNameForBundle(appBundle);
-}
-
-static NSString *NiceNameForApp(NSString *bundleID)
-{
-    NSBundle *appBundle = [NSBundle bundleWithIdentifier:bundleID];
-    return NiceNameForBundle(appBundle);
-}
-
-
 
 #define URL_SCHEME @"x-man-page"
 #define URL_SCHEME_PREFIX URL_SCHEME @":"
@@ -425,16 +412,16 @@ static NSString *currentApp = nil;
 
 - (void)resetCurrentApp
 {
-    NSString *currentBundleID = nil;
+    CFStringRef currentBundleID = nil;
 
-    currentBundleID = (NSString *)LSCopyDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME);
+    currentBundleID = LSCopyDefaultHandlerForURLScheme(URL_SCHEME);
 	if (currentBundleID != nil)
     {
         BOOL resetPopup = (currentApp == nil); //first time
 
         [currentApp release];
-        currentApp = [currentBundleID retain];
-        [currentBundleID release];
+        currentApp = [[NSString alloc] initWithString:(NSString*)currentBundleID];
+        CFRelease(currentBundleID);
 
         if ([availableApps indexOfObject:currentApp] == NSNotFound)
         {
@@ -462,13 +449,15 @@ static NSString *currentApp = nil;
 {
     if (availableApps == nil)
     {
-        NSURL *dummyURL = [NSURL URLWithString:URL_SCHEME_PREFIX];
+        //NSURL *dummyURL = [NSURL URLWithString:URL_SCHEME_PREFIX];
         NSArray *apps = nil;
         availableApps = [[NSMutableArray alloc] init];
         appNames = [[NSMutableArray alloc] init];
 
-		apps = (NSArray *)LSCopyApplicationURLsForURL((CFURLRef)dummyURL, kLSRolesViewer);
+		//apps = (NSArray *)LSCopyApplicationURLsForURL((CFURLRef)dummyURL, kLSRolesViewer);
 		
+        apps = (NSArray*)LSCopyAllHandlersForURLScheme((CFStringRef)URL_SCHEME);
+        
         if (apps != nil)
         {
             CFMakeCollectable(apps);
@@ -477,8 +466,8 @@ static NSString *currentApp = nil;
             apps = nil;
 
             [appNames removeAllObjects];
-            for (NSURL *thisApp in availableApps) {
-                [appNames addObject:NiceNameForURL(thisApp)];
+            for (NSString *thisApp in availableApps) {
+                [appNames addObject:NiceNameForApp(thisApp)];
 			}
         }
     }

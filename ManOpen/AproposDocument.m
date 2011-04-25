@@ -39,7 +39,8 @@
     
     [command appendFormat:@" %@", EscapePath(apropos, YES)];
     output = [docController dataByExecutingCommand:command manPath:manPath];
-    [self parseOutput:[NSString stringWithCString:[output bytes] encoding:NSUTF8StringEncoding]];
+	//For some odd reason, if I use the encoding:NSUTF8StringEncoding, it returns a nil.  Going to have to investigate.
+    [self parseOutput:[NSString stringWithCString:[output bytes] /*encoding:NSUTF8StringEncoding*/]];
 
     if ([titles count] == 0) {
         NSRunAlertPanel(@"Nothing found", @"No pages related to '%@' found", nil, nil, nil, apropos);

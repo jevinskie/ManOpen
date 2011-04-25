@@ -523,7 +523,7 @@ static BOOL IsSectionWord(NSString *word)
     else if ([sender tag] == 20)
         [self openApropos:@"(n)"];
     else
-        [self openApropos:[NSString stringWithFormat:@"(%ld", (long)[sender tag]]];
+        [self openApropos:[NSString stringWithFormat:@"(%ld)", (long)[sender tag]]];
 }
 
 - (BOOL)useModalPanels

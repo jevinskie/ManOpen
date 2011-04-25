@@ -333,14 +333,12 @@ void RegisterManDefaults()
 /* 
  * Add a preference pane so that the user can set the default x-man-page
  * application. Under Panther (10.3), Terminal.app supports this, so we should
- * too.  Unfortunately the LaunchServices functions to do this are private
- * and undocumented.
+ * too.
  */
 #import <ApplicationServices/ApplicationServices.h>
 
-static NSString *NiceNameForApp(NSURL *bundleID)
+static NSString *NiceNameForBundle(NSBundle *appBundle)
 {
-    NSBundle *appBundle = [NSBundle bundleWithURL:bundleID];
     NSMutableDictionary *infoDict = [NSMutableDictionary dictionary];
     [infoDict addEntriesFromDictionary:[appBundle infoDictionary]];
     [infoDict addEntriesFromDictionary:[appBundle localizedInfoDictionary]];
@@ -351,12 +349,27 @@ static NSString *NiceNameForApp(NSURL *bundleID)
     {
         niceName = [infoDict objectForKey:(NSString*)kCFBundleNameKey];
     }
-
+    
     if (appVersion != nil)
         niceName = [NSString stringWithFormat:@"%@ (%@)", niceName, appVersion];
-
+    
     return niceName;
+
 }
+
+static NSString *NiceNameForURL(NSURL *bundleURL)
+{
+    NSBundle *appBundle = [NSBundle bundleWithURL:bundleURL];
+    return NiceNameForBundle(appBundle);
+}
+
+static NSString *NiceNameForApp(NSString *bundleID)
+{
+    NSBundle *appBundle = [NSBundle bundleWithIdentifier:bundleID];
+    return NiceNameForBundle(appBundle);
+}
+
+
 
 #define URL_SCHEME @"x-man-page"
 #define URL_SCHEME_PREFIX URL_SCHEME @":"
@@ -465,7 +478,7 @@ static NSString *currentApp = nil;
 
             [appNames removeAllObjects];
             for (NSURL *thisApp in availableApps) {
-                [appNames addObject:NiceNameForApp(thisApp)];
+                [appNames addObject:NiceNameForURL(thisApp)];
 			}
         }
     }

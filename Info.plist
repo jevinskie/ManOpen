@@ -96,18 +96,16 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2.5.3</string>
-	<key>NSAppVersion</key>
-	<string>Version 2.5</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
+	<key>NSAppVersion</key>
+	<string>Version 2.5</string>
 	<key>NSHumanReadableCompleteName</key>
 	<string>ManOpen</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright (c) 1999-2004 Carl Lindberg, 2010 Jan Weiß</string>
 	<key>NSHumanReadableShortName</key>
 	<string>ManOpen</string>
-	<key>NSInfoPlistVersion</key>
-	<string>5.0</string>
 	<key>NSMainNibFile</key>
 	<string>ManOpen-macos</string>
 	<key>NSPrincipalClass</key>

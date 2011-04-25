@@ -17,6 +17,11 @@ provided, which is basically a quick-and-dirty search of the man page
 databases.  Services are provided to other applications to open selected
 files/titles or do apropos searches using the selected text.
 
+	Version 2.5.3 changes:
+	
+	- Fixed the preference pane.
+	- Fixed List Pages menu.
+
 	Version 2.5.2 changes:
 
     - Universal build (including 64-bit).

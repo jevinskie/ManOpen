@@ -392,11 +392,12 @@ static NSString *currentApp = nil;
         NSImage *image = [[workspace iconForFile:currPath] copy];
         NSString *niceName = [appNames objectAtIndex:i];
         NSString *displayName = niceName;
+#if 0
         NSUInteger num = 2;
-
         while ([appPopup indexOfItemWithTitle:displayName] >= 0) {
             displayName = [NSString stringWithFormat:@"%@[%lu]", niceName, (unsigned long)num++];
         }
+#endif
         [appPopup addItemWithTitle:displayName];
 
         [image setScalesWhenResized:YES];

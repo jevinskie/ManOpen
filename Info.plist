@@ -12,7 +12,7 @@
 				<string>*</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
+			<string>ManOpen</string>
 			<key>CFBundleTypeName</key>
 			<string>man</string>
 			<key>CFBundleTypeRole</key>
@@ -26,7 +26,7 @@
 				<string>gz</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
+			<string>ManOpen</string>
 			<key>CFBundleTypeName</key>
 			<string>mangz</string>
 			<key>CFBundleTypeRole</key>
@@ -40,7 +40,7 @@
 				<string>cat</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
+			<string>ManOpen</string>
 			<key>CFBundleTypeName</key>
 			<string>cat</string>
 			<key>CFBundleTypeRole</key>
@@ -54,7 +54,7 @@
 				<string>gz</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
+			<string>ManOpen</string>
 			<key>CFBundleTypeName</key>
 			<string>catgz</string>
 			<key>CFBundleTypeRole</key>
@@ -66,7 +66,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>ManOpen 2.5.3 (c) 2004 Carl Lindberg, 2010 Jan Weiß</string>
+	<string>ManOpen 2.5.4 (c) 2004 Carl Lindberg, 2010 Jan Weiß</string>
 	<key>CFBundleIconFile</key>
 	<string>ManOpen.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -78,7 +78,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.5.3</string>
+	<string>2.5.4</string>
 	<key>CFBundleSignature</key>
 	<string>MnOp</string>
 	<key>CFBundleURLTypes</key>
@@ -86,6 +86,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>CFBundleURLIconFile</key>
+			<string>ManOpen</string>
 			<key>CFBundleURLName</key>
 			<string>Man Page URL</string>
 			<key>CFBundleURLSchemes</key>
@@ -95,11 +97,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.5.3</string>
-	<key>NSAppleScriptEnabled</key>
-	<string>YES</string>
+	<string>2.5.4</string>
 	<key>NSAppVersion</key>
 	<string>Version 2.5</string>
+	<key>NSAppleScriptEnabled</key>
+	<string>YES</string>
 	<key>NSHumanReadableCompleteName</key>
 	<string>ManOpen</string>
 	<key>NSHumanReadableCopyright</key>

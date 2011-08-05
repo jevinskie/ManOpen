@@ -318,23 +318,29 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     {
         NSString *filename;
 
-        document = [[[ManDocument alloc]
+        document = [[ManDocument alloc]
                         initWithName:name section:section
-                        manPath:manPath title:title] autorelease];
+                        manPath:manPath title:title];
+		filename = [self manFileForName:name section:section manPath:manPath];
+
+        if (filename != nil)
+		{
+			NSURL *fileURL = [NSURL fileURLWithPath:filename];
+			
+			/* Add the filename to the recent menu */
+			[self noteNewRecentDocumentURL:fileURL];
+			[document setFileURL:fileURL];
+		}
+
         [self addDocument:document];
         [document makeWindowControllers];
 
-        /* Add the filename to the recent menu */
-        filename = [self manFileForName:name section:section manPath:manPath];
-
-        if (filename != nil)
-            [self noteNewRecentDocumentURL:[NSURL fileURLWithPath:filename]];
 
     }
 
     [document showWindows];
 
-    return document;
+    return [document autorelease];
 }
 
 - (id)openAproposDocument:(NSString *)apropos manPath:(NSString *)manPath
@@ -485,6 +491,7 @@ static BOOL IsSectionWord(NSString *word)
     if ([word isEqual:@"n"]) return YES;
     return NO;
 }
+
 - (void)openTitleFromPanel
 {
     NSString *string = [openTextField stringValue];

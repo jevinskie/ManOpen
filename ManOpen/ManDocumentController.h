@@ -1,7 +1,11 @@
 
-#import <AppKit/AppKit.h>
-
 #import "ManOpenProtocol.h"
+#import "SystemType.h"
+#import <AppKit/NSDocumentController.h>
+
+
+@class NSPanel, NSTextField, NSPopUpButton, NSFont;
+@class NSData, NSMutableString;
 
 extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 
@@ -35,7 +39,6 @@ extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 - (IBAction)okText:(id)sender;
 - (IBAction)cancelText:(id)sender;
 
-- (IBAction)orderFrontFindPanel:(id)sender;
 - (IBAction)orderFrontHelpPanel:(id)sender;
 - (IBAction)orderFrontPreferencesPanel:(id)sender;
 

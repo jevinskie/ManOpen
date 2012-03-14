@@ -1,10 +1,15 @@
 /* AproposDocument.h created by lindberg on Tue 10-Oct-2000 */
 
-#import <AppKit/AppKit.h>
+#import "SystemType.h"
+#import <AppKit/NSDocument.h>
+
+@class NSMutableArray;
+@class NSTableColumn, NSTableView;
 
 @interface AproposDocument : NSDocument
 {
     NSString *title;
+    NSString *searchString;
     NSMutableArray *titles;
     NSMutableArray *descriptions;
 

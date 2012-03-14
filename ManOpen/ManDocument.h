@@ -1,18 +1,24 @@
 
-#import <AppKit/AppKit.h>
+#import "SystemType.h"
+#import <AppKit/NSDocument.h>
+#import <AppKit/NSWindow.h>
 
+@class NSMutableArray, NSMutableDictionary;
 @class ManTextView;
+@class NSTextField, NSText, NSButton, NSPopUpButton;
 
 @interface ManDocument : NSDocument <NSWindowDelegate>
 {
     NSString *shortTitle;
     NSData *taskData;
+    BOOL hasLoaded;
+    NSURL *copyURL;
     NSMutableArray *sections;
     NSMutableArray *sectionRanges;
+    NSMutableDictionary *restoreData;
 
     IBOutlet ManTextView *textView;
     IBOutlet NSTextField *titleStringField;
-    //IBOutlet NSButton    *findSelectionButton;
     IBOutlet NSButton    *openSelectionButton;
     IBOutlet NSPopUpButton *sectionPopup;
 }
@@ -28,7 +34,7 @@
 
 - (IBAction)saveCurrentWindowSize:(id)sender;
 - (IBAction)openSelection:(id)sender;
-- (IBAction)searchForSelection:(id)sender;
 - (IBAction)displaySection:(id)sender;
+- (IBAction)copyURL:(id)sender;
 
 @end

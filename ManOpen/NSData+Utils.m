@@ -1,5 +1,7 @@
 
 #import "NSData+Utils.h"
+#import "SystemType.h"
+#import <Foundation/NSException.h>
 #import <libc.h>
 #import <ctype.h>
 
@@ -57,10 +59,10 @@
     return NO;
 }
 
-- (BOOL)hasPrefixBytes:(void *)bytes length:(NSInteger)len
+- (BOOL)hasPrefixBytes:(void *)bytes length:(NSUInteger)len
 {
     if ([self length] < len) return NO;
-    return (memcmp([self bytes], bytes, len) == 0);
+    return (memcmp([self bytes], bytes, (size_t)len) == 0);
 }
 
 - (BOOL)isRTFData
@@ -78,17 +80,63 @@
 /* Very rough check -- see if more than a third of the first 100 bytes have the high bit set */
 - (BOOL)isBinaryData
 {
-    NSInteger checklen = MIN(100, [self length]);
-    NSInteger i;
-    NSInteger badByteCount = 0;
+    NSUInteger checklen = MIN((NSUInteger)100, [self length]);
+    NSUInteger i;
+    NSUInteger badByteCount = 0;
     unsigned const char *bytes = [self bytes];
 
     if (checklen == 0) return NO;
     for (i=0; i<checklen; i++, bytes++)
-        if (*bytes == '\0' || !isascii((NSInteger)*bytes)) badByteCount++;
+        if (*bytes == '\0' || !isascii((int)*bytes)) badByteCount++;
 
     return (badByteCount > 0) && (checklen / badByteCount) <= 2;
 }
 
 @end
 
+#import <sys/types.h>
+#import <errno.h>
+#import <assert.h>
+
+@implementation NSFileHandle (Utils)
+
+/*
+ * The NSData -readDataToEndOfFile method does not deal with EINTR errors, which in most
+ * cases is fine, but sometimes not when running under a debugger.  So... this is more to help
+ * folks working on the code, rather the users ;-)
+ */
+- (NSData *)readDataToEndOfFileIgnoreInterrupt
+{
+    int fd = [self fileDescriptor];
+    size_t offset = 0;
+    size_t allocated = 16384;
+    unsigned char *bytes = malloc(allocated);
+    ssize_t bytesRead;
+    
+    do {
+        if (offset >= allocated) {
+            allocated *= 2;
+            bytes = reallocf(bytes, allocated);
+        }
+        assert(bytes != NULL);
+
+        do {
+            bytesRead = read(fd, bytes + offset, allocated - offset);
+        } while (bytesRead < 0 && ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK)));
+        
+        if (bytesRead > 0) {
+            offset += bytesRead;
+        }
+
+    } while (bytesRead > 0);
+    
+    if (bytesRead < 0) {
+        free(bytes);
+        [NSException raise:NSFileHandleOperationException format:@"%s: %s", __FUNCTION__, strerror(errno)];
+    }
+
+    bytes = reallocf(bytes, offset);
+    return [NSData dataWithBytesNoCopy:bytes length:(NSUInteger)offset];
+}
+
+@end

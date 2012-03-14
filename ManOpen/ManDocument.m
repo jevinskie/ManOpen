@@ -1,52 +1,83 @@
 
 #import "ManDocument.h"
+#import <AppKit/AppKit.h>
 #import "ManDocumentController.h"
 #import "PrefPanelController.h"
-#import "FindPanelController.h"
 #import "NSData+Utils.h"
-
-
-#ifndef NSFoundationVersionNumber10_3
-#define NSFoundationVersionNumber10_3 500.0
-#endif
-
-#define IsPanther() (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber10_3)
 
 
 @interface ManTextView : NSTextView
 - (void)scrollRangeToTop:(NSRange)charRange;
 @end
 
+#define RestoreWindowDict @"RestoreWindowInfo"
+#define RestoreSection    @"Section"
+#define RestoreTitle      @"Title"
+#define RestoreName       @"Name"
+#define RestoreFileURL    @"URL"
+#define RestoreFileType   @"DocType"
+@interface NSDocument (LionRestorationMethods)
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder;
+- (void)restoreStateWithCoder:(NSCoder *)coder;
+@end
+
+
 @implementation ManDocument
+
++ (BOOL)canConcurrentlyReadDocumentsOfType:(NSString *)typeName
+{
+    return YES;
+}
+
+- (void)_loadDocumentWithName:(NSString *)name
+                      section:(NSString *)section
+                      manPath:(NSString *)manPath
+                        title:(NSString *)title
+{
+    ManDocumentController *docController = [ManDocumentController sharedDocumentController];
+    NSMutableString *command = [docController manCommandWithManPath:manPath];
+    
+    [self setFileType:@"man"];
+    [self setShortTitle:title];
+    
+    if (section && [section length] > 0)
+    {
+        [command appendFormat:@" %@", [section lowercaseString]];
+        copyURL = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"x-man-doc://%@/%@", section, title]];
+    }
+    else
+    {
+        copyURL = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"x-man-doc://%@", title]];
+    }
+    
+    restoreData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                   name,    RestoreName,
+                   title,   RestoreTitle,
+                   section, RestoreSection,
+                   nil];
+    
+    [command appendFormat:@" %@", name];
+    
+    [self loadCommand:command];
+}
 
 - initWithName:(NSString *)name
 	section:(NSString *)section
 	manPath:(NSString *)manPath
 	title:(NSString *)title
 {
-    ManDocumentController *docController = [ManDocumentController sharedDocumentController];
-    NSMutableString *command = [docController manCommandWithManPath:manPath];
-
     [super init];
-
-    [self setFileType:@"man"];
-    [self setShortTitle:title];
-
-    if (section && [section length] > 0)
-        [command appendFormat:@" %@", [section lowercaseString]];
-
-    [command appendFormat:@" %@", name];
-
-    [self loadCommand:command];
-
+    [self _loadDocumentWithName:name section:section manPath:manPath title:title];
     return self;
 }
 
 - (void)dealloc
 {
     [taskData release];
+    [copyURL release];
     [shortTitle release];
     [sections release];
+    [restoreData release];
     [super dealloc];
 }
 
@@ -97,7 +128,7 @@
         [header rangeOfCharacterFromSet:[NSCharacterSet lowercaseLetterCharacterSet]].length == 0)
     {
         NSString *label = header;
-        NSInteger count = 1;
+        int count = 1;
 
         /* Check for dups (e.g. lesskey(1) ) */
         while ([sections containsObject:label]) {
@@ -112,14 +143,15 @@
 
 - (void)showData
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSTextStorage *storage = nil;
-    NSFont        *manFont = ManFont();
-    NSColor       *linkColor = ManLinkColor();
-    NSColor       *textColor = ManTextColor();
-    NSColor       *backgroundColor = ManBackgroundColor();
+    NSFont        *manFont = [defaults manFont];
+    NSColor       *linkColor = [defaults manLinkColor];
+    NSColor       *textColor = [defaults manTextColor];
+    NSColor       *backgroundColor = [defaults manBackgroundColor];
 
-    if (textView == nil) return;
+    if (textView == nil || hasLoaded) return;
 
     if ([taskData isRTFData])
     {
@@ -150,8 +182,8 @@
     {
         NSFontManager *manager = [NSFontManager sharedFontManager];
         NSString      *family = [manFont familyName];
-        CGFloat         size    = [manFont pointSize];
-        NSUInteger      currIndex = 0;
+        CGFloat       size    = [manFont pointSize];
+        NSUInteger    currIndex = 0;
 
         NS_DURING
         [storage beginEditing];
@@ -177,6 +209,11 @@
             if (font != nil)
                 [storage addAttribute:NSFontAttributeName value:font range:currRange];
 
+            /*
+             * Starting in 10.3, there is a -setLinkTextAttributes: method to set these, without having to
+             * determine the ranges ourselves.  However, since we are already iterating all the ranges
+             * for other reasons, may as well keep the old way.
+             */
             if (isLink)
                 [storage addAttribute:NSForegroundColorAttributeName value:linkColor range:currRange];
             else
@@ -197,6 +234,15 @@
 
     [textView setBackgroundColor:backgroundColor];
     [self setupSectionPopup];
+    
+    /*
+     * The 10.7 document reloading stuff can cause the loading methods to be invoked more than
+     * once, and the second time through we have thrown away our raw data.  Probably indicates
+     * some overkill code elsewhere on my part, but putting in the hadLoaded guard to only
+     * avoid doing anything after we have loaded real data seems to help.
+     */
+    if (taskData != nil)
+        hasLoaded = YES;
 
     // no need to keep around rtf data
     [taskData release];
@@ -208,7 +254,8 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     /* HTML parser in tiger got slow... RTF is faster, and is usable now that it supports hyperlinks */
-    NSString *tool = IsPanther()? @"cat2rtf" : @"cat2html";
+    //    NSString *tool = @"cat2html";
+    NSString *tool = @"cat2rtf";
     NSString *command = [[NSBundle mainBundle] pathForResource:tool ofType:nil];
 
     command = EscapePath(command, YES);
@@ -264,26 +311,47 @@
     [self loadCommand:[NSString stringWithFormat:@"%@ '%@'", binary, EscapePath(filename, NO)]];
 }
 
-- (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)type
+- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)type error:(NSError **)error
 {
     if ([type isEqual:@"man"])
-        [self loadManFile:fileName isGzip:NO];
+        [self loadManFile:[url path] isGzip:NO];
     else if ([type isEqual:@"mangz"])
-        [self loadManFile:fileName isGzip:YES];
+        [self loadManFile:[url path] isGzip:YES];
     else if ([type isEqual:@"cat"])
-        [self loadCatFile:fileName isGzip:NO];
+        [self loadCatFile:[url path] isGzip:NO];
     else if ([type isEqual:@"catgz"])
-        [self loadCatFile:fileName isGzip:YES];
-    else return NO;
+        [self loadCatFile:[url path] isGzip:YES];
+    else {
+        NSDictionary *errorDetail = [NSDictionary dictionaryWithObject:@"Invalid document type" forKey:NSLocalizedDescriptionKey];
+        if (error != NULL)
+            *error = [NSError errorWithDomain:@"ManOpen" code:0 userInfo:errorDetail];
+        return NO;
+    }
 
-    [self setShortTitle:[[fileName lastPathComponent] stringByDeletingPathExtension]];
+    // strip extension twice in case it is a e.g. "1.gz" filename
+    [self setShortTitle:[[[[url path] lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension]];
+    copyURL = [url retain];
+    
+    restoreData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                   url,    RestoreFileURL,
+                   type,   RestoreFileType,
+                   nil];
 
-    return taskData != nil;
+    if (taskData == nil)
+    {
+        NSDictionary *errorDetail = [NSDictionary dictionaryWithObject:@"Could not read manual data" forKey:NSLocalizedDescriptionKey];
+        if (error != NULL)
+            *error = [NSError errorWithDomain:@"ManOpen" code:0 userInfo:errorDetail];
+        return NO;
+    }
+
+    return YES;
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)windowController
 {
     NSString *sizeString = [[NSUserDefaults standardUserDefaults] stringForKey:@"ManWindowSize"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     [super windowControllerDidLoadNib:windowController];
 
@@ -291,6 +359,7 @@
     [textView setSelectable:YES];
     [textView setImportsGraphics:NO];
     [textView setRichText:YES];
+    [textView setUsesFindPanel:YES];
 
     if (sizeString != nil)
     {
@@ -304,21 +373,15 @@
         }
     }
 
-    //[[findSelectionButton cell] setGradientType:NSGradientConcaveStrong];
-    //[findSelectionButton setBezelStyle:NSThickerSquareBezelStyle];
-    [[sectionPopup cell] setControlSize:NSSmallControlSize];
-    [[sectionPopup cell] setFont:[NSFont labelFontOfSize:11.0]];
-
-    if ([self shortTitle])
+    if ([self shortTitle] != nil)
         [titleStringField setStringValue:[self shortTitle]];
     [[[textView textStorage] mutableString] setString:@"Loading..."];
-    [textView setBackgroundColor:ManBackgroundColor()];
-    [textView setTextColor:ManTextColor()];
+    [textView setBackgroundColor:[defaults manBackgroundColor]];
+    [textView setTextColor:[defaults manTextColor]];
     [self performSelector:@selector(showData) withObject:nil afterDelay:0.0];
 
     [[textView window] makeFirstResponder:textView];
     [[textView window] setDelegate:self];
-
 }
 
 - (IBAction)openSelection:(id)sender
@@ -333,24 +396,32 @@
     [[textView window] makeFirstResponder:textView];
 }
 
-- (IBAction)findNext:(id)sender        { [[FindPanelController sharedInstance] findNext:sender]; }
-- (IBAction)findPrevious:(id)sender    { [[FindPanelController sharedInstance] findPrevious:sender]; }
-- (IBAction)enterSelection:(id)sender  { [[FindPanelController sharedInstance] enterSelection:sender]; }
-- (IBAction)jumpToSelection:(id)sender { [[FindPanelController sharedInstance] jumpToSelection:sender]; }
-
-- (IBAction)searchForSelection:(id)sender
-{
-    [self enterSelection:sender];
-    [self findNext:sender];
-    [[textView window] makeFirstResponder:textView];
-}
-
 - (IBAction)displaySection:(id)sender
 {
     NSInteger section = [sectionPopup indexOfSelectedItem];
     if (section > 0 && section <= [sectionRanges count]) {
         NSRange range = [[sectionRanges objectAtIndex:section-1] rangeValue];
         [textView scrollRangeToTop:range];
+    }
+}
+
+- (IBAction)copyURL:(id)sender
+{
+    if (copyURL != nil)
+    {
+        NSPasteboard *pb = [NSPasteboard generalPasteboard];
+        NSMutableArray *types = [NSMutableArray array];
+        
+        [types addObject:NSURLPboardType];
+        if ([copyURL isFileURL])
+            [types addObject:NSFilenamesPboardType];
+        [types addObject:NSStringPboardType];
+        [pb declareTypes:types owner:nil];
+
+        [copyURL writeToPasteboard:pb];
+        [pb setString:[NSString stringWithFormat:@"<%@>", [copyURL absoluteString]] forType:NSStringPboardType];
+        if ([copyURL isFileURL])
+            [pb setPropertyList:[NSArray arrayWithObject:[copyURL path]] forType:NSFilenamesPboardType];
     }
 }
 
@@ -382,7 +453,9 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-    if (![[FindPanelController sharedInstance] validateMenuItem:item]) return NO;
+    if ([item action] == @selector(copyURL:))
+        return copyURL != nil;
+
     return [super validateMenuItem:item];
 }
 
@@ -464,9 +537,45 @@
     return desiredFrame;
 }
 
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super encodeRestorableStateWithCoder:coder];
+    [coder encodeObject:restoreData forKey:RestoreWindowDict];
+}
+
+- (void)restoreStateWithCoder:(NSCoder *)coder
+{
+    [super restoreStateWithCoder:coder];
+
+    if (![coder containsValueForKey:RestoreWindowDict])
+        return;
+
+    NSDictionary *restoreInfo = [coder decodeObjectForKey:RestoreWindowDict];
+    if ([restoreInfo objectForKey:RestoreName] != nil)
+    {
+        NSString *name = [restoreInfo objectForKey:RestoreName];
+        NSString *section = [restoreInfo objectForKey:RestoreSection];
+        NSString *title = [restoreInfo objectForKey:RestoreTitle];
+        NSString *manPath = [[NSUserDefaults standardUserDefaults] manPath];
+        
+        [self _loadDocumentWithName:name section:section manPath:manPath title:title];
+    }
+    /* Usually, URL-backed documents have been automatically restored already
+       (the copyURL would be set), but just in case... */
+    else if ([restoreInfo objectForKey:RestoreFileURL] != nil && copyURL == nil)
+    {
+        NSURL *url = [restoreInfo objectForKey:RestoreFileURL];
+        NSString *type  = [restoreInfo objectForKey:RestoreFileType];
+        [self readFromURL:url ofType:type error:NULL];
+    }
+
+    if ([self shortTitle] != nil)
+        [titleStringField setStringValue:[self shortTitle]];
+    [[self windowControllers] makeObjectsPerformSelector:@selector(synchronizeWindowTitleWithDocumentName)];
+}
+
 @end
 
-#import <ApplicationServices/ApplicationServices.h>
 
 @implementation ManTextView
 
@@ -479,7 +588,7 @@ static NSCursor *linkCursor = nil;
 
     path = [[NSBundle mainBundle] pathForResource:@"LinkCursor" ofType:@"tiff"];
     linkImage = [[NSImage alloc] initWithContentsOfFile: path];
-    linkCursor = [[NSCursor alloc] initWithImage:linkImage hotSpot:NSMakePoint(6.0, 1.0)];
+    linkCursor = [[NSCursor alloc] initWithImage:linkImage hotSpot:NSMakePoint(6.0f, 1.0f)];
     [linkCursor setOnMouseEntered:YES];
     [linkImage release];
 }
@@ -490,7 +599,7 @@ static NSCursor *linkCursor = nil;
     NSLayoutManager *layout    = [self layoutManager];
     NSTextStorage *storage     = [self textStorage];
     NSRect visible = [self visibleRect];
-    NSInteger currIndex = 0;
+    NSUInteger currIndex = 0;
 
     [super resetCursorRects];
 
@@ -498,15 +607,13 @@ static NSCursor *linkCursor = nil;
     {
         NSRange currRange;
         NSDictionary *attribs = [storage attributesAtIndex:currIndex effectiveRange:&currRange];
-        BOOL isLinkSection;
+        BOOL isLinkSection = [attribs objectForKey:NSLinkAttributeName] != nil;
 
-        isLinkSection = [attribs objectForKey:NSLinkAttributeName] != nil;
         if (isLinkSection)
         {
             NSRect *rects;
             NSRange ignoreRange = {NSNotFound, 0};
-            NSUInteger rectCount = 0;
-            NSInteger i;
+            NSUInteger i, rectCount = 0;
 
             rects = [layout rectArrayForCharacterRange:currRange
                             withinSelectedCharacterRange:ignoreRange
@@ -552,51 +659,38 @@ static NSCursor *linkCursor = nil;
 }
 
 /* 
- * Draw page numbers when printing. This method is kinda odd... the normal
- * NSString drawing methods don't work. When I lockFocus on a view it does, but
- * it then appears the transformation matrix is altered in that the page is
- * translated a half page down (even worse, so is the clipping rect). Looking
- * back at old example code, this method seemed more designed to have explicit
- * PostScript drawing code work, so on MacOS X I tried some raw CoreGraphics
- * calls to render right to the graphics context without calling lockFocus on
- * anything, and it works fine. Very annoying though -- not sure if this can be
- * considered a bug in the NSString drawing code or not. NSBezierPath works fine
- * for what it's worth.
+ * Draw page numbers when printing. Under early versions of MacOS X... the normal
+ * NSString drawing methods don't work in the context of this method. So, I fell back on
+ * CoreGraphics primitives, which did. However, I'm now just supporting Tiger (10.4) and up,
+ * and it looks like the bugs have been fixed, so we can just use the higher-level
+ * NSStringDrawing now, thankfully.
  */
 - (void)drawPageBorderWithSize:(NSSize)size
 {
-    NSFont *font = ManFont();
-	
+    NSFont *font = [[NSUserDefaults standardUserDefaults] manFont];
     NSInteger currPage = [[NSPrintOperation currentOperation] currentPage];
-    NSString *str = [NSString stringWithFormat:@"%ld", (long)currPage];
-	
-	NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
-	[style setAlignment:NSCenterTextAlignment];
-	NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-						   style, NSParagraphStyleAttributeName,
-						   font, NSFontAttributeName,
-						   nil];
-	
-    NSSize strSize = [str sizeWithAttributes:attrs];
-    NSPoint point = NSMakePoint(size.width/2 - strSize.width/2, 20.0f/* - strSize.height/2*/);	 
-	
-	[NSGraphicsContext saveGraphicsState];
+    NSString *pageString = [NSString stringWithFormat:@"%ld", (long)currPage];
+    NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
+    NSMutableDictionary *drawAttribs = [NSMutableDictionary dictionary];
+    NSRect drawRect = NSMakeRect(0.0f, 0.0f, size.width, 20.0f + [font ascender]);
 
-	[str drawAtPoint:point withAttributes:attrs];
+    [style setAlignment:NSCenterTextAlignment];
+    [drawAttribs setObject:style forKey:NSParagraphStyleAttributeName];
+    [drawAttribs setObject:font forKey:NSFontAttributeName];
+
+    [pageString drawInRect:drawRect withAttributes:drawAttribs];
     
-	[NSGraphicsContext restoreGraphicsState];
-	
-	[style release];
-
-	/*
-	CGContextSaveGState(context);
-    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-    CGContextSetTextDrawingMode(context, kCGTextFill);  //needed?
-    CGContextSetGrayFillColor(context, 0.0, 1.0);
-    CGContextSelectFont(context, [[font fontName] cStringUsingEncoding:NSUTF8StringEncoding], [font pointSize], kCGEncodingMacRoman);
-    CGContextShowTextAtPoint(context, point.x, point.y, [str cStringUsingEncoding:NSUTF8StringEncoding], [str cStringLength]);
-    CGContextRestoreGState(context);
-	 */
+//    CGFloat strWidth = [str sizeWithAttributes:attribs].width;
+//    NSPoint point = NSMakePoint(size.width/2 - strWidth/2, 20.0f);
+//    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+//    
+//    CGContextSaveGState(context);
+//    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+//    CGContextSetTextDrawingMode(context, kCGTextFill);  //needed?
+//    CGContextSetGrayFillColor(context, 0.0f, 1.0f);
+//    CGContextSelectFont(context, [[font fontName] cStringUsingEncoding:NSMacOSRomanStringEncoding], [font pointSize], kCGEncodingMacRoman);
+//    CGContextShowTextAtPoint(context, point.x, point.y, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], [str lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]);
+//    CGContextRestoreGState(context);
 }
 
 @end

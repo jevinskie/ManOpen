@@ -1,12 +1,21 @@
+
 #import <Foundation/Foundation.h>
 #import <AppKit/NSWorkspace.h>
 #import <libc.h>  // for getopt()
 #import <ctype.h> // for isdigit()
 #import "ManOpenProtocol.h"
+#import "SystemType.h"
 
-NSString *MakeAbsolutePath(const char *filename)
+
+static NSString *MakeNSStringFromPath(const char *filename)
 {
-    NSString *currFile = [NSString stringWithCString:filename encoding:NSUTF8StringEncoding];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    return [manager stringWithFileSystemRepresentation:filename length:strlen(filename)];
+}
+
+static NSString *MakeAbsolutePath(const char *filename)
+{
+    NSString *currFile = MakeNSStringFromPath(filename);
 
     if (![currFile isAbsolutePath])
     {
@@ -17,24 +26,25 @@ NSString *MakeAbsolutePath(const char *filename)
     return currFile;
 }
 
-void usage(const char *progname)
+static void usage(const char *progname)
 {
     fprintf(stderr,"%s: [-bk] [-M path] [-f file] [section] [name ...]\n", progname);
 }
 
 int main (int argc, char * const *argv)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSAutoreleasePool *pool = [NSAutoreleasePool new];
     NSString          *manPath = nil;
     NSString          *section = nil;
     NSMutableArray    *files = [NSMutableArray array];
     BOOL              aproposMode = NO;
     BOOL              forceToFront = YES;
-    NSInteger         i;
+    NSInteger         argIndex;
+    NSUInteger        fileIndex;
     char              c;
     NSDistantObject <ManOpen>  *server;
     NSInteger         maxConnectTries;
-    NSInteger         connectCount;
+    NSInteger          connectCount;
 
     while ((c = getopt(argc,argv,"hbm:M:f:kaCcw")) != EOF)
     {
@@ -42,7 +52,7 @@ int main (int argc, char * const *argv)
         {
             case 'm':
             case 'M':
-                manPath = [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
+                manPath = MakeNSStringFromPath(optarg);
                 break;
             case 'f':
                 [files addObject:MakeAbsolutePath(optarg)];
@@ -64,7 +74,6 @@ int main (int argc, char * const *argv)
             default:
                 usage(argv[0]);
                 [pool drain];
-                //exit(0);
 				return 0;
         }
     }
@@ -79,7 +88,7 @@ int main (int argc, char * const *argv)
 
     if (optind < argc && !aproposMode)
     {
-        NSString *tmp = [NSString stringWithCString:argv[optind] encoding:NSUTF8StringEncoding];
+        NSString *tmp = MakeNSStringFromPath(argv[optind]);
 
         if (isdigit(argv[optind][0])          ||
             /* These are configurable in /etc/man.conf; these are just the default strings.  Hm, they are invalid as of Panther. */
@@ -113,7 +122,6 @@ int main (int argc, char * const *argv)
         if (optind >= argc && [files count] <= 0)
         {
             [pool drain];
-            //exit(0);
 			return 0;
         }
     }
@@ -150,23 +158,22 @@ int main (int argc, char * const *argv)
     {
         fprintf(stderr,"Could not open connection to ManOpen\n");
         [pool drain];
-        //exit(1);
         return 1;
     }
 
     [server setProtocolForProxy:@protocol(ManOpen)];
 
-    for (i=0; i<[files count]; i++)
+    for (fileIndex=0; fileIndex<[files count]; fileIndex++)
     {
-        [server openFile:[files objectAtIndex:i] forceToFront:forceToFront];
+        [server openFile:[files objectAtIndex:fileIndex] forceToFront:forceToFront];
     }
 
     if (manPath == nil && getenv("MANPATH") != NULL)
-        manPath = [NSString stringWithCString:getenv("MANPATH") encoding:NSUTF8StringEncoding];
+        manPath = MakeNSStringFromPath(getenv("MANPATH"));
 
-    for (i = optind; i < argc; i++)
+    for (argIndex = optind; argIndex < argc; argIndex++)
     {
-        NSString *currFile = [NSString stringWithCString:argv[i] encoding:NSUTF8StringEncoding];
+        NSString *currFile = MakeNSStringFromPath(argv[argIndex]);
         if (aproposMode)
             [server openApropos:currFile manPath:manPath forceToFront:forceToFront];
         else
@@ -174,6 +181,5 @@ int main (int argc, char * const *argv)
     }
 
     [pool drain];
-    //exit(0);       // insure the process exit status is 0
     return 0;      // ...and make main fit the ANSI spec.
 }

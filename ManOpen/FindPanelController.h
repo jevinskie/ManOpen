@@ -1,6 +1,14 @@
 
-#import <AppKit/AppKit.h>
+#import "SystemType.h"
+#ifdef OPENSTEP
+#import "NSWindowController.h"
+#else
+#import <AppKit/NSWindowController.h>
+#endif
 
+@class NSText, NSTextField, NSButton;
+
+/* This class has been obsoleted by setUsesFindPanel: in NSTextView, so we no longer use it. */
 @interface FindPanelController : NSWindowController
 {
     IBOutlet NSTextField *stringField;

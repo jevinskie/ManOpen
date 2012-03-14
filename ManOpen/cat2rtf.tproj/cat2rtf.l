@@ -34,20 +34,28 @@
      *    Default settings, may be changed using options...
      */
     
-    char *startBold = "\n\\b ";
-    char *stopBold = "\n\\b0 ";
-    char *startULine = "\n\\ul ";
-    char *stopULine = "\n\\ulnone ";
-    char *startHeader = "\n\\f1 ";
-    char *stopHeader = "\n\\f0 ";
-    int addLinks = 0;
-    int markHeaders = 0; /* Mark headers with Helvetica */
+    static char *startBold = "\n\\b ";
+    static char *stopBold = "\n\\b0 ";
+    static char *startULine = "\n\\ul ";
+    static char *stopULine = "\n\\ulnone ";
+    static char *startHeader = "\n\\f1 ";
+    static char *stopHeader = "\n\\f0 ";
+    static int addLinks = 0;
+    static int markHeaders = 0; /* Mark headers with Helvetica */
+    /*
+     * 'lineCount' is here to squeeze multiple-blank lines (like 'more -s'
+     * does with the traditional nroff output).  By default, a max of 3
+     * consecutive blank lines are allowed. A value of -1 means to not
+     * squeeze lines at all.  -CEL
+     */
+    static int lineCount = 0;
+    static int maxLineCount = 3;
 
     /* Decode a UTF8 sequence to return the unicode number */
-    unsigned decodeUTF8(unsigned char *buf, int len)
+    static unsigned decodeUTF8(unsigned char *buf, yy_size_t len)
     {
         int n = buf[0] & (0x7f >> len);
-        int i;
+        yy_size_t i;
 
         for (i=1; i<len; i++)
             n = (n << 6) | (buf[i] & 0x3f);
@@ -55,7 +63,7 @@
         return (unsigned)n;
     }
 
-    void emitPreamble(void) {
+    static void emitPreamble(void) {
     
         fputs("{\\rtf0\\ansi{\\fonttbl\\f0\\fmodern Courier;\\f1"
         "\\fswiss Helvetica;}\n" "\\paperw14640\n" "\\paperh9600\n"
@@ -67,14 +75,14 @@
         "\\fs24\\fc1\\cf1 ",stdout);
     }
     
-    void emitPostamble(void) {
+    static void emitPostamble(void) {
     
         fputs("\n}\n",stdout);
     }
 
     #define adjust() if( neededflags!=flags ) _adjust()
     
-    void _adjust(void) {
+    static void _adjust(void) {
     
         if( (flags^neededflags)&ULINEFLAG )
             fputs(neededflags&ULINEFLAG?
@@ -85,19 +93,11 @@
         flags = neededflags;
     }
     
-    /*
-     * 'lineCount' is here to squeeze multiple-blank lines (like 'more -s'
-     * does with the traditional nroff output).  By default, a max of 3
-     * consecutive blank lines are allowed. A value of -1 means to not
-     * squeeze lines at all.  -CEL
-     */
-    static int lineCount = 0;
-    static int maxLineCount = 3;
 
     /*
      *    emitChar escapes RTF-special characters...
      */
-    void emitChar(int ch) {        
+    static void emitChar(int ch) {        
         adjust();
 
         if (ch=='\n') {
@@ -115,9 +115,9 @@
         fputc(ch,stdout);
     }
 
-    void emitChars(char *string, int len)
+    static void emitChars(char *string, yy_size_t len)
     {
-        int i;
+        yy_size_t i;
 
         for (i=0; i<len; i++)
             emitChar(string[i]);
@@ -126,13 +126,13 @@
     /*
      *    ...emitString doesn't!
      */
-    void emitString(char *string) {
+    static void emitString(char *string) {
         adjust();
         lineCount = 0;
         fputs(string,stdout);
     }
 
-    void emitBackspacedLetters(char *charblock, int lengthLeft, int doBold)
+    static void emitBackspacedLetters(char *charblock, yy_size_t lengthLeft, int doBold)
     {
         /* If there's a trailing backspace, then both letters are deleted, so print nothing */
         if (lengthLeft >= 4 && charblock[3] == '\010')
@@ -153,9 +153,9 @@
         }
     }
 
-    void emitBackspacedText(char *text, int length)
+    static void emitBackspacedText(char *text, yy_size_t length)
     {
-        int i=0;
+        yy_size_t i=0;
         while (i < length) {
             if ((i < (length-1)) && text[i+1] == '\010') {
                 emitBackspacedLetters(&text[i], 3, 0);
@@ -178,7 +178,7 @@
      * instead.  We just show a '?'.  Put both inside a {...} section
      * so that the scope of the "uc" setting is limited.
      */
-    void emitUnicode(unsigned charNum)
+    static void emitUnicode(unsigned charNum)
     {
         short rtfVal = charNum;
         char rtfBuf[20];
@@ -186,9 +186,9 @@
         emitString(rtfBuf);
     }
 
-ALLBUTUL    [^\n_\010]
+ALLBUTUL     [^\n_\010]
 NEEDQUOTE    [\\{}]
-VERBATIM    [^\n_\010( \t\\{}\xC2-\xF4]
+VERBATIM     [^\n_\010\x1B( \t\\{}\xC2-\xF4]
 UPPER        [A-Z]
 UPPERCONT    [-/A-Z0-9 \t()]
 UPPERBS      {UPPER}\010{UPPER}
@@ -196,8 +196,13 @@ UPPERBSCONT  ({UPPERBS}|[ \t()])
 UTF8START    [\xC2-\xF4]
 UTF8CONT     [\x80-\xBF]
 UTF8SEQ      {UTF8START}({UTF8CONT}{1,3})
+SGRSTART     \x1B\[
 
+%option 8bit
 %option debug
+%option noyywrap
+%option noinput
+%option prefix="cat2rtf"
 
 %x FIRSTLINE
 
@@ -336,15 +341,23 @@ _\010{ALLBUTUL}        {
         if (yytext[yyleng-1] != '\010') {
             char *backspace = index(yytext, '\010');
             if (backspace != NULL) {
-                emitUnicode(decodeUTF8((unsigned char*)backspace+1, (yyleng - (backspace-yytext) - 1)));
+                emitUnicode(decodeUTF8((unsigned char *)backspace+1, (yyleng - (backspace-yytext) - 1)));
             }
         }
     }
 
   /* If we find a UTF8 sequence, decode it */
 {UTF8SEQ} {
-    emitUnicode(decodeUTF8((unsigned char*)yytext, yyleng));
+    emitUnicode(decodeUTF8((unsigned char *)yytext, yyleng));
 }
+
+  /* Some versions of nroff/grotty use SGR (ANSI) escape sequences instead of the backspace hacks */
+{SGRSTART}0?m          UNSETU;UNSETB;
+{SGRSTART}1m           SETB;
+{SGRSTART}[347]m       SETU;
+{SGRSTART}(21|22)m     UNSETB;
+{SGRSTART}(23|24|27)m  UNSETU;
+{SGRSTART}[0-9;]+m     {/*ignore any other codes*/}
 
     /*
         group characters in VERBATIM to make this
@@ -363,7 +376,7 @@ _\010{ALLBUTUL}        {
 
 %%
 
-void usage() {
+static void usage() {
 
     fprintf(stderr,"Usage: cat2rtf [-gil] [-s <num>| -S] [<filename>]\n"
         "\tTranslate output of (g)nroff to RTF. If no\n"
@@ -376,9 +389,6 @@ void usage() {
         "\tRTF output is sent to stdout.\n");
     exit(1); 
 }
-
-extern char *optarg;
-extern int optind;
 
 int main(int argc, char *argv[])
 {

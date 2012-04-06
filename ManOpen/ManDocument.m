@@ -5,17 +5,13 @@
 #import "PrefPanelController.h"
 #import "NSData+Utils.h"
 
-
-@interface ManTextView : NSTextView
-- (void)scrollRangeToTop:(NSRange)charRange;
-@end
-
 #define RestoreWindowDict @"RestoreWindowInfo"
 #define RestoreSection    @"Section"
 #define RestoreTitle      @"Title"
 #define RestoreName       @"Name"
 #define RestoreFileURL    @"URL"
 #define RestoreFileType   @"DocType"
+
 @interface NSDocument (LionRestorationMethods)
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder;
 - (void)restoreStateWithCoder:(NSCoder *)coder;

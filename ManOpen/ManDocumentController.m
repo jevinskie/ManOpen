@@ -47,11 +47,14 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
 @implementation ManDocumentController
 
-- init
+- (id)init
 {
     NSConnection *connection = [[NSConnection new] autorelease];
 
-    [super init];
+    self = [super init];
+	if (!self) {
+		return nil;
+	}
 
     /*
      * Set ourselves up for DO connections.  I do it here so it's done as
@@ -166,7 +169,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
 - (NSData *)dataByExecutingCommand:(NSString *)command
 {
-    return [self dataByExecutingCommand:command maxLength:0];
+    return [self dataByExecutingCommand:command maxLength:0 environment:nil];
 }
 
 - (NSData *)dataByExecutingCommand:(NSString *)command manPath:(NSString *)manPath

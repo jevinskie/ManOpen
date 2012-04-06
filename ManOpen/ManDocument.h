@@ -2,10 +2,14 @@
 #import "SystemType.h"
 #import <AppKit/NSDocument.h>
 #import <AppKit/NSWindow.h>
+#import <AppKit/NSTextView.h>
 
 @class NSMutableArray, NSMutableDictionary;
-@class ManTextView;
 @class NSTextField, NSText, NSButton, NSPopUpButton;
+
+@interface ManTextView : NSTextView
+- (void)scrollRangeToTop:(NSRange)charRange;
+@end
 
 @interface ManDocument : NSDocument <NSWindowDelegate>
 {

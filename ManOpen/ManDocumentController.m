@@ -209,41 +209,11 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     return nil;
 }
 
-- (NSString *)typeFromURL:(NSURL *)url
-{
-    NSString *filename = [url path];
-	NSFileHandle  *handle;
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSDictionary  *attributes = [manager attributesOfItemAtPath:[filename stringByResolvingSymlinksInPath] error:NULL];
-    NSUInteger      maxLength = MIN(150, (NSUInteger)[attributes fileSize]);
-    NSData        *fileHeader;
-    NSString      *catType = @"cat";
-    NSString      *manType = @"man";
-	
-    if (maxLength == 0) return catType;
-	
-    handle = [NSFileHandle fileHandleForReadingAtPath:filename];
-    fileHeader = [handle readDataOfLength:maxLength];
-	
-    if ([attributes fileSize] > 1000000) return nil;
-	
-    if ([fileHeader isGzipData]) {
-        NSString *command = [NSString stringWithFormat:@"/usr/bin/gzip -dc '%@'", EscapePath(filename, NO)];
-        fileHeader = [self dataByExecutingCommand:command maxLength:maxLength];
-        manType = @"mangz";
-        catType = @"catgz";
-    }
-	
-    if ([fileHeader isBinaryData]) return nil;
-	
-    return [fileHeader isNroffData]? manType : catType;
-}
-
 - (NSString *)typeFromFilename:(NSString *)filename
 {
     NSFileHandle  *handle;
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSDictionary  *attributes = [manager fileAttributesAtPath:filename traverseLink:YES];
+    NSDictionary  *attributes = [manager attributesOfItemAtPath:[filename stringByResolvingSymlinksInPath] error:NULL];
     NSUInteger    maxLength = MIN(150, (NSUInteger)[attributes fileSize]);
     NSData        *fileHeader;
     NSString      *catType = @"cat";
@@ -737,8 +707,9 @@ static BOOL IsSectionWord(NSString *word)
         (fileArray = [pboard propertyListForType:NSFilenamesPboardType]))
     {
         NSError *openError = nil;
-        for (NSString *fileName in fileArray) {
-            [self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:fileName] display:YES error:&openError];
+		NSInteger count = [fileArray count], i;
+        for (i = 0; i < count; i++) {
+            [self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:[fileArray objectAtIndex:i]] display:YES error:&openError];
         }
         
         if (error != NULL && openError != nil)

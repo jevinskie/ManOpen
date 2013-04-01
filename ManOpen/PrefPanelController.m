@@ -61,8 +61,8 @@
 @end
 
 #define DATA_FOR_COLOR(color) [NSArchiver archivedDataWithRootObject:color]
-#define BOOL_YES [NSNumber numberWithBool:YES]
-#define BOOL_NO [NSNumber numberWithBool:NO]
+#define BOOL_YES @YES
+#define BOOL_NO @NO
 
 @implementation PrefPanelController
 
@@ -837,7 +837,7 @@ static NSString *currentAppID = nil;
         [panel setAllowsMultipleSelection:NO];
         [panel setResolvesAliases:YES];
         [panel setCanChooseFiles:YES];
-		[panel setAllowedFileTypes:[NSArray arrayWithObject:BRIDGE(NSString, kUTTypeApplicationBundle)]];
+		[panel setAllowedFileTypes:[NSArray arrayWithObject:BRIDGE(NSString*, kUTTypeApplicationBundle)]];
 		[panel beginSheetModalForWindow:[appPopup window] completionHandler:^(NSInteger result) {
 			if (result == NSOKButton) {
 				NSURL *appURL = [panel URL];

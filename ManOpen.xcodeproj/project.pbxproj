@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		554659FB170A073C00B19C56 /* Find.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 554659FA170A073C00B19C56 /* Find.tiff */; };
 		55F13AB415103C1E0095B5A9 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
 		D38A240C14E4C3FE00F6AFFE /* ManPage.nib in Resources */ = {isa = PBXBuildFile; fileRef = D39279130821FFA400376676 /* ManPage.nib */; };
 		D38A240D14E4C3FE00F6AFFE /* PrefPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = D39279160821FFA400376676 /* PrefPanel.nib */; };
@@ -111,6 +112,7 @@
 
 /* Begin PBXFileReference section */
 		554659F91709F0F900B19C56 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
+		554659FA170A073C00B19C56 /* Find.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Find.tiff; sourceTree = "<group>"; };
 		55F13AB515103C1E0095B5A9 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = English; path = English.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A242C14E4C3FE00F6AFFE /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		D38A242D14E4C3FE00F6AFFE /* ManOpen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -291,6 +293,7 @@
 		D39279270821FFA400376676 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				554659FA170A073C00B19C56 /* Find.tiff */,
 				D3EA5B5914E8DA3700AB000A /* helpQMark.tiff */,
 				D392792C0821FFA400376676 /* ManOpen.tiff */,
 			);
@@ -524,6 +527,7 @@
 				D38A241814E4C3FE00F6AFFE /* Credits.rtf in Resources */,
 				D38A241914E4C3FE00F6AFFE /* InfoPlist.strings in Resources */,
 				D3EA5B5A14E8DA3700AB000A /* helpQMark.tiff in Resources */,
+				554659FB170A073C00B19C56 /* Find.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -70,20 +70,25 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSDictionary *defaults;
     NSString *nroff   = @"nroff -mandoc '%@'";
     NSString *manpath = @"/usr/local/man:/usr/share/man";
     NSData *textColor = [userDefaults dataForKey:@"TextColor"]; // historical name
     NSData *linkColor = [userDefaults dataForKey:@"LinkColor"]; // historical name
     NSData *bgColor = [userDefaults dataForKey:@"BackgroundColor"]; // historical name
     
-    if (textColor == nil)
-        textColor = DATA_FOR_COLOR([NSColor textColor]);
-    if (linkColor == nil)
-        linkColor = DATA_FOR_COLOR([NSColor colorWithDeviceRed:0.1f green:0.1f blue:1.0f alpha:1.0f]);
-    if (bgColor == nil)
-        bgColor = DATA_FOR_COLOR([NSColor textBackgroundColor]);
-
+    if (textColor != nil){
+		[userDefaults setObject:textColor forKey:@"ManTextColor"];
+		[userDefaults removeObjectForKey:@"TextColor"];
+	}
+    if (linkColor != nil) {
+		[userDefaults setObject:linkColor forKey:@"ManLinkColor"];
+		[userDefaults removeObjectForKey:@"LinkColor"];
+	}
+    if (bgColor != nil) {
+		[userDefaults setObject:bgColor forKey:@"ManBackgroundColor"];
+		[userDefaults removeObjectForKey:@"BackgroundColor"];
+	}
+	
     if ([manager fileExistsAtPath:@"/sw/share/man"]) // fink
         manpath = [@"/sw/share/man:" stringByAppendingString:manpath];
     if ([manager fileExistsAtPath:@"/opt/local/share/man"])  //macports
@@ -91,20 +96,24 @@
     if ([manager fileExistsAtPath:@"/usr/X11R6/man"])
         manpath = [manpath stringByAppendingString:@":/usr/X11R6/man"];
     
-    defaults = [NSDictionary dictionaryWithObjectsAndKeys:
-                BOOL_NO,        @"QuitWhenLastClosed",
-                BOOL_NO,        @"UseItalics",
-                BOOL_YES,       @"UseBold",
-                nroff,          @"NroffCommand",
-                manpath,        @"ManPath",
-                BOOL_NO,        @"KeepPanelsOpen",
-                textColor,      @"ManTextColor",
-                linkColor,      @"ManLinkColor",
-                bgColor,        @"ManBackgroundColor",
-                BOOL_YES,       @"NSQuitAlwaysKeepsWindows", // NO will disable by default
-                nil];
-    
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+    {
+		NSData *linkDefaultColor = DATA_FOR_COLOR([NSColor colorWithDeviceRed:0.1f green:0.1f blue:1.0f alpha:1.0f]);
+		NSData *textDefaultColor = DATA_FOR_COLOR([NSColor textColor]);
+		NSData *bgDefaultColor = DATA_FOR_COLOR([NSColor textBackgroundColor]);
+		
+		[userDefaults registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
+					BOOL_NO,			@"QuitWhenLastClosed",
+					BOOL_NO,			@"UseItalics",
+					BOOL_YES,			@"UseBold",
+					nroff,				@"NroffCommand",
+					manpath,			@"ManPath",
+					BOOL_NO,			@"KeepPanelsOpen",
+					textDefaultColor,	@"ManTextColor",
+					linkDefaultColor,	@"ManLinkColor",
+					bgDefaultColor,		@"ManBackgroundColor",
+					BOOL_YES,			@"NSQuitAlwaysKeepsWindows", // NO will disable by default
+					nil]];
+	}
 }
 
 + (id)allocWithZone:(NSZone *)aZone

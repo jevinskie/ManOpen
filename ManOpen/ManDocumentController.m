@@ -50,23 +50,20 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
 - (id)init
 {
-    NSConnection *connection = AUTORELEASEOBJ([NSConnection new]);
-
-    self = [super init];
-	if (!self) {
-		return nil;
+	if (self = [super init]) {
+		/*
+		 * Set ourselves up for DO connections.  I do it here so it's done as
+		 * early as possible.  If the command-line tool still has problems
+		 * connecting, we may be able to do this whole thing in main()...
+		 */
+		
+		NSConnection *connection = AUTORELEASEOBJ([NSConnection new]);
+		[connection registerName:@"ManOpenApp"];
+		[connection setRootObject:self];
+		
+		[PrefPanelController registerManDefaults];
+		[NSBundle loadNibNamed:@"DocController" owner:self];
 	}
-
-    /*
-     * Set ourselves up for DO connections.  I do it here so it's done as
-     * early as possible.  If the command-line tool still has problems
-     * connecting, we may be able to do this whole thing in main()...
-     */
-    [connection registerName:@"ManOpenApp"];
-    [connection setRootObject:self];
-
-    [PrefPanelController registerManDefaults];
-    [NSBundle loadNibNamed:@"DocController" owner:self];
 
     return self;
 }
@@ -95,6 +92,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     else
         return [[NSUserDefaults standardUserDefaults] boolForKey:@"OpenPanelOnStartup"];
 }
+
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)sender
 {
     if ([self applicationShouldOpenUntitledFile:sender]) {

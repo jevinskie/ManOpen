@@ -762,7 +762,8 @@ static NSString *currentAppID = nil;
     [appPopup removeAllItems];
     [appPopup setImage:nil];
 
-	for (MVAppInfo *info in apps) {
+	for (i = 0; i< [apps count]; i++) {
+		MVAppInfo *info = [apps objectAtIndex:i];
 		NSImage *image = [[workspace iconForFile:[[info appURL] path]] copy];
         NSString *niceName = [info displayName];
         NSString *displayName = niceName;

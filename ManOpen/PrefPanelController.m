@@ -122,10 +122,10 @@
 
 - (id)init
 {
-    self = [super initWithWindowNibName:@"PrefPanel"];
-    [self setShouldCascadeWindows:NO];
-    [[NSFontManager sharedFontManager] setDelegate:self];
-
+    if (self = [super initWithWindowNibName:@"PrefPanel"]) {
+		[self setShouldCascadeWindows:NO];
+		[[NSFontManager sharedFontManager] setDelegate:self];
+	}
     return self;
 }
 
@@ -193,13 +193,11 @@
 {
     SEL action = [menuItem action];
 
-    if ((action == @selector(cut:)) || (action == @selector(copy:)) || (action == @selector(delete:)))
-    {
+    if ((action == @selector(cut:)) || (action == @selector(copy:)) || (action == @selector(delete:))) {
         return [manPathController canRemove];
     }
 
-    if (action == @selector(paste:))
-    {
+    if (action == @selector(paste:)) {
         NSArray *types = [[NSPasteboard generalPasteboard] types];
         return [manPathController canInsert] &&
                ([types containsObject:NSFilenamesPboardType] || [types containsObject:NSStringPboardType]);
@@ -268,8 +266,7 @@
 - (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation
 {
     /* Only try the poof if the operation was None (nothing accepted the drop) and it is outside our view */
-    if (operation == NSDragOperationNone && ![self containsScreenPoint:screenPoint])
-    {
+    if (operation == NSDragOperationNone && ![self containsScreenPoint:screenPoint]) {
         if ([[self dataSource] respondsToSelector:@selector(tableView:performDropOutsideViewAtPoint:)] &&
             [(id)[self dataSource] tableView:self performDropOutsideViewAtPoint:screenPoint])
         {
@@ -290,8 +287,7 @@
     NSString *new = [anObject stringByAbbreviatingWithTildeInPath];
     
     /* The above method may not work if the home directory is a symlink, and our path is already resolved */
-    if ([new isAbsolutePath])
-    {
+    if ([new isAbsolutePath]) {
         static NSString *resHome = nil;
         if (resHome == nil)
             resHome = RETAINOBJ([[NSHomeDirectory() stringByResolvingSymlinksInPath] stringByAppendingString:@"/"]);
@@ -302,7 +298,8 @@
     
     return new;
 }
-- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
+- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error
+{
     *anObject = [string stringByExpandingTildeInPath];
     return YES;
 }
@@ -398,33 +395,24 @@ static NSString *ManPathArrayKey = @"manPathArray";
     [panel setCanChooseDirectories:YES];
     [panel setCanChooseFiles:NO];
 
-    [panel beginSheetForDirectory:nil file:nil
-         modalForWindow:[self window]
-         modalDelegate:self
-         didEndSelector:@selector(didAddManPathFromPanel:code:context:)
-         contextInfo:NULL];
-}
-- (void)didAddManPathFromPanel:(NSOpenPanel *)panel code:(int)returnCode context:(void *)context
-{
-    if (returnCode == NSOKButton)
-    {
-        NSArray *urls = [panel URLs];
-        NSUInteger i, count = [urls count];
-        NSMutableArray *paths = [NSMutableArray arrayWithCapacity:count];
-
-        for (i=0; i<count; i++)
-        {
-            NSURL *url = [urls objectAtIndex:i];
-            if ([url isFileURL])
-                [paths addObject:[url path]];
-        }
-
-        NSUInteger insertionIndex = [manPathController selectionIndex];
-        if (insertionIndex == NSNotFound)
-            insertionIndex = [manPathArray count]; //add it on the end
-
-        [self addPathDirectories:paths atIndex:insertionIndex removeFirst:nil];
-    }
+	[panel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+		if (result == NSOKButton) {
+			NSArray *urls = [panel URLs];
+			NSUInteger i, count = [urls count];
+			NSMutableArray *paths = [NSMutableArray arrayWithCapacity:count];
+			
+			for (NSURL *url in urls) {
+				if ([url isFileURL])
+					[paths addObject:[url path]];
+			}
+			
+			NSUInteger insertionIndex = [manPathController selectionIndex];
+			if (insertionIndex == NSNotFound)
+				insertionIndex = [manPathArray count]; //add it on the end
+			
+			[self addPathDirectories:paths atIndex:insertionIndex removeFirst:nil];
+		}
+	}];
 }
 
 - (NSArray *)pathsAtIndexes:(NSIndexSet *)set
@@ -432,8 +420,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
     NSMutableArray *paths = [NSMutableArray arrayWithCapacity:[set count]];
     NSUInteger currIndex;
     
-    for (currIndex = 0; currIndex < [manPathArray count]; currIndex++)
-    {
+    for (currIndex = 0; currIndex < [manPathArray count]; currIndex++) {
         if ([set containsIndex:currIndex])
             [paths addObject:[manPathArray objectAtIndex:currIndex]];
     }
@@ -518,8 +505,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
 
     NSArray *paths = [self pathsFromPasteboard:pb];
     NSUInteger i;
-    for (i=0; i<[paths count]; i++)
-    {
+    for (i=0; i<[paths count]; i++) {
         NSString *path = [paths objectAtIndex:i];
         if (![manPathArray containsObject:path])
             return NSDragOperationCopy;
@@ -534,21 +520,17 @@ static NSString *ManPathArrayKey = @"manPathArray";
     NSArray *pathsToAdd = nil;
     NSIndexSet *removeSet = nil;
     
-    if ([[pb types] containsObject:ManPathIndexSetPboardType])
-    {
+    if ([[pb types] containsObject:ManPathIndexSetPboardType]) {
         NSData *indexData = [pb dataForType:ManPathIndexSetPboardType];
         if ((dragOp & NSDragOperationMove) && indexData != nil) {
             removeSet = [NSUnarchiver unarchiveObjectWithData:indexData];
             pathsToAdd = [self pathsAtIndexes:removeSet];
         }
-    }
-    else
-    {
+    } else {
         pathsToAdd = [self pathsFromPasteboard:pb];
     }
 
-    if ([pathsToAdd count] > 0)
-    {
+    if ([pathsToAdd count] > 0) {
         [self addPathDirectories:pathsToAdd atIndex:row removeFirst:removeSet];
         return YES;
     }
@@ -560,11 +542,9 @@ static NSString *ManPathArrayKey = @"manPathArray";
 - (BOOL)tableView:(NSTableView *)tableView performDropOutsideViewAtPoint:(NSPoint)screenPoint
 {
     NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSDragPboard];
-    if ([[pb types] containsObject:ManPathIndexSetPboardType])
-    {
+    if ([[pb types] containsObject:ManPathIndexSetPboardType]) {
         NSData *indexData = [pb dataForType:ManPathIndexSetPboardType];
-        if (indexData != nil)
-        {
+        if (indexData != nil) {
             NSIndexSet *removeSet = [NSUnarchiver unarchiveObjectWithData:indexData];
             if ([removeSet count] > 0) {
                 [self addPathDirectories:[NSArray array] atIndex:0 removeFirst:removeSet];
@@ -703,8 +683,7 @@ static NSMutableArray *allApps = nil;
 + (void)addAppWithID:(NSString *)aBundleID sort:(BOOL)shouldResort
 {
     MVAppInfo *info = [[MVAppInfo alloc] initWithBundleID:aBundleID];
-    if (![allApps containsObject:info])
-    {
+    if (![allApps containsObject:info]) {
         [allApps addObject:info];
         if (shouldResort)
             [self sortApps];
@@ -774,26 +753,24 @@ static NSString *currentAppID = nil;
     [appPopup removeAllItems];
     [appPopup setImage:nil];
 
-    for (i=0; i<[apps count]; i++)
-    {
-        MVAppInfo *info = [apps objectAtIndex:i];
-        NSImage *image = [[workspace iconForFile:[[info appURL] path]] copy];
+	for (MVAppInfo *info in apps) {
+		NSImage *image = [[workspace iconForFile:[[info appURL] path]] copy];
         NSString *niceName = [info displayName];
         NSString *displayName = niceName;
         int num = 2;
-
+		
         /* This should never happen any more since apps are uniqued to their bundle ID, but ... */
         while ([appPopup indexOfItemWithTitle:displayName] >= 0) {
             displayName = [NSString stringWithFormat:@"%@[%d]", niceName, num++];
         }
         [appPopup addItemWithTitle:displayName];
-
+		
         [image setScalesWhenResized:YES];
         [image setSize:NSMakeSize(16, 16)];
         [[appPopup itemAtIndex:i] setImage:image];
 		RELEASEOBJ(image);
-    }
-
+	}
+	
     if ([apps count] > 0)
         [[appPopup menu] addItem:[NSMenuItem separatorItem]];
     [appPopup addItemWithTitle:@"Select... "];
@@ -807,8 +784,7 @@ static NSString *currentAppID = nil;
     if (currSetID == nil)
         currSetID = [[[MVAppInfo allManViewerApps] objectAtIndex:0] bundleID];
  
-    if (currSetID != nil)
-    {
+    if (currSetID != nil) {
         BOOL resetPopup = (currentAppID == nil); //first time
 
 #if __has_feature(objc_arc)
@@ -819,8 +795,7 @@ static NSString *currentAppID = nil;
         [currSetID release];
 #endif
 
-        if ([MVAppInfo indexOfBundleID:currSetID] == NSNotFound)
-        {
+        if ([MVAppInfo indexOfBundleID:currSetID] == NSNotFound) {
             [MVAppInfo addAppWithID:currSetID sort:YES];
             resetPopup = YES;
         }
@@ -856,27 +831,23 @@ static NSString *currentAppID = nil;
         MVAppInfo *info = [apps objectAtIndex:choice];
         if ([info bundleID] != currentAppID)
             [self setManPageViewer:[info bundleID]];
-    }
-    else {
+    } else {
         NSOpenPanel *panel = [NSOpenPanel openPanel];
         [panel setTreatsFilePackagesAsDirectories:NO];
         [panel setAllowsMultipleSelection:NO];
         [panel setResolvesAliases:YES];
         [panel setCanChooseFiles:YES];
-        [panel beginSheetForDirectory:nil file:nil types:[NSArray arrayWithObject:@"app"]
-                       modalForWindow:[appPopup window] modalDelegate:self
-                       didEndSelector:@selector(panelDidEnd:code:context:) contextInfo:NULL];
+		[panel setAllowedFileTypes:[NSArray arrayWithObject:BRIDGE(NSString, kUTTypeApplicationBundle)]];
+		[panel beginSheetModalForWindow:[appPopup window] completionHandler:^(NSInteger result) {
+			if (result == NSOKButton) {
+				NSURL *appURL = [panel URL];
+				NSString *appID = [[NSBundle bundleWithURL:appURL] bundleIdentifier];
+				if (appID != nil)
+					[self setManPageViewer:appID];
+			}
+			[self setAppPopupToCurrent];
+		}];
     }
 }
 
-- (void)panelDidEnd:(NSOpenPanel *)panel code:(NSInteger)returnCode context:(void *)context
-{
-    if (returnCode == NSOKButton) {
-        NSURL *appURL = [panel URL];
-        NSString *appID = [[NSBundle bundleWithURL:appURL] bundleIdentifier];
-        if (appID != nil)
-            [self setManPageViewer:appID];
-    }
-    [self setAppPopupToCurrent];
-}
 @end

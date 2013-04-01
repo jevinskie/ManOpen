@@ -29,7 +29,6 @@
 		D38A240F14E4C3FE00F6AFFE /* Apropos.nib in Resources */ = {isa = PBXBuildFile; fileRef = D392791C0821FFA400376676 /* Apropos.nib */; };
 		D38A241014E4C3FE00F6AFFE /* ManOpen.nib in Resources */ = {isa = PBXBuildFile; fileRef = D392791F0821FFA400376676 /* ManOpen.nib */; };
 		D38A241114E4C3FE00F6AFFE /* DocController.nib in Resources */ = {isa = PBXBuildFile; fileRef = D39279240821FFA400376676 /* DocController.nib */; };
-		D38A241214E4C3FE00F6AFFE /* LinkCursor.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D39279280821FFA400376676 /* LinkCursor.tiff */; };
 		D38A241414E4C3FE00F6AFFE /* ManOpen.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D392792C0821FFA400376676 /* ManOpen.tiff */; };
 		D38A241514E4C3FE00F6AFFE /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
 		D38A241614E4C3FE00F6AFFE /* ManOpen.icns in Resources */ = {isa = PBXBuildFile; fileRef = D39279310821FFA400376676 /* ManOpen.icns */; };
@@ -111,6 +110,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		554659F91709F0F900B19C56 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
 		55F13AB515103C1E0095B5A9 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = English; path = English.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A242C14E4C3FE00F6AFFE /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		D38A242D14E4C3FE00F6AFFE /* ManOpen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,7 +136,6 @@
 		D392791E0821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Apropos.nib; sourceTree = "<group>"; };
 		D39279210821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ManOpen.nib; sourceTree = "<group>"; };
 		D39279260821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DocController.nib; sourceTree = "<group>"; };
-		D39279280821FFA400376676 /* LinkCursor.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = LinkCursor.tiff; sourceTree = "<group>"; };
 		D392792C0821FFA400376676 /* ManOpen.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ManOpen.tiff; sourceTree = "<group>"; };
 		D392792F0821FFA400376676 /* ManOpen.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptSuite; path = ManOpen.scriptSuite; sourceTree = "<group>"; };
 		D39279310821FFA400376676 /* ManOpen.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ManOpen.icns; sourceTree = "<group>"; };
@@ -256,6 +255,7 @@
 		D39278FE0821FFA400376676 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				554659F91709F0F900B19C56 /* ARCBridge.h */,
 				D39278FF0821FFA400376676 /* AproposDocument.h */,
 				D39279030821FFA400376676 /* ManDocument.h */,
 				D39279050821FFA400376676 /* ManDocumentController.h */,
@@ -292,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				D3EA5B5914E8DA3700AB000A /* helpQMark.tiff */,
-				D39279280821FFA400376676 /* LinkCursor.tiff */,
 				D392792C0821FFA400376676 /* ManOpen.tiff */,
 			);
 			name = Images;
@@ -518,7 +517,6 @@
 				D38A240F14E4C3FE00F6AFFE /* Apropos.nib in Resources */,
 				D38A241014E4C3FE00F6AFFE /* ManOpen.nib in Resources */,
 				D38A241114E4C3FE00F6AFFE /* DocController.nib in Resources */,
-				D38A241214E4C3FE00F6AFFE /* LinkCursor.tiff in Resources */,
 				D38A241414E4C3FE00F6AFFE /* ManOpen.tiff in Resources */,
 				D38A241514E4C3FE00F6AFFE /* ManOpen.scriptSuite in Resources */,
 				D38A241614E4C3FE00F6AFFE /* ManOpen.icns in Resources */,
@@ -670,29 +668,31 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		D38A23AA14E38E1E00F6AFFE /* Development */ = {
+		D38A23AA14E38E1E00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
-			name = Development;
+			name = Debug;
 		};
-		D38A23AB14E38E1E00F6AFFE /* Deployment */ = {
+		D38A23AB14E38E1E00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				SDKROOT = macosx10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		D38A23FB14E4C3FE00F6AFFE /* Development */ = {
+		D38A23FB14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -707,9 +707,9 @@
 					"-Wno-unknown-pragmas",
 				);
 			};
-			name = Development;
+			name = Debug;
 		};
-		D38A23FC14E4C3FE00F6AFFE /* Deployment */ = {
+		D38A23FC14E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -724,13 +724,14 @@
 					"-Wno-unknown-pragmas",
 				);
 			};
-			name = Deployment;
+			name = Release;
 		};
-		D38A242A14E4C3FE00F6AFFE /* Development */ = {
+		D38A242A14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_ENABLE_OBJC_GC = supported;
+				"GCC_ENABLE_OBJC_GC[arch=x86_64]" = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -739,13 +740,14 @@
 				PRODUCT_NAME = ManOpen;
 				WRAPPER_EXTENSION = app;
 			};
-			name = Development;
+			name = Debug;
 		};
-		D38A242B14E4C3FE00F6AFFE /* Deployment */ = {
+		D38A242B14E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_OBJC_GC = supported;
+				"GCC_ENABLE_OBJC_GC[arch=x86_64]" = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -754,9 +756,9 @@
 				PRODUCT_NAME = ManOpen;
 				WRAPPER_EXTENSION = app;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		D38A243614E4C3FE00F6AFFE /* Development */ = {
+		D38A243614E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -766,9 +768,9 @@
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.4;
 				PRODUCT_NAME = cat2rtf;
 			};
-			name = Development;
+			name = Debug;
 		};
-		D38A243714E4C3FE00F6AFFE /* Deployment */ = {
+		D38A243714E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -777,9 +779,9 @@
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.4;
 				PRODUCT_NAME = cat2rtf;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		D38A244214E4C3FE00F6AFFE /* Development */ = {
+		D38A244214E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -788,9 +790,9 @@
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.4;
 				PRODUCT_NAME = cat2html;
 			};
-			name = Development;
+			name = Debug;
 		};
-		D38A244314E4C3FE00F6AFFE /* Deployment */ = {
+		D38A244314E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -798,18 +800,18 @@
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.4;
 				PRODUCT_NAME = cat2html;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		D38A244F14E4C3FE00F6AFFE /* Development */ = {
+		D38A244F14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				PRODUCT_NAME = openman;
 				SKIP_INSTALL = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		D38A245014E4C3FE00F6AFFE /* Deployment */ = {
+		D38A245014E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -817,7 +819,7 @@
 				PRODUCT_NAME = openman;
 				SKIP_INSTALL = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -825,56 +827,56 @@
 		D38A23BC14E38E1E00F6AFFE /* Build configuration list for PBXProject "ManOpen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D38A23AA14E38E1E00F6AFFE /* Development */,
-				D38A23AB14E38E1E00F6AFFE /* Deployment */,
+				D38A23AA14E38E1E00F6AFFE /* Debug */,
+				D38A23AB14E38E1E00F6AFFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		D38A23FA14E4C3FE00F6AFFE /* Build configuration list for PBXAggregateTarget "ManOpen (Aggregate)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D38A23FB14E4C3FE00F6AFFE /* Development */,
-				D38A23FC14E4C3FE00F6AFFE /* Deployment */,
+				D38A23FB14E4C3FE00F6AFFE /* Debug */,
+				D38A23FC14E4C3FE00F6AFFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		D38A242914E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "ManOpen (Application)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D38A242A14E4C3FE00F6AFFE /* Development */,
-				D38A242B14E4C3FE00F6AFFE /* Deployment */,
+				D38A242A14E4C3FE00F6AFFE /* Debug */,
+				D38A242B14E4C3FE00F6AFFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		D38A243514E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2rtf (Tool)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D38A243614E4C3FE00F6AFFE /* Development */,
-				D38A243714E4C3FE00F6AFFE /* Deployment */,
+				D38A243614E4C3FE00F6AFFE /* Debug */,
+				D38A243714E4C3FE00F6AFFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		D38A244114E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2html (Tool)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D38A244214E4C3FE00F6AFFE /* Development */,
-				D38A244314E4C3FE00F6AFFE /* Deployment */,
+				D38A244214E4C3FE00F6AFFE /* Debug */,
+				D38A244314E4C3FE00F6AFFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		D38A244E14E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "openman (Tool)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D38A244F14E4C3FE00F6AFFE /* Development */,
-				D38A245014E4C3FE00F6AFFE /* Deployment */,
+				D38A244F14E4C3FE00F6AFFE /* Debug */,
+				D38A245014E4C3FE00F6AFFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

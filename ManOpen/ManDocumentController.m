@@ -5,6 +5,7 @@
 #import "AproposDocument.h"
 #import "NSData+Utils.h"
 #import "PrefPanelController.h"
+#import "ARCBridge.h"
 
 #define MAN_BINARY     @"/usr/bin/man"
 //#define MANPATH_FORMAT @" -m '%@'"  // There's a bug in man(1) on OSX and OSXS
@@ -49,7 +50,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
 - (id)init
 {
-    NSConnection *connection = [[NSConnection new] autorelease];
+    NSConnection *connection = AUTORELEASEOBJ([NSConnection new]);
 
     self = [super init];
 	if (!self) {
@@ -139,7 +140,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
         NSMutableDictionary *environment = [[[NSProcessInfo processInfo] environment] mutableCopy];
         [environment addEntriesFromDictionary:extraEnv];
         [task setEnvironment:environment];
-        [environment release];
+		RELEASEOBJ(environment);
     }
 
     [task setLaunchPath:@"/bin/sh"];
@@ -156,8 +157,8 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
         output = [[pipe fileHandleForReading] readDataToEndOfFileIgnoreInterrupt];
     }
     [task waitUntilExit];
-    [pipe release];
-    [task release];
+	RELEASEOBJ(pipe);
+	RELEASEOBJ(task);
 
     return output;
 }
@@ -382,7 +383,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
     [document showWindows];
 
-    return [document autorelease];
+    return AUTORELEASEOBJ(document);
 }
 
 - (id)openAproposDocument:(NSString *)apropos manPath:(NSString *)manPath
@@ -392,8 +393,8 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
     if ((document = [self documentForTitle:title]) == nil)
     {
-        document = [[[AproposDocument alloc]
-                        initWithString:apropos manPath:manPath title:title] autorelease];
+        document = AUTORELEASEOBJ([[AproposDocument alloc]
+                        initWithString:apropos manPath:manPath title:title]);
         if (document) [self addDocument:document];
         [document makeWindowControllers];
     }
@@ -409,28 +410,28 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 "*/
 - (id)openWord:(NSString *)word
 {
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
-    NSString *section = nil;
-    NSString *base    = word;
-    NSRange lparenRange = [word rangeOfString:@"("];
-    NSRange rparenRange = [word rangeOfString:@")"];
-    id document;
-
-    if (lparenRange.length != 0 && rparenRange.length != 0 &&
-        lparenRange.location < rparenRange.location)
-    {
-        NSRange sectionRange;
-
-        sectionRange.location = NSMaxRange(lparenRange);
-        sectionRange.length = rparenRange.location - sectionRange.location;
-
-        base = [word substringToIndex:lparenRange.location];
-        section = [word substringWithRange:sectionRange];
-    }
-
-    document = [self openDocumentWithName:base section:section manPath:[[NSUserDefaults standardUserDefaults] manPath]];
-    [pool drain];
-    return document;
+	@autoreleasepool {
+		NSString *section = nil;
+		NSString *base    = word;
+		NSRange lparenRange = [word rangeOfString:@"("];
+		NSRange rparenRange = [word rangeOfString:@")"];
+		id document;
+		
+		if (lparenRange.length != 0 && rparenRange.length != 0 &&
+			lparenRange.location < rparenRange.location)
+		{
+			NSRange sectionRange;
+			
+			sectionRange.location = NSMaxRange(lparenRange);
+			sectionRange.length = rparenRange.location - sectionRange.location;
+			
+			base = [word substringToIndex:lparenRange.location];
+			section = [word substringWithRange:sectionRange];
+		}
+		
+		document = [self openDocumentWithName:base section:section manPath:[[NSUserDefaults standardUserDefaults] manPath]];
+		return document;
+	}
 }
 
 
@@ -458,8 +459,8 @@ static NSArray *GetWordArray(NSString *string)
     NSArray *words = GetWordArray(string);
     
     if ([words count] > 20) {
-        NSInteger reply = NSRunAlertPanel(@"Warning", @"This will open approximately %d windows!",
-                                          @"Cancel", @"Continue", nil, [words count]);
+        NSInteger reply = NSRunAlertPanel(@"Warning", @"This will open approximately %ld windows!",
+                                          @"Cancel", @"Continue", nil, (long)[words count]);
         if (reply != NSAlertAlternateReturn)
             return;
     }

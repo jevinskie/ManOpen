@@ -3,6 +3,7 @@
 #import "PrefPanelController.h"
 #import <AppKit/AppKit.h>
 #import "ManDocumentController.h"
+#import "ARCBridge.h"
 
 @implementation NSUserDefaults (ManOpenPreferences)
 
@@ -128,11 +129,13 @@
     return self;
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
     [manPathArray release];
     [super dealloc];
 }
+#endif
 
 - (void)windowDidLoad
 {
@@ -291,7 +294,7 @@
     {
         static NSString *resHome = nil;
         if (resHome == nil)
-            resHome = [[[NSHomeDirectory() stringByResolvingSymlinksInPath] stringByAppendingString:@"/"] retain];
+            resHome = RETAINOBJ([[NSHomeDirectory() stringByResolvingSymlinksInPath] stringByAppendingString:@"/"]);
 
         if ([new hasPrefix:resHome])
             new = [@"~/" stringByAppendingString:[new substringFromIndex:[resHome length]]];
@@ -613,10 +616,13 @@ static NSMutableArray *allApps = nil;
 
 - (id)initWithBundleID:(NSString *)aBundleID
 {
-    bundleID = [aBundleID retain];
+    if (self = [super init]) {
+		bundleID = RETAINOBJ(aBundleID);
+	}
     return self;
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
     [appURL release];
@@ -624,22 +630,21 @@ static NSMutableArray *allApps = nil;
     [bundleID release];
     [super dealloc];
 }
+#endif
 
 - (BOOL)isEqualToBundleID:(NSString *)aBundleID
 {
     return [bundleID caseInsensitiveCompare:aBundleID] == NSOrderedSame;
 }
+
 - (BOOL)isEqual:(id)other
 {
     return [self isEqualToBundleID:[other bundleID]];
 }
+
 - (NSUInteger)hash
 {
     return [[bundleID lowercaseString] hash];
-}
-- (NSComparisonResult)compareDisplayName:(id)other
-{
-    return [[self displayName] localizedCaseInsensitiveCompare:[other displayName]];
 }
 
 - (NSString *)bundleID
@@ -653,7 +658,7 @@ static NSMutableArray *allApps = nil;
     {
         NSString *path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:bundleID];
         if (path != nil)
-            appURL = [[NSURL fileURLWithPath:path] retain];
+            appURL = RETAINOBJ([NSURL fileURLWithPath:path]);
     }
 
     return appURL;
@@ -664,15 +669,17 @@ static NSMutableArray *allApps = nil;
     if (displayName == nil)
     {
         NSURL *url = [self appURL];
-        NSDictionary *infoDict = [(id)CFBundleCopyInfoDictionaryForURL((CFURLRef)url) autorelease];
+        NSDictionary *infoDict = CFBridgingRelease(CFBundleCopyInfoDictionaryForURL(BRIDGE(CFURLRef, url)));
         NSString *appVersion;
         NSString *niceName = nil;
+		CFStringRef niceNameRef = NULL;
 
         if (infoDict == nil)
-            infoDict = [[NSBundle bundleWithPath:[url path]] infoDictionary];
+            infoDict = [[NSBundle bundleWithURL:url] infoDictionary];
         
-        LSCopyDisplayNameForURL((CFURLRef)url, (CFStringRef*)&niceName);
-        [niceName autorelease];
+        LSCopyDisplayNameForURL(BRIDGE(CFURLRef, url), &niceNameRef);
+		niceName = CFBridgingRelease(niceNameRef);
+		niceNameRef = NULL;
         if (niceName == nil)
             niceName = [[url path] lastPathComponent];
         
@@ -680,7 +687,7 @@ static NSMutableArray *allApps = nil;
         if (appVersion != nil)
             niceName = [NSString stringWithFormat:@"%@ (%@)", niceName, appVersion];
 
-        displayName = [niceName retain];
+        displayName = RETAINOBJ(niceName);
     }
     
     return displayName;
@@ -688,7 +695,9 @@ static NSMutableArray *allApps = nil;
 
 + (void)sortApps
 {
-    [allApps sortUsingSelector:@selector(compareDisplayName:)];
+	[allApps sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		return [[obj1 displayName] localizedCaseInsensitiveCompare:[obj2 displayName]];
+	}];
 }
 
 + (void)addAppWithID:(NSString *)aBundleID sort:(BOOL)shouldResort
@@ -700,7 +709,7 @@ static NSMutableArray *allApps = nil;
         if (shouldResort)
             [self sortApps];
     }
-    [info release];
+	RELEASEOBJ(info);
 }
 
 + (NSArray *)allManViewerApps
@@ -708,17 +717,16 @@ static NSMutableArray *allApps = nil;
     if (allApps == nil)
     {
         /* Ensure our app is registered */
-//        NSString *appPath = [[NSBundle mainBundle] bundlePath];
-//        NSURL *url = [NSURL fileURLWithPath:appPath];
-//        LSRegisterURL((CFURLRef)url, false);
+        //NSURL *url = [[NSBundle mainBundle] bundleURL];
+        //LSRegisterURL(BRIDGE(CFURLRef,url), false);
         
-        NSArray *allBundleIDs = [(id)LSCopyAllHandlersForURLScheme((CFStringRef)URL_SCHEME) autorelease];
+        NSArray *allBundleIDs = CFBridgingRelease(LSCopyAllHandlersForURLScheme(BRIDGE(CFStringRef, URL_SCHEME)));
         NSUInteger i;
 
         allApps = [[NSMutableArray alloc] initWithCapacity:[allBundleIDs count]];
-        for (i = 0; i<[allBundleIDs count]; i++) {
-            [self addAppWithID:[allBundleIDs objectAtIndex:i] sort:NO];
-        }        
+		for (NSString *bundleID in allBundleIDs) {
+			[self addAppWithID:bundleID sort:NO];
+		}
         [self sortApps];
     }
     
@@ -783,7 +791,7 @@ static NSString *currentAppID = nil;
         [image setScalesWhenResized:YES];
         [image setSize:NSMakeSize(16, 16)];
         [[appPopup itemAtIndex:i] setImage:image];
-        [image release];
+		RELEASEOBJ(image);
     }
 
     if ([apps count] > 0)
@@ -794,7 +802,7 @@ static NSString *currentAppID = nil;
 
 - (void)resetCurrentApp
 {
-    NSString *currSetID = (id)LSCopyDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME);
+    NSString *currSetID = CFBridgingRelease(LSCopyDefaultHandlerForURLScheme(BRIDGE(CFStringRef, URL_SCHEME)));
     
     if (currSetID == nil)
         currSetID = [[[MVAppInfo allManViewerApps] objectAtIndex:0] bundleID];
@@ -803,9 +811,13 @@ static NSString *currentAppID = nil;
     {
         BOOL resetPopup = (currentAppID == nil); //first time
 
+#if __has_feature(objc_arc)
+		currentAppID = currSetID;
+#else
         [currentAppID release];
         currentAppID = [currSetID retain];
         [currSetID release];
+#endif
 
         if ([MVAppInfo indexOfBundleID:currSetID] == NSNotFound)
         {
@@ -821,7 +833,7 @@ static NSString *currentAppID = nil;
 
 - (void)setManPageViewer:(NSString *)bundleID
 {
-    OSStatus error = LSSetDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME, (CFStringRef)bundleID);
+    OSStatus error = LSSetDefaultHandlerForURLScheme(BRIDGE(CFStringRef,URL_SCHEME), BRIDGE(CFStringRef, bundleID));
     
     if (error != noErr)
         NSLog(@"Could not set default " URL_SCHEME_PREFIX @" app: Launch Services error %ld", (long)error);
@@ -857,11 +869,11 @@ static NSString *currentAppID = nil;
     }
 }
 
-- (void)panelDidEnd:(NSOpenPanel *)panel code:(int)returnCode context:(void *)context
+- (void)panelDidEnd:(NSOpenPanel *)panel code:(NSInteger)returnCode context:(void *)context
 {
     if (returnCode == NSOKButton) {
         NSURL *appURL = [panel URL];
-        NSString *appID = [[NSBundle bundleWithPath:[appURL path]] bundleIdentifier];
+        NSString *appID = [[NSBundle bundleWithURL:appURL] bundleIdentifier];
         if (appID != nil)
             [self setManPageViewer:appID];
     }

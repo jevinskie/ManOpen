@@ -4,6 +4,7 @@
 #import <AppKit/AppKit.h>
 #import "ManDocumentController.h"
 #import "PrefPanelController.h"
+#import "ARCBridge.h"
 
 @interface NSDocument (LionRestorationMethods)
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder;
@@ -25,13 +26,13 @@
     
     titles = [[NSMutableArray alloc] init];
     descriptions = [[NSMutableArray alloc] init];
-    title = [aTitle retain];
+    title = RETAINOBJ(aTitle);
     [self setFileType:@"apropos"];
 
     /* Searching for a blank string doesn't work anymore... use a catchall regex */
     if ([apropos length] == 0)
         apropos = @".";
-    searchString = [apropos retain];
+    searchString = RETAINOBJ(apropos);
 
     /*
      * Starting on Tiger, man -k doesn't quite work the same as apropos directly.
@@ -45,23 +46,24 @@
     [command appendFormat:@" %@", EscapePath(apropos, YES)];
     output = [docController dataByExecutingCommand:command manPath:manPath];
     /* The whatis database appears to not be UTF8 -- at least, UTF8 can fail, even on 10.7 */
-    [self parseOutput:[[[NSString alloc] initWithData:output encoding:NSMacOSRomanStringEncoding] autorelease]];
+    [self parseOutput:AUTORELEASEOBJ([[NSString alloc] initWithData:output encoding:NSMacOSRomanStringEncoding])];
 }
 
 - (id)initWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)aTitle
 {
-    [super init];
-    [self _loadWithString:apropos manPath:manPath title:aTitle];
-    
-    if ([titles count] == 0) {
-        NSRunAlertPanel(@"Nothing found", @"No pages related to '%@' found", nil, nil, nil, apropos);
-        [self release];
-        return nil;
-    }
-
+    if(self = [super init]) {
+		[self _loadWithString:apropos manPath:manPath title:aTitle];
+		
+		if ([titles count] == 0) {
+			NSRunAlertPanel(@"Nothing found", @"No pages related to '%@' found", nil, nil, nil, apropos);
+			AUTORELEASEOBJNORETURN(self);
+			return nil;
+		}
+	}
     return self;
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
     [title release];
@@ -70,6 +72,7 @@
     [searchString release];
     [super dealloc];
 }
+#endif
 
 - (NSString *)windowNibName
 {

@@ -29,8 +29,7 @@
 
 - initWithName:(NSString *)name section:(NSString *)section manPath:(NSString *)manPath title:(NSString *)title;
 
-- (NSString *)shortTitle;
-- (void)setShortTitle:(NSString *)aString;
+@property (readwrite, retain) NSString *shortTitle;
 
 - (NSText *)textView;
 

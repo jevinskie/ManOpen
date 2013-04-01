@@ -4,6 +4,7 @@
 #import "ManDocumentController.h"
 #import "PrefPanelController.h"
 #import "NSData+Utils.h"
+#import "ARCBridge.h"
 
 #define RestoreWindowDict @"RestoreWindowInfo"
 #define RestoreSection    @"Section"
@@ -34,7 +35,7 @@
     NSMutableString *command = [docController manCommandWithManPath:manPath];
     
     [self setFileType:@"man"];
-    [self setShortTitle:title];
+	self.shortTitle = title;
     
     if (section && [section length] > 0)
     {
@@ -57,16 +58,18 @@
     [self loadCommand:command];
 }
 
-- initWithName:(NSString *)name
+- (id)initWithName:(NSString *)name
 	section:(NSString *)section
 	manPath:(NSString *)manPath
 	title:(NSString *)title
 {
-    [super init];
-    [self _loadDocumentWithName:name section:section manPath:manPath title:title];
+	if (self = [super init]) {
+		[self _loadDocumentWithName:name section:section manPath:manPath title:title];
+	}
     return self;
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
     [taskData release];
@@ -76,6 +79,7 @@
     [restoreData release];
     [super dealloc];
 }
+#endif
 
 - (NSString *)windowNibName
 {
@@ -91,16 +95,7 @@
     return ([self fileURL] != nil)? [super displayName] : [self shortTitle];
 }
 
-- (NSString *)shortTitle
-{
-    return shortTitle;
-}
-
-- (void)setShortTitle:(NSString *)aString
-{
-    [shortTitle autorelease];
-    shortTitle = [aString retain];
-}
+@synthesize shortTitle;
 
 - (NSText *)textView
 {
@@ -139,111 +134,111 @@
 
 - (void)showData
 {
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSTextStorage *storage = nil;
-    NSFont        *manFont = [defaults manFont];
-    NSColor       *linkColor = [defaults manLinkColor];
-    NSColor       *textColor = [defaults manTextColor];
-    NSColor       *backgroundColor = [defaults manBackgroundColor];
-
-    if (textView == nil || hasLoaded) return;
-
-    if ([taskData isRTFData])
-    {
-        storage = [[NSTextStorage alloc] initWithRTF:taskData documentAttributes:NULL];
-    }
-    else if (taskData != nil)
-    {
-        storage = [[NSTextStorage alloc] initWithHTML:taskData documentAttributes:NULL];
-    }
-
-    if (storage == nil)
-        storage = [[NSTextStorage alloc] init];
-
-    if ([[storage string] rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].length == 0)
-    {
-        [[storage mutableString] setString:@"\nNo manual entry."];
-    }
-
-    if (sections == nil) {
-        sections = [[NSMutableArray alloc] init];
-        sectionRanges = [[NSMutableArray alloc] init];
-    }
-    [sections removeAllObjects];
-    [sectionRanges removeAllObjects];
-    
-    /* Convert the attributed string to use the user's chosen font and text color */
-    if (storage != nil)
-    {
-        NSFontManager *manager = [NSFontManager sharedFontManager];
-        NSString      *family = [manFont familyName];
-        CGFloat       size    = [manFont pointSize];
-        NSUInteger    currIndex = 0;
-
-        NS_DURING
-        [storage beginEditing];
-
-        while (currIndex < [storage length])
-        {
-            NSRange currRange;
-            NSDictionary *attribs = [storage attributesAtIndex:currIndex effectiveRange:&currRange];
-            NSFont       *font = [attribs objectForKey:NSFontAttributeName];
-            BOOL isLink = NO;
-
-            /* We mark "sections" with Helvetica fonts */
-            if (font != nil && ![[font familyName] isEqualToString:@"Courier"]) {
-                [self addSectionHeader:[[storage string] substringWithRange:currRange] range:currRange];
-            }
-
-            isLink = ([attribs objectForKey:NSLinkAttributeName] != nil);
-
-            if (font != nil && ![[font familyName] isEqualToString:family])
-                font = [manager convertFont:font toFamily:family];
-            if (font != nil && [font pointSize] != size)
-                font = [manager convertFont:font toSize:size];
-            if (font != nil)
-                [storage addAttribute:NSFontAttributeName value:font range:currRange];
-
-            /*
-             * Starting in 10.3, there is a -setLinkTextAttributes: method to set these, without having to
-             * determine the ranges ourselves.  However, since we are already iterating all the ranges
-             * for other reasons, may as well keep the old way.
-             */
-            if (isLink)
-                [storage addAttribute:NSForegroundColorAttributeName value:linkColor range:currRange];
-            else
-                [storage addAttribute:NSForegroundColorAttributeName value:textColor range:currRange];
-            
-            currIndex = NSMaxRange(currRange);
-        }
-
-        [storage endEditing];
-        NS_HANDLER
-        NSLog(@"Exception during formatting: %@", localException);
-        NS_ENDHANDLER
-
-        [[textView layoutManager] replaceTextStorage:storage];
-        [[textView window] invalidateCursorRectsForView:textView];
-        [storage release];
-    }
-
-    [textView setBackgroundColor:backgroundColor];
-    [self setupSectionPopup];
-    
-    /*
-     * The 10.7 document reloading stuff can cause the loading methods to be invoked more than
-     * once, and the second time through we have thrown away our raw data.  Probably indicates
-     * some overkill code elsewhere on my part, but putting in the hadLoaded guard to only
-     * avoid doing anything after we have loaded real data seems to help.
-     */
-    if (taskData != nil)
-        hasLoaded = YES;
-
-    // no need to keep around rtf data
-    [taskData release];
-    taskData = nil;
-    [pool drain];
+	@autoreleasepool {
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		NSTextStorage *storage = nil;
+		NSFont        *manFont = [defaults manFont];
+		NSColor       *linkColor = [defaults manLinkColor];
+		NSColor       *textColor = [defaults manTextColor];
+		NSColor       *backgroundColor = [defaults manBackgroundColor];
+		
+		if (textView == nil || hasLoaded) return;
+		
+		if ([taskData isRTFData])
+		{
+			storage = [[NSTextStorage alloc] initWithRTF:taskData documentAttributes:NULL];
+		}
+		else if (taskData != nil)
+		{
+			storage = [[NSTextStorage alloc] initWithHTML:taskData documentAttributes:NULL];
+		}
+		
+		if (storage == nil)
+			storage = [[NSTextStorage alloc] init];
+		
+		if ([[storage string] rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].length == 0)
+		{
+			[[storage mutableString] setString:@"\nNo manual entry."];
+		}
+		
+		if (sections == nil) {
+			sections = [[NSMutableArray alloc] init];
+			sectionRanges = [[NSMutableArray alloc] init];
+		}
+		[sections removeAllObjects];
+		[sectionRanges removeAllObjects];
+		
+		/* Convert the attributed string to use the user's chosen font and text color */
+		if (storage != nil)
+		{
+			NSFontManager *manager = [NSFontManager sharedFontManager];
+			NSString      *family = [manFont familyName];
+			CGFloat       size    = [manFont pointSize];
+			NSUInteger    currIndex = 0;
+			
+			NS_DURING
+			[storage beginEditing];
+			
+			while (currIndex < [storage length])
+			{
+				NSRange currRange;
+				NSDictionary *attribs = [storage attributesAtIndex:currIndex effectiveRange:&currRange];
+				NSFont       *font = [attribs objectForKey:NSFontAttributeName];
+				BOOL isLink = NO;
+				
+				/* We mark "sections" with Helvetica fonts */
+				if (font != nil && ![[font familyName] isEqualToString:@"Courier"]) {
+					[self addSectionHeader:[[storage string] substringWithRange:currRange] range:currRange];
+				}
+				
+				isLink = ([attribs objectForKey:NSLinkAttributeName] != nil);
+				
+				if (font != nil && ![[font familyName] isEqualToString:family])
+					font = [manager convertFont:font toFamily:family];
+				if (font != nil && [font pointSize] != size)
+					font = [manager convertFont:font toSize:size];
+				if (font != nil)
+					[storage addAttribute:NSFontAttributeName value:font range:currRange];
+				
+				/*
+				 * Starting in 10.3, there is a -setLinkTextAttributes: method to set these, without having to
+				 * determine the ranges ourselves.  However, since we are already iterating all the ranges
+				 * for other reasons, may as well keep the old way.
+				 */
+				if (isLink)
+					[storage addAttribute:NSForegroundColorAttributeName value:linkColor range:currRange];
+				else
+					[storage addAttribute:NSForegroundColorAttributeName value:textColor range:currRange];
+				
+				currIndex = NSMaxRange(currRange);
+			}
+			
+			[storage endEditing];
+			NS_HANDLER
+			NSLog(@"Exception during formatting: %@", localException);
+			NS_ENDHANDLER
+			
+			[[textView layoutManager] replaceTextStorage:storage];
+			[[textView window] invalidateCursorRectsForView:textView];
+			RELEASEOBJ(storage);
+		}
+		
+		[textView setBackgroundColor:backgroundColor];
+		[self setupSectionPopup];
+		
+		/*
+		 * The 10.7 document reloading stuff can cause the loading methods to be invoked more than
+		 * once, and the second time through we have thrown away our raw data.  Probably indicates
+		 * some overkill code elsewhere on my part, but putting in the hadLoaded guard to only
+		 * avoid doing anything after we have loaded real data seems to help.
+		 */
+		if (taskData != nil)
+			hasLoaded = YES;
+		
+		// no need to keep around rtf data
+		RELEASEOBJ(taskData);
+		taskData = nil;
+	}
 }
 
 - (NSString *)filterCommand
@@ -268,10 +263,13 @@
 {
     ManDocumentController *docController = [ManDocumentController sharedDocumentController];
     NSString *fullCommand = [NSString stringWithFormat:@"%@ | %@", command, [self filterCommand]];
-
+#if __has_feature(objc_arc)
+	taskData = [docController dataByExecutingCommand:fullCommand];
+#else
     [taskData release];
     taskData = nil;
     taskData = [[docController dataByExecutingCommand:fullCommand] retain];
+#endif
 
     [self showData];
 }
@@ -291,7 +289,7 @@
         NSString *repl = hasQuote? @"'%@'" : @"%@";
         NSRange replRange = [nroffFormat rangeOfString:repl];
         if (replRange.length > 0) {
-            NSMutableString *formatCopy = [[nroffFormat mutableCopy] autorelease];
+            NSMutableString *formatCopy = AUTORELEASEOBJ([nroffFormat mutableCopy]);
             [formatCopy replaceCharactersInRange:replRange withString:@""];
             nroffFormat = [NSString stringWithFormat:@"/usr/bin/gzip -dc %@ | %@", repl, formatCopy];
         }
@@ -325,8 +323,8 @@
     }
 
     // strip extension twice in case it is a e.g. "1.gz" filename
-    [self setShortTitle:[[[[url path] lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension]];
-    copyURL = [url retain];
+    self.shortTitle = [[[[url path] lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension];
+    copyURL = RETAINOBJ(url);
     
     restoreData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                    url,    RestoreFileURL,
@@ -575,19 +573,6 @@
 
 @implementation ManTextView
 
-static NSCursor *linkCursor = nil;
-
-+ (void)initialize
-{
-    NSImage *linkImage;
-    NSString *path;
-
-    path = [[NSBundle mainBundle] pathForResource:@"LinkCursor" ofType:@"tiff"];
-    linkImage = [[NSImage alloc] initWithContentsOfFile: path];
-    linkCursor = [[NSCursor alloc] initWithImage:linkImage hotSpot:NSMakePoint(6.0f, 1.0f)];
-    [linkCursor setOnMouseEntered:YES];
-    [linkImage release];
-}
 
 - (void)resetCursorRects
 {
@@ -618,7 +603,7 @@ static NSCursor *linkCursor = nil;
 
             for (i=0; i<rectCount; i++)
                 if (NSIntersectsRect(visible, rects[i]))
-                    [self addCursorRect:rects[i] cursor:linkCursor];
+                    [self addCursorRect:rects[i] cursor:[NSCursor pointingHandCursor]];
         }
 
         currIndex = NSMaxRange(currRange);
@@ -666,12 +651,13 @@ static NSCursor *linkCursor = nil;
     NSFont *font = [[NSUserDefaults standardUserDefaults] manFont];
     NSInteger currPage = [[NSPrintOperation currentOperation] currentPage];
     NSString *pageString = [NSString stringWithFormat:@"%ld", (long)currPage];
-    NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     NSMutableDictionary *drawAttribs = [NSMutableDictionary dictionary];
     NSRect drawRect = NSMakeRect(0.0f, 0.0f, size.width, 20.0f + [font ascender]);
 
     [style setAlignment:NSCenterTextAlignment];
     [drawAttribs setObject:style forKey:NSParagraphStyleAttributeName];
+	RELEASEOBJ(style);
     [drawAttribs setObject:font forKey:NSFontAttributeName];
 
     [pageString drawInRect:drawRect withAttributes:drawAttribs];

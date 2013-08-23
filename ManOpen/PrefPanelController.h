@@ -2,6 +2,8 @@
 
 #import "SystemType.h"
 #import <AppKit/NSWindowController.h>
+#import <Foundation/NSUserDefaults.h>
+#import <Foundation/NSFormatter.h>
 
 @class NSMutableArray;
 @class NSFont, NSColor;
@@ -32,8 +34,6 @@
 - (IBAction)chooseNewApp:(id)sender;
 @end
 
-#import <Foundation/NSUserDefaults.h>
-
 @interface NSUserDefaults (ManOpenPreferences)
 - (NSFont *)manFont;
 - (NSString *)manPath;
@@ -42,8 +42,6 @@
 - (NSColor *)manBackgroundColor;
 @end
 
-
-#import <Foundation/NSFormatter.h>
 // This needs to be in the header so IB can find it
 @interface DisplayPathFormatter : NSFormatter
 @end

@@ -1,5 +1,6 @@
 
 #import <Foundation/NSData.h>
+#import <Foundation/NSFileHandle.h>
 
 @interface NSData (Utils)
 
@@ -9,8 +10,6 @@
 - (BOOL)isBinaryData;
 
 @end
-
-#import <Foundation/NSFileHandle.h>
 
 @interface NSFileHandle (Utils)
 

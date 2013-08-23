@@ -350,7 +350,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
     {
         int numBeforeInsertion = 0;
 
-        for (i=[manPathArray count]-1; i>=0; i--)
+        for (i = [manPathArray count] - 1; i >= 0; i--)
         {
             if ([removeIndexes containsIndex:i])
             {
@@ -362,9 +362,9 @@ static NSString *ManPathArrayKey = @"manPathArray";
         insertIndex -= numBeforeInsertion;
     }
 
-    for (i=0; i<[directories count]; i++)
+    for (NSString *directory in directories)
     {
-        NSString *path = [[directories objectAtIndex:i] stringByExpandingTildeInPath];
+        NSString *path = [directory stringByExpandingTildeInPath];
         NSRange colonRange = [path rangeOfString:@":"];
         while (colonRange.length > 0) { // stringByReplacingOccurrencesOfString is not until 10.5... grrr...
             path = [[path substringToIndex:colonRange.location] stringByAppendingString:[path substringFromIndex:NSMaxRange(colonRange)]];
@@ -513,9 +513,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
         return NSDragOperationMove;
 
     NSArray *paths = [self pathsFromPasteboard:pb];
-    NSUInteger i;
-    for (i=0; i<[paths count]; i++) {
-        NSString *path = [paths objectAtIndex:i];
+    for (NSString *path in paths) {
         if (![manPathArray containsObject:path])
             return NSDragOperationCopy;
     }
@@ -587,16 +585,20 @@ static NSString *ManPathArrayKey = @"manPathArray";
     NSURL *appURL;
 }
 
+@property (retain) NSString *bundleID;
+@property (retain, nonatomic) NSString *displayName;
+@property (retain, nonatomic) NSURL *appURL;
+
 + (NSArray *)allManViewerApps;
 + (void)addAppWithID:(NSString *)aBundleID sort:(BOOL)shouldResort;
 + (NSUInteger)indexOfBundleID:(NSString*)bundleID;
-- (NSString *)bundleID;
-- (NSString *)displayName;
-- (NSURL *)appURL;
 
 @end
 
 @implementation MVAppInfo
+@synthesize bundleID;
+@synthesize appURL;
+@synthesize displayName;
 
 #define URL_SCHEME @"x-man-page"
 #define URL_SCHEME_PREFIX URL_SCHEME @":"
@@ -606,7 +608,7 @@ static NSMutableArray *allApps = nil;
 - (id)initWithBundleID:(NSString *)aBundleID
 {
     if (self = [super init]) {
-		bundleID = RETAINOBJ(aBundleID);
+		self.bundleID = aBundleID;
 	}
     return self;
 }
@@ -614,9 +616,9 @@ static NSMutableArray *allApps = nil;
 #if !__has_feature(objc_arc)
 - (void)dealloc
 {
-    [appURL release];
-    [displayName release];
-    [bundleID release];
+    self.appURL = nil;
+    self.displayName = nil;
+    self.bundleID = nil;
     [super dealloc];
 }
 #endif
@@ -628,17 +630,15 @@ static NSMutableArray *allApps = nil;
 
 - (BOOL)isEqual:(id)other
 {
-    return [self isEqualToBundleID:[other bundleID]];
+    if ([other isKindOfClass:[MVAppInfo class]]) {
+		return [self isEqualToBundleID:[other bundleID]];
+	} else
+		return NO;
 }
 
 - (NSUInteger)hash
 {
     return [[bundleID lowercaseString] hash];
-}
-
-- (NSString *)bundleID
-{
-    return bundleID;
 }
 
 - (NSURL *)appURL
@@ -647,7 +647,7 @@ static NSMutableArray *allApps = nil;
     {
         NSString *path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:bundleID];
         if (path != nil)
-            appURL = RETAINOBJ([NSURL fileURLWithPath:path]);
+            self.appURL = [NSURL fileURLWithPath:path];
     }
 
     return appURL;
@@ -676,7 +676,7 @@ static NSMutableArray *allApps = nil;
         if (appVersion != nil)
             niceName = [NSString stringWithFormat:@"%@ (%@)", niceName, appVersion];
 
-        displayName = RETAINOBJ(niceName);
+        self.displayName = niceName;
     }
     
     return displayName;
@@ -684,7 +684,7 @@ static NSMutableArray *allApps = nil;
 
 + (void)sortApps
 {
-	[allApps sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+	[allApps sortedArrayWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(id obj1, id obj2) {
 		return [[obj1 displayName] localizedCaseInsensitiveCompare:[obj2 displayName]];
 	}];
 }
@@ -723,13 +723,23 @@ static NSMutableArray *allApps = nil;
 
 + (NSUInteger)indexOfBundleID:(NSString*)bundleID
 {
-    NSArray *apps = [self allManViewerApps];
-    NSUInteger i, count = [apps count];
-
-    for (i=0; bundleID != nil && i<count; i++) {
+    if (!bundleID) {
+		return NSNotFound;
+	}
+	NSArray *apps = [self allManViewerApps];
+#if 0
+    for (MVAppInfo *obj in apps) {
+        if ([obj isEqualToBundleID:bundleID])
+            return [apps indexOfObject:obj];
+    }
+#else 
+	NSUInteger i, count = [apps count];
+	
+    for (i = 0; i < count; i++) {
         if ([[apps objectAtIndex:i] isEqualToBundleID:bundleID])
             return i;
     }
+#endif
 
     return NSNotFound;
 }
@@ -775,7 +785,6 @@ static NSString *currentAppID = nil;
         }
         [appPopup addItemWithTitle:displayName];
 		
-        [image setScalesWhenResized:YES];
         [image setSize:NSMakeSize(16, 16)];
         [[appPopup itemAtIndex:i] setImage:image];
 		RELEASEOBJ(image);

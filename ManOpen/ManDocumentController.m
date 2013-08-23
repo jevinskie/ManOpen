@@ -322,11 +322,9 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 - (id)documentForTitle:(NSString *)title
 {
     NSArray *documents = [self documents];
-    NSUInteger i, count = [documents count];
 
-    for (i=0; i<count; i++)
+    for (NSDocument *document in documents)
     {
-        NSDocument *document = [documents objectAtIndex:i];
         if ([document isKindOfClass:[ManDocument class]] &&
             [document fileURL] == nil &&
             [[(ManDocument *)document shortTitle] isEqualToString:title])
@@ -702,21 +700,24 @@ static BOOL IsSectionWord(NSString *word)
 /*" Methods to do the services entries "*/
 - (void)openFiles:(NSPasteboard *)pboard userData:(NSString *)data error:(NSString **)error
 {
-    NSArray *fileArray;
-    NSArray *types = [pboard types];
-
-    if ([types containsObject:NSFilenamesPboardType] &&
-        (fileArray = [pboard propertyListForType:NSFilenamesPboardType]))
-    {
-        NSError *openError = nil;
-		NSInteger count = [fileArray count], i;
-        for (i = 0; i < count; i++) {
-            [self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:[fileArray objectAtIndex:i]] display:YES error:&openError];
-        }
-        
-        if (error != NULL && openError != nil)
-            *error = [openError localizedDescription];
-    }
+	NSArray *fileArray;
+	NSArray *types = [pboard types];
+	
+	if ([types containsObject:NSFilenamesPboardType] &&
+		(fileArray = [pboard propertyListForType:NSFilenamesPboardType]))
+	{
+		NSError *openError = nil;
+		for (NSString *tmpPath in fileArray) {
+			//FIXME: deprecated!
+			if (![self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:tmpPath] display:YES error:&openError])
+			{
+				if (error) {
+					*error = [openError localizedDescription];
+				}
+				return;
+			}
+		}
+	}
 }
 
 - (void)openSelection:(NSPasteboard *)pboard userData:(NSString *)data error:(NSString **)error
@@ -801,11 +802,9 @@ static BOOL IsSectionWord(NSString *word)
         NSString *path = [param substringFromIndex:[URL_PREFIX length]];
         NSMutableArray *pageNames = [NSMutableArray array];
         NSArray *components = [path pathComponents];
-        NSUInteger i, count = [components count];
 
-        for (i=0; i<count; i++)
+        for (NSString *name in components)
         {
-            NSString *name = [components objectAtIndex:i];
             if ([name length] == 0 || [name isEqual:@"/"]) continue;
             if (IsSectionWord(name)) {
                 section = name;

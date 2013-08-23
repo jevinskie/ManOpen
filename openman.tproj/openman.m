@@ -158,9 +158,9 @@ int main (int argc, char * const *argv)
 		
 		[server setProtocolForProxy:@protocol(ManOpen)];
 		
-		for (fileIndex=0; fileIndex<[files count]; fileIndex++)
+		for (NSString *fileName in files)
 		{
-			[server openFile:[files objectAtIndex:fileIndex] forceToFront:forceToFront];
+			[server openFile:fileName forceToFront:forceToFront];
 		}
 		
 		if (manPath == nil && getenv("MANPATH") != NULL)

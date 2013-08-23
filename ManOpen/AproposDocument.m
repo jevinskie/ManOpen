@@ -110,15 +110,12 @@
 - (void)parseOutput:(NSString *)output
 {
     NSArray *lines = [output componentsSeparatedByString:@"\n"];
-    NSUInteger i, count = [lines count];
-
     if ([output length] == 0) return;
 
     lines = [lines sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     
-    for (i=0; i<count; i++)
+    for (NSString *line in lines)
     {
-        NSString *line = [lines objectAtIndex:i];
         NSRange dashRange;
 
         if ([line length] == 0) continue;

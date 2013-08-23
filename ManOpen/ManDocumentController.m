@@ -361,6 +361,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
         document = [[ManDocument alloc]
                         initWithName:name section:section
                         manPath:manPath title:title];
+		AUTORELEASEOBJNORETURN(document);
 
         /* Add the filename to the recent menu */
         filename = [self manFileForName:name section:section manPath:manPath];
@@ -379,7 +380,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
     [document showWindows];
 
-    return AUTORELEASEOBJ(document);
+    return document;
 }
 
 - (id)openAproposDocument:(NSString *)apropos manPath:(NSString *)manPath

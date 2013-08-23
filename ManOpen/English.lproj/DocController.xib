@@ -429,7 +429,7 @@
 				<string key="NSViewClass">View</string>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="260961260">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSTextField" id="79369407">
@@ -437,7 +437,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{5, 93}, {123, 18}}</string>
 							<reference key="NSSuperview" ref="260961260"/>
-							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="421175748">
 								<int key="NSCellFlags">67108864</int>
@@ -455,7 +454,6 @@
 							<int key="NSvFlags">266</int>
 							<string key="NSFrame">{{133, 91}, {231, 21}}</string>
 							<reference key="NSSuperview" ref="260961260"/>
-							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="86967953">
 								<int key="NSCellFlags">-1805647872</int>
@@ -474,7 +472,6 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{286, 15}, {84, 32}}</string>
 							<reference key="NSSuperview" ref="260961260"/>
-							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="375642306">
 								<int key="NSCellFlags">67108864</int>
@@ -496,7 +493,6 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{204, 15}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="260961260"/>
-							<reference key="NSWindow"/>
 							<int key="NSTag">454</int>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="708797562">
@@ -521,7 +517,6 @@
 							<int key="NSvFlags">266</int>
 							<string key="NSFrame">{{130, 56}, {237, 26}}</string>
 							<reference key="NSSuperview" ref="260961260"/>
-							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSPopUpButtonCell" key="NSCell" id="781271844">
 								<int key="NSCellFlags">67108928</int>
@@ -679,7 +674,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{5, 63}, {123, 18}}</string>
 							<reference key="NSSuperview" ref="260961260"/>
-							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="136470482">
 								<int key="NSCellFlags">67108864</int>
@@ -694,8 +688,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{384, 131}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -712,7 +704,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{92, 10}</string>
 				<object class="NSView" key="NSWindowView" id="465429275">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSScrollView" id="203759524">
@@ -728,7 +720,6 @@
 											<int key="NSvFlags">2322</int>
 											<string key="NSFrameSize">{489, 2118}</string>
 											<reference key="NSSuperview" ref="215231645"/>
-											<reference key="NSWindow"/>
 											<object class="NSTextContainer" key="NSTextContainer" id="834571999">
 												<object class="NSLayoutManager" key="NSLayoutManager">
 													<object class="NSTextStorage" key="NSTextStorage">
@@ -1122,7 +1113,6 @@ DQbWAwI</bytes>
 									</array>
 									<string key="NSFrameSize">{490, 481}</string>
 									<reference key="NSSuperview" ref="203759524"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="782007755"/>
 									<reference key="NSDocView" ref="782007755"/>
 									<reference key="NSBGColor" ref="986642769"/>
@@ -1152,7 +1142,6 @@ DQbWAwI</bytes>
 									<int key="NSvFlags">256</int>
 									<string key="NSFrame">{{474, 0}, {16, 481}}</string>
 									<reference key="NSSuperview" ref="203759524"/>
-									<reference key="NSWindow"/>
 									<bool key="NSEnabled">YES</bool>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="203759524"/>
@@ -1164,7 +1153,6 @@ DQbWAwI</bytes>
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{-100, -100}, {87, 18}}</string>
 									<reference key="NSSuperview" ref="203759524"/>
-									<reference key="NSWindow"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="203759524"/>
@@ -1175,7 +1163,6 @@ DQbWAwI</bytes>
 							</array>
 							<string key="NSFrameSize">{490, 481}</string>
 							<reference key="NSSuperview" ref="465429275"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="215231645"/>
 							<int key="NSsFlags">133200</int>
 							<reference key="NSVScroller" ref="173693207"/>
@@ -1187,8 +1174,6 @@ DQbWAwI</bytes>
 						</object>
 					</array>
 					<string key="NSFrameSize">{490, 481}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMinSize">{92, 32}</string>
@@ -1923,10 +1908,6 @@ DQbWAwI</bytes>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<real value="1060" key="NS.object.0"/>
-		</object>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
-			<real value="4300" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>

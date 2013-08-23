@@ -61,8 +61,6 @@
 @end
 
 #define DATA_FOR_COLOR(color) [NSArchiver archivedDataWithRootObject:color]
-#define BOOL_YES @YES
-#define BOOL_NO @NO
 
 @implementation PrefPanelController
 
@@ -102,16 +100,16 @@
 		NSData *bgDefaultColor = DATA_FOR_COLOR([NSColor textBackgroundColor]);
 		
 		[userDefaults registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-					BOOL_NO,			@"QuitWhenLastClosed",
-					BOOL_NO,			@"UseItalics",
-					BOOL_YES,			@"UseBold",
+					@NO,				@"QuitWhenLastClosed",
+					@NO,				@"UseItalics",
+					@YES,				@"UseBold",
 					nroff,				@"NroffCommand",
 					manpath,			@"ManPath",
-					BOOL_NO,			@"KeepPanelsOpen",
+					@NO,				@"KeepPanelsOpen",
 					textDefaultColor,	@"ManTextColor",
 					linkDefaultColor,	@"ManLinkColor",
 					bgDefaultColor,		@"ManBackgroundColor",
-					BOOL_YES,			@"NSQuitAlwaysKeepsWindows", // NO will disable by default
+					@YES,				@"NSQuitAlwaysKeepsWindows", // NO will disable by default
 					nil]];
 	}
 }

@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1837,8 +1837,6 @@ DQbWAwI</bytes>
 						<string key="openTextPanel:">id</string>
 						<string key="orderFrontHelpPanel:">id</string>
 						<string key="orderFrontPreferencesPanel:">id</string>
-						<string key="runPageLayout:">id</string>
-						<string key="showHelp:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="cancelText:">
@@ -1871,14 +1869,6 @@ DQbWAwI</bytes>
 						</object>
 						<object class="IBActionInfo" key="orderFrontPreferencesPanel:">
 							<string key="name">orderFrontPreferencesPanel:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="runPageLayout:">
-							<string key="name">runPageLayout:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showHelp:">
-							<string key="name">showHelp:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

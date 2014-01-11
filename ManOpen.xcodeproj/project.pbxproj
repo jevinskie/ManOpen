@@ -113,12 +113,12 @@
 /* Begin PBXFileReference section */
 		554659F91709F0F900B19C56 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
 		554659FA170A073C00B19C56 /* Find.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Find.tiff; sourceTree = "<group>"; };
-		55AB410317C6FFF100DB019C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ManPage.xib; sourceTree = "<group>"; };
-		55AB410617C7001700DB019C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PrefPanel.xib; sourceTree = "<group>"; };
-		55AB410917C7003900DB019C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindPanel.xib; sourceTree = "<group>"; };
-		55AB410C17C7005200DB019C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Apropos.xib; sourceTree = "<group>"; };
-		55AB410F17C7006900DB019C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ManOpen.xib; sourceTree = "<group>"; };
-		55AB411217C7008D00DB019C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DocController.xib; sourceTree = "<group>"; };
+		5553E1F01881E78D003C2DBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ManPage.xib; sourceTree = "<group>"; };
+		5553E1F11881E78D003C2DBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrefPanel.xib; sourceTree = "<group>"; };
+		5553E1F21881E78D003C2DBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FindPanel.xib; sourceTree = "<group>"; };
+		5553E1F31881E78D003C2DBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Apropos.xib; sourceTree = "<group>"; };
+		5553E1F41881E78D003C2DBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ManOpen.xib; sourceTree = "<group>"; };
+		5553E1F51881E78D003C2DBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocController.xib; sourceTree = "<group>"; };
 		55F13AB515103C1E0095B5A9 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = English; path = English.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A242C14E4C3FE00F6AFFE /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		D38A242D14E4C3FE00F6AFFE /* ManOpen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -495,6 +495,7 @@
 			knownRegions = (
 				en,
 				English,
+				Base,
 			);
 			mainGroup = D39278DB0821FF9D00376676 /* ManOpen */;
 			productRefGroup = D39278ED0821FFA400376676 /* Products */;
@@ -601,7 +602,7 @@
 		55AB410217C6FFF100DB019C /* ManPage.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55AB410317C6FFF100DB019C /* English */,
+				5553E1F01881E78D003C2DBF /* Base */,
 			);
 			name = ManPage.xib;
 			sourceTree = "<group>";
@@ -609,7 +610,7 @@
 		55AB410517C7001700DB019C /* PrefPanel.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55AB410617C7001700DB019C /* English */,
+				5553E1F11881E78D003C2DBF /* Base */,
 			);
 			name = PrefPanel.xib;
 			sourceTree = "<group>";
@@ -617,7 +618,7 @@
 		55AB410817C7003900DB019C /* FindPanel.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55AB410917C7003900DB019C /* English */,
+				5553E1F21881E78D003C2DBF /* Base */,
 			);
 			name = FindPanel.xib;
 			sourceTree = "<group>";
@@ -625,7 +626,7 @@
 		55AB410B17C7005200DB019C /* Apropos.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55AB410C17C7005200DB019C /* English */,
+				5553E1F31881E78D003C2DBF /* Base */,
 			);
 			name = Apropos.xib;
 			sourceTree = "<group>";
@@ -633,7 +634,7 @@
 		55AB410E17C7006900DB019C /* ManOpen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55AB410F17C7006900DB019C /* English */,
+				5553E1F41881E78D003C2DBF /* Base */,
 			);
 			name = ManOpen.xib;
 			sourceTree = "<group>";
@@ -641,7 +642,7 @@
 		55AB411117C7008D00DB019C /* DocController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55AB411217C7008D00DB019C /* English */,
+				5553E1F51881E78D003C2DBF /* Base */,
 			);
 			name = DocController.xib;
 			sourceTree = "<group>";
@@ -676,33 +677,39 @@
 		D38A23AA14E38E1E00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				LLVM_LTO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
 		D38A23AB14E38E1E00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				LLVM_LTO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 		D38A23FB14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ManOpen;
 				SECTORDER_FLAGS = "";
@@ -717,9 +724,7 @@
 		D38A23FC14E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ManOpen;
 				SECTORDER_FLAGS = "";
@@ -734,9 +739,9 @@
 		D38A242A14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_ENABLE_OBJC_GC = supported;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				"GCC_ENABLE_OBJC_GC[arch=x86_64]" = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -744,6 +749,7 @@
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = ManOpen;
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -751,9 +757,9 @@
 		D38A242B14E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_OBJC_GC = supported;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				"GCC_ENABLE_OBJC_GC[arch=x86_64]" = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -761,6 +767,7 @@
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = ManOpen;
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -768,11 +775,7 @@
 		D38A243614E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=ppc64]" = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.4;
 				PRODUCT_NAME = cat2rtf;
 			};
 			name = Debug;
@@ -780,10 +783,6 @@
 		D38A243714E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=ppc64]" = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.4;
 				PRODUCT_NAME = cat2rtf;
 			};
 			name = Release;
@@ -791,10 +790,7 @@
 		D38A244214E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				"MACOSX_DEPLOYMENT_TARGET[arch=ppc64]" = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.4;
 				PRODUCT_NAME = cat2html;
 			};
 			name = Debug;
@@ -802,9 +798,6 @@
 		D38A244314E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				"MACOSX_DEPLOYMENT_TARGET[arch=ppc64]" = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.4;
 				PRODUCT_NAME = cat2html;
 			};
 			name = Release;
@@ -812,19 +805,16 @@
 		D38A244F14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				PRODUCT_NAME = openman;
-				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
 		D38A245014E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				PRODUCT_NAME = openman;
-				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};

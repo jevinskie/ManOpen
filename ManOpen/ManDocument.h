@@ -13,7 +13,6 @@
 
 @interface ManDocument : NSDocument <NSWindowDelegate>
 {
-    NSString *shortTitle;
     NSData *taskData;
     BOOL hasLoaded;
     NSURL *copyURL;
@@ -29,7 +28,7 @@
 
 - initWithName:(NSString *)name section:(NSString *)section manPath:(NSString *)manPath title:(NSString *)title;
 
-@property (readwrite, retain) NSString *shortTitle;
+@property (readwrite, strong) NSString *shortTitle;
 
 - (NSText *)textView;
 

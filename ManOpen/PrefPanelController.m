@@ -577,15 +577,9 @@ static NSString *ManPathArrayKey = @"manPathArray";
 
 /* Little class to store info on the possible man page viewers, for easier sorting by display name */
 @interface MVAppInfo : NSObject
-{
-    NSString *bundleID;
-    NSString *displayName;
-    NSURL *appURL;
-}
-
-@property (retain) NSString *bundleID;
-@property (retain, nonatomic) NSString *displayName;
-@property (retain, nonatomic) NSURL *appURL;
+@property (strong) NSString *bundleID;
+@property (strong, nonatomic) NSString *displayName;
+@property (strong, nonatomic) NSURL *appURL;
 
 + (NSArray *)allManViewerApps;
 + (void)addAppWithID:(NSString *)aBundleID sort:(BOOL)shouldResort;

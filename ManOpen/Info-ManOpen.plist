@@ -86,7 +86,7 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
+	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
 	<string>ManOpen 2.6.3 © 2012 Carl Lindberg</string>
 	<key>CFBundleIdentifier</key>
@@ -94,7 +94,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ManOpen</string>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -118,16 +118,10 @@
 	<string>2.6.3</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
-	<key>NSAppVersion</key>
-	<string>Version 2.6.3</string>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
-	<key>NSHumanReadableCompleteName</key>
-	<string>ManOpen</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 1999-2012 Carl Lindberg</string>
-	<key>NSHumanReadableShortName</key>
-	<string>ManOpen</string>
+	<string>Copyright (c) 1999-2012 Carl Lindberg, 2010 Jan Weiß</string>
 	<key>NSMainNibFile</key>
 	<string>ManOpen</string>
 	<key>NSPrincipalClass</key>

@@ -89,8 +89,6 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
 	<string>ManOpen 2.6.3 © 2012 Carl Lindberg</string>
-	<key>CFBundleIconFile</key>
-	<string>ManOpen</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.clindberg.ManOpen</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -102,7 +100,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>2.6.3</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>MnOp</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -123,7 +121,7 @@
 	<key>NSAppVersion</key>
 	<string>Version 2.6.3</string>
 	<key>NSAppleScriptEnabled</key>
-	<string>YES</string>
+	<true/>
 	<key>NSHumanReadableCompleteName</key>
 	<string>ManOpen</string>
 	<key>NSHumanReadableCopyright</key>

@@ -3,7 +3,6 @@
 #import "PrefPanelController.h"
 #import <AppKit/AppKit.h>
 #import "ManDocumentController.h"
-#import "ARCBridge.h"
 
 @implementation NSUserDefaults (ManOpenPreferences)
 
@@ -297,7 +296,7 @@
     if ([new isAbsolutePath]) {
         static NSString *resHome = nil;
         if (resHome == nil)
-            resHome = RETAINOBJ([[NSHomeDirectory() stringByResolvingSymlinksInPath] stringByAppendingString:@"/"]);
+            resHome = [[NSHomeDirectory() stringByResolvingSymlinksInPath] stringByAppendingString:@"/"];
 
         if ([new hasPrefix:resHome])
             new = [@"~/" stringByAppendingString:[new substringFromIndex:[resHome length]]];
@@ -650,7 +649,7 @@ static NSMutableArray *allApps = nil;
     if (displayName == nil)
     {
         NSURL *url = [self appURL];
-        NSDictionary *infoDict = CFBridgingRelease(CFBundleCopyInfoDictionaryForURL(BRIDGE(CFURLRef, url)));
+        NSDictionary *infoDict = CFBridgingRelease(CFBundleCopyInfoDictionaryForURL((__bridge CFURLRef)url));
         NSString *appVersion;
         NSString *niceName = nil;
 		CFStringRef niceNameRef = NULL;
@@ -658,7 +657,7 @@ static NSMutableArray *allApps = nil;
         if (infoDict == nil)
             infoDict = [[NSBundle bundleWithURL:url] infoDictionary];
         
-        LSCopyDisplayNameForURL(BRIDGE(CFURLRef, url), &niceNameRef);
+        LSCopyDisplayNameForURL((__bridge CFURLRef)url, &niceNameRef);
 		niceName = CFBridgingRelease(niceNameRef);
 		niceNameRef = NULL;
         if (niceName == nil)
@@ -689,7 +688,6 @@ static NSMutableArray *allApps = nil;
         if (shouldResort)
             [self sortApps];
     }
-	RELEASEOBJ(info);
 }
 
 + (NSArray *)allManViewerApps
@@ -700,7 +698,7 @@ static NSMutableArray *allApps = nil;
         //NSURL *url = [[NSBundle mainBundle] bundleURL];
         //LSRegisterURL(BRIDGE(CFURLRef,url), false);
         
-        NSArray *allBundleIDs = CFBridgingRelease(LSCopyAllHandlersForURLScheme(BRIDGE(CFStringRef, URL_SCHEME)));
+        NSArray *allBundleIDs = CFBridgingRelease(LSCopyAllHandlersForURLScheme((CFStringRef)URL_SCHEME));
         NSUInteger i;
 
         allApps = [[NSMutableArray alloc] initWithCapacity:[allBundleIDs count]];
@@ -779,7 +777,6 @@ static NSString *currentAppID = nil;
 		
         [image setSize:NSMakeSize(16, 16)];
         [[appPopup itemAtIndex:i] setImage:image];
-		RELEASEOBJ(image);
 	}
 	
     if ([apps count] > 0)
@@ -790,7 +787,7 @@ static NSString *currentAppID = nil;
 
 - (void)resetCurrentApp
 {
-    NSString *currSetID = CFBridgingRelease(LSCopyDefaultHandlerForURLScheme(BRIDGE(CFStringRef, URL_SCHEME)));
+    NSString *currSetID = CFBridgingRelease(LSCopyDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME));
     
     if (currSetID == nil)
         currSetID = [[[MVAppInfo allManViewerApps] objectAtIndex:0] bundleID];
@@ -819,7 +816,7 @@ static NSString *currentAppID = nil;
 
 - (void)setManPageViewer:(NSString *)bundleID
 {
-    OSStatus error = LSSetDefaultHandlerForURLScheme(BRIDGE(CFStringRef,URL_SCHEME), BRIDGE(CFStringRef, bundleID));
+    OSStatus error = LSSetDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME, (__bridge CFStringRef)bundleID);
     
     if (error != noErr)
         NSLog(@"Could not set default " URL_SCHEME_PREFIX @" app: Launch Services error %ld", (long)error);
@@ -848,7 +845,7 @@ static NSString *currentAppID = nil;
         [panel setAllowsMultipleSelection:NO];
         [panel setResolvesAliases:YES];
         [panel setCanChooseFiles:YES];
-		[panel setAllowedFileTypes:[NSArray arrayWithObject:BRIDGE(NSString*, kUTTypeApplicationBundle)]];
+		[panel setAllowedFileTypes:[NSArray arrayWithObject:(NSString*)kUTTypeApplicationBundle]];
 		[panel beginSheetModalForWindow:[appPopup window] completionHandler:^(NSInteger result) {
 			if (result == NSOKButton) {
 				NSURL *appURL = [panel URL];

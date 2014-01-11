@@ -5,7 +5,6 @@
 #import "AproposDocument.h"
 #import "NSData+Utils.h"
 #import "PrefPanelController.h"
-#import "ARCBridge.h"
 
 #define MAN_BINARY     @"/usr/bin/man"
 //#define MANPATH_FORMAT @" -m '%@'"  // There's a bug in man(1) on OSX and OSXS
@@ -57,7 +56,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 		 * connecting, we may be able to do this whole thing in main()...
 		 */
 		
-		NSConnection *connection = AUTORELEASEOBJ([NSConnection new]);
+		NSConnection *connection = [NSConnection new];
 		[connection registerName:@"ManOpenApp"];
 		[connection setRootObject:self];
 		
@@ -138,7 +137,6 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
         NSMutableDictionary *environment = [[[NSProcessInfo processInfo] environment] mutableCopy];
         [environment addEntriesFromDictionary:extraEnv];
         [task setEnvironment:environment];
-		RELEASEOBJ(environment);
     }
 
     [task setLaunchPath:@"/bin/sh"];
@@ -155,8 +153,6 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
         output = [[pipe fileHandleForReading] readDataToEndOfFileIgnoreInterrupt];
     }
     [task waitUntilExit];
-	RELEASEOBJ(pipe);
-	RELEASEOBJ(task);
 
     return output;
 }
@@ -361,7 +357,6 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
         document = [[ManDocument alloc]
                         initWithName:name section:section
                         manPath:manPath title:title];
-		AUTORELEASEOBJNORETURN(document);
 
         /* Add the filename to the recent menu */
         filename = [self manFileForName:name section:section manPath:manPath];
@@ -390,9 +385,10 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
     if ((document = [self documentForTitle:title]) == nil)
     {
-        document = AUTORELEASEOBJ([[AproposDocument alloc]
-                        initWithString:apropos manPath:manPath title:title]);
-        if (document) [self addDocument:document];
+        document = [[AproposDocument alloc]
+                        initWithString:apropos manPath:manPath title:title];
+        if (document)
+			[self addDocument:document];
         [document makeWindowControllers];
     }
 

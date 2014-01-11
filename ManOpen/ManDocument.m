@@ -4,7 +4,6 @@
 #import "ManDocumentController.h"
 #import "PrefPanelController.h"
 #import "NSData+Utils.h"
-#import "ARCBridge.h"
 
 #define RestoreWindowDict @"RestoreWindowInfo"
 #define RestoreSection    @"Section"
@@ -220,7 +219,6 @@
 			
 			[[textView layoutManager] replaceTextStorage:storage];
 			[[textView window] invalidateCursorRectsForView:textView];
-			RELEASEOBJ(storage);
 		}
 		
 		[textView setBackgroundColor:backgroundColor];
@@ -236,7 +234,6 @@
 			hasLoaded = YES;
 		
 		// no need to keep around rtf data
-		RELEASEOBJ(taskData);
 		taskData = nil;
 	}
 }
@@ -289,7 +286,7 @@
         NSString *repl = hasQuote? @"'%@'" : @"%@";
         NSRange replRange = [nroffFormat rangeOfString:repl];
         if (replRange.length > 0) {
-            NSMutableString *formatCopy = AUTORELEASEOBJ([nroffFormat mutableCopy]);
+            NSMutableString *formatCopy = [nroffFormat mutableCopy];
             [formatCopy replaceCharactersInRange:replRange withString:@""];
             nroffFormat = [NSString stringWithFormat:@"/usr/bin/gzip -dc %@ | %@", repl, formatCopy];
         }
@@ -324,7 +321,7 @@
 
     // strip extension twice in case it is a e.g. "1.gz" filename
     self.shortTitle = [[[[url path] lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension];
-    copyURL = RETAINOBJ(url);
+    copyURL = url;
     
     restoreData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                    url,    RestoreFileURL,
@@ -648,31 +645,31 @@
  */
 - (void)drawPageBorderWithSize:(NSSize)size
 {
-    NSFont *font = [[NSUserDefaults standardUserDefaults] manFont];
-    NSInteger currPage = [[NSPrintOperation currentOperation] currentPage];
-    NSString *pageString = [NSString stringWithFormat:@"%ld", (long)currPage];
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    NSMutableDictionary *drawAttribs = [NSMutableDictionary dictionary];
-    NSRect drawRect = NSMakeRect(0.0f, 0.0f, size.width, 20.0f + [font ascender]);
-
-    [style setAlignment:NSCenterTextAlignment];
-    [drawAttribs setObject:style forKey:NSParagraphStyleAttributeName];
-	RELEASEOBJ(style);
-    [drawAttribs setObject:font forKey:NSFontAttributeName];
-
-    [pageString drawInRect:drawRect withAttributes:drawAttribs];
+	NSFont *font = [[NSUserDefaults standardUserDefaults] manFont];
+	NSInteger currPage = [[NSPrintOperation currentOperation] currentPage];
+	NSString *pageString = [NSString stringWithFormat:@"%ld", (long)currPage];
+	NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+	NSMutableDictionary *drawAttribs = [NSMutableDictionary dictionary];
+	NSRect drawRect = NSMakeRect(0.0f, 0.0f, size.width, 20.0f + [font ascender]);
+	
+	[style setAlignment:NSCenterTextAlignment];
+	[drawAttribs setObject:style forKey:NSParagraphStyleAttributeName];
+	[drawAttribs setObject:font forKey:NSFontAttributeName];
+	
+	[pageString drawInRect:drawRect withAttributes:drawAttribs];
+#if 0
+    CGFloat strWidth = [str sizeWithAttributes:attribs].width;
+    NSPoint point = NSMakePoint(size.width/2 - strWidth/2, 20.0f);
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     
-//    CGFloat strWidth = [str sizeWithAttributes:attribs].width;
-//    NSPoint point = NSMakePoint(size.width/2 - strWidth/2, 20.0f);
-//    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-//    
-//    CGContextSaveGState(context);
-//    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-//    CGContextSetTextDrawingMode(context, kCGTextFill);  //needed?
-//    CGContextSetGrayFillColor(context, 0.0f, 1.0f);
-//    CGContextSelectFont(context, [[font fontName] cStringUsingEncoding:NSMacOSRomanStringEncoding], [font pointSize], kCGEncodingMacRoman);
-//    CGContextShowTextAtPoint(context, point.x, point.y, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], [str lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]);
-//    CGContextRestoreGState(context);
+    CGContextSaveGState(context);
+    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+    CGContextSetTextDrawingMode(context, kCGTextFill);  //needed?
+    CGContextSetGrayFillColor(context, 0.0f, 1.0f);
+    CGContextSelectFont(context, [[font fontName] cStringUsingEncoding:NSMacOSRomanStringEncoding], [font pointSize], kCGEncodingMacRoman);
+    CGContextShowTextAtPoint(context, point.x, point.y, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], [str lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]);
+    CGContextRestoreGState(context);
+#endif
 }
 
 @end

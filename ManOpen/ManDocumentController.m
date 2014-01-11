@@ -754,6 +754,18 @@ static BOOL IsSectionWord(NSString *word)
     [[PrefPanelController sharedInstance] showWindow:sender];
 }
 
+- (void)awakeFromNib
+{
+	[super awakeFromNib];
+	NSURL *helpPath = [[NSBundle mainBundle] URLForResource:@"Help" withExtension:@"rtf"];
+	if (!helpPath) {
+		if (!(helpPath = [[NSBundle mainBundle] URLForResource:@"Help" withExtension:@"rtfd"]))
+			return;
+	}
+	
+	[self.helpTextView readRTFDFromFile:[helpPath path]];
+}
+
 /*
  Under MacOS X, NSApplication will not validate this menu item, so implement
    it here ourselves.

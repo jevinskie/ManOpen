@@ -10,6 +10,7 @@
                 <outlet property="aproposField" destination="10" id="33"/>
                 <outlet property="aproposPanel" destination="5" id="32"/>
                 <outlet property="helpPanel" destination="56" id="60"/>
+                <outlet property="helpTextView" destination="57" id="snR-cd-xix"/>
                 <outlet property="infoPanel" destination="15" id="30"/>
                 <outlet property="openSectionPopup" destination="41" id="55"/>
                 <outlet property="openTextField" destination="6" id="34"/>
@@ -27,7 +28,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="384" height="91"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="14">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="14">
                         <rect key="frame" x="18" y="51" width="120" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="right" title="List pages about:" id="64">
@@ -111,7 +112,7 @@ Gw
                 <rect key="frame" x="0.0" y="0.0" width="255" height="146"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="19">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="19">
                         <rect key="frame" x="3" y="4" width="63" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" alignment="left" title="Version 2.1.3" id="72">
@@ -120,7 +121,7 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8">
                         <rect key="frame" x="82" y="4" width="171" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" alignment="right" title="Copyright 2000.  All Rights Reserved." id="68">
@@ -143,7 +144,7 @@ Gw
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" size="12" name="Helvetica"/>
                     </box>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="12">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="12">
                         <rect key="frame" x="97" y="96" width="118" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" alignment="center" title="ManOpen" id="70">
@@ -152,7 +153,7 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="26">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="26">
                         <rect key="frame" x="100" y="70" width="111" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" alignment="center" title="by Carl Lindberg" id="74">
@@ -161,7 +162,7 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="20">
                         <rect key="frame" x="74" y="55" width="163" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" selectable="YES" alignment="center" title="lindberg@clindberg.org" id="73">
@@ -204,14 +205,14 @@ Gw
         <window title="Open Man Page" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="18" userLabel="OpenTextPanel" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="530" y="673" width="384" height="144"/>
+            <rect key="contentRect" x="530" y="673" width="384" height="132"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="23">
-                <rect key="frame" x="0.0" y="0.0" width="384" height="144"/>
+                <rect key="frame" x="0.0" y="0.0" width="384" height="132"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="17">
-                        <rect key="frame" x="18" y="104" width="114" height="17"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="17">
+                        <rect key="frame" x="18" y="92" width="114" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="right" title="Open man page:" id="77">
                             <font key="font" metaFont="systemBold"/>
@@ -220,7 +221,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6">
-                        <rect key="frame" x="138" y="102" width="226" height="22"/>
+                        <rect key="frame" x="138" y="90" width="226" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="75">
                             <font key="font" metaFont="system"/>
@@ -281,7 +282,7 @@ Gw
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="47">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="47">
                         <rect key="frame" x="18" y="64" width="114" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="right" title="Section:" id="80">
@@ -297,7 +298,7 @@ Gw
                     <constraint firstItem="41" firstAttribute="leading" secondItem="47" secondAttribute="trailing" constant="8" symbolic="YES" id="EQk-Oy-30J"/>
                     <constraint firstItem="17" firstAttribute="baseline" secondItem="6" secondAttribute="baseline" id="F3R-Wa-WNa"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="21" secondAttribute="trailing" constant="12" symbolic="YES" id="GHl-bT-FVo"/>
-                    <constraint firstItem="41" firstAttribute="top" secondItem="6" secondAttribute="bottom" constant="20" symbolic="YES" id="Q0B-OS-3up"/>
+                    <constraint firstItem="41" firstAttribute="top" secondItem="6" secondAttribute="bottom" constant="8" id="Q0B-OS-3up"/>
                     <constraint firstAttribute="trailing" secondItem="7" secondAttribute="trailing" constant="20" symbolic="YES" id="REN-Ro-1ja"/>
                     <constraint firstItem="7" firstAttribute="top" secondItem="41" secondAttribute="bottom" constant="20" symbolic="YES" id="Tko-jo-bL4"/>
                     <constraint firstItem="17" firstAttribute="leading" secondItem="47" secondAttribute="leading" id="WHJ-cb-Xhv"/>

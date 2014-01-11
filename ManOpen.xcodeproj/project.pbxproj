@@ -32,7 +32,6 @@
 		5553E21F1881F83E003C2DBF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
 		55F13AB415103C1E0095B5A9 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
 		D38A241514E4C3FE00F6AFFE /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
-		D38A241614E4C3FE00F6AFFE /* ManOpen.icns in Resources */ = {isa = PBXBuildFile; fileRef = D39279310821FFA400376676 /* ManOpen.icns */; };
 		D38A241814E4C3FE00F6AFFE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D39279350821FFA400376676 /* Credits.rtf */; };
 		D38A241914E4C3FE00F6AFFE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D39279380821FFA400376676 /* InfoPlist.strings */; };
 		D38A241B14E4C3FE00F6AFFE /* AproposDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F20821FFA400376676 /* AproposDocument.m */; settings = {ATTRIBUTES = (); }; };
@@ -519,7 +518,6 @@
 			files = (
 				5553E21F1881F83E003C2DBF /* Images.xcassets in Resources */,
 				D38A241514E4C3FE00F6AFFE /* ManOpen.scriptSuite in Resources */,
-				D38A241614E4C3FE00F6AFFE /* ManOpen.icns in Resources */,
 				55F13AB415103C1E0095B5A9 /* ManOpen.scriptTerminology in Resources */,
 				D38A241814E4C3FE00F6AFFE /* Credits.rtf in Resources */,
 				5553E1FC1881F2C2003C2DBF /* Help.rtf in Resources */,

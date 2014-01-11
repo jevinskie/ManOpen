@@ -135,14 +135,6 @@
     return self;
 }
 
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-    [manPathArray release];
-    [super dealloc];
-}
-#endif
-
 - (void)windowDidLoad
 {
     [super windowDidLoad];
@@ -604,16 +596,6 @@ static NSMutableArray *allApps = nil;
     return self;
 }
 
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-    self.appURL = nil;
-    self.displayName = nil;
-    self.bundleID = nil;
-    [super dealloc];
-}
-#endif
-
 - (BOOL)isEqualToBundleID:(NSString *)aBundleID
 {
     return [bundleID caseInsensitiveCompare:aBundleID] == NSOrderedSame;
@@ -795,13 +777,7 @@ static NSString *currentAppID = nil;
     if (currSetID != nil) {
         BOOL resetPopup = (currentAppID == nil); //first time
 
-#if __has_feature(objc_arc)
 		currentAppID = currSetID;
-#else
-        [currentAppID release];
-        currentAppID = [currSetID retain];
-        [currSetID release];
-#endif
 
         if ([MVAppInfo indexOfBundleID:currSetID] == NSNotFound) {
             [MVAppInfo addAppWithID:currSetID sort:YES];

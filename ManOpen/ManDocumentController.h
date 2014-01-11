@@ -6,6 +6,7 @@
 
 @class NSPanel, NSTextField, NSPopUpButton, NSFont;
 @class NSData, NSMutableString;
+@class NSTextView;
 
 extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 
@@ -20,6 +21,8 @@ extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
     IBOutlet NSPopUpButton *openSectionPopup;
     BOOL startedUp;
 }
+
+@property (unsafe_unretained) IBOutlet NSTextView *helpTextView;
 
 - (id)openWord:(NSString *)word;
 

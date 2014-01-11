@@ -68,18 +68,6 @@
     return self;
 }
 
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-    [taskData release];
-    [copyURL release];
-    [shortTitle release];
-    [sections release];
-    [restoreData release];
-    [super dealloc];
-}
-#endif
-
 - (NSString *)windowNibName
 {
     return @"ManPage";
@@ -258,17 +246,11 @@
 
 - (void)loadCommand:(NSString *)command
 {
-    ManDocumentController *docController = [ManDocumentController sharedDocumentController];
-    NSString *fullCommand = [NSString stringWithFormat:@"%@ | %@", command, [self filterCommand]];
-#if __has_feature(objc_arc)
+	ManDocumentController *docController = [ManDocumentController sharedDocumentController];
+	NSString *fullCommand = [NSString stringWithFormat:@"%@ | %@", command, [self filterCommand]];
 	taskData = [docController dataByExecutingCommand:fullCommand];
-#else
-    [taskData release];
-    taskData = nil;
-    taskData = [[docController dataByExecutingCommand:fullCommand] retain];
-#endif
-
-    [self showData];
+	
+	[self showData];
 }
 
 - (void)loadManFile:(NSString *)filename isGzip:(BOOL)isGzip

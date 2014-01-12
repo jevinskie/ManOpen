@@ -1,5 +1,4 @@
 
-#import "SystemType.h"
 #import <AppKit/NSDocument.h>
 #import <AppKit/NSWindow.h>
 #import <AppKit/NSTextView.h>

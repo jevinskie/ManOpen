@@ -138,17 +138,6 @@
 {
     [super windowDidLoad];
 	
-    /* The "save windows on quit" is a Lion-only feature */
-    if (!IsLion()) {
-        NSRect oldFrame = [generalSwitchMatrix frame];
-        [generalSwitchMatrix removeRow:4];
-        [generalSwitchMatrix sizeToCells];
-        NSRect newFrame = [generalSwitchMatrix frame];
-        /* Keep the top edge at the same place; sizeToCells just lowers the height */
-        newFrame.origin.y += (oldFrame.size.height - newFrame.size.height);
-        [generalSwitchMatrix setFrame:newFrame];
-        
-    }
     [self setUpDefaultManViewerApp];
     [self setUpManPathUI];
     [self setFontFieldToFont:[[NSUserDefaults standardUserDefaults] manFont]];
@@ -244,12 +233,6 @@
     NSPoint viewPoint = [self convertPoint:windowPoint fromView:nil];
 	
     return NSMouseInRect(viewPoint, [self bounds], [self isFlipped]);
-}
-
-- (void)dragImage:(NSImage *)anImage at:(NSPoint)imageLoc offset:(NSSize)mouseOffset event:(NSEvent *)theEvent pasteboard:(NSPasteboard *)pboard source:(id)sourceObject slideBack:(BOOL)slideBack
-{
-    /* Prevent slide back prior to Lion (where we can control it with newer methods) */
-    [super dragImage:anImage at:imageLoc offset:mouseOffset event:theEvent pasteboard:pboard source:sourceObject slideBack:IsLion() && slideBack];
 }
 
 /* Only implement the 10.7 method, since I don't think we can conditionally affect the "slide back" value prior to 10.7 */

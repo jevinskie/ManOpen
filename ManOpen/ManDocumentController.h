@@ -1,6 +1,5 @@
 
 #import "ManOpenProtocol.h"
-#import "SystemType.h"
 #import <AppKit/NSDocumentController.h>
 
 

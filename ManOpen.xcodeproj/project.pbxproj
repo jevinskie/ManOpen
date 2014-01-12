@@ -121,6 +121,11 @@
 		5553E22018821265003C2DBF /* openman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openman-Info.plist"; sourceTree = "<group>"; };
 		5553E22418821455003C2DBF /* cat2html-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cat2html-Info.plist"; sourceTree = "<group>"; };
 		5553E226188214B9003C2DBF /* cat2rtf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cat2rtf-Info.plist"; sourceTree = "<group>"; };
+		55E8029B188237D600037AF6 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		55E8029C188237D600037AF6 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		55E8029F188237E000037AF6 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		55E802A1188237F000037AF6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		55E802A3188237FA00037AF6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		55F13AB515103C1E0095B5A9 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = English; path = English.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A242C14E4C3FE00F6AFFE /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		D38A242D14E4C3FE00F6AFFE /* ManOpen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +143,6 @@
 		D39279070821FFA400376676 /* ManOpenProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManOpenProtocol.h; sourceTree = "<group>"; };
 		D39279090821FFA400376676 /* NSData+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; };
 		D392790B0821FFA400376676 /* PrefPanelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPanelController.h; sourceTree = "<group>"; };
-		D392790D0821FFA400376676 /* SystemType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemType.h; sourceTree = "<group>"; };
 		D39279100821FFA400376676 /* ManOpen_main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManOpen_main.m; sourceTree = "<group>"; };
 		D392792C0821FFA400376676 /* ManOpen.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ManOpen.tiff; sourceTree = "<group>"; };
 		D392792F0821FFA400376676 /* ManOpen.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptSuite; path = ManOpen.scriptSuite; sourceTree = "<group>"; };
@@ -238,7 +242,6 @@
 			isa = PBXGroup;
 			children = (
 				D39278F10821FFA400376676 /* Classes */,
-				D39278FE0821FFA400376676 /* Headers */,
 				D392790F0821FFA400376676 /* Other Sources */,
 				D39279120821FFA400376676 /* Interfaces */,
 				D39279270821FFA400376676 /* Images */,
@@ -263,27 +266,19 @@
 		D39278F10821FFA400376676 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D39278FF0821FFA400376676 /* AproposDocument.h */,
 				D39278F20821FFA400376676 /* AproposDocument.m */,
+				D39279030821FFA400376676 /* ManDocument.h */,
 				D39278F60821FFA400376676 /* ManDocument.m */,
+				D39279050821FFA400376676 /* ManDocumentController.h */,
 				D39278F80821FFA400376676 /* ManDocumentController.m */,
+				D39279070821FFA400376676 /* ManOpenProtocol.h */,
+				D39279090821FFA400376676 /* NSData+Utils.h */,
 				D39278FA0821FFA400376676 /* NSData+Utils.m */,
+				D392790B0821FFA400376676 /* PrefPanelController.h */,
 				D39278FC0821FFA400376676 /* PrefPanelController.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		D39278FE0821FFA400376676 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				D39278FF0821FFA400376676 /* AproposDocument.h */,
-				D39279030821FFA400376676 /* ManDocument.h */,
-				D39279050821FFA400376676 /* ManDocumentController.h */,
-				D39279070821FFA400376676 /* ManOpenProtocol.h */,
-				D39279090821FFA400376676 /* NSData+Utils.h */,
-				D392790B0821FFA400376676 /* PrefPanelController.h */,
-				D392790D0821FFA400376676 /* SystemType.h */,
-			);
-			name = Headers;
 			sourceTree = "<group>";
 		};
 		D392790F0821FFA400376676 /* Other Sources */ = {
@@ -414,6 +409,11 @@
 		D39279800821FFA400376676 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55E802A3188237FA00037AF6 /* CoreData.framework */,
+				55E802A1188237F000037AF6 /* Cocoa.framework */,
+				55E8029F188237E000037AF6 /* ApplicationServices.framework */,
+				55E8029B188237D600037AF6 /* CoreFoundation.framework */,
+				55E8029C188237D600037AF6 /* CoreServices.framework */,
 				D39279810821FFA400376676 /* Foundation.framework */,
 				D39279850821FFA400376676 /* AppKit.framework */,
 			);
@@ -716,6 +716,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -746,6 +747,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_UNROLL_LOOPS = YES;

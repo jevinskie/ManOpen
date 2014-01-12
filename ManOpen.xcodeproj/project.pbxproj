@@ -711,6 +711,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_OUTPUT_FORMAT = XML;
 				LLVM_LTO = YES;
@@ -731,6 +732,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LLVM_LTO = YES;
@@ -815,7 +817,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				PRODUCT_NAME = cat2rtf;
@@ -826,7 +827,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				PRODUCT_NAME = cat2rtf;
 			};
@@ -836,7 +836,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
 				PRODUCT_NAME = cat2html;
@@ -847,7 +846,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
 				PRODUCT_NAME = cat2html;
 			};
@@ -858,7 +856,6 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				PRODUCT_NAME = openman;
 				SKIP_INSTALL = NO;
@@ -870,7 +867,6 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				PRODUCT_NAME = openman;
 				SKIP_INSTALL = NO;

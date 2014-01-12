@@ -138,12 +138,12 @@
     }
 }
 
-- (void)printShowingPrintPanel:(BOOL)showPanel
+- (void)printDocumentWithSettings:(NSDictionary *)printSettings showPrintPanel:(BOOL)showPanel delegate:(id)delegate didPrintSelector:(SEL)didPrintSelector contextInfo:(void *)contextInfo;
 {
-    NSPrintOperation *op = [NSPrintOperation printOperationWithView:tableView];
-    [op setShowsPrintPanel:showPanel];
-    [op setShowsProgressPanel:showPanel];
-    [op runOperationModalForWindow:[tableView window] delegate:nil didRunSelector:NULL contextInfo:NULL];
+	NSPrintOperation *op = [NSPrintOperation printOperationWithView:tableView];
+	[op setShowsPrintPanel:showPanel];
+	[op setShowsProgressPanel:showPanel];
+	[op runOperationModalForWindow:[tableView window] delegate:delegate didRunSelector:didPrintSelector contextInfo:contextInfo];
 }
 
 /* NSTableView dataSource */
@@ -154,7 +154,7 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    NSArray *strings = (tableColumn == titleColumn)? titles : descriptions;
+    NSArray *strings = (tableColumn == titleColumn) ? titles : descriptions;
     return [strings objectAtIndex:row];
 }
 

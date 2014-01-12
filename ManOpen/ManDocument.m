@@ -410,7 +410,7 @@
     [[NSApplication sharedApplication] runPageLayout:sender];
 }
 
-- (void)printShowingPrintPanel:(BOOL)showPanel
+- (void)printDocumentWithSettings:(NSDictionary *)printSettings showPrintPanel:(BOOL)showPanel delegate:(id)delegate didPrintSelector:(SEL)didPrintSelector contextInfo:(void *)contextInfo;
 {
     NSPrintOperation *operation = [NSPrintOperation printOperationWithView:textView];
     NSPrintInfo      *printInfo = [operation printInfo];
@@ -421,7 +421,7 @@
     [operation setShowsPrintPanel:showPanel];
     [operation setShowsProgressPanel:showPanel];
 
-    [operation runOperationModalForWindow:[textView window] delegate:nil didRunSelector:NULL contextInfo:NULL];
+    [operation runOperationModalForWindow:[textView window] delegate:delegate didRunSelector:didPrintSelector contextInfo:contextInfo];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item

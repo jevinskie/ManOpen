@@ -1,10 +1,8 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/NSWorkspace.h>
-#import <libc.h>  // for getopt()
-#import <ctype.h> // for isdigit()
+#include <stdlib.h>
 #import "ManOpenProtocol.h"
-#import "SystemType.h"
 
 
 static NSString *MakeNSStringFromPath(const char *filename)

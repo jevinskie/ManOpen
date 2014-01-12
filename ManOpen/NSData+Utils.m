@@ -1,8 +1,10 @@
 
 #import "NSData+Utils.h"
 #import <Foundation/NSException.h>
-#import <libc.h>
-#import <ctype.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <assert.h>
 
 @implementation NSData (Utils)
 
@@ -61,7 +63,7 @@
 - (BOOL)hasPrefixBytes:(void *)bytes length:(NSUInteger)len
 {
     if ([self length] < len) return NO;
-    return (memcmp([self bytes], bytes, (size_t)len) == 0);
+    return (memcmp([self bytes], bytes, len) == 0);
 }
 
 - (BOOL)isRTFData
@@ -79,7 +81,7 @@
 /* Very rough check -- see if more than a third of the first 100 bytes have the high bit set */
 - (BOOL)isBinaryData
 {
-    NSUInteger checklen = MIN((NSUInteger)100, [self length]);
+    NSUInteger checklen = MIN(100, [self length]);
     NSUInteger i;
     NSUInteger badByteCount = 0;
     unsigned const char *bytes = [self bytes];
@@ -92,10 +94,6 @@
 }
 
 @end
-
-#import <sys/types.h>
-#import <errno.h>
-#import <assert.h>
 
 @implementation NSFileHandle (Utils)
 

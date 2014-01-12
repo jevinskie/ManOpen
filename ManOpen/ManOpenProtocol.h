@@ -5,9 +5,10 @@
  */
 
 #import <Foundation/NSObjCRuntime.h>
+#import <Foundation/NSObject.h>
 @class NSString;
 
-@protocol ManOpen
+@protocol ManOpen <NSObject>
 
 - (oneway void)openName:(NSString *)name section:(NSString *)section manPath:(NSString *)manPath forceToFront:(BOOL)force;
 - (oneway void)openApropos:(NSString *)apropos manPath:(NSString *)manPath forceToFront:(BOOL)force;

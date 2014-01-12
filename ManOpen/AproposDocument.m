@@ -11,6 +11,7 @@
 @end
 
 @implementation AproposDocument
+@synthesize title;
 
 + (BOOL)canConcurrentlyReadDocumentsOfType:(NSString *)typeName
 {
@@ -51,13 +52,13 @@
 - (id)initWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)aTitle
 {
     if(self = [super init]) {
-		[self _loadWithString:apropos manPath:manPath title:aTitle];
-		
-		if ([titles count] == 0) {
-			NSRunAlertPanel(@"Nothing found", @"No pages related to '%@' found", nil, nil, nil, apropos);
-			return nil;
-		}
-	}
+        [self _loadWithString:apropos manPath:manPath title:aTitle];
+        
+        if ([titles count] == 0) {
+            NSRunAlertPanel(@"Nothing found", @"No pages related to '%@' found", nil, nil, nil, apropos);
+            return nil;
+        }
+    }
     return self;
 }
 
@@ -140,10 +141,10 @@
 
 - (void)printDocumentWithSettings:(NSDictionary *)printSettings showPrintPanel:(BOOL)showPanel delegate:(id)delegate didPrintSelector:(SEL)didPrintSelector contextInfo:(void *)contextInfo;
 {
-	NSPrintOperation *op = [NSPrintOperation printOperationWithView:tableView];
-	[op setShowsPrintPanel:showPanel];
-	[op setShowsProgressPanel:showPanel];
-	[op runOperationModalForWindow:[tableView window] delegate:delegate didRunSelector:didPrintSelector contextInfo:contextInfo];
+    NSPrintOperation *op = [NSPrintOperation printOperationWithView:tableView];
+    [op setShowsPrintPanel:showPanel];
+    [op setShowsProgressPanel:showPanel];
+    [op runOperationModalForWindow:[tableView window] delegate:delegate didRunSelector:didPrintSelector contextInfo:contextInfo];
 }
 
 /* NSTableView dataSource */

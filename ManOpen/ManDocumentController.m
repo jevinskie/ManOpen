@@ -140,9 +140,9 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     }
 
     task.launchPath = @"/bin/sh";
-    [task setArguments:@[@"-c", command]];
+    task.arguments = @[@"-c", command];
     task.standardOutput = pipe;
-    task.standardError = [NSFileHandle fileHandleWithNullDevice]; //don't care about output
+    task.standardError = [NSFileHandle fileHandleWithNullDevice]; //don't care about error output
     [task launch];
 
     if (maxLength > 0) {
@@ -207,6 +207,11 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     return nil;
 }
 
+- (NSString *)typeFromURL:(NSURL *)url
+{
+    return [self typeFromFilename:[url path]];
+}
+
 - (NSString *)typeFromFilename:(NSString *)filename
 {
     NSFileHandle  *handle;
@@ -253,7 +258,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)display error:(NSError **)outError
 {
     NSDocument *document;
-
+    
     /*
      * NSDocument[Controller] doesn't standardize filenames, at least when
      * calling -initWithContentsOfFile:, meaning it will raise if it gets a
@@ -269,7 +274,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     {
         /* Resolve the type by contents rather than relying on the extension. */
         NSString *type = [self typeFromFilename:[standardizedURL path]];
-
+        
         if (type != nil)
         {
             document = [self makeDocumentWithContentsOfURL:standardizedURL ofType:type error:outError];

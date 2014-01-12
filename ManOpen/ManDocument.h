@@ -4,7 +4,7 @@
 #import <AppKit/NSTextView.h>
 
 @class NSMutableArray, NSMutableDictionary;
-@class NSTextField, NSText, NSButton, NSPopUpButton;
+@class NSTextField, NSButton, NSPopUpButton;
 
 @interface ManTextView : NSTextView
 - (void)scrollRangeToTop:(NSRange)charRange;
@@ -19,17 +19,15 @@
     NSMutableArray *sectionRanges;
     NSMutableDictionary *restoreData;
 
-    IBOutlet ManTextView *textView;
-    IBOutlet NSTextField *titleStringField;
-    IBOutlet NSButton    *openSelectionButton;
-    IBOutlet NSPopUpButton *sectionPopup;
+    IBOutlet NSTextField    *titleStringField;
+    IBOutlet NSButton       *openSelectionButton;
+    IBOutlet NSPopUpButton  *sectionPopup;
 }
 
 - initWithName:(NSString *)name section:(NSString *)section manPath:(NSString *)manPath title:(NSString *)title;
 
-@property (readwrite, strong) NSString *shortTitle;
-
-- (NSText *)textView;
+@property (copy) NSString *shortTitle;
+@property (unsafe_unretained) IBOutlet ManTextView *textView;
 
 - (void)loadCommand:(NSString *)command;
 

@@ -15,6 +15,7 @@
     IBOutlet NSTableView *tableView;
     IBOutlet NSTableColumn *titleColumn;
 }
+@property (copy) NSString *title;
 
 - (id)initWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)title;
 - (void)parseOutput:(NSString *)output;

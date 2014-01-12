@@ -25,7 +25,6 @@
 		5553E1FC1881F2C2003C2DBF /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
 		5553E20C1881F640003C2DBF /* Apropos.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E20E1881F640003C2DBF /* Apropos.xib */; };
 		5553E20F1881F646003C2DBF /* DocController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E2111881F646003C2DBF /* DocController.xib */; };
-		5553E2121881F64F003C2DBF /* FindPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E2141881F64F003C2DBF /* FindPanel.xib */; };
 		5553E2151881F65A003C2DBF /* ManOpen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E2171881F65A003C2DBF /* ManOpen.xib */; };
 		5553E2181881F666003C2DBF /* ManPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21A1881F666003C2DBF /* ManPage.xib */; };
 		5553E21B1881F670003C2DBF /* PrefPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21D1881F670003C2DBF /* PrefPanel.xib */; };
@@ -113,7 +112,6 @@
 		5553E1FF1881F2CA003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Help.rtf; sourceTree = "<group>"; };
 		5553E20D1881F640003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Apropos.xib; sourceTree = "<group>"; };
 		5553E2101881F646003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocController.xib; sourceTree = "<group>"; };
-		5553E2131881F64F003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FindPanel.xib; sourceTree = "<group>"; };
 		5553E2161881F65A003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ManOpen.xib; sourceTree = "<group>"; };
 		5553E2191881F666003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ManPage.xib; sourceTree = "<group>"; };
 		5553E21C1881F670003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PrefPanel.xib; sourceTree = "<group>"; };
@@ -132,26 +130,26 @@
 		D38A243814E4C3FE00F6AFFE /* cat2rtf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2rtf; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A244414E4C3FE00F6AFFE /* cat2html */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2html; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A245114E4C3FE00F6AFFE /* openman */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = openman; sourceTree = BUILT_PRODUCTS_DIR; };
-		D39278F20821FFA400376676 /* AproposDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AproposDocument.m; sourceTree = "<group>"; };
-		D39278F60821FFA400376676 /* ManDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManDocument.m; sourceTree = "<group>"; };
-		D39278F80821FFA400376676 /* ManDocumentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManDocumentController.m; sourceTree = "<group>"; };
-		D39278FA0821FFA400376676 /* NSData+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Utils.m"; sourceTree = "<group>"; };
-		D39278FC0821FFA400376676 /* PrefPanelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefPanelController.m; sourceTree = "<group>"; };
-		D39278FF0821FFA400376676 /* AproposDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AproposDocument.h; sourceTree = "<group>"; };
-		D39279030821FFA400376676 /* ManDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManDocument.h; sourceTree = "<group>"; };
-		D39279050821FFA400376676 /* ManDocumentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManDocumentController.h; sourceTree = "<group>"; };
-		D39279070821FFA400376676 /* ManOpenProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManOpenProtocol.h; sourceTree = "<group>"; };
-		D39279090821FFA400376676 /* NSData+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; };
-		D392790B0821FFA400376676 /* PrefPanelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPanelController.h; sourceTree = "<group>"; };
-		D39279100821FFA400376676 /* ManOpen_main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManOpen_main.m; sourceTree = "<group>"; };
+		D39278F20821FFA400376676 /* AproposDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AproposDocument.m; sourceTree = "<group>"; usesTabs = 0; };
+		D39278F60821FFA400376676 /* ManDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManDocument.m; sourceTree = "<group>"; usesTabs = 0; };
+		D39278F80821FFA400376676 /* ManDocumentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManDocumentController.m; sourceTree = "<group>"; usesTabs = 0; };
+		D39278FA0821FFA400376676 /* NSData+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Utils.m"; sourceTree = "<group>"; usesTabs = 0; };
+		D39278FC0821FFA400376676 /* PrefPanelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefPanelController.m; sourceTree = "<group>"; usesTabs = 0; };
+		D39278FF0821FFA400376676 /* AproposDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AproposDocument.h; sourceTree = "<group>"; usesTabs = 0; };
+		D39279030821FFA400376676 /* ManDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManDocument.h; sourceTree = "<group>"; usesTabs = 0; };
+		D39279050821FFA400376676 /* ManDocumentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManDocumentController.h; sourceTree = "<group>"; usesTabs = 0; };
+		D39279070821FFA400376676 /* ManOpenProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManOpenProtocol.h; sourceTree = "<group>"; usesTabs = 0; };
+		D39279090821FFA400376676 /* NSData+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; usesTabs = 0; };
+		D392790B0821FFA400376676 /* PrefPanelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPanelController.h; sourceTree = "<group>"; usesTabs = 0; };
+		D39279100821FFA400376676 /* ManOpen_main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManOpen_main.m; sourceTree = "<group>"; usesTabs = 0; };
 		D392792C0821FFA400376676 /* ManOpen.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ManOpen.tiff; sourceTree = "<group>"; };
 		D392792F0821FFA400376676 /* ManOpen.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptSuite; path = ManOpen.scriptSuite; sourceTree = "<group>"; };
 		D39279310821FFA400376676 /* ManOpen.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ManOpen.icns; sourceTree = "<group>"; };
 		D39279370821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		D392793A0821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D39279560821FFA400376676 /* cat2rtf.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2rtf.l; sourceTree = "<group>"; };
-		D39279690821FFA400376676 /* cat2html.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2html.l; sourceTree = "<group>"; };
-		D39279770821FFA400376676 /* openman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = openman.m; sourceTree = "<group>"; };
+		D39279560821FFA400376676 /* cat2rtf.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2rtf.l; sourceTree = "<group>"; usesTabs = 0; };
+		D39279690821FFA400376676 /* cat2html.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2html.l; sourceTree = "<group>"; usesTabs = 0; };
+		D39279770821FFA400376676 /* openman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = openman.m; sourceTree = "<group>"; usesTabs = 0; };
 		D392797F0821FFA400376676 /* openman.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = openman.1; sourceTree = "<group>"; };
 		D39279810821FFA400376676 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		D39279850821FFA400376676 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -214,19 +212,11 @@
 		D39278DB0821FF9D00376676 /* ManOpen */ = {
 			isa = PBXGroup;
 			children = (
-				D39278E00821FFA400376676 /* Supporting Files */,
 				D39278E40821FFA400376676 /* Subprojects */,
 				D39279800821FFA400376676 /* Frameworks */,
 				D39278ED0821FFA400376676 /* Products */,
 			);
 			name = ManOpen;
-			sourceTree = "<group>";
-		};
-		D39278E00821FFA400376676 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		D39278E40821FFA400376676 /* Subprojects */ = {
@@ -294,7 +284,6 @@
 			children = (
 				5553E20E1881F640003C2DBF /* Apropos.xib */,
 				5553E2111881F646003C2DBF /* DocController.xib */,
-				5553E2141881F64F003C2DBF /* FindPanel.xib */,
 				5553E2171881F65A003C2DBF /* ManOpen.xib */,
 				5553E21A1881F666003C2DBF /* ManPage.xib */,
 				5553E21D1881F670003C2DBF /* PrefPanel.xib */,
@@ -305,6 +294,7 @@
 		D39279270821FFA400376676 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5553E21E1881F83E003C2DBF /* Images.xcassets */,
 				554659FA170A073C00B19C56 /* Find.tiff */,
 				D3EA5B5914E8DA3700AB000A /* helpQMark.tiff */,
 				D392792C0821FFA400376676 /* ManOpen.tiff */,
@@ -315,7 +305,6 @@
 		D392792E0821FFA400376676 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5553E21E1881F83E003C2DBF /* Images.xcassets */,
 				D392792F0821FFA400376676 /* ManOpen.scriptSuite */,
 				D39279310821FFA400376676 /* ManOpen.icns */,
 				55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */,
@@ -543,7 +532,6 @@
 				55F13AB415103C1E0095B5A9 /* ManOpen.scriptTerminology in Resources */,
 				D38A241814E4C3FE00F6AFFE /* Credits.rtf in Resources */,
 				5553E1FC1881F2C2003C2DBF /* Help.rtf in Resources */,
-				5553E2121881F64F003C2DBF /* FindPanel.xib in Resources */,
 				5553E2151881F65A003C2DBF /* ManOpen.xib in Resources */,
 				5553E2181881F666003C2DBF /* ManPage.xib in Resources */,
 				5553E20F1881F646003C2DBF /* DocController.xib in Resources */,
@@ -641,14 +629,6 @@
 				5553E2101881F646003C2DBF /* en */,
 			);
 			name = DocController.xib;
-			sourceTree = "<group>";
-		};
-		5553E2141881F64F003C2DBF /* FindPanel.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5553E2131881F64F003C2DBF /* en */,
-			);
-			name = FindPanel.xib;
 			sourceTree = "<group>";
 		};
 		5553E2171881F65A003C2DBF /* ManOpen.xib */ = {

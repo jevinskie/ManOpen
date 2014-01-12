@@ -284,13 +284,13 @@
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)type error:(NSError **)error
 {
-    if ([type isEqual:@"man"])
+    if ([type isEqualToString:@"man"])
         [self loadManFile:[url path] isGzip:NO];
-    else if ([type isEqual:@"mangz"])
+    else if ([type isEqualToString:@"mangz"])
         [self loadManFile:[url path] isGzip:YES];
-    else if ([type isEqual:@"cat"])
+    else if ([type isEqualToString:@"cat"])
         [self loadCatFile:[url path] isGzip:NO];
-    else if ([type isEqual:@"catgz"])
+    else if ([type isEqualToString:@"catgz"])
         [self loadCatFile:[url path] isGzip:YES];
     else {
         if (error != NULL)

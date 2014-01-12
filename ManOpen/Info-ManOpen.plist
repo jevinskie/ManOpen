@@ -11,6 +11,8 @@
 			<string>unknown</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>CFBundleTypeIconFile</key>
+			<string>ManOpen</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.data</string>
@@ -34,11 +36,13 @@
 				<string>man</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
+			<string>ManOpen</string>
 			<key>CFBundleTypeName</key>
 			<string>man</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>ManDocument</string>
 		</dict>
@@ -48,11 +52,13 @@
 				<string>cat</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
+			<string>ManOpen</string>
 			<key>CFBundleTypeName</key>
 			<string>cat</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>ManDocument</string>
 		</dict>
@@ -62,7 +68,9 @@
 				<string>man.gz</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
+			<string>ManOpen</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>CFBundleTypeName</key>
 			<string>mangz</string>
 			<key>CFBundleTypeRole</key>
@@ -76,7 +84,9 @@
 				<string>cat.gz</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen.icns</string>
+			<string>ManOpen</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>CFBundleTypeName</key>
 			<string>catgz</string>
 			<key>CFBundleTypeRole</key>

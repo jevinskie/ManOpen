@@ -133,7 +133,7 @@
 - (IBAction)openManPages:(id)sender
 {
     if ([sender clickedRow] >= 0) {
-        NSString *manPage = [titles objectAtIndex:[sender clickedRow]];
+        NSString *manPage = titles[[sender clickedRow]];
         [[ManDocumentController sharedDocumentController] openString:manPage oneWordOnly:YES];
     }
 }
@@ -155,7 +155,7 @@
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     NSArray *strings = (tableColumn == titleColumn) ? titles : descriptions;
-    return [strings objectAtIndex:row];
+    return strings[row];
 }
 
 /* Document restoration */

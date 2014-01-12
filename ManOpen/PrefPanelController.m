@@ -98,18 +98,17 @@
 		NSData *textDefaultColor = DATA_FOR_COLOR([NSColor textColor]);
 		NSData *bgDefaultColor = DATA_FOR_COLOR([NSColor textBackgroundColor]);
 		
-		[userDefaults registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-					@NO,				@"QuitWhenLastClosed",
-					@NO,				@"UseItalics",
-					@YES,				@"UseBold",
-					nroff,				@"NroffCommand",
-					manpath,			@"ManPath",
-					@NO,				@"KeepPanelsOpen",
-					textDefaultColor,	@"ManTextColor",
-					linkDefaultColor,	@"ManLinkColor",
-					bgDefaultColor,		@"ManBackgroundColor",
-					@YES,				@"NSQuitAlwaysKeepsWindows", // NO will disable by default
-					nil]];
+		[userDefaults registerDefaults:@{@"QuitWhenLastClosed": @NO,
+					@"UseItalics": @NO,
+					@"UseBold": @YES,
+					@"NroffCommand": nroff,
+					@"ManPath": manpath,
+					@"KeepPanelsOpen": @NO,
+					@"ManTextColor": textDefaultColor,
+					@"ManLinkColor": linkDefaultColor,
+					@"ManBackgroundColor": bgDefaultColor,
+					@"NSQuitAlwaysKeepsWindows": @YES} // NO will disable by default
+		 ];
 	}
 }
 
@@ -257,7 +256,7 @@
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
 {
 //    [super draggingSession:session movedToPoint:screenPoint]; // doesn't exist
-    [session setValue:[NSNumber numberWithBool:[self containsScreenPoint:screenPoint]] forKey:SessionSlideBackKey];
+    [session setValue:@([self containsScreenPoint:screenPoint]) forKey:SessionSlideBackKey];
 }
 
 /* 10.7 has a new method, but it still calls this one, so this is all we need */
@@ -311,7 +310,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
 
 - (void)setUpManPathUI
 {
-    [manPathTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, NSStringPboardType, ManPathIndexSetPboardType, nil]];
+    [manPathTableView registerForDraggedTypes:@[NSFilenamesPboardType, NSStringPboardType, ManPathIndexSetPboardType]];
     [manPathTableView setVerticalMotionCanBeginDrag:YES];
     // XXX NSDragOperationDelete -- not sure the "poof" drag can show that
     [manPathTableView setDraggingSourceOperationMask:NSDragOperationCopy                     forLocal:NO];
@@ -420,7 +419,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
     
     for (currIndex = 0; currIndex < [manPathArray count]; currIndex++) {
         if ([set containsIndex:currIndex])
-            [paths addObject:[manPathArray objectAtIndex:currIndex]];
+            [paths addObject:manPathArray[currIndex]];
     }
 
     return paths;
@@ -428,7 +427,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
 
 - (BOOL)writePaths:(NSArray *)paths toPasteboard:(NSPasteboard *)pb
 {
-    [pb declareTypes:[NSArray arrayWithObjects:NSStringPboardType, nil] owner:nil];
+    [pb declareTypes:@[NSStringPboardType] owner:nil];
 
     /* This causes an NSLog if one of the paths does not exist. Hm.  May not be worth it. Might let folks drag to Trash etc. as well. */
 //        [pb setPropertyList:paths forType:NSFilenamesPboardType];
@@ -441,7 +440,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
 
     if ([self writePaths:files toPasteboard:pb])
     {
-        [pb addTypes:[NSArray arrayWithObject:ManPathIndexSetPboardType] owner:nil];
+        [pb addTypes:@[ManPathIndexSetPboardType] owner:nil];
         return [pb setData:[NSArchiver archivedDataWithRootObject:set] forType:ManPathIndexSetPboardType];
     }
 
@@ -450,7 +449,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
 
 - (NSArray *)pathsFromPasteboard:(NSPasteboard *)pb
 {
-    NSString *bestType = [pb availableTypeFromArray:[NSArray arrayWithObjects:NSFilenamesPboardType, NSStringPboardType, nil]];
+    NSString *bestType = [pb availableTypeFromArray:@[NSFilenamesPboardType, NSStringPboardType]];
     
     if ([bestType isEqual:NSFilenamesPboardType])
         return [pb propertyListForType:NSFilenamesPboardType];
@@ -543,7 +542,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
         if (indexData != nil) {
             NSIndexSet *removeSet = [NSUnarchiver unarchiveObjectWithData:indexData];
             if ([removeSet count] > 0) {
-                [self addPathDirectories:[NSArray array] atIndex:0 removeFirst:removeSet];
+                [self addPathDirectories:@[] atIndex:0 removeFirst:removeSet];
                 return YES;
             }
         }
@@ -645,7 +644,7 @@ static NSMutableArray *allApps = nil;
         if (niceName == nil)
             niceName = [[url path] lastPathComponent];
         
-        appVersion = [infoDict objectForKey:@"CFBundleShortVersionString"];
+        appVersion = infoDict[@"CFBundleShortVersionString"];
         if (appVersion != nil)
             niceName = [NSString stringWithFormat:@"%@ (%@)", niceName, appVersion];
 
@@ -708,7 +707,7 @@ static NSMutableArray *allApps = nil;
 	NSUInteger i, count = [apps count];
 	
     for (i = 0; i < count; i++) {
-        if ([[apps objectAtIndex:i] isEqualToBundleID:bundleID])
+        if ([apps[i] isEqualToBundleID:bundleID])
             return i;
     }
 #endif
@@ -745,7 +744,7 @@ static NSString *currentAppID = nil;
     [appPopup setImage:nil];
 
 	for (i = 0; i< [apps count]; i++) {
-		MVAppInfo *info = [apps objectAtIndex:i];
+		MVAppInfo *info = apps[i];
 		NSImage *image = [[workspace iconForFile:[[info appURL] path]] copy];
         NSString *niceName = [info displayName];
         NSString *displayName = niceName;
@@ -772,7 +771,7 @@ static NSString *currentAppID = nil;
     NSString *currSetID = CFBridgingRelease(LSCopyDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME));
     
     if (currSetID == nil)
-        currSetID = [[[MVAppInfo allManViewerApps] objectAtIndex:0] bundleID];
+        currSetID = [[MVAppInfo allManViewerApps][0] bundleID];
  
     if (currSetID != nil) {
         BOOL resetPopup = (currentAppID == nil); //first time
@@ -812,7 +811,7 @@ static NSString *currentAppID = nil;
     NSInteger choice = [appPopup indexOfSelectedItem];
 
     if (choice >= 0 && choice < [apps count]) {
-        MVAppInfo *info = [apps objectAtIndex:choice];
+        MVAppInfo *info = apps[choice];
         if ([info bundleID] != currentAppID)
             [self setManPageViewer:[info bundleID]];
     } else {
@@ -821,7 +820,7 @@ static NSString *currentAppID = nil;
         [panel setAllowsMultipleSelection:NO];
         [panel setResolvesAliases:YES];
         [panel setCanChooseFiles:YES];
-		[panel setAllowedFileTypes:[NSArray arrayWithObject:(NSString*)kUTTypeApplicationBundle]];
+		[panel setAllowedFileTypes:@[(NSString*)kUTTypeApplicationBundle]];
 		[panel beginSheetModalForWindow:[appPopup window] completionHandler:^(NSInteger result) {
 			if (result == NSOKButton) {
 				NSURL *appURL = [panel URL];

@@ -139,10 +139,10 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
         [task setEnvironment:environment];
     }
 
-    [task setLaunchPath:@"/bin/sh"];
-    [task setArguments:[NSArray arrayWithObjects:@"-c", command, nil]];
-    [task setStandardOutput:pipe];
-    [task setStandardError:[NSFileHandle fileHandleWithNullDevice]]; //don't care about output
+    task.launchPath = @"/bin/sh";
+    [task setArguments:@[@"-c", command]];
+    task.standardOutput = pipe;
+    task.standardError = [NSFileHandle fileHandleWithNullDevice]; //don't care about output
     [task launch];
 
     if (maxLength > 0) {
@@ -173,7 +173,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     
     if (manPath != nil) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:manPath forKey:@"MANPATH"];
+        dict[@"MANPATH"] = manPath;
         extraEnv = dict;
     }
     return [self dataByExecutingCommand:command maxLength:0 environment:extraEnv];
@@ -403,28 +403,26 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 "*/
 - (id)openWord:(NSString *)word
 {
-	@autoreleasepool {
-		NSString *section = nil;
-		NSString *base    = word;
-		NSRange lparenRange = [word rangeOfString:@"("];
-		NSRange rparenRange = [word rangeOfString:@")"];
-		id document;
+	NSString *section = nil;
+	NSString *base    = word;
+	NSRange lparenRange = [word rangeOfString:@"("];
+	NSRange rparenRange = [word rangeOfString:@")"];
+	id document;
+	
+	if (lparenRange.length != 0 && rparenRange.length != 0 &&
+		lparenRange.location < rparenRange.location)
+	{
+		NSRange sectionRange;
 		
-		if (lparenRange.length != 0 && rparenRange.length != 0 &&
-			lparenRange.location < rparenRange.location)
-		{
-			NSRange sectionRange;
-			
-			sectionRange.location = NSMaxRange(lparenRange);
-			sectionRange.length = rparenRange.location - sectionRange.location;
-			
-			base = [word substringToIndex:lparenRange.location];
-			section = [word substringWithRange:sectionRange];
-		}
+		sectionRange.location = NSMaxRange(lparenRange);
+		sectionRange.length = rparenRange.location - sectionRange.location;
 		
-		document = [self openDocumentWithName:base section:section manPath:[[NSUserDefaults standardUserDefaults] manPath]];
-		return document;
+		base = [word substringToIndex:lparenRange.location];
+		section = [word substringWithRange:sectionRange];
 	}
+	
+	document = [self openDocumentWithName:base section:section manPath:[[NSUserDefaults standardUserDefaults] manPath]];
+	return document;
 }
 
 
@@ -536,9 +534,9 @@ static BOOL IsSectionWord(NSString *word)
     /* If the string is of the form "3 printf", arrange it better for our parser.  Requested by Eskimo.  Also accept 'n' as a section */
     if ([words count] == 2 &&
         [string rangeOfString:@"("].length == 0 &&
-        IsSectionWord([words objectAtIndex:0]))
+        IsSectionWord(words[0]))
     {
-        string = [NSString stringWithFormat:@"%@(%@)", [words objectAtIndex:1], [words objectAtIndex:0]];
+        string = [NSString stringWithFormat:@"%@(%@)", words[1], words[0]];
     }
     
     /* Append the section if chosen in the popup and not explicity defined in the string */

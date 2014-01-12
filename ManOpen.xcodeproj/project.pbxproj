@@ -118,6 +118,9 @@
 		5553E2191881F666003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ManPage.xib; sourceTree = "<group>"; };
 		5553E21C1881F670003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PrefPanel.xib; sourceTree = "<group>"; };
 		5553E21E1881F83E003C2DBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "ManOpen (Application)/Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		5553E22018821265003C2DBF /* openman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openman-Info.plist"; sourceTree = "<group>"; };
+		5553E22418821455003C2DBF /* cat2html-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cat2html-Info.plist"; sourceTree = "<group>"; };
+		5553E226188214B9003C2DBF /* cat2rtf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cat2rtf-Info.plist"; sourceTree = "<group>"; };
 		55F13AB515103C1E0095B5A9 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = English; path = English.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A242C14E4C3FE00F6AFFE /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		D38A242D14E4C3FE00F6AFFE /* ManOpen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,12 +191,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5553E222188213BA003C2DBF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5553E22418821455003C2DBF /* cat2html-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5553E22518821499003C2DBF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5553E226188214B9003C2DBF /* cat2rtf-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		D39278DB0821FF9D00376676 /* ManOpen */ = {
 			isa = PBXGroup;
 			children = (
 				D39278E00821FFA400376676 /* Supporting Files */,
 				D39278E40821FFA400376676 /* Subprojects */,
-				D39279800821FFA400376676 /* External Frameworks and Libraries */,
+				D39279800821FFA400376676 /* Frameworks */,
 				D39278ED0821FFA400376676 /* Products */,
 			);
 			name = ManOpen;
@@ -333,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				D392794F0821FFA400376676 /* Other Sources */,
+				5553E22518821499003C2DBF /* Supporting Files */,
 			);
 			name = cat2rtf;
 			path = cat2rtf.tproj;
@@ -350,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				D39279620821FFA400376676 /* Other Sources */,
+				5553E222188213BA003C2DBF /* Supporting Files */,
 			);
 			name = cat2html;
 			path = cat2html.tproj;
@@ -385,17 +406,18 @@
 			isa = PBXGroup;
 			children = (
 				D392797F0821FFA400376676 /* openman.1 */,
+				5553E22018821265003C2DBF /* openman-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D39279800821FFA400376676 /* External Frameworks and Libraries */ = {
+		D39279800821FFA400376676 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				D39279810821FFA400376676 /* Foundation.framework */,
 				D39279850821FFA400376676 /* AppKit.framework */,
 			);
-			name = "External Frameworks and Libraries";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -783,7 +805,9 @@
 		D38A243614E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				PRODUCT_NAME = cat2rtf;
 			};
 			name = Debug;
@@ -791,6 +815,8 @@
 		D38A243714E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				PRODUCT_NAME = cat2rtf;
 			};
 			name = Release;
@@ -798,7 +824,9 @@
 		D38A244214E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
 				PRODUCT_NAME = cat2html;
 			};
 			name = Debug;
@@ -806,6 +834,8 @@
 		D38A244314E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
 				PRODUCT_NAME = cat2html;
 			};
 			name = Release;
@@ -814,6 +844,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				PRODUCT_NAME = openman;
 			};
 			name = Debug;
@@ -822,6 +854,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				PRODUCT_NAME = openman;
 			};
 			name = Release;

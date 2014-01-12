@@ -88,9 +88,9 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>ManOpen 2.6.3 © 2012 Carl Lindberg</string>
+	<string>ManOpen 2.6.3 © 2012 Carl Lindberg, 2010 Jan Weiß</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.clindberg.ManOpen</string>
+	<string>org.clindberg.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -121,7 +121,7 @@
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 1999-2012 Carl Lindberg, 2010 Jan Weiß</string>
+	<string>Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß</string>
 	<key>NSMainNibFile</key>
 	<string>ManOpen</string>
 	<key>NSPrincipalClass</key>

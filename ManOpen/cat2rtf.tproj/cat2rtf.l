@@ -16,9 +16,7 @@
 
     #include <string.h>
     
-    #if defined(__APPLE__) && !defined(NeXT)
     #define RTF_HYPERLINKS
-    #endif
 
     #define BOLDFLAG    1
     #define ULINEFLAG    2

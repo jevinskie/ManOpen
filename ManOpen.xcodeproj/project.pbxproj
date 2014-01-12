@@ -705,15 +705,18 @@
 		D38A23AA14E38E1E00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_OUTPUT_FORMAT = XML;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				PLIST_FILE_OUTPUT_FORMAT = XML;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -723,14 +726,19 @@
 		D38A23AB14E38E1E00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 			};
 			name = Release;
 		};
@@ -794,6 +802,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = ManOpen;
@@ -806,6 +815,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				PRODUCT_NAME = cat2rtf;
@@ -816,6 +826,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				PRODUCT_NAME = cat2rtf;
 			};
@@ -825,6 +836,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
 				PRODUCT_NAME = cat2html;
@@ -835,6 +847,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
 				PRODUCT_NAME = cat2html;
 			};
@@ -845,8 +858,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				PRODUCT_NAME = openman;
+				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
@@ -855,8 +870,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				PRODUCT_NAME = openman;
+				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};

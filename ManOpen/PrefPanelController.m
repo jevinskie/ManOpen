@@ -42,7 +42,7 @@
         }
     }
     
-    return [NSFont userFixedPitchFontOfSize:12.0f]; // Monaco
+    return [NSFont userFixedPitchFontOfSize:12.0]; // Monaco, or Menlo
 }
 
 - (NSString *)manPath
@@ -94,7 +94,7 @@
         manpath = [manpath stringByAppendingString:@":/usr/X11R6/man"];
     
     {
-		NSData *linkDefaultColor = DATA_FOR_COLOR([NSColor colorWithDeviceRed:0.1f green:0.1f blue:1.0f alpha:1.0f]);
+		NSData *linkDefaultColor = DATA_FOR_COLOR([NSColor colorWithSRGBRed:0.10 green:0.10 blue:1.0 alpha:1.0]);
 		NSData *textDefaultColor = DATA_FOR_COLOR([NSColor textColor]);
 		NSData *bgDefaultColor = DATA_FOR_COLOR([NSColor textBackgroundColor]);
 		
@@ -137,12 +137,12 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-
+	
     /* The "save windows on quit" is a Lion-only feature */
     if (!IsLion()) {
         NSRect oldFrame = [generalSwitchMatrix frame];
         [generalSwitchMatrix removeRow:4];
-        [generalSwitchMatrix sizeToCells];        
+        [generalSwitchMatrix sizeToCells];
         NSRect newFrame = [generalSwitchMatrix frame];
         /* Keep the top edge at the same place; sizeToCells just lowers the height */
         newFrame.origin.y += (oldFrame.size.height - newFrame.size.height);
@@ -179,7 +179,7 @@
 {
     NSFont *font = [fontField font];
     NSString *fontString;
-
+	
     font = [sender convertFont:font];
     [self setFontFieldToFont:font];
     fontString = [NSString stringWithFormat:@"%f %@", [font pointSize], [font fontName]];
@@ -189,21 +189,21 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
     SEL action = [menuItem action];
-
+	
     if ((action == @selector(cut:)) || (action == @selector(copy:)) || (action == @selector(delete:))) {
         return [manPathController canRemove];
     }
-
+	
     if (action == @selector(paste:)) {
         NSArray *types = [[NSPasteboard generalPasteboard] types];
         return [manPathController canInsert] &&
-               ([types containsObject:NSFilenamesPboardType] || [types containsObject:NSStringPboardType]);
+		([types containsObject:NSFilenamesPboardType] || [types containsObject:NSStringPboardType]);
     }
     /* The menu on our app popup may call this validate method ;-) */
     if (action == @selector(chooseNewApp:))
         return YES;
-
-//    NSLog(@"unk item: %s", action);
+	
+	//    NSLog(@"unk item: %s", action);
     return NO;
 }
 
@@ -242,7 +242,7 @@
 {
     NSPoint windowPoint = [[self window] convertScreenToBase:screenPoint];
     NSPoint viewPoint = [self convertPoint:windowPoint fromView:nil];
-
+	
     return NSMouseInRect(viewPoint, [self bounds], [self isFlipped]);
 }
 
@@ -255,7 +255,7 @@
 /* Only implement the 10.7 method, since I don't think we can conditionally affect the "slide back" value prior to 10.7 */
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
 {
-//    [super draggingSession:session movedToPoint:screenPoint]; // doesn't exist
+    //[super draggingSession:session movedToPoint:screenPoint]; // doesn't exist
     [session setValue:@([self containsScreenPoint:screenPoint]) forKey:SessionSlideBackKey];
 }
 
@@ -295,11 +295,13 @@
     
     return new;
 }
+
 - (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error
 {
     *anObject = [string stringByExpandingTildeInPath];
     return YES;
 }
+
 @end
 
 static NSString *ManPathIndexSetPboardType = @"org.clindberg.ManOpen.ManPathIndexSetType";
@@ -332,12 +334,12 @@ static NSString *ManPathArrayKey = @"manPathArray";
      * our values are non-editable, by using "description" as the keypath on the NSStrings.
      */
     NSInteger i;
-
+	
     [self willChangeValueForKey:ManPathArrayKey];
     if (removeIndexes != nil)
     {
         int numBeforeInsertion = 0;
-
+		
         for (i = [manPathArray count] - 1; i >= 0; i--)
         {
             if ([removeIndexes containsIndex:i])
@@ -349,7 +351,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
         
         insertIndex -= numBeforeInsertion;
     }
-
+	
     for (NSString *directory in directories)
     {
         NSString *path = [directory stringByExpandingTildeInPath];
@@ -377,21 +379,21 @@ static NSString *ManPathArrayKey = @"manPathArray";
     
     return manPathArray;
 }
+
 - (void)setManPathArray:(NSArray *)anArray;
 {
     [manPathArray setArray:anArray];
     [self saveManPath];
 }
 
-
 - (IBAction)addPathFromPanel:(id)sender
 {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
-
+	
     [panel setAllowsMultipleSelection:YES];
     [panel setCanChooseDirectories:YES];
     [panel setCanChooseFiles:NO];
-
+	
 	[panel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
 		if (result == NSOKButton) {
 			NSArray *urls = [panel URLs];
@@ -421,29 +423,29 @@ static NSString *ManPathArrayKey = @"manPathArray";
         if ([set containsIndex:currIndex])
             [paths addObject:manPathArray[currIndex]];
     }
-
+	
     return paths;
 }
 
 - (BOOL)writePaths:(NSArray *)paths toPasteboard:(NSPasteboard *)pb
 {
     [pb declareTypes:@[NSStringPboardType] owner:nil];
-
+	
     /* This causes an NSLog if one of the paths does not exist. Hm.  May not be worth it. Might let folks drag to Trash etc. as well. */
-//        [pb setPropertyList:paths forType:NSFilenamesPboardType];
+	//[pb setPropertyList:paths forType:NSFilenamesPboardType];
     return [pb setString:[paths componentsJoinedByString:@":"] forType:NSStringPboardType];
 }
 
 - (BOOL)writeIndexSet:(NSIndexSet *)set toPasteboard:(NSPasteboard *)pb
 {
     NSArray *files = [self pathsAtIndexes:set];
-
+	
     if ([self writePaths:files toPasteboard:pb])
     {
         [pb addTypes:@[ManPathIndexSetPboardType] owner:nil];
         return [pb setData:[NSArchiver archivedDataWithRootObject:set] forType:ManPathIndexSetPboardType];
     }
-
+	
     return NO;
 }
 
@@ -465,15 +467,18 @@ static NSString *ManPathArrayKey = @"manPathArray";
     NSArray *files = [self pathsAtIndexes:[manPathController selectionIndexes]];
     [self writePaths:files toPasteboard:[NSPasteboard generalPasteboard]];
 }
+
 - (void)delete:(id)sender
 {
     [manPathController remove:sender];
 }
+
 - (void)cut:(id)sender
 {
     [self copy:sender];
     [self delete:sender];
 }
+
 - (void)paste:(id)sender
 {
     NSArray *paths = [self pathsFromPasteboard:[NSPasteboard generalPasteboard]];
@@ -488,26 +493,28 @@ static NSString *ManPathArrayKey = @"manPathArray";
 {
     return [self writeIndexSet:rowIndexes toPasteboard:pboard];
 }
+
 - (NSDragOperation)tableView:(NSTableView*)tableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation
 {
     NSPasteboard *pb = [info draggingPasteboard];
-
+	
     /* We only drop between rows */
     if (dropOperation != NSTableViewDropAbove)
         return NSDragOperationNone;
-
+	
     /* If this is a dragging operation in the table itself, show the move icon */
     if ([[pb types] containsObject:ManPathIndexSetPboardType] && ([info draggingSource] == manPathTableView))
         return NSDragOperationMove;
-
+	
     NSArray *paths = [self pathsFromPasteboard:pb];
     for (NSString *path in paths) {
         if (![manPathArray containsObject:path])
             return NSDragOperationCopy;
     }
-
+	
     return NSDragOperationNone;
 }
+
 - (BOOL)tableView:(NSTableView*)tableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation
 {
     NSPasteboard *pb = [info draggingPasteboard];
@@ -524,7 +531,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
     } else {
         pathsToAdd = [self pathsFromPasteboard:pb];
     }
-
+	
     if ([pathsToAdd count] > 0) {
         [self addPathDirectories:pathsToAdd atIndex:row removeFirst:removeSet];
         return YES;
@@ -547,14 +554,11 @@ static NSString *ManPathArrayKey = @"manPathArray";
             }
         }
     }
-
+	
     return NO;
 }
 
 @end
-
-
-
 
 
 /* 
@@ -602,9 +606,9 @@ static NSMutableArray *allApps = nil;
 
 - (BOOL)isEqual:(id)other
 {
-    if ([other isKindOfClass:[MVAppInfo class]]) {
+    if ([other isKindOfClass:[MVAppInfo class]])
 		return [self isEqualToBundleID:[other bundleID]];
-	} else
+	else
 		return NO;
 }
 
@@ -621,7 +625,7 @@ static NSMutableArray *allApps = nil;
         if (path != nil)
             self.appURL = [NSURL fileURLWithPath:path];
     }
-
+	
     return appURL;
 }
 
@@ -634,7 +638,7 @@ static NSMutableArray *allApps = nil;
         NSString *appVersion;
         NSString *niceName = nil;
 		CFStringRef niceNameRef = NULL;
-
+		
         if (infoDict == nil)
             infoDict = [[NSBundle bundleWithURL:url] infoDictionary];
         
@@ -647,7 +651,7 @@ static NSMutableArray *allApps = nil;
         appVersion = infoDict[@"CFBundleShortVersionString"];
         if (appVersion != nil)
             niceName = [NSString stringWithFormat:@"%@ (%@)", niceName, appVersion];
-
+		
         self.displayName = niceName;
     }
     
@@ -675,12 +679,11 @@ static NSMutableArray *allApps = nil;
 {
     if (allApps == nil)
     {
-        /* Ensure our app is registered */
-        //NSURL *url = [[NSBundle mainBundle] bundleURL];
-        //LSRegisterURL(BRIDGE(CFURLRef,url), false);
+        /* Ensure our app is registered
+		 NSURL *url = [[NSBundle mainBundle] bundleURL];
+		 LSRegisterURL(BRIDGE(CFURLRef,url), false); */
         
         NSArray *allBundleIDs = CFBridgingRelease(LSCopyAllHandlersForURLScheme((CFStringRef)URL_SCHEME));
-        NSUInteger i;
 
         allApps = [[NSMutableArray alloc] initWithCapacity:[allBundleIDs count]];
 		for (NSString *bundleID in allBundleIDs) {
@@ -698,20 +701,11 @@ static NSMutableArray *allApps = nil;
 		return NSNotFound;
 	}
 	NSArray *apps = [self allManViewerApps];
-#if 0
     for (MVAppInfo *obj in apps) {
         if ([obj isEqualToBundleID:bundleID])
             return [apps indexOfObject:obj];
     }
-#else 
-	NSUInteger i, count = [apps count];
 	
-    for (i = 0; i < count; i++) {
-        if ([apps[i] isEqualToBundleID:bundleID])
-            return i;
-    }
-#endif
-
     return NSNotFound;
 }
 
@@ -725,11 +719,11 @@ static NSString *currentAppID = nil;
 - (void)setAppPopupToCurrent
 {
     NSUInteger currIndex = [MVAppInfo indexOfBundleID:currentAppID];
-
+	
     if (currIndex == NSNotFound) {
         currIndex = 0;
     }
-
+	
     if (currIndex < [appPopup numberOfItems])
         [appPopup selectItemAtIndex:currIndex];
 }
@@ -739,10 +733,10 @@ static NSString *currentAppID = nil;
     NSArray *apps = [MVAppInfo allManViewerApps];
     NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
     NSUInteger i;
-
+	
     [appPopup removeAllItems];
     [appPopup setImage:nil];
-
+	
 	for (i = 0; i< [apps count]; i++) {
 		MVAppInfo *info = apps[i];
 		NSImage *image = [[workspace iconForFile:[[info appURL] path]] copy];
@@ -772,12 +766,12 @@ static NSString *currentAppID = nil;
     
     if (currSetID == nil)
         currSetID = [[MVAppInfo allManViewerApps][0] bundleID];
- 
+	
     if (currSetID != nil) {
         BOOL resetPopup = (currentAppID == nil); //first time
-
+		
 		currentAppID = currSetID;
-
+		
         if ([MVAppInfo indexOfBundleID:currSetID] == NSNotFound) {
             [MVAppInfo addAppWithID:currSetID sort:YES];
             resetPopup = YES;
@@ -795,7 +789,7 @@ static NSString *currentAppID = nil;
     
     if (error != noErr)
         NSLog(@"Could not set default " URL_SCHEME_PREFIX @" app: Launch Services error %ld", (long)error);
-
+	
     [self resetCurrentApp];
 }
 
@@ -809,7 +803,7 @@ static NSString *currentAppID = nil;
 {
     NSArray *apps = [MVAppInfo allManViewerApps];
     NSInteger choice = [appPopup indexOfSelectedItem];
-
+	
     if (choice >= 0 && choice < [apps count]) {
         MVAppInfo *info = apps[choice];
         if ([info bundleID] != currentAppID)

@@ -10,11 +10,10 @@
 
 extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 
-@interface ManDocumentController : NSDocumentController <ManOpen>
+@interface ManDocumentController : NSDocumentController <ManOpen, NSApplicationDelegate>
 {
     IBOutlet NSPanel *openTextPanel;
     IBOutlet NSPanel *aproposPanel;
-    IBOutlet NSPanel *infoPanel;
     IBOutlet NSPanel *helpPanel;
     IBOutlet NSTextField *aproposField;
     IBOutlet NSTextField *openTextField;

@@ -11,7 +11,6 @@
                 <outlet property="aproposPanel" destination="5" id="32"/>
                 <outlet property="helpPanel" destination="56" id="60"/>
                 <outlet property="helpTextView" destination="57" id="snR-cd-xix"/>
-                <outlet property="infoPanel" destination="15" id="30"/>
                 <outlet property="openSectionPopup" destination="41" id="55"/>
                 <outlet property="openTextField" destination="6" id="34"/>
                 <outlet property="openTextPanel" destination="18" id="31"/>
@@ -100,105 +99,6 @@ Gw
                     <constraint firstItem="10" firstAttribute="leading" secondItem="14" secondAttribute="trailing" constant="8" symbolic="YES" id="ngT-wX-nXV"/>
                     <constraint firstAttribute="trailing" secondItem="24" secondAttribute="trailing" constant="20" symbolic="YES" id="pf0-Ts-qPp"/>
                     <constraint firstAttribute="bottom" secondItem="40" secondAttribute="bottom" constant="10" id="pfY-xb-Chf"/>
-                </constraints>
-            </view>
-        </window>
-        <window title="Info" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="15" userLabel="Info" customClass="NSPanel">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="432" y="542" width="255" height="146"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
-            <view key="contentView" id="16">
-                <rect key="frame" x="0.0" y="0.0" width="255" height="146"/>
-                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="19">
-                        <rect key="frame" x="3" y="4" width="63" height="13"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" alignment="left" title="Version 2.1.3" id="72">
-                            <font key="font" size="10" name="Helvetica"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8">
-                        <rect key="frame" x="82" y="4" width="171" height="13"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" alignment="right" title="Copyright 2000.  All Rights Reserved." id="68">
-                            <font key="font" size="10" name="Helvetica"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <box title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="22">
-                        <rect key="frame" x="1" y="21" width="253" height="6"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <view key="contentView">
-                            <rect key="frame" x="2" y="2" width="249" height="2"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        </view>
-                        <constraints>
-                            <constraint firstAttribute="height" id="hVR-he-9Am"/>
-                        </constraints>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" size="12" name="Helvetica"/>
-                    </box>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                        <rect key="frame" x="97" y="96" width="118" height="30"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" alignment="center" title="ManOpen" id="70">
-                            <font key="font" size="24" name="Helvetica-Bold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="26">
-                        <rect key="frame" x="100" y="70" width="111" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" alignment="center" title="by Carl Lindberg" id="74">
-                            <font key="font" size="14" name="Helvetica"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="20">
-                        <rect key="frame" x="74" y="55" width="163" height="15"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" selectable="YES" alignment="center" title="lindberg@clindberg.org" id="73">
-                            <font key="font" size="12" name="Helvetica-Oblique"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <imageView translatesAutoresizingMaskIntoConstraints="NO" id="11">
-                        <rect key="frame" x="20" y="78" width="48" height="48"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="48" id="Ph2-8M-2d8"/>
-                            <constraint firstAttribute="height" constant="48" id="Xfk-tN-eoS"/>
-                        </constraints>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ManOpen" id="69"/>
-                    </imageView>
-                </subviews>
-                <constraints>
-                    <constraint firstItem="26" firstAttribute="centerX" secondItem="20" secondAttribute="centerX" id="2bX-qQ-h0z"/>
-                    <constraint firstItem="20" firstAttribute="leading" secondItem="11" secondAttribute="trailing" constant="8" symbolic="YES" id="4Hw-u7-wUu"/>
-                    <constraint firstItem="19" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="5" id="6Qo-px-4XC"/>
-                    <constraint firstItem="22" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="4" id="Igb-CS-t37"/>
-                    <constraint firstItem="11" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" id="NoD-LF-bUl"/>
-                    <constraint firstAttribute="centerX" secondItem="22" secondAttribute="centerX" id="QUJ-9E-0Qu"/>
-                    <constraint firstItem="26" firstAttribute="centerX" secondItem="12" secondAttribute="centerX" id="QfD-c4-6PF"/>
-                    <constraint firstItem="8" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="8" symbolic="YES" id="UsR-Uh-bH8"/>
-                    <constraint firstItem="19" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="8" symbolic="YES" id="aNy-mh-Grd"/>
-                    <constraint firstItem="26" firstAttribute="top" secondItem="12" secondAttribute="bottom" constant="8" symbolic="YES" id="aoz-k9-09l"/>
-                    <constraint firstItem="20" firstAttribute="top" secondItem="26" secondAttribute="bottom" id="dh9-18-rtA"/>
-                    <constraint firstAttribute="trailing" secondItem="8" secondAttribute="trailing" constant="4" id="hlD-Vf-0T5"/>
-                    <constraint firstAttribute="trailing" secondItem="20" secondAttribute="trailing" constant="20" symbolic="YES" id="jqA-MM-hcN"/>
-                    <constraint firstItem="12" firstAttribute="top" secondItem="16" secondAttribute="top" constant="20" symbolic="YES" id="l48-1j-adE"/>
-                    <constraint firstAttribute="bottom" secondItem="8" secondAttribute="bottom" constant="4" id="m4G-YO-Kb4"/>
-                    <constraint firstItem="11" firstAttribute="top" secondItem="16" secondAttribute="top" constant="20" symbolic="YES" id="tKd-lV-tTh"/>
-                    <constraint firstItem="19" firstAttribute="baseline" secondItem="8" secondAttribute="baseline" id="vIb-wV-yP6"/>
                 </constraints>
             </view>
         </window>
@@ -334,10 +234,10 @@ Gw
                                     <rect key="frame" x="0.0" y="0.0" width="474" height="481"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="474" height="481"/>
+                                    <size key="minSize" width="475" height="481"/>
                                     <size key="maxSize" width="490" height="10000000"/>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="474" height="481"/>
+                                    <size key="minSize" width="475" height="481"/>
                                     <size key="maxSize" width="490" height="10000000"/>
                                 </textView>
                             </subviews>
@@ -362,7 +262,4 @@ Gw
             </view>
         </window>
     </objects>
-    <resources>
-        <image name="ManOpen" width="128" height="128"/>
-    </resources>
 </document>

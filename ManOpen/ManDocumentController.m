@@ -296,7 +296,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
  */
 - (void)openDocumentWithContentsOfURL:(NSURL *)url display:(BOOL)displayDocument completionHandler:(void (^)(NSDocument *document, BOOL documentWasAlreadyOpen, NSError *error))completionHandler
 {
-    NSError *error = nil;
+    NSError *error;
     NSUInteger numDocuments = [[self documents] count];
     NSDocument *document = [self openDocumentWithContentsOfURL:url display:displayDocument error:&error];
     BOOL docAdded = numDocuments < [[self documents] count];
@@ -318,7 +318,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 - (id)documentForTitle:(NSString *)title
 {
     NSArray *documents = [self documents];
-
+	
     for (NSDocument *document in documents)
     {
         if ([document isKindOfClass:[ManDocument class]] &&
@@ -333,7 +333,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
             return document;
         }
     }
-
+	
     return nil;
 }
 
@@ -344,20 +344,20 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 {
     ManDocument *document;
     NSString    *title = name;
-
+	
     if (section && [section length] > 0)
     {
         title = [NSString stringWithFormat:@"%@(%@)",name, section];
     }
-
+	
     if ((document = [self documentForTitle:title]) == nil)
     {
         NSString *filename;
-
+		
         document = [[ManDocument alloc]
-                        initWithName:name section:section
-                        manPath:manPath title:title];
-
+					initWithName:name section:section
+					manPath:manPath title:title];
+		
         /* Add the filename to the recent menu */
         filename = [self manFileForName:name section:section manPath:manPath];
         if (filename != nil)
@@ -370,11 +370,11 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 		}
 		[self addDocument:document];
         [document makeWindowControllers];
-
+		
     }
-
+	
     [document showWindows];
-
+	
     return document;
 }
 
@@ -382,18 +382,18 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 {
     AproposDocument *document;
     NSString *title = [NSString stringWithFormat:@"Apropos %@", apropos];
-
+	
     if ((document = [self documentForTitle:title]) == nil)
     {
         document = [[AproposDocument alloc]
-                        initWithString:apropos manPath:manPath title:title];
+					initWithString:apropos manPath:manPath title:title];
         if (document)
 			[self addDocument:document];
         [document makeWindowControllers];
     }
-
+	
     [document showWindows];
-
+	
     return document;
 }
 
@@ -455,7 +455,7 @@ static NSArray *GetWordArray(NSString *string)
         if (reply != NSAlertAlternateReturn)
             return;
     }
-
+	
     [self openString:string oneWordOnly:NO];
 }
 
@@ -473,9 +473,9 @@ static NSArray *GetWordArray(NSString *string)
     NSCharacterSet *nonwhitespaceSet = [whitespaceSet invertedSet];
     NSString       *aWord;
     NSString       *lastWord = nil;
-
+	
     [scanner setCharactersToBeSkipped:whitespaceSet];
-
+	
     while (![scanner isAtEnd])
     {
         if ([scanner scanCharactersFromSet:nonwhitespaceSet intoString:&aWord])
@@ -509,7 +509,7 @@ static NSArray *GetWordArray(NSString *string)
             }
         }
     }
-
+	
     if (lastWord != nil) {
         if ([lastWord hasSuffix:@","])
             lastWord = [lastWord substringToIndex:[lastWord length] - 1];
@@ -530,7 +530,7 @@ static BOOL IsSectionWord(NSString *word)
 {
     NSString *string = [openTextField stringValue];
     NSArray *words = GetWordArray(string);
-
+	
     /* If the string is of the form "3 printf", arrange it better for our parser.  Requested by Eskimo.  Also accept 'n' as a section */
     if ([words count] == 2 &&
         [string rangeOfString:@"("].length == 0 &&
@@ -545,7 +545,7 @@ static BOOL IsSectionWord(NSString *word)
     {
         string = [string stringByAppendingFormat:@"(%ld)", (long)[openSectionPopup indexOfSelectedItem]];
     }
-
+	
     [self openString:string];
     [openTextField selectText:self];
 }
@@ -577,12 +577,11 @@ static BOOL IsSectionWord(NSString *word)
     if (![openTextPanel isVisible])
         [openSectionPopup selectItemAtIndex:0];
     [openTextField selectText:self];
-
+	
     if ([self useModalPanels]) {
         if ([NSApp runModalForWindow:openTextPanel] == NSOKButton)
             [self openTitleFromPanel];
-    }
-    else {
+    } else {
         [openTextPanel makeKeyAndOrderFront:self];
     }
 }
@@ -593,8 +592,7 @@ static BOOL IsSectionWord(NSString *word)
     if ([self useModalPanels]) {
         if ([NSApp runModalForWindow:aproposPanel] == NSOKButton)
             [self openAproposFromPanel];
-    }
-    else {
+    } else {
         [aproposPanel makeKeyAndOrderFront:self];
     }
 }
@@ -603,11 +601,10 @@ static BOOL IsSectionWord(NSString *word)
 {
     if ([self useModalPanels])
         [[sender window] orderOut:self];
-
+	
     if ([[sender window] level] == NSModalPanelWindowLevel) {
         [NSApp stopModalWithCode:NSOKButton];
-    }
-    else {
+    } else {
         [self openTitleFromPanel];
     }
 }
@@ -616,11 +613,10 @@ static BOOL IsSectionWord(NSString *word)
 {
     if ([self useModalPanels])
         [[sender window] orderOut:self];
-
+	
     if ([[sender window] level] == NSModalPanelWindowLevel) {
         [NSApp stopModalWithCode:NSOKButton];
-    }
-    else {
+    } else {
         [self openAproposFromPanel];
     }
 }
@@ -719,7 +715,7 @@ static BOOL IsSectionWord(NSString *word)
 {
     NSString *pboardString;
     NSArray *types = [pboard types];
-
+	
     if ([types containsObject:NSStringPboardType] &&
         (pboardString = [pboard stringForType:NSStringPboardType]))
     {
@@ -731,7 +727,7 @@ static BOOL IsSectionWord(NSString *word)
 {
     NSString *pboardString;
     NSArray *types = [pboard types];
-
+	
     if ([types containsObject:NSStringPboardType] &&
         (pboardString = [pboard stringForType:NSStringPboardType]))
     {
@@ -803,13 +799,13 @@ static BOOL IsSectionWord(NSString *word)
 {
     NSString *param = [self directParameter];
     NSString *section = nil;
-
+	
     if ([param rangeOfString:URL_PREFIX options:NSCaseInsensitiveSearch|NSAnchoredSearch].length > 0)
     {
         NSString *path = [param substringFromIndex:[URL_PREFIX length]];
         NSMutableArray *pageNames = [NSMutableArray array];
         NSArray *components = [path pathComponents];
-
+		
         for (NSString *name in components)
         {
             if ([name length] == 0 || [name isEqual:@"/"]) continue;
@@ -824,7 +820,7 @@ static BOOL IsSectionWord(NSString *word)
                 }
             }
         }
-
+		
         if ([pageNames count] > 0)
             [[ManDocumentController sharedDocumentController] openString:[pageNames componentsJoinedByString:@" "]];
     }

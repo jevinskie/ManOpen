@@ -5,13 +5,10 @@
 #import "ManDocumentController.h"
 #import "PrefPanelController.h"
 
-@interface NSDocument (LionRestorationMethods)
-- (void)encodeRestorableStateWithCoder:(NSCoder *)coder;
-- (void)restoreStateWithCoder:(NSCoder *)coder;
-@end
-
 @implementation AproposDocument
 @synthesize title;
+@synthesize tableView;
+@synthesize titleColumn;
 
 + (BOOL)canConcurrentlyReadDocumentsOfType:(NSString *)typeName
 {

@@ -46,6 +46,13 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 }
 
 @implementation ManDocumentController
+@synthesize aproposField;
+@synthesize aproposPanel;
+@synthesize helpPanel;
+@synthesize openSectionPopup;
+@synthesize openTextField;
+@synthesize openTextPanel;
+@synthesize startedUp;
 
 - (id)init
 {

@@ -9,16 +9,14 @@
 extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 
 @interface ManDocumentController : NSDocumentController <ManOpen, NSApplicationDelegate>
-{
-    IBOutlet NSPanel *openTextPanel;
-    IBOutlet NSPanel *aproposPanel;
-    IBOutlet NSPanel *helpPanel;
-    IBOutlet NSTextField *aproposField;
-    IBOutlet NSTextField *openTextField;
-    IBOutlet NSPopUpButton *openSectionPopup;
-    BOOL startedUp;
-}
 @property (unsafe_unretained) IBOutlet NSTextView *helpTextView;
+@property (weak) IBOutlet NSPanel *openTextPanel;
+@property (weak) IBOutlet NSPanel *aproposPanel;
+@property (weak) IBOutlet NSPanel *helpPanel;
+@property (weak) IBOutlet NSTextField *aproposField;
+@property (weak) IBOutlet NSTextField *openTextField;
+@property (weak) IBOutlet NSPopUpButton *openSectionPopup;
+@property BOOL startedUp;
 
 - (id)openWord:(NSString *)word;
 

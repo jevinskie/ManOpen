@@ -1,8 +1,48 @@
 /* PrefPanelController.m created by lindberg on Fri 08-Oct-1999 */
 
+#include <ApplicationServices/ApplicationServices.h>
 #import "PrefPanelController.h"
 #import <AppKit/AppKit.h>
 #import "ManDocumentController.h"
+
+#define URL_SCHEME @"x-man-page"
+#define URL_SCHEME_PREFIX URL_SCHEME @":"
+
+
+static NSString *ManPathIndexSetPboardType = @"org.clindberg.ManOpen.ManPathIndexSetType";
+static NSString *ManPathArrayKey = @"manPathArray";
+
+/* Little class to store info on the possible man page viewers, for easier sorting by display name */
+@interface MVAppInfo : NSObject
+@property (strong) NSString *bundleID;
+@property (strong, nonatomic) NSString *displayName;
+@property (strong, nonatomic) NSURL *appURL;
+
++ (NSArray *)allManViewerApps;
++ (void)addAppWithID:(NSString *)aBundleID sort:(BOOL)shouldResort;
++ (NSUInteger)indexOfBundleID:(NSString*)bundleID;
+
+@end
+
+
+/* Man path table view pref code.  We are trying to support drag-reordering, and other fun stuff. */
+
+
+/*
+ * Class to add a delegate method for when something was dropped with no other action
+ * outside the view, i.e. the "poof" removing functionality.  In 10.7, this can almost
+ * be implemented in the dataSource, but I wanted to retain the "slide back" functionality
+ * when dropped in an invalid place inside the view, which requires a subclass anyways.
+ * Prior to 10.7, a subclass is required to get the "end" notification, and also to
+ * disable the "slide back" functionality.
+ */
+@interface PoofDragTableView : NSTableView
+@end
+
+@interface NSObject (PoofDragDataSource)
+- (BOOL)tableView:(NSTableView *)tableView performDropOutsideViewAtPoint:(NSPoint)screenPoint;
+@end
+
 
 @implementation NSUserDefaults (ManOpenPreferences)
 
@@ -53,15 +93,23 @@
 @end
 
 
-@interface PrefPanelController (Private)
+@interface PrefPanelController ()
 - (void)setUpDefaultManViewerApp;
 - (void)setFontFieldToFont:(NSFont *)font;
 - (void)setUpManPathUI;
+@property (strong) NSString *currentAppID;
 @end
 
 #define DATA_FOR_COLOR(color) [NSArchiver archivedDataWithRootObject:color]
 
 @implementation PrefPanelController
+@synthesize currentAppID;
+@synthesize appPopup;
+@synthesize fontField;
+@synthesize generalSwitchMatrix;
+@synthesize manPathArray;
+@synthesize manPathController;
+@synthesize manPathTableView;
 
 + (void)registerManDefaults
 {
@@ -196,102 +244,118 @@
     return NO;
 }
 
-@end
+#pragma mark DefaultManApp
 
-
-/* Man path table view pref code.  We are trying to support drag-reordering, and other fun stuff. */
-
-
-/*
- * Class to add a delegate method for when something was dropped with no other action
- * outside the view, i.e. the "poof" removing functionality.  In 10.7, this can almost
- * be implemented in the dataSource, but I wanted to retain the "slide back" functionality
- * when dropped in an invalid place inside the view, which requires a subclass anyways.
- * Prior to 10.7, a subclass is required to get the "end" notification, and also to
- * disable the "slide back" functionality.
- */
-@interface PoofDragTableView : NSTableView
-@end
-
-@interface NSObject (PoofDragDataSource)
-- (BOOL)tableView:(NSTableView *)tableView performDropOutsideViewAtPoint:(NSPoint)screenPoint;
-@end
-
-/*
- * NSDraggingSession is a 10.7 only class, which has the slide-back property, which Id like to
- * set depending on the image is inside or outside the view.  Since I will be compiling on
- * pre-10.7 systems, I can't invoke the API directly.
- */
-@class NSDraggingSession;
-#define SessionSlideBackKey @"animatesToStartingPositionsOnCancelOrFail"
-
-@implementation PoofDragTableView
-
-- (BOOL)containsScreenPoint:(NSPoint)screenPoint
+- (void)setAppPopupToCurrent
 {
-    NSPoint windowPoint = [[self window] convertScreenToBase:screenPoint];
-    NSPoint viewPoint = [self convertPoint:windowPoint fromView:nil];
+    NSUInteger currIndex = [MVAppInfo indexOfBundleID:currentAppID];
 	
-    return NSMouseInRect(viewPoint, [self bounds], [self isFlipped]);
+    if (currIndex == NSNotFound) {
+        currIndex = 0;
+    }
+	
+    if (currIndex < [appPopup numberOfItems])
+        [appPopup selectItemAtIndex:currIndex];
 }
 
-/* Only implement the 10.7 method, since I don't think we can conditionally affect the "slide back" value prior to 10.7 */
-- (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
+- (void)resetAppPopup
 {
-    //[super draggingSession:session movedToPoint:screenPoint]; // doesn't exist
-    [session setValue:@([self containsScreenPoint:screenPoint]) forKey:SessionSlideBackKey];
-}
-
-/* 10.7 has a new method, but it still calls this one, so this is all we need */
-- (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation
-{
-    /* Only try the poof if the operation was None (nothing accepted the drop) and it is outside our view */
-    if (operation == NSDragOperationNone && ![self containsScreenPoint:screenPoint]) {
-        if ([[self dataSource] respondsToSelector:@selector(tableView:performDropOutsideViewAtPoint:)] &&
-            [(id)[self dataSource] tableView:self performDropOutsideViewAtPoint:screenPoint])
-        {
-            NSShowAnimationEffect(NSAnimationEffectDisappearingItemDefault, screenPoint, NSZeroSize, nil, nil, nil);
+    NSArray *apps = [MVAppInfo allManViewerApps];
+    NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
+    NSUInteger i;
+    
+    [appPopup removeAllItems];
+    [appPopup setImage:nil];
+    
+    for (i = 0; i< [apps count]; i++) {
+        MVAppInfo *info = apps[i];
+        NSImage *image = [[workspace iconForFile:[[info appURL] path]] copy];
+        NSString *niceName = [info displayName];
+        NSString *displayName = niceName;
+        NSUInteger num = 2;
+        
+        /* This should never happen any more since apps are uniqued to their bundle ID, but ... */
+        while ([appPopup indexOfItemWithTitle:displayName] >= 0) {
+            displayName = [NSString stringWithFormat:@"%@[%lu]", niceName, (unsigned long)num++];
         }
-    }
-    [super draggedImage:anImage endedAt:screenPoint operation:operation];
-}
-
-@end
-
-
-/* Formatter to abbreviate folders in the user's home directory for a nicer display. */
-@implementation DisplayPathFormatter
-
-- (NSString *)stringForObjectValue:(id)anObject
-{
-    NSString *new = [anObject stringByAbbreviatingWithTildeInPath];
-    
-    /* The above method may not work if the home directory is a symlink, and our path is already resolved */
-    if ([new isAbsolutePath]) {
-        static NSString *resHome = nil;
-        if (resHome == nil)
-            resHome = [[NSHomeDirectory() stringByResolvingSymlinksInPath] stringByAppendingString:@"/"];
-
-        if ([new hasPrefix:resHome])
-            new = [@"~/" stringByAppendingString:[new substringFromIndex:[resHome length]]];
+        [appPopup addItemWithTitle:displayName];
+        
+        [image setSize:NSMakeSize(16, 16)];
+        [[appPopup itemAtIndex:i] setImage:image];
     }
     
-    return new;
+    if ([apps count] > 0)
+        [[appPopup menu] addItem:[NSMenuItem separatorItem]];
+    [appPopup addItemWithTitle:@"Select... "];
+    [self setAppPopupToCurrent];
 }
 
-- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error
+- (void)resetCurrentApp
 {
-    *anObject = [string stringByExpandingTildeInPath];
-    return YES;
+    NSString *currSetID = CFBridgingRelease(LSCopyDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME));
+    
+    if (currSetID == nil)
+        currSetID = [[MVAppInfo allManViewerApps][0] bundleID];
+	
+    if (currSetID != nil) {
+        BOOL resetPopup = (currentAppID == nil); //first time
+		
+		currentAppID = currSetID;
+		
+        if ([MVAppInfo indexOfBundleID:currSetID] == NSNotFound) {
+            [MVAppInfo addAppWithID:currSetID sort:YES];
+            resetPopup = YES;
+        }
+        if (resetPopup)
+            [self resetAppPopup];
+        else
+            [self setAppPopupToCurrent];
+    }
 }
 
-@end
+- (void)setManPageViewer:(NSString *)bundleID
+{
+    OSStatus error = LSSetDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME, (__bridge CFStringRef)bundleID);
+    
+    if (error != noErr)
+        NSLog(@"Could not set default " URL_SCHEME_PREFIX @" app: Launch Services error %ld", (long)error);
+	
+    [self resetCurrentApp];
+}
 
-static NSString *ManPathIndexSetPboardType = @"org.clindberg.ManOpen.ManPathIndexSetType";
-static NSString *ManPathArrayKey = @"manPathArray";
+- (void)setUpDefaultManViewerApp
+{
+    [MVAppInfo allManViewerApps];
+    [self resetCurrentApp];
+}
 
-
-@implementation PrefPanelController (ManPath)
+- (IBAction)chooseNewApp:(id)sender
+{
+    NSArray *apps = [MVAppInfo allManViewerApps];
+    NSInteger choice = [appPopup indexOfSelectedItem];
+	
+    if (choice >= 0 && choice < [apps count]) {
+        MVAppInfo *info = apps[choice];
+        if ([info bundleID] != currentAppID)
+            [self setManPageViewer:[info bundleID]];
+    } else {
+        NSOpenPanel *panel = [NSOpenPanel openPanel];
+        [panel setTreatsFilePackagesAsDirectories:NO];
+        [panel setAllowsMultipleSelection:NO];
+        [panel setResolvesAliases:YES];
+        [panel setCanChooseFiles:YES];
+		[panel setAllowedFileTypes:@[(NSString*)kUTTypeApplicationBundle]];
+		[panel beginSheetModalForWindow:[appPopup window] completionHandler:^(NSInteger result) {
+			if (result == NSOKButton) {
+				NSURL *appURL = [panel URL];
+				NSString *appID = [[NSBundle bundleWithURL:appURL] bundleIdentifier];
+				if (appID != nil)
+					[self setManPageViewer:appID];
+			}
+			[self setAppPopupToCurrent];
+		}];
+    }
+}
 
 - (void)setUpManPathUI
 {
@@ -321,7 +385,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
     [self willChangeValueForKey:ManPathArrayKey];
     if (removeIndexes != nil)
     {
-        int numBeforeInsertion = 0;
+        NSInteger numBeforeInsertion = 0;
 		
         for (i = [manPathArray count] - 1; i >= 0; i--)
         {
@@ -418,6 +482,8 @@ static NSString *ManPathArrayKey = @"manPathArray";
 	//[pb setPropertyList:paths forType:NSFilenamesPboardType];
     return [pb setString:[paths componentsJoinedByString:@":"] forType:NSStringPboardType];
 }
+
+#pragma mark ManPath
 
 - (BOOL)writeIndexSet:(NSIndexSet *)set toPasteboard:(NSPasteboard *)pb
 {
@@ -543,6 +609,65 @@ static NSString *ManPathArrayKey = @"manPathArray";
 
 @end
 
+/*
+ * NSDraggingSession is a 10.7 only class, which has the slide-back property, which Id like to
+ * set depending on the image is inside or outside the view.  Since I will be compiling on
+ * pre-10.7 systems, I can't invoke the API directly.
+ */
+@implementation PoofDragTableView
+
+- (BOOL)containsScreenPoint:(NSPoint)screenPoint
+{
+    NSPoint windowPoint = [[self window] convertScreenToBase:screenPoint];
+    NSPoint viewPoint = [self convertPoint:windowPoint fromView:nil];
+	
+    return NSMouseInRect(viewPoint, [self bounds], [self isFlipped]);
+}
+
+/* 10.7 has a new method, but it still calls this one, so this is all we need */
+- (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation
+{
+    /* Only try the poof if the operation was None (nothing accepted the drop) and it is outside our view */
+    if (operation == NSDragOperationNone && ![self containsScreenPoint:screenPoint]) {
+        if ([self.dataSource respondsToSelector:@selector(tableView:performDropOutsideViewAtPoint:)] &&
+            [(id)[self dataSource] tableView:self performDropOutsideViewAtPoint:screenPoint])
+        {
+            NSShowAnimationEffect(NSAnimationEffectDisappearingItemDefault, screenPoint, NSZeroSize, nil, nil, nil);
+        }
+    }
+    [super draggedImage:anImage endedAt:screenPoint operation:operation];
+}
+
+@end
+
+
+/* Formatter to abbreviate folders in the user's home directory for a nicer display. */
+@implementation DisplayPathFormatter
+
+- (NSString *)stringForObjectValue:(id)anObject
+{
+    NSString *new = [anObject stringByAbbreviatingWithTildeInPath];
+    
+    /* The above method may not work if the home directory is a symlink, and our path is already resolved */
+    if ([new isAbsolutePath]) {
+        static NSString *resHome = nil;
+        if (resHome == nil)
+            resHome = [[NSHomeDirectory() stringByResolvingSymlinksInPath] stringByAppendingString:@"/"];
+
+        if ([new hasPrefix:resHome])
+            new = [@"~/" stringByAppendingString:[new substringFromIndex:[resHome length]]];
+    }
+    
+    return new;
+}
+
+- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error
+{
+    *anObject = [string stringByExpandingTildeInPath];
+    return YES;
+}
+
+@end
 
 /* 
  * Add a preference pane so that the user can set the default x-man-page
@@ -550,27 +675,11 @@ static NSString *ManPathArrayKey = @"manPathArray";
  * too.  The APIs were private and undocumented prior to 10.4, which is a big reason
  * why that version is now required, since the below code uses the 10.4 APIs.
  */
-#import <ApplicationServices/ApplicationServices.h>
-
-/* Little class to store info on the possible man page viewers, for easier sorting by display name */
-@interface MVAppInfo : NSObject
-@property (strong) NSString *bundleID;
-@property (strong, nonatomic) NSString *displayName;
-@property (strong, nonatomic) NSURL *appURL;
-
-+ (NSArray *)allManViewerApps;
-+ (void)addAppWithID:(NSString *)aBundleID sort:(BOOL)shouldResort;
-+ (NSUInteger)indexOfBundleID:(NSString*)bundleID;
-
-@end
 
 @implementation MVAppInfo
 @synthesize bundleID;
 @synthesize appURL;
 @synthesize displayName;
-
-#define URL_SCHEME @"x-man-page"
-#define URL_SCHEME_PREFIX URL_SCHEME @":"
 
 static NSMutableArray *allApps = nil;
 
@@ -690,124 +799,6 @@ static NSMutableArray *allApps = nil;
     }
 	
     return NSNotFound;
-}
-
-@end
-
-static NSString *currentAppID = nil;
-
-
-@implementation PrefPanelController (DefaultManApp)
-
-- (void)setAppPopupToCurrent
-{
-    NSUInteger currIndex = [MVAppInfo indexOfBundleID:currentAppID];
-	
-    if (currIndex == NSNotFound) {
-        currIndex = 0;
-    }
-	
-    if (currIndex < [appPopup numberOfItems])
-        [appPopup selectItemAtIndex:currIndex];
-}
-
-- (void)resetAppPopup
-{
-    NSArray *apps = [MVAppInfo allManViewerApps];
-    NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
-    NSUInteger i;
-	
-    [appPopup removeAllItems];
-    [appPopup setImage:nil];
-	
-	for (i = 0; i< [apps count]; i++) {
-		MVAppInfo *info = apps[i];
-		NSImage *image = [[workspace iconForFile:[[info appURL] path]] copy];
-        NSString *niceName = [info displayName];
-        NSString *displayName = niceName;
-        int num = 2;
-		
-        /* This should never happen any more since apps are uniqued to their bundle ID, but ... */
-        while ([appPopup indexOfItemWithTitle:displayName] >= 0) {
-            displayName = [NSString stringWithFormat:@"%@[%d]", niceName, num++];
-        }
-        [appPopup addItemWithTitle:displayName];
-		
-        [image setSize:NSMakeSize(16, 16)];
-        [[appPopup itemAtIndex:i] setImage:image];
-	}
-	
-    if ([apps count] > 0)
-        [[appPopup menu] addItem:[NSMenuItem separatorItem]];
-    [appPopup addItemWithTitle:@"Select... "];
-    [self setAppPopupToCurrent];
-}
-
-- (void)resetCurrentApp
-{
-    NSString *currSetID = CFBridgingRelease(LSCopyDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME));
-    
-    if (currSetID == nil)
-        currSetID = [[MVAppInfo allManViewerApps][0] bundleID];
-	
-    if (currSetID != nil) {
-        BOOL resetPopup = (currentAppID == nil); //first time
-		
-		currentAppID = currSetID;
-		
-        if ([MVAppInfo indexOfBundleID:currSetID] == NSNotFound) {
-            [MVAppInfo addAppWithID:currSetID sort:YES];
-            resetPopup = YES;
-        }
-        if (resetPopup)
-            [self resetAppPopup];
-        else
-            [self setAppPopupToCurrent];
-    }
-}
-
-- (void)setManPageViewer:(NSString *)bundleID
-{
-    OSStatus error = LSSetDefaultHandlerForURLScheme((CFStringRef)URL_SCHEME, (__bridge CFStringRef)bundleID);
-    
-    if (error != noErr)
-        NSLog(@"Could not set default " URL_SCHEME_PREFIX @" app: Launch Services error %ld", (long)error);
-	
-    [self resetCurrentApp];
-}
-
-- (void)setUpDefaultManViewerApp
-{
-    [MVAppInfo allManViewerApps];
-    [self resetCurrentApp];
-}
-
-- (IBAction)chooseNewApp:(id)sender
-{
-    NSArray *apps = [MVAppInfo allManViewerApps];
-    NSInteger choice = [appPopup indexOfSelectedItem];
-	
-    if (choice >= 0 && choice < [apps count]) {
-        MVAppInfo *info = apps[choice];
-        if ([info bundleID] != currentAppID)
-            [self setManPageViewer:[info bundleID]];
-    } else {
-        NSOpenPanel *panel = [NSOpenPanel openPanel];
-        [panel setTreatsFilePackagesAsDirectories:NO];
-        [panel setAllowsMultipleSelection:NO];
-        [panel setResolvesAliases:YES];
-        [panel setCanChooseFiles:YES];
-		[panel setAllowedFileTypes:@[(NSString*)kUTTypeApplicationBundle]];
-		[panel beginSheetModalForWindow:[appPopup window] completionHandler:^(NSInteger result) {
-			if (result == NSOKButton) {
-				NSURL *appURL = [panel URL];
-				NSString *appID = [[NSBundle bundleWithURL:appURL] bundleIdentifier];
-				if (appID != nil)
-					[self setManPageViewer:appID];
-			}
-			[self setAppPopupToCurrent];
-		}];
-    }
 }
 
 @end

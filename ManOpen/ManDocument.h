@@ -18,16 +18,15 @@
     NSMutableArray *sections;
     NSMutableArray *sectionRanges;
     NSMutableDictionary *restoreData;
-
-    IBOutlet NSTextField    *titleStringField;
-    IBOutlet NSButton       *openSelectionButton;
-    IBOutlet NSPopUpButton  *sectionPopup;
 }
 
 - initWithName:(NSString *)name section:(NSString *)section manPath:(NSString *)manPath title:(NSString *)title;
 
 @property (copy) NSString *shortTitle;
 @property (unsafe_unretained) IBOutlet ManTextView *textView;
+@property (weak) IBOutlet NSTextField    *titleStringField;
+@property (weak) IBOutlet NSButton       *openSelectionButton;
+@property (weak) IBOutlet NSPopUpButton  *sectionPopup;
 
 - (void)loadCommand:(NSString *)command;
 

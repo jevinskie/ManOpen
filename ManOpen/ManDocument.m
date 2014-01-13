@@ -13,15 +13,12 @@
 #define RestoreFileURL    @"URL"
 #define RestoreFileType   @"DocType"
 
-@interface NSDocument (LionRestorationMethods)
-- (void)encodeRestorableStateWithCoder:(NSCoder *)coder;
-- (void)restoreStateWithCoder:(NSCoder *)coder;
-@end
-
-
 @implementation ManDocument
 @synthesize shortTitle;
 @synthesize textView;
+@synthesize openSelectionButton;
+@synthesize sectionPopup;
+@synthesize titleStringField;
 
 + (BOOL)canConcurrentlyReadDocumentsOfType:(NSString *)typeName
 {

@@ -12,24 +12,21 @@
 @interface PrefPanelController : NSWindowController
 {
     NSMutableArray *manPathArray;
-    IBOutlet NSArrayController *manPathController;
-    IBOutlet NSTableView *manPathTableView;
-    IBOutlet NSTextField *fontField;
-    IBOutlet NSMatrix *generalSwitchMatrix;
-    IBOutlet NSPopUpButton *appPopup;
 }
+@property (strong) NSMutableArray *manPathArray;
+@property (weak) IBOutlet NSArrayController *manPathController;
+@property (weak) IBOutlet NSTableView *manPathTableView;
+@property (weak) IBOutlet NSTextField *fontField;
+@property (weak) IBOutlet NSMatrix *generalSwitchMatrix;
+@property (weak) IBOutlet NSPopUpButton *appPopup;
 
 + (id)sharedInstance;
 + (void)registerManDefaults;
 
 - (IBAction)openFontPanel:(id)sender;
 
-@end
-
-@interface PrefPanelController (ManPath)
 - (IBAction)addPathFromPanel:(id)sender;
-@end
-@interface PrefPanelController (DefaultManApp)
+
 - (IBAction)chooseNewApp:(id)sender;
 @end
 

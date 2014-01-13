@@ -11,10 +11,9 @@
     NSString *searchString;
     NSMutableArray *titles;
     NSMutableArray *descriptions;
-
-    IBOutlet NSTableView *tableView;
-    IBOutlet NSTableColumn *titleColumn;
 }
+@property (weak) IBOutlet NSTableView *tableView;
+@property (weak) IBOutlet NSTableColumn *titleColumn;
 @property (copy) NSString *title;
 
 - (id)initWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)title;

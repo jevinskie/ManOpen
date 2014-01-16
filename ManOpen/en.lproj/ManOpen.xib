@@ -14,8 +14,8 @@
         <customObject id="-3" userLabel="Application"/>
         <menu title="ManOpen" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
-                <menuItem id="274">
-                    <menu key="submenu" title="Info" systemMenu="apple" id="275">
+                <menuItem title="ManOpen" id="274">
+                    <menu key="submenu" title="ManOpen" systemMenu="apple" id="275">
                         <items>
                             <menuItem title="About ManOpen" id="276">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -32,6 +32,7 @@
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Services" id="304">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Services" systemMenu="services" id="305"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="306">
@@ -87,56 +88,67 @@
                                 <menu key="submenu" title="List Pages" id="327">
                                     <items>
                                         <menuItem title="All Pages" id="332">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="335"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="1 - User Commands" tag="1" id="330">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="336"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="2 - System Calls" tag="2" id="331">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="337"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="3 - Library Calls" tag="3" id="326">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="338"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="4 - Special Files" tag="4" id="328">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="339"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="5 - File Formats" tag="5" id="323">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="340"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="6 - Games" tag="6" id="329">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="341"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="7 - Macros and Conventions" tag="7" id="325">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="342"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="8 - Administrative Commands" tag="8" id="334">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="343"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="9 - Kernel Interface" tag="9" id="333">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="344"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="n - Tcl Calls" tag="20" id="346">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openSection:" target="54" id="347"/>
                                             </connections>
@@ -200,7 +212,7 @@
                                     <action selector="paste:" target="-1" id="32"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Delete" id="400">
+                            <menuItem title="Delete" keyEquivalent="" id="400">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="delete:" target="-1" id="401"/>
@@ -268,6 +280,7 @@
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Bring All to Front" id="5">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="arrangeInFront:" target="-1" id="39"/>
                                 </connections>

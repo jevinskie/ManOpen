@@ -1,8 +1,6 @@
 /* PrefPanelController.h created by lindberg on Fri 08-Oct-1999 */
 
-#import <AppKit/NSWindowController.h>
-#import <Foundation/NSUserDefaults.h>
-#import <Foundation/NSFormatter.h>
+#import <Cocoa/Cocoa.h>
 
 @class NSMutableArray;
 @class NSFont, NSColor;
@@ -24,9 +22,7 @@
 + (void)registerManDefaults;
 
 - (IBAction)openFontPanel:(id)sender;
-
 - (IBAction)addPathFromPanel:(id)sender;
-
 - (IBAction)chooseNewApp:(id)sender;
 @end
 

@@ -1,10 +1,6 @@
 
 #import "ManOpenProtocol.h"
-#import <AppKit/NSDocumentController.h>
-
-@class NSPanel, NSTextField, NSPopUpButton, NSFont;
-@class NSData, NSMutableString;
-@class NSTextView;
+#import <Cocoa/Cocoa.h>
 
 extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 

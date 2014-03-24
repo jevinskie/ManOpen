@@ -1,10 +1,4 @@
-
-#import <AppKit/NSDocument.h>
-#import <AppKit/NSWindow.h>
-#import <AppKit/NSTextView.h>
-
-@class NSMutableArray, NSMutableDictionary;
-@class NSTextField, NSButton, NSPopUpButton;
+#import <Cocoa/Cocoa.h>
 
 @interface ManTextView : NSTextView
 - (void)scrollRangeToTop:(NSRange)charRange;

@@ -7,12 +7,12 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>ManOpen</string>
 			<key>CFBundleTypeName</key>
 			<string>unknown</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
-			<key>CFBundleTypeIconFile</key>
-			<string>ManOpen</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.data</string>
@@ -69,12 +69,12 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>ManOpen</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>CFBundleTypeName</key>
 			<string>mangz</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>ManDocument</string>
 		</dict>
@@ -85,12 +85,12 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>ManOpen</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>CFBundleTypeName</key>
 			<string>catgz</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>ManDocument</string>
 		</dict>
@@ -98,7 +98,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>ManOpen 2.6.3 © 2012 Carl Lindberg, 2010 Jan Weiß</string>
+	<string>ManOpen 2.6.4 © 2012 Carl Lindberg, 2010 Jan Weiß</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.clindberg.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -108,7 +108,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6.3</string>
+	<string>2.6.4</string>
 	<key>CFBundleSignature</key>
 	<string>MnOp</string>
 	<key>CFBundleURLTypes</key>
@@ -125,7 +125,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.6.3</string>
+	<string>2.6.4</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSAppleScriptEnabled</key>

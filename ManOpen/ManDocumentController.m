@@ -1,6 +1,4 @@
-
 #import "ManDocumentController.h"
-#import <AppKit/AppKit.h>
 #import "ManDocument.h"
 #import "AproposDocument.h"
 #import "NSData+Utils.h"

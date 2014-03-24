@@ -4,9 +4,7 @@
  * through
  */
 
-#import <Foundation/NSObjCRuntime.h>
-#import <Foundation/NSObject.h>
-@class NSString;
+#import <Foundation/Foundation.h>
 
 @protocol ManOpen <NSObject>
 

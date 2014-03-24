@@ -1,9 +1,6 @@
 /* AproposDocument.h created by lindberg on Tue 10-Oct-2000 */
 
-#import <AppKit/NSDocument.h>
-
-@class NSMutableArray;
-@class NSTableColumn, NSTableView;
+#import <Cocoa/Cocoa.h>
 
 @interface AproposDocument : NSDocument
 {

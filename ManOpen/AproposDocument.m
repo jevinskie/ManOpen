@@ -1,7 +1,6 @@
 /* AproposDocument.m created by lindberg on Tue 10-Oct-2000 */
 
 #import "AproposDocument.h"
-#import <AppKit/AppKit.h>
 #import "ManDocumentController.h"
 #import "PrefPanelController.h"
 
@@ -37,7 +36,7 @@
      * argument, so don't try... we set the MANPATH environment variable, which
      * gives a warning on Panther (stderr; ignored) but not on Tiger.
      */
-//    [command appendString:@" -k"];
+    // [command appendString:@" -k"];
     [command setString:@"/usr/bin/apropos"];
     
     [command appendFormat:@" %@", EscapePath(apropos, YES)];

@@ -1,6 +1,4 @@
-
-#import <Foundation/NSData.h>
-#import <Foundation/NSFileHandle.h>
+#import <Foundation/Foundation.h>
 
 @interface NSData (Utils)
 
@@ -16,4 +14,3 @@
 - (NSData *)readDataToEndOfFileIgnoreInterrupt;
 
 @end
-

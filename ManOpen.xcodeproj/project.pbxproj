@@ -108,6 +108,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		552F6EAC18E23A2C0056F78B /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		5553E1FF1881F2CA003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Help.rtf; sourceTree = "<group>"; };
 		5553E20D1881F640003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Apropos.xib; sourceTree = "<group>"; };
 		5553E2101881F646003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocController.xib; sourceTree = "<group>"; };
@@ -298,6 +299,7 @@
 		D392792E0821FFA400376676 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				552F6EAC18E23A2C0056F78B /* Info-ManOpen.plist */,
 				D392792F0821FFA400376676 /* ManOpen.scriptSuite */,
 				55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */,
 				D39279350821FFA400376676 /* Credits.rtf */,

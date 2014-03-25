@@ -34,7 +34,7 @@ extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 
 - (IBAction)orderFrontHelpPanel:(id)sender;
 - (IBAction)orderFrontPreferencesPanel:(id)sender;
-- (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)display error:(NSError **)outError DEPRECATED_ATTRIBUTE;
+- (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)display error:(NSError **)outError NS_DEPRECATED_MAC(10_0, 10_7);
 
 // Helper methods for document classes
 - (NSMutableString *)manCommandWithManPath:(NSString *)manPath;

@@ -228,7 +228,7 @@ Gw
             <value key="minSize" type="size" width="92" height="10"/>
             <view key="contentView" id="59">
                 <rect key="frame" x="0.0" y="0.0" width="490" height="481"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58">
                         <rect key="frame" x="0.0" y="0.0" width="490" height="481"/>

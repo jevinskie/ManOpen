@@ -241,9 +241,10 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
         catType = @"catgz";
     }
 
-    if ([fileHeader isBinaryData]) return nil;
+    if ([fileHeader isBinaryData])
+        return nil;
 
-    return [fileHeader isNroffData]? manType : catType;
+    return [fileHeader isNroffData] ? manType : catType;
 }
 
 /*
@@ -278,10 +279,9 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     if ((document = [self documentForURL:standardizedURL]) == nil)
     {
         /* Resolve the type by contents rather than relying on the extension. */
-        NSString *type = [self typeFromFilename:[standardizedURL path]];
+        NSString *type = [self typeFromURL:standardizedURL];
         
-        if (type != nil)
-        {
+        if (type != nil) {
             document = [self makeDocumentWithContentsOfURL:standardizedURL ofType:type error:outError];
             [document makeWindowControllers];
             [self addDocument:document];
@@ -292,8 +292,6 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     return document;
 }
 
-
-#if NS_BLOCKS_AVAILABLE
 /*
  * The super implementations of these likewise get confused if someone opens a non-declared
  * extension, even when declaring public.data as a generic type.  When linked against 10.7
@@ -313,11 +311,11 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     
     completionHandler(document, !docAdded, error);
 }
+
 - (void)reopenDocumentForURL:(NSURL *)url withContentsOfURL:(NSURL*)url2 display:(BOOL)displayDocument completionHandler:(void (^)(NSDocument *document, BOOL documentWasAlreadyOpen, NSError *error))completionHandler
 {
     [self openDocumentWithContentsOfURL:url display:displayDocument completionHandler:completionHandler];
 }
-#endif
 
 /* Ignore the types; man/cat files can have any range of extensions. */
 - (NSInteger)runModalOpenPanel:(NSOpenPanel *)openPanel forTypes:(NSArray *)openableFileExtensions
@@ -327,10 +325,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 
 - (id)documentForTitle:(NSString *)title
 {
-    NSArray *documents = [self documents];
-	
-    for (NSDocument *document in documents)
-    {
+    for (NSDocument *document in [self documents]) {
         if ([document isKindOfClass:[ManDocument class]] &&
             [document fileURL] == nil &&
             [[(ManDocument *)document shortTitle] isEqualToString:title])
@@ -355,13 +350,11 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
     ManDocument *document;
     NSString    *title = name;
 	
-    if (section && [section length] > 0)
-    {
+    if (section && [section length] > 0) {
         title = [NSString stringWithFormat:@"%@(%@)",name, section];
     }
 	
-    if ((document = [self documentForTitle:title]) == nil)
-    {
+    if ((document = [self documentForTitle:title]) == nil) {
         NSString *filename;
 		
         document = [[ManDocument alloc]

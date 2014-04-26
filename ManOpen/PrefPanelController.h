@@ -2,15 +2,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class NSMutableArray;
-@class NSFont, NSColor;
-@class NSArrayController;
-@class NSTableView, NSTextField, NSPopUpButton, NSMatrix;
-
 @interface PrefPanelController : NSWindowController
-{
-    NSMutableArray *manPathArray;
-}
 @property (strong) NSMutableArray *manPathArray;
 @property (weak) IBOutlet NSArrayController *manPathController;
 @property (weak) IBOutlet NSTableView *manPathTableView;

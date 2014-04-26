@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D38A23FD14E4C3FE00F6AFFE"
                BuildableName = "ManOpen.app"
-               BlueprintName = "ManOpen (Application)"
+               BlueprintName = "ManOpen"
                ReferencedContainer = "container:ManOpen.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D38A23FD14E4C3FE00F6AFFE"
             BuildableName = "ManOpen.app"
-            BlueprintName = "ManOpen (Application)"
+            BlueprintName = "ManOpen"
             ReferencedContainer = "container:ManOpen.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -53,7 +53,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D38A23FD14E4C3FE00F6AFFE"
             BuildableName = "ManOpen.app"
-            BlueprintName = "ManOpen (Application)"
+            BlueprintName = "ManOpen"
             ReferencedContainer = "container:ManOpen.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -71,7 +71,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D38A23FD14E4C3FE00F6AFFE"
             BuildableName = "ManOpen.app"
-            BlueprintName = "ManOpen (Application)"
+            BlueprintName = "ManOpen"
             ReferencedContainer = "container:ManOpen.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

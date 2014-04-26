@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		D38A23F314E4C3FE00F6AFFE /* ManOpen (Aggregate) */ = {
+		D38A23F314E4C3FE00F6AFFE /* Aggregate */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = D38A23FA14E4C3FE00F6AFFE /* Build configuration list for PBXAggregateTarget "ManOpen (Aggregate)" */;
+			buildConfigurationList = D38A23FA14E4C3FE00F6AFFE /* Build configuration list for PBXAggregateTarget "Aggregate" */;
 			buildPhases = (
 			);
 			dependencies = (
 				D38A245414E4C3FE00F6AFFE /* PBXTargetDependency */,
 				D38A247D14E4C7FC00F6AFFE /* PBXTargetDependency */,
 			);
-			name = "ManOpen (Aggregate)";
+			name = Aggregate;
 			productName = "ManOpen (Aggregate)";
 		};
 /* End PBXAggregateTarget section */
@@ -406,9 +406,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D38A23FD14E4C3FE00F6AFFE /* ManOpen (Application) */ = {
+		D38A23FD14E4C3FE00F6AFFE /* ManOpen */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D38A242914E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "ManOpen (Application)" */;
+			buildConfigurationList = D38A242914E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "ManOpen" */;
 			buildPhases = (
 				D38A240B14E4C3FE00F6AFFE /* Resources */,
 				D38A241A14E4C3FE00F6AFFE /* Sources */,
@@ -421,15 +421,15 @@
 				D38A245814E4C3FE00F6AFFE /* PBXTargetDependency */,
 				D38A245A14E4C3FE00F6AFFE /* PBXTargetDependency */,
 			);
-			name = "ManOpen (Application)";
+			name = ManOpen;
 			productInstallPath = "$(HOME)/Apps";
 			productName = "ManOpen (Application)";
 			productReference = D38A242D14E4C3FE00F6AFFE /* ManOpen.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D38A242F14E4C3FE00F6AFFE /* cat2rtf (Tool) */ = {
+		D38A242F14E4C3FE00F6AFFE /* cat2rtf */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D38A243514E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2rtf (Tool)" */;
+			buildConfigurationList = D38A243514E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2rtf" */;
 			buildPhases = (
 				D38A243114E4C3FE00F6AFFE /* Sources */,
 				D38A243314E4C3FE00F6AFFE /* Frameworks */,
@@ -438,14 +438,14 @@
 			);
 			dependencies = (
 			);
-			name = "cat2rtf (Tool)";
+			name = cat2rtf;
 			productName = "cat2rtf (Tool)";
 			productReference = D38A243814E4C3FE00F6AFFE /* cat2rtf */;
 			productType = "com.apple.product-type.tool";
 		};
-		D38A243A14E4C3FE00F6AFFE /* cat2html (Tool) */ = {
+		D38A243A14E4C3FE00F6AFFE /* cat2html */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D38A244114E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2html (Tool)" */;
+			buildConfigurationList = D38A244114E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2html" */;
 			buildPhases = (
 				D38A243C14E4C3FE00F6AFFE /* Sources */,
 				D38A243E14E4C3FE00F6AFFE /* Frameworks */,
@@ -454,14 +454,14 @@
 			);
 			dependencies = (
 			);
-			name = "cat2html (Tool)";
+			name = cat2html;
 			productName = "cat2html (Tool)";
 			productReference = D38A244414E4C3FE00F6AFFE /* cat2html */;
 			productType = "com.apple.product-type.tool";
 		};
-		D38A244614E4C3FE00F6AFFE /* openman (Tool) */ = {
+		D38A244614E4C3FE00F6AFFE /* openman */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D38A244E14E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "openman (Tool)" */;
+			buildConfigurationList = D38A244E14E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "openman" */;
 			buildPhases = (
 				D38A244814E4C3FE00F6AFFE /* Sources */,
 				D38A244A14E4C3FE00F6AFFE /* Frameworks */,
@@ -471,7 +471,7 @@
 			);
 			dependencies = (
 			);
-			name = "openman (Tool)";
+			name = openman;
 			productInstallPath = /usr/local/bin;
 			productName = "openman (Tool)";
 			productReference = D38A245114E4C3FE00F6AFFE /* openman */;
@@ -507,11 +507,11 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D38A23F314E4C3FE00F6AFFE /* ManOpen (Aggregate) */,
-				D38A23FD14E4C3FE00F6AFFE /* ManOpen (Application) */,
-				D38A242F14E4C3FE00F6AFFE /* cat2rtf (Tool) */,
-				D38A243A14E4C3FE00F6AFFE /* cat2html (Tool) */,
-				D38A244614E4C3FE00F6AFFE /* openman (Tool) */,
+				D38A23F314E4C3FE00F6AFFE /* Aggregate */,
+				D38A23FD14E4C3FE00F6AFFE /* ManOpen */,
+				D38A242F14E4C3FE00F6AFFE /* cat2rtf */,
+				D38A243A14E4C3FE00F6AFFE /* cat2html */,
+				D38A244614E4C3FE00F6AFFE /* openman */,
 			);
 		};
 /* End PBXProject section */
@@ -580,22 +580,22 @@
 /* Begin PBXTargetDependency section */
 		D38A245414E4C3FE00F6AFFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D38A23FD14E4C3FE00F6AFFE /* ManOpen (Application) */;
+			target = D38A23FD14E4C3FE00F6AFFE /* ManOpen */;
 			targetProxy = D38A245314E4C3FE00F6AFFE /* PBXContainerItemProxy */;
 		};
 		D38A245814E4C3FE00F6AFFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D38A242F14E4C3FE00F6AFFE /* cat2rtf (Tool) */;
+			target = D38A242F14E4C3FE00F6AFFE /* cat2rtf */;
 			targetProxy = D38A245714E4C3FE00F6AFFE /* PBXContainerItemProxy */;
 		};
 		D38A245A14E4C3FE00F6AFFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D38A243A14E4C3FE00F6AFFE /* cat2html (Tool) */;
+			target = D38A243A14E4C3FE00F6AFFE /* cat2html */;
 			targetProxy = D38A245914E4C3FE00F6AFFE /* PBXContainerItemProxy */;
 		};
 		D38A247D14E4C7FC00F6AFFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D38A244614E4C3FE00F6AFFE /* openman (Tool) */;
+			target = D38A244614E4C3FE00F6AFFE /* openman */;
 			targetProxy = D38A247C14E4C7FC00F6AFFE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -696,11 +696,9 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				INFOPLIST_OUTPUT_FORMAT = XML;
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				PLIST_FILE_OUTPUT_FORMAT = XML;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -727,10 +725,8 @@
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				INFOPLIST_OUTPUT_FORMAT = binary;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PLIST_FILE_OUTPUT_FORMAT = binary;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -765,7 +761,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = ManOpen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
@@ -784,7 +780,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = ManOpen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
@@ -795,7 +791,7 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
-				PRODUCT_NAME = cat2rtf;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -804,7 +800,7 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
-				PRODUCT_NAME = cat2rtf;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -813,7 +809,7 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
-				PRODUCT_NAME = cat2html;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -822,7 +818,7 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
-				PRODUCT_NAME = cat2html;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -831,7 +827,7 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
-				PRODUCT_NAME = openman;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 			};
 			name = Debug;
@@ -841,7 +837,7 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
-				PRODUCT_NAME = openman;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 			};
 			name = Release;
@@ -858,7 +854,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D38A23FA14E4C3FE00F6AFFE /* Build configuration list for PBXAggregateTarget "ManOpen (Aggregate)" */ = {
+		D38A23FA14E4C3FE00F6AFFE /* Build configuration list for PBXAggregateTarget "Aggregate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D38A23FB14E4C3FE00F6AFFE /* Debug */,
@@ -867,7 +863,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D38A242914E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "ManOpen (Application)" */ = {
+		D38A242914E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "ManOpen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D38A242A14E4C3FE00F6AFFE /* Debug */,
@@ -876,7 +872,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D38A243514E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2rtf (Tool)" */ = {
+		D38A243514E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2rtf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D38A243614E4C3FE00F6AFFE /* Debug */,
@@ -885,7 +881,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D38A244114E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2html (Tool)" */ = {
+		D38A244114E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "cat2html" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D38A244214E4C3FE00F6AFFE /* Debug */,
@@ -894,7 +890,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D38A244E14E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "openman (Tool)" */ = {
+		D38A244E14E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "openman" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D38A244F14E4C3FE00F6AFFE /* Debug */,

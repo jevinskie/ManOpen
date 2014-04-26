@@ -1,6 +1,5 @@
-
-#import "ManOpenProtocol.h"
 #import <Cocoa/Cocoa.h>
+#import "ManOpenProtocol.h"
 
 extern NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes);
 

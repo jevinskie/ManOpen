@@ -109,12 +109,17 @@
 
 /* Begin PBXFileReference section */
 		552F6EAC18E23A2C0056F78B /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
+		55485832190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Apropos.xib; sourceTree = "<group>"; };
+		55485833190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocController.xib; sourceTree = "<group>"; };
+		55485834190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ManOpen.xib; sourceTree = "<group>"; };
+		55485835190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ManPage.xib; sourceTree = "<group>"; };
+		55485836190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrefPanel.xib; sourceTree = "<group>"; };
+		55485838190C53610017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Apropos.strings; sourceTree = "<group>"; };
+		5548583A190C536D0017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DocController.strings; sourceTree = "<group>"; };
+		5548583C190C53750017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManOpen.strings; sourceTree = "<group>"; };
+		5548583E190C537A0017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManPage.strings; sourceTree = "<group>"; };
+		55485840190C537F0017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefPanel.strings; sourceTree = "<group>"; };
 		5553E1FF1881F2CA003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Help.rtf; sourceTree = "<group>"; };
-		5553E20D1881F640003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Apropos.xib; sourceTree = "<group>"; };
-		5553E2101881F646003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocController.xib; sourceTree = "<group>"; };
-		5553E2161881F65A003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ManOpen.xib; sourceTree = "<group>"; };
-		5553E2191881F666003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ManPage.xib; sourceTree = "<group>"; };
-		5553E21C1881F670003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PrefPanel.xib; sourceTree = "<group>"; };
 		5553E21E1881F83E003C2DBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ManOpen/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		5553E22018821265003C2DBF /* openman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openman-Info.plist"; sourceTree = "<group>"; };
 		5553E22418821455003C2DBF /* cat2html-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cat2html-Info.plist"; sourceTree = "<group>"; };
@@ -612,7 +617,8 @@
 		5553E20E1881F640003C2DBF /* Apropos.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5553E20D1881F640003C2DBF /* en */,
+				55485832190C53570017BB41 /* Base */,
+				55485838190C53610017BB41 /* en */,
 			);
 			name = Apropos.xib;
 			sourceTree = "<group>";
@@ -620,7 +626,8 @@
 		5553E2111881F646003C2DBF /* DocController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5553E2101881F646003C2DBF /* en */,
+				55485833190C53570017BB41 /* Base */,
+				5548583A190C536D0017BB41 /* en */,
 			);
 			name = DocController.xib;
 			sourceTree = "<group>";
@@ -628,7 +635,8 @@
 		5553E2171881F65A003C2DBF /* ManOpen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5553E2161881F65A003C2DBF /* en */,
+				55485834190C53570017BB41 /* Base */,
+				5548583C190C53750017BB41 /* en */,
 			);
 			name = ManOpen.xib;
 			sourceTree = "<group>";
@@ -636,7 +644,8 @@
 		5553E21A1881F666003C2DBF /* ManPage.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5553E2191881F666003C2DBF /* en */,
+				55485835190C53570017BB41 /* Base */,
+				5548583E190C537A0017BB41 /* en */,
 			);
 			name = ManPage.xib;
 			sourceTree = "<group>";
@@ -644,7 +653,8 @@
 		5553E21D1881F670003C2DBF /* PrefPanel.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5553E21C1881F670003C2DBF /* en */,
+				55485836190C53570017BB41 /* Base */,
+				55485840190C537F0017BB41 /* en */,
 			);
 			name = PrefPanel.xib;
 			sourceTree = "<group>";
@@ -697,7 +707,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LLVM_LTO = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -726,7 +736,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;

@@ -1,0 +1,9 @@
+
+/* Class = "NSWindow"; title = "Apropos"; ObjectID = "5"; */
+"5.title" = "Apropos";
+
+/* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "8"; */
+"8.headerCell.title" = "Name";
+
+/* Class = "NSTableColumn"; headerCell.title = "Description"; ObjectID = "10"; */
+"10.headerCell.title" = "Description";

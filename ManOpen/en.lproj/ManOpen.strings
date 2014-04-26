@@ -1,0 +1,168 @@
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "4"; */
+"4.title" = "Copy";
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "5"; */
+"5.title" = "Bring All to Front";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "8"; */
+"8.title" = "Paste";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "11"; */
+"11.title" = "Select All";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "13"; */
+"13.title" = "Edit";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "15"; */
+"15.title" = "Edit";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "19"; */
+"19.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "22"; */
+"22.title" = "Cut";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "23"; */
+"23.title" = "Minimize";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "24"; */
+"24.title" = "Window";
+
+/* Class = "NSMenu"; title = "ManOpen"; ObjectID = "29"; */
+"29.title" = "ManOpen";
+
+/* Class = "NSMenuItem"; title = "Open Title..."; ObjectID = "44"; */
+"44.title" = "Open Title...";
+
+/* Class = "NSMenuItem"; title = "File"; ObjectID = "45"; */
+"45.title" = "File";
+
+/* Class = "NSMenuItem"; title = "Open File..."; ObjectID = "46"; */
+"46.title" = "Open File...";
+
+/* Class = "NSMenu"; title = "File"; ObjectID = "49"; */
+"49.title" = "File";
+
+/* Class = "NSMenuItem"; title = "Page Setup..."; ObjectID = "217"; */
+"217.title" = "Page Setup...";
+
+/* Class = "NSMenuItem"; title = "Print..."; ObjectID = "219"; */
+"219.title" = "Print...";
+
+/* Class = "NSMenuItem"; title = "Close"; ObjectID = "221"; */
+"221.title" = "Close";
+
+/* Class = "NSMenuItem"; title = "Apropos..."; ObjectID = "241"; */
+"241.title" = "Apropos...";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "263"; */
+"263.title" = "Zoom";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "266"; */
+"266.title" = "Help";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "267"; */
+"267.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "ManOpen Help"; ObjectID = "271"; */
+"271.title" = "ManOpen Help";
+
+/* Class = "NSMenuItem"; title = "ManOpen"; ObjectID = "274"; */
+"274.title" = "ManOpen";
+
+/* Class = "NSMenu"; title = "ManOpen"; ObjectID = "275"; */
+"275.title" = "ManOpen";
+
+/* Class = "NSMenuItem"; title = "About ManOpen"; ObjectID = "276"; */
+"276.title" = "About ManOpen";
+
+/* Class = "NSMenuItem"; title = "Preferences..."; ObjectID = "299"; */
+"299.title" = "Preferences...";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "304"; */
+"304.title" = "Services";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "305"; */
+"305.title" = "Services";
+
+/* Class = "NSMenuItem"; title = "Hide ManOpen"; ObjectID = "307"; */
+"307.title" = "Hide ManOpen";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "308"; */
+"308.title" = "Hide Others";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "309"; */
+"309.title" = "Show All";
+
+/* Class = "NSMenuItem"; title = "Quit ManOpen"; ObjectID = "311"; */
+"311.title" = "Quit ManOpen";
+
+/* Class = "NSMenuItem"; title = "Set Default Window Size"; ObjectID = "320"; */
+"320.title" = "Set Default Window Size";
+
+/* Class = "NSMenuItem"; title = "5 - File Formats"; ObjectID = "323"; */
+"323.title" = "5 - File Formats";
+
+/* Class = "NSMenuItem"; title = "List Pages"; ObjectID = "324"; */
+"324.title" = "List Pages";
+
+/* Class = "NSMenuItem"; title = "7 - Macros and Conventions"; ObjectID = "325"; */
+"325.title" = "7 - Macros and Conventions";
+
+/* Class = "NSMenuItem"; title = "3 - Library Calls"; ObjectID = "326"; */
+"326.title" = "3 - Library Calls";
+
+/* Class = "NSMenu"; title = "List Pages"; ObjectID = "327"; */
+"327.title" = "List Pages";
+
+/* Class = "NSMenuItem"; title = "4 - Special Files"; ObjectID = "328"; */
+"328.title" = "4 - Special Files";
+
+/* Class = "NSMenuItem"; title = "6 - Games"; ObjectID = "329"; */
+"329.title" = "6 - Games";
+
+/* Class = "NSMenuItem"; title = "1 - User Commands"; ObjectID = "330"; */
+"330.title" = "1 - User Commands";
+
+/* Class = "NSMenuItem"; title = "2 - System Calls"; ObjectID = "331"; */
+"331.title" = "2 - System Calls";
+
+/* Class = "NSMenuItem"; title = "All Pages"; ObjectID = "332"; */
+"332.title" = "All Pages";
+
+/* Class = "NSMenuItem"; title = "9 - Kernel Interface"; ObjectID = "333"; */
+"333.title" = "9 - Kernel Interface";
+
+/* Class = "NSMenuItem"; title = "8 - Administrative Commands"; ObjectID = "334"; */
+"334.title" = "8 - Administrative Commands";
+
+/* Class = "NSMenuItem"; title = "n - Tcl Calls"; ObjectID = "346"; */
+"346.title" = "n - Tcl Calls";
+
+/* Class = "NSMenuItem"; title = "Find"; ObjectID = "356"; */
+"356.title" = "Find";
+
+/* Class = "NSMenu"; title = "Find"; ObjectID = "357"; */
+"357.title" = "Find";
+
+/* Class = "NSMenuItem"; title = "Find…"; ObjectID = "358"; */
+"358.title" = "Find…";
+
+/* Class = "NSMenuItem"; title = "Find Next"; ObjectID = "359"; */
+"359.title" = "Find Next";
+
+/* Class = "NSMenuItem"; title = "Use Selection for Find"; ObjectID = "360"; */
+"360.title" = "Use Selection for Find";
+
+/* Class = "NSMenuItem"; title = "Jump to Selection"; ObjectID = "361"; */
+"361.title" = "Jump to Selection";
+
+/* Class = "NSMenuItem"; title = "Find Previous"; ObjectID = "362"; */
+"362.title" = "Find Previous";
+
+/* Class = "NSMenuItem"; title = "Copy URL"; ObjectID = "396"; */
+"396.title" = "Copy URL";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "400"; */
+"400.title" = "Delete";

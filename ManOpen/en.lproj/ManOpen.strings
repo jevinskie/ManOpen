@@ -32,29 +32,29 @@
 /* Class = "NSMenu"; title = "ManOpen"; ObjectID = "29"; */
 "29.title" = "ManOpen";
 
-/* Class = "NSMenuItem"; title = "Open Title..."; ObjectID = "44"; */
-"44.title" = "Open Title...";
+/* Class = "NSMenuItem"; title = "Open Title…"; ObjectID = "44"; */
+"44.title" = "Open Title…";
 
 /* Class = "NSMenuItem"; title = "File"; ObjectID = "45"; */
 "45.title" = "File";
 
-/* Class = "NSMenuItem"; title = "Open File..."; ObjectID = "46"; */
-"46.title" = "Open File...";
+/* Class = "NSMenuItem"; title = "Open File…"; ObjectID = "46"; */
+"46.title" = "Open File…";
 
 /* Class = "NSMenu"; title = "File"; ObjectID = "49"; */
 "49.title" = "File";
 
-/* Class = "NSMenuItem"; title = "Page Setup..."; ObjectID = "217"; */
-"217.title" = "Page Setup...";
+/* Class = "NSMenuItem"; title = "Page Setup…"; ObjectID = "217"; */
+"217.title" = "Page Setup…";
 
-/* Class = "NSMenuItem"; title = "Print..."; ObjectID = "219"; */
-"219.title" = "Print...";
+/* Class = "NSMenuItem"; title = "Print…"; ObjectID = "219"; */
+"219.title" = "Print…";
 
 /* Class = "NSMenuItem"; title = "Close"; ObjectID = "221"; */
 "221.title" = "Close";
 
-/* Class = "NSMenuItem"; title = "Apropos..."; ObjectID = "241"; */
-"241.title" = "Apropos...";
+/* Class = "NSMenuItem"; title = "Apropos…"; ObjectID = "241"; */
+"241.title" = "Apropos…";
 
 /* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "263"; */
 "263.title" = "Zoom";
@@ -77,8 +77,8 @@
 /* Class = "NSMenuItem"; title = "About ManOpen"; ObjectID = "276"; */
 "276.title" = "About ManOpen";
 
-/* Class = "NSMenuItem"; title = "Preferences..."; ObjectID = "299"; */
-"299.title" = "Preferences...";
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "299"; */
+"299.title" = "Preferences…";
 
 /* Class = "NSMenuItem"; title = "Services"; ObjectID = "304"; */
 "304.title" = "Services";

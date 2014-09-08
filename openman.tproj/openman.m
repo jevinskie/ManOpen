@@ -5,19 +5,21 @@
 #import "ManOpenProtocol.h"
 
 
+static inline NSString *MakeNSStringFromPath(const char *filename) NS_RETURNS_RETAINED;
 static inline NSString *MakeNSStringFromPath(const char *filename)
 {
     return [[NSFileManager defaultManager] stringWithFileSystemRepresentation:filename length:strlen(filename)];
 }
 
+static NSString *MakeAbsolutePath(const char *filename) NS_RETURNS_RETAINED;
 static NSString *MakeAbsolutePath(const char *filename)
 {
     NSString *currFile = MakeNSStringFromPath(filename);
     
-    if (![currFile isAbsolutePath])
-    {
-        currFile = [[[NSFileManager defaultManager] currentDirectoryPath]
-                    stringByAppendingPathComponent:currFile];
+    if (![currFile isAbsolutePath]) {
+        NSURL *theURL = [NSURL fileURLWithPath:currFile];
+        theURL = [theURL absoluteURL];
+        currFile = [theURL path];
     }
     
     return currFile;

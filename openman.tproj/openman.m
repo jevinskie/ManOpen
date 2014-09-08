@@ -16,7 +16,7 @@ static NSString *MakeAbsolutePath(const char *filename)
 {
     NSString *currFile = MakeNSStringFromPath(filename);
     
-    if (![currFile isAbsolutePath]) {
+    if (!currFile.absolutePath) {
         NSURL *theURL = [NSURL fileURLWithPath:currFile];
         theURL = [theURL absoluteURL];
         currFile = [theURL path];

@@ -1,0 +1,15 @@
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "13"; */
+"13.title" = "Window";
+
+/* Class = "NSButton"; ibShadowedToolTip = " Open selection "; ObjectID = "25"; */
+"25.ibShadowedToolTip" = " Open selection ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "47"; */
+"47.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Section:"; ObjectID = "49"; */
+"49.title" = "Section:";
+
+/* Class = "NSTextFieldCell"; title = "Title"; ObjectID = "62"; */
+"62.title" = "Title";

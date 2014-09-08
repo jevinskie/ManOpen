@@ -29,15 +29,40 @@
 		5553E2181881F666003C2DBF /* ManPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21A1881F666003C2DBF /* ManPage.xib */; };
 		5553E21B1881F670003C2DBF /* PrefPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21D1881F670003C2DBF /* PrefPanel.xib */; };
 		5553E21F1881F83E003C2DBF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
+		55A5E74519BE0BFA00BF2597 /* DisplayPathFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */; };
+		55A5E74719BE11B400BF2597 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5E74619BE11B400BF2597 /* main.swift */; };
+		55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
+		55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
+		55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
+		55C0CEF819BE04D8009C50D7 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D39279350821FFA400376676 /* Credits.rtf */; };
+		55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
+		55C0CEFE19BE04D8009C50D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D39279380821FFA400376676 /* InfoPlist.strings */; };
+		55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
+		55C0CF0919BE04D8009C50D7 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279850821FFA400376676 /* AppKit.framework */; };
+		55C0CF0B19BE04D8009C50D7 /* cat2rtf in CopyFiles */ = {isa = PBXBuildFile; fileRef = D38A243814E4C3FE00F6AFFE /* cat2rtf */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55C0CF0C19BE04D8009C50D7 /* cat2html in CopyFiles */ = {isa = PBXBuildFile; fileRef = D38A244414E4C3FE00F6AFFE /* cat2html */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55C0CF4419BE07E9009C50D7 /* AproposDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF1719BE07E8009C50D7 /* AproposDocument.m */; };
+		55C0CF4519BE07E9009C50D7 /* Apropos.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1819BE07E8009C50D7 /* Apropos.xib */; };
+		55C0CF4619BE07E9009C50D7 /* DocController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1A19BE07E8009C50D7 /* DocController.xib */; };
+		55C0CF4719BE07E9009C50D7 /* ManOpen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */; };
+		55C0CF4819BE07E9009C50D7 /* ManPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1E19BE07E9009C50D7 /* ManPage.xib */; };
+		55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */; };
+		55C0CF5519BE07E9009C50D7 /* ManDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF3719BE07E9009C50D7 /* ManDocument.m */; };
+		55C0CF5619BE07E9009C50D7 /* ManDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF3919BE07E9009C50D7 /* ManDocumentController.m */; };
+		55C0CF5719BE07E9009C50D7 /* ManOpen-nextstep.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */; };
+		55C0CF5919BE07E9009C50D7 /* ManOpen_main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF3C19BE07E9009C50D7 /* ManOpen_main.m */; };
+		55C0CF5A19BE07E9009C50D7 /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF4019BE07E9009C50D7 /* NSData+Utils.m */; };
+		55C0CF5B19BE07E9009C50D7 /* PrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF4219BE07E9009C50D7 /* PrefPanelController.m */; };
+		55C0CF5C19BE07E9009C50D7 /* PrefPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */; };
+		55C0CF5D19BE0865009C50D7 /* AproposDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F20821FFA400376676 /* AproposDocument.m */; };
+		55C0CF5E19BE0865009C50D7 /* ManDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F60821FFA400376676 /* ManDocument.m */; };
+		55C0CF5F19BE0865009C50D7 /* ManDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F80821FFA400376676 /* ManDocumentController.m */; };
+		55C0CF6019BE0865009C50D7 /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FA0821FFA400376676 /* NSData+Utils.m */; };
+		55C0CF6119BE0865009C50D7 /* PrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FC0821FFA400376676 /* PrefPanelController.m */; };
 		55F13AB415103C1E0095B5A9 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
 		D38A241514E4C3FE00F6AFFE /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
 		D38A241814E4C3FE00F6AFFE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D39279350821FFA400376676 /* Credits.rtf */; };
 		D38A241914E4C3FE00F6AFFE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D39279380821FFA400376676 /* InfoPlist.strings */; };
-		D38A241B14E4C3FE00F6AFFE /* AproposDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F20821FFA400376676 /* AproposDocument.m */; settings = {ATTRIBUTES = (); }; };
-		D38A241D14E4C3FE00F6AFFE /* ManDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F60821FFA400376676 /* ManDocument.m */; settings = {ATTRIBUTES = (); }; };
-		D38A241E14E4C3FE00F6AFFE /* ManDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F80821FFA400376676 /* ManDocumentController.m */; settings = {ATTRIBUTES = (); }; };
-		D38A241F14E4C3FE00F6AFFE /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FA0821FFA400376676 /* NSData+Utils.m */; settings = {ATTRIBUTES = (); }; };
-		D38A242014E4C3FE00F6AFFE /* PrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FC0821FFA400376676 /* PrefPanelController.m */; settings = {ATTRIBUTES = (); }; };
 		D38A242114E4C3FE00F6AFFE /* ManOpen_main.m in Sources */ = {isa = PBXBuildFile; fileRef = D39279100821FFA400376676 /* ManOpen_main.m */; settings = {ATTRIBUTES = (); }; };
 		D38A242314E4C3FE00F6AFFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
 		D38A242414E4C3FE00F6AFFE /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279850821FFA400376676 /* AppKit.framework */; };
@@ -53,6 +78,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		55C0CEF119BE04D8009C50D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D39279890821FFA400376676 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D38A242F14E4C3FE00F6AFFE;
+			remoteInfo = "cat2rtf (Tool) (Upgraded)";
+		};
+		55C0CEF319BE04D8009C50D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D39279890821FFA400376676 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D38A243A14E4C3FE00F6AFFE;
+			remoteInfo = "cat2html (Tool) (Upgraded)";
+		};
 		D38A245314E4C3FE00F6AFFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D39279890821FFA400376676 /* Project object */;
@@ -84,6 +123,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		55C0CF0A19BE04D8009C50D7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				55C0CF0B19BE04D8009C50D7 /* cat2rtf in CopyFiles */,
+				55C0CF0C19BE04D8009C50D7 /* cat2html in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D38A242614E4C3FE00F6AFFE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,6 +174,35 @@
 		5553E22018821265003C2DBF /* openman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openman-Info.plist"; sourceTree = "<group>"; };
 		5553E22418821455003C2DBF /* cat2html-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cat2html-Info.plist"; sourceTree = "<group>"; };
 		5553E226188214B9003C2DBF /* cat2rtf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cat2rtf-Info.plist"; sourceTree = "<group>"; };
+		55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayPathFormatter.swift; sourceTree = "<group>"; };
+		55A5E74619BE11B400BF2597 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		55C0CF1019BE04D8009C50D7 /* ManOpenSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpenSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55C0CF1619BE07E8009C50D7 /* AproposDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AproposDocument.h; sourceTree = "<group>"; };
+		55C0CF1719BE07E8009C50D7 /* AproposDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AproposDocument.m; sourceTree = "<group>"; };
+		55C0CF1919BE07E8009C50D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Apropos.xib; sourceTree = "<group>"; };
+		55C0CF1B19BE07E8009C50D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocController.xib; sourceTree = "<group>"; };
+		55C0CF1D19BE07E9009C50D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ManOpen.xib; sourceTree = "<group>"; };
+		55C0CF1F19BE07E9009C50D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ManPage.xib; sourceTree = "<group>"; };
+		55C0CF2119BE07E9009C50D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrefPanel.xib; sourceTree = "<group>"; };
+		55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
+		55C0CF3619BE07E9009C50D7 /* ManDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManDocument.h; sourceTree = "<group>"; };
+		55C0CF3719BE07E9009C50D7 /* ManDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManDocument.m; sourceTree = "<group>"; };
+		55C0CF3819BE07E9009C50D7 /* ManDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManDocumentController.h; sourceTree = "<group>"; };
+		55C0CF3919BE07E9009C50D7 /* ManDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManDocumentController.m; sourceTree = "<group>"; };
+		55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "ManOpen-nextstep.tiff"; sourceTree = "<group>"; };
+		55C0CF3C19BE07E9009C50D7 /* ManOpen_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManOpen_main.m; sourceTree = "<group>"; };
+		55C0CF3D19BE07E9009C50D7 /* ManOpenProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManOpenProtocol.h; sourceTree = "<group>"; };
+		55C0CF3E19BE07E9009C50D7 /* ManOpenSwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ManOpenSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		55C0CF3F19BE07E9009C50D7 /* NSData+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; };
+		55C0CF4019BE07E9009C50D7 /* NSData+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Utils.m"; sourceTree = "<group>"; };
+		55C0CF4119BE07E9009C50D7 /* PrefPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefPanelController.h; sourceTree = "<group>"; };
+		55C0CF4219BE07E9009C50D7 /* PrefPanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefPanelController.m; sourceTree = "<group>"; };
+		55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefPanelController.swift; sourceTree = "<group>"; };
+		55C0CF6219BE0894009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Apropos.strings; sourceTree = "<group>"; };
+		55C0CF6319BE08A8009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DocController.strings; sourceTree = "<group>"; };
+		55C0CF6419BE08AC009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManOpen.strings; sourceTree = "<group>"; };
+		55C0CF6519BE08B0009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManPage.strings; sourceTree = "<group>"; };
+		55C0CF6619BE08B6009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefPanel.strings; sourceTree = "<group>"; };
 		55E8029B188237D600037AF6 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55E8029C188237D600037AF6 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55E8029F188237E000037AF6 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
@@ -159,6 +238,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		55C0CF0719BE04D8009C50D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */,
+				55C0CF0919BE04D8009C50D7 /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D38A242214E4C3FE00F6AFFE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -211,6 +299,36 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		55C0CF1519BE07E8009C50D7 /* ManOpenSwift */ = {
+			isa = PBXGroup;
+			children = (
+				55C0CF1619BE07E8009C50D7 /* AproposDocument.h */,
+				55C0CF1719BE07E8009C50D7 /* AproposDocument.m */,
+				55C0CF1819BE07E8009C50D7 /* Apropos.xib */,
+				55C0CF1A19BE07E8009C50D7 /* DocController.xib */,
+				55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */,
+				55C0CF1E19BE07E9009C50D7 /* ManPage.xib */,
+				55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */,
+				55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */,
+				55C0CF3619BE07E9009C50D7 /* ManDocument.h */,
+				55C0CF3719BE07E9009C50D7 /* ManDocument.m */,
+				55C0CF3819BE07E9009C50D7 /* ManDocumentController.h */,
+				55C0CF3919BE07E9009C50D7 /* ManDocumentController.m */,
+				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,
+				55C0CF3C19BE07E9009C50D7 /* ManOpen_main.m */,
+				55C0CF3D19BE07E9009C50D7 /* ManOpenProtocol.h */,
+				55C0CF3E19BE07E9009C50D7 /* ManOpenSwift-Bridging-Header.h */,
+				55C0CF3F19BE07E9009C50D7 /* NSData+Utils.h */,
+				55C0CF4019BE07E9009C50D7 /* NSData+Utils.m */,
+				55C0CF4119BE07E9009C50D7 /* PrefPanelController.h */,
+				55C0CF4219BE07E9009C50D7 /* PrefPanelController.m */,
+				55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */,
+				55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */,
+				55A5E74619BE11B400BF2597 /* main.swift */,
+			);
+			path = ManOpenSwift;
+			sourceTree = "<group>";
+		};
 		D39278DB0821FF9D00376676 /* ManOpen */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				D39278E50821FFA400376676 /* ManOpen */,
+				55C0CF1519BE07E8009C50D7 /* ManOpenSwift */,
 				D392796A0821FFA400376676 /* openman */,
 			);
 			name = Subprojects;
@@ -251,6 +370,7 @@
 				D38A243814E4C3FE00F6AFFE /* cat2rtf */,
 				D38A244414E4C3FE00F6AFFE /* cat2html */,
 				D38A245114E4C3FE00F6AFFE /* openman */,
+				55C0CF1019BE04D8009C50D7 /* ManOpenSwift.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -411,6 +531,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		55C0CEEF19BE04D8009C50D7 /* ManOpenSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55C0CF0D19BE04D8009C50D7 /* Build configuration list for PBXNativeTarget "ManOpenSwift" */;
+			buildPhases = (
+				55C0CEF419BE04D8009C50D7 /* Resources */,
+				55C0CF0019BE04D8009C50D7 /* Sources */,
+				55C0CF0719BE04D8009C50D7 /* Frameworks */,
+				55C0CF0A19BE04D8009C50D7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55C0CEF019BE04D8009C50D7 /* PBXTargetDependency */,
+				55C0CEF219BE04D8009C50D7 /* PBXTargetDependency */,
+			);
+			name = ManOpenSwift;
+			productInstallPath = "$(HOME)/Apps";
+			productName = "ManOpen (Application)";
+			productReference = 55C0CF1019BE04D8009C50D7 /* ManOpenSwift.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D38A23FD14E4C3FE00F6AFFE /* ManOpen */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D38A242914E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "ManOpen" */;
@@ -514,6 +655,7 @@
 			targets = (
 				D38A23F314E4C3FE00F6AFFE /* Aggregate */,
 				D38A23FD14E4C3FE00F6AFFE /* ManOpen */,
+				55C0CEEF19BE04D8009C50D7 /* ManOpenSwift */,
 				D38A242F14E4C3FE00F6AFFE /* cat2rtf */,
 				D38A243A14E4C3FE00F6AFFE /* cat2html */,
 				D38A244614E4C3FE00F6AFFE /* openman */,
@@ -522,6 +664,25 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		55C0CEF419BE04D8009C50D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55C0CF4519BE07E9009C50D7 /* Apropos.xib in Resources */,
+				55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */,
+				55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */,
+				55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */,
+				55C0CF4719BE07E9009C50D7 /* ManOpen.xib in Resources */,
+				55C0CEF819BE04D8009C50D7 /* Credits.rtf in Resources */,
+				55C0CF4819BE07E9009C50D7 /* ManPage.xib in Resources */,
+				55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */,
+				55C0CF4619BE07E9009C50D7 /* DocController.xib in Resources */,
+				55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */,
+				55C0CEFE19BE04D8009C50D7 /* InfoPlist.strings in Resources */,
+				55C0CF5719BE07E9009C50D7 /* ManOpen-nextstep.tiff in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D38A240B14E4C3FE00F6AFFE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -543,16 +704,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		55C0CF0019BE04D8009C50D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55C0CF5A19BE07E9009C50D7 /* NSData+Utils.m in Sources */,
+				55C0CF5C19BE07E9009C50D7 /* PrefPanelController.swift in Sources */,
+				55A5E74719BE11B400BF2597 /* main.swift in Sources */,
+				55C0CF5919BE07E9009C50D7 /* ManOpen_main.m in Sources */,
+				55C0CF5519BE07E9009C50D7 /* ManDocument.m in Sources */,
+				55A5E74519BE0BFA00BF2597 /* DisplayPathFormatter.swift in Sources */,
+				55C0CF5B19BE07E9009C50D7 /* PrefPanelController.m in Sources */,
+				55C0CF5619BE07E9009C50D7 /* ManDocumentController.m in Sources */,
+				55C0CF4419BE07E9009C50D7 /* AproposDocument.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D38A241A14E4C3FE00F6AFFE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D38A241B14E4C3FE00F6AFFE /* AproposDocument.m in Sources */,
-				D38A241D14E4C3FE00F6AFFE /* ManDocument.m in Sources */,
-				D38A241E14E4C3FE00F6AFFE /* ManDocumentController.m in Sources */,
-				D38A241F14E4C3FE00F6AFFE /* NSData+Utils.m in Sources */,
-				D38A242014E4C3FE00F6AFFE /* PrefPanelController.m in Sources */,
+				55C0CF6019BE0865009C50D7 /* NSData+Utils.m in Sources */,
 				D38A242114E4C3FE00F6AFFE /* ManOpen_main.m in Sources */,
+				55C0CF5F19BE0865009C50D7 /* ManDocumentController.m in Sources */,
+				55C0CF5D19BE0865009C50D7 /* AproposDocument.m in Sources */,
+				55C0CF5E19BE0865009C50D7 /* ManDocument.m in Sources */,
+				55C0CF6119BE0865009C50D7 /* PrefPanelController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +760,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		55C0CEF019BE04D8009C50D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D38A242F14E4C3FE00F6AFFE /* cat2rtf */;
+			targetProxy = 55C0CEF119BE04D8009C50D7 /* PBXContainerItemProxy */;
+		};
+		55C0CEF219BE04D8009C50D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D38A243A14E4C3FE00F6AFFE /* cat2html */;
+			targetProxy = 55C0CEF319BE04D8009C50D7 /* PBXContainerItemProxy */;
+		};
 		D38A245414E4C3FE00F6AFFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D38A23FD14E4C3FE00F6AFFE /* ManOpen */;
@@ -659,6 +846,51 @@
 			name = PrefPanel.xib;
 			sourceTree = "<group>";
 		};
+		55C0CF1819BE07E8009C50D7 /* Apropos.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55C0CF1919BE07E8009C50D7 /* Base */,
+				55C0CF6219BE0894009C50D7 /* en */,
+			);
+			name = Apropos.xib;
+			sourceTree = "<group>";
+		};
+		55C0CF1A19BE07E8009C50D7 /* DocController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55C0CF1B19BE07E8009C50D7 /* Base */,
+				55C0CF6319BE08A8009C50D7 /* en */,
+			);
+			name = DocController.xib;
+			sourceTree = "<group>";
+		};
+		55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55C0CF1D19BE07E9009C50D7 /* Base */,
+				55C0CF6419BE08AC009C50D7 /* en */,
+			);
+			name = ManOpen.xib;
+			sourceTree = "<group>";
+		};
+		55C0CF1E19BE07E9009C50D7 /* ManPage.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55C0CF1F19BE07E9009C50D7 /* Base */,
+				55C0CF6519BE08B0009C50D7 /* en */,
+			);
+			name = ManPage.xib;
+			sourceTree = "<group>";
+		};
+		55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55C0CF2119BE07E9009C50D7 /* Base */,
+				55C0CF6619BE08B6009C50D7 /* en */,
+			);
+			name = PrefPanel.xib;
+			sourceTree = "<group>";
+		};
 		55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -686,6 +918,45 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		55C0CF0E19BE04D8009C50D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "ManOpenSwift/Info-ManOpen.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "ManOpenSwift/ManOpenSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		55C0CF0F19BE04D8009C50D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "ManOpenSwift/Info-ManOpen.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "ManOpenSwift/ManOpenSwift-Bridging-Header.h";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		D38A23AA14E38E1E00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -848,6 +1119,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		55C0CF0D19BE04D8009C50D7 /* Build configuration list for PBXNativeTarget "ManOpenSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55C0CF0E19BE04D8009C50D7 /* Debug */,
+				55C0CF0F19BE04D8009C50D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D38A23BC14E38E1E00F6AFFE /* Build configuration list for PBXProject "ManOpen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

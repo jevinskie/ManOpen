@@ -4,3 +4,4 @@
 
 #import "ManDocumentController.h"
 #import "NSData+Utils.h"
+#import "ManOpenProtocol.h"

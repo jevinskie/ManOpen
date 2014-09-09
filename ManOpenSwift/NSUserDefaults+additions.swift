@@ -20,33 +20,33 @@ private func ColorForKey(key: String, defaults: NSUserDefaults = NSUserDefaults.
 
 extension NSUserDefaults {
 	
-	var textColor: NSColor {
+	var manTextColor: NSColor {
 		get {
-			return ColorForKey(manTextColor, defaults: self)!
+			return ColorForKey(manTextColorKey, defaults: self)!
 		}
 	}
 	
-	var linkColor: NSColor {
+	var manLinkColor: NSColor {
 		get {
-			return ColorForKey(manLinkColor, defaults: self)!
+			return ColorForKey(manLinkColorKey, defaults: self)!
 		}
 	}
 	
-	var backgroundColor: NSColor {
+	var manBackgroundColor: NSColor {
 		get {
-			return ColorForKey(manBackgroundColor, defaults: self)!
+			return ColorForKey(manBackgroundColorKey, defaults: self)!
 		}
 	}
 	
-	var path: String {
+	var manPath: String {
 		get {
-			return self.stringForKey(manPath)!
+			return self.stringForKey(manPathKey)!
 		}
 	}
 	
-	var font: NSFont {
+	var manFont: NSFont {
 		get {
-			let fontString = self.stringForKey(manFont);
+			let fontString = self.stringForKey(manFontKey);
 			
 			if fontString != nil {
 				let spaceRange = fontString!.rangeOfString(" ")

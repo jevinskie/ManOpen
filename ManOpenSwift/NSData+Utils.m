@@ -6,6 +6,11 @@
 #include <errno.h>
 #include <assert.h>
 
+NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
+{
+	return @"";
+}
+
 @implementation NSData (Utils)
 
 /*

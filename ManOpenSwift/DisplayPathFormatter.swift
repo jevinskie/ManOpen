@@ -31,7 +31,6 @@ class DisplayPathFormatter: NSFormatter {
 		return nil;
 	}
 	
-	
 	override func getObjectValue(obj: AutoreleasingUnsafeMutablePointer<AnyObject?>, forString string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>) -> Bool {
 		obj.memory = string.stringByExpandingTildeInPath
 

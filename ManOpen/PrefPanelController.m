@@ -752,7 +752,7 @@ static NSMutableArray *allApps = nil;
 
 + (void)sortApps
 {
-	[allApps sortedArrayWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(id obj1, id obj2) {
+	[allApps sortWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(id obj1, id obj2) {
 		return [[obj1 displayName] localizedCaseInsensitiveCompare:[obj2 displayName]];
 	}];
 }

@@ -55,7 +55,7 @@
     [self loadCommand:command];
 }
 
-- (id)initWithName:(NSString *)name
+- (instancetype)initWithName:(NSString *)name
 	section:(NSString *)section
 	manPath:(NSString *)manPath
 	title:(NSString *)title

@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		552A9CF719BF75D500BECDC1 /* DictionaryAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A9CF619BF75D500BECDC1 /* DictionaryAdditions.swift */; };
 		5553E1FC1881F2C2003C2DBF /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
 		5553E20C1881F640003C2DBF /* Apropos.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E20E1881F640003C2DBF /* Apropos.xib */; };
 		5553E20F1881F646003C2DBF /* DocController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E2111881F646003C2DBF /* DocController.xib */; };
@@ -157,6 +158,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		552A9CF619BF75D500BECDC1 /* DictionaryAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryAdditions.swift; sourceTree = "<group>"; };
 		552F6EAC18E23A2C0056F78B /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		55485832190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Apropos.xib; sourceTree = "<group>"; };
 		55485833190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocController.xib; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */,
 				55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */,
 				55A5E74619BE11B400BF2597 /* main.swift */,
+				552A9CF619BF75D500BECDC1 /* DictionaryAdditions.swift */,
 			);
 			path = ManOpenSwift;
 			sourceTree = "<group>";
@@ -708,6 +711,7 @@
 				55C0CF5A19BE07E9009C50D7 /* NSData+Utils.m in Sources */,
 				55B078E519BE946500586F4C /* NSUserDefaults+additions.swift in Sources */,
 				55C0CF5C19BE07E9009C50D7 /* PrefPanelController.swift in Sources */,
+				552A9CF719BF75D500BECDC1 /* DictionaryAdditions.swift in Sources */,
 				55A5E74719BE11B400BF2597 /* main.swift in Sources */,
 				55B880BB19BEB80E0026FCF9 /* ManDocumentController.swift in Sources */,
 				55C0CF5519BE07E9009C50D7 /* ManDocument.m in Sources */,

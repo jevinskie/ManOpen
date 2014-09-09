@@ -1,8 +1,7 @@
 /* AproposDocument.m created by lindberg on Tue 10-Oct-2000 */
 
 #import "AproposDocument.h"
-#import "ManDocumentController.h"
-#import "PrefPanelController.h"
+#import "ManOpenSwift-Swift.h"
 
 @implementation AproposDocument
 @synthesize title;
@@ -17,7 +16,7 @@
 - (void)_loadWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)aTitle
 {
     ManDocumentController *docController = [ManDocumentController sharedDocumentController];
-    NSMutableString *command = [docController manCommandWithManPath:manPath];
+    NSMutableString *command = [[docController manCommandWithManPath:manPath] copy];
     NSData *output;
     
     titles = [[NSMutableArray alloc] init];
@@ -39,7 +38,7 @@
     // [command appendString:@" -k"];
     [command setString:@"/usr/bin/apropos"];
     
-    [command appendFormat:@" %@", EscapePath(apropos, YES)];
+    [command appendFormat:@" %@", [ManDocumentController escapePath:apropos addSurroundingQuotes:YES]];
     output = [docController dataByExecutingCommand:command manPath:manPath];
     /* The whatis database appears to not be UTF8 -- at least, UTF8 can fail, even on 10.7 */
     [self parseOutput:[[NSString alloc] initWithData:output encoding:NSMacOSRomanStringEncoding]];

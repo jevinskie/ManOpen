@@ -19,11 +19,11 @@
 @end
 
 @interface NSUserDefaults (ManOpenPreferences)
-- (NSFont *)manFont;
-- (NSString *)manPath;
-- (NSColor *)manTextColor;
-- (NSColor *)manLinkColor;
-- (NSColor *)manBackgroundColor;
+@property (nonatomic, readonly, copy) NSFont *manFont;
+@property (nonatomic, readonly, copy) NSString *manPath;
+@property (nonatomic, readonly, copy) NSColor *manTextColor;
+@property (nonatomic, readonly, copy) NSColor *manLinkColor;
+@property (nonatomic, readonly, copy) NSColor *manBackgroundColor;
 @end
 
 // This needs to be in the header so IB can find it

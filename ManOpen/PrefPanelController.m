@@ -173,7 +173,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
     return instance;
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super initWithWindowNibName:@"PrefPanel"]) {
         [self setShouldCascadeWindows:NO];
@@ -683,7 +683,7 @@ static NSString *ManPathArrayKey = @"manPathArray";
 
 static NSMutableArray *allApps = nil;
 
-- (id)initWithBundleID:(NSString *)aBundleID
+- (instancetype)initWithBundleID:(NSString *)aBundleID
 {
     if (self = [super init]) {
 		self.bundleID = aBundleID;

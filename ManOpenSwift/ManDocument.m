@@ -1,6 +1,5 @@
 #import "ManDocument.h"
-#import "ManDocumentController.h"
-#import "PrefPanelController.h"
+#import "ManOpenSwift-Swift.h"
 #import "NSData+Utils.h"
 #include <ApplicationServices/ApplicationServices.h>
 
@@ -29,7 +28,7 @@
                         title:(NSString *)title
 {
     ManDocumentController *docController = [ManDocumentController sharedDocumentController];
-    NSMutableString *command = [docController manCommandWithManPath:manPath];
+    NSMutableString *command = [[docController manCommandWithManPath:manPath] mutableCopy];
     
     [self setFileType:@"man"];
     self.shortTitle = title;
@@ -223,7 +222,7 @@
     NSString *tool = @"cat2rtf";
     NSString *command = [[NSBundle mainBundle] pathForResource:tool ofType:nil];
 
-    command = EscapePath(command, YES);
+	command = [ManDocumentController escapePath:command addSurroundingQuotes: YES];
     command = [command stringByAppendingString:@" -lH"]; // generate links, mark headers
     if ([defaults boolForKey:@"UseItalics"])
         command = [command stringByAppendingString:@" -i"];
@@ -263,14 +262,14 @@
         }
     }
     
-    nroffCommand = [NSString stringWithFormat:nroffFormat, EscapePath(filename, !hasQuote)];
+    nroffCommand = [NSString stringWithFormat:nroffFormat, [ManDocumentController escapePath:filename addSurroundingQuotes:!hasQuote]];
     [self loadCommand:nroffCommand];
 }
 
 - (void)loadCatFile:(NSString *)filename isGzip:(BOOL)isGzip
 {
     NSString *binary = isGzip? @"/usr/bin/gzip -dc" : @"/bin/cat";
-    [self loadCommand:[NSString stringWithFormat:@"%@ '%@'", binary, EscapePath(filename, NO)]];
+    [self loadCommand:[NSString stringWithFormat:@"%@ '%@'", binary, [ManDocumentController escapePath:filename addSurroundingQuotes:NO]]];
 }
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)type error:(NSError **)error

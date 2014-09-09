@@ -52,7 +52,7 @@ NSString *EscapePath(NSString *path, BOOL addSurroundingQuotes)
 @synthesize openTextPanel;
 @synthesize startedUp;
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		/*

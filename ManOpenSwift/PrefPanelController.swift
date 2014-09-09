@@ -18,8 +18,8 @@ let manBackgroundColorKey = "ManBackgroundColor"
 let manFontKey = "ManFont"
 let manPathKey = "ManPath"
 
-private let URL_SCHEME = "x-man-page"
-private let URL_SCHEME_PREFIX = URL_SCHEME + ":"
+let URL_SCHEME = "x-man-page"
+let URL_SCHEME_PREFIX = URL_SCHEME + ":"
 
 private func StringToCFString(string: String) -> CFString {
 	return string as NSString as CFString
@@ -49,7 +49,7 @@ func ==(lhs: PrefPanelController.AppInfo, rhs: String) -> Bool {
 
 private var allApps: [PrefPanelController.AppInfo] = []
 
-class PrefPanelController: NSWindowController {
+class PrefPanelController: NSWindowController, NSTableViewDataSource {
 
 	class AppInfo: Hashable, SequenceType {
 		private var internalDisplayName: String!
@@ -254,12 +254,21 @@ class PrefPanelController: NSWindowController {
 		}
 	}
 	
+	private func setUpDefaultManViewerApp() {
+		AppInfo.allManViewerApps
+		resetCurrentApp()
+	}
+	
     override func windowDidLoad() {
 		self.shouldCascadeWindows = false
 		NSFontManager.sharedFontManager().delegate = self
         super.windowDidLoad()
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+		
+		setUpDefaultManViewerApp()
+		setUpManPathUI()
+		fontFieldFont = NSUserDefaults.standardUserDefaults().manFont
     }
 
 	@IBAction func openFontPanel(sender: AnyObject!) {
@@ -422,8 +431,197 @@ class PrefPanelController: NSWindowController {
 		}
 	}
 	
-	@IBAction func addPathFromPanel(sender: AnyObject!) {
-		let panel = NSOpenPanel()
+	func addPathDirectories(directories: [String], atIndex: Int, removeFirst removeIndexes: NSIndexSet?) {
+		
+		func insertObject(anObj: String, atIndex: Int) {
+			var hasObject = manPathArrayPriv.filter { (otherObj) -> Bool in
+				return anObj == otherObj
+			}
+			if hasObject.count == 0 {
+				manPathArrayPriv.insert(anObj, atIndex: atIndex)
+			}
+		}
+		
+		var insertIndex = atIndex
+		
+		self.willChangeValueForKey(ManPathArrayKey)
+		if let removeIndexesUn = removeIndexes {
+			var numBeforeInsertion = 0
+			
+			for var i = manPathArrayPriv.count - 1; i >= 0; i-- {
+				if removeIndexesUn.containsIndex(i) {
+					manPathArrayPriv.removeAtIndex(i)
+					if i <= insertIndex {
+						numBeforeInsertion++
+					}
+				}
+			}
+			insertIndex -= numBeforeInsertion
+		}
+		
+		for directory in directories {
+			var path = directory.stringByExpandingTildeInPath
+			path = path.stringByReplacingOccurrencesOfString(":", withString: "")
+			
+			insertObject(path, insertIndex++)
+		}
+		
+		self.didChangeValueForKey(ManPathArrayKey)
+		saveManPath()
 	}
 	
+	@IBAction func addPathFromPanel(sender: AnyObject!) {
+		let panel = NSOpenPanel()
+		
+		panel.allowsMultipleSelection = true
+		panel.canChooseDirectories = true
+		panel.canChooseFiles = false
+		
+		panel.beginSheetModalForWindow(window, completionHandler: { (result) -> Void in
+			if result == NSOKButton {
+				let urls = panel.URLs as [NSURL]
+				var paths = [String]()
+				
+				for url in urls {
+					if url.fileURL {
+						paths.append(url.path!)
+					}
+					
+				}
+				
+				var insertionIndex = self.manPathController.selectionIndex
+				if insertionIndex == NSNotFound {
+					insertionIndex = self.manPathArrayPriv.count
+				}
+				
+				self.addPathDirectories(paths, atIndex: insertionIndex, removeFirst: nil)
+			}
+		})
+	}
+	
+	func pathsAtIndexes(set: NSIndexSet) -> [String] {
+		var paths = [String]()
+		
+		for (currIndex, path) in enumerate(manPathArrayPriv) {
+			if set.containsIndex(currIndex) {
+				paths.append(path)
+			}
+		}
+		
+		return paths
+	}
+	
+	func writePaths(paths: [String], toPasteboard pb: NSPasteboard) -> Bool {
+		pb.declareTypes([NSStringPboardType], owner: nil)
+		
+		/* This causes an NSLog if one of the paths does not exist. Hm.  May not be worth it. Might let folks drag to Trash etc. as well. */
+		//[pb setPropertyList:paths forType:NSFilenamesPboardType];
+		return pb.setString((paths as NSArray).componentsJoinedByString(":"), forType: NSStringPboardType)
+	}
+	
+	func writeIndexSet(set: NSIndexSet, toPasteboard pb: NSPasteboard) -> Bool {
+		var files = pathsAtIndexes(set)
+		
+		if writePaths(files, toPasteboard: pb) {
+			pb.addTypes([ManPathIndexSetPboardType], owner: nil)
+			return pb.setData(NSArchiver.archivedDataWithRootObject(set), forType: ManPathIndexSetPboardType)
+		}
+		
+		return false
+	}
+	
+	func pathsFromPasteboard(pb: NSPasteboard) -> [String]? {
+		var bestType = pb.availableTypeFromArray([NSFilenamesPboardType, NSStringPboardType])
+		
+		if bestType == NSFilenamesPboardType {
+			return pb.propertyListForType(NSFilenamesPboardType) as [String]!
+		}
+		
+		if bestType == NSStringPboardType {
+			return pb.stringForType(NSStringPboardType).componentsSeparatedByString(":")
+		}
+		
+		return nil
+	}
+	
+	@IBAction func copy(sender: AnyObject!) {
+		var files = pathsAtIndexes(manPathController.selectionIndexes)
+		writePaths(files, toPasteboard: NSPasteboard.generalPasteboard())
+	}
+	
+	
+	@IBAction func delete(sender: AnyObject!) {
+		manPathController.remove(sender)
+	}
+	
+	@IBAction func cut(sender: AnyObject!) {
+		copy(sender)
+		delete(sender)
+	}
+	
+	@IBAction func paste(sender: AnyObject!) {
+		var paths = pathsFromPasteboard(NSPasteboard.generalPasteboard())
+		var insertionIndex = manPathController.selectionIndex
+		if insertionIndex == NSNotFound {
+			insertionIndex = manPathArrayPriv.count //add it on the end
+		}
+		
+		addPathDirectories(paths!, atIndex: insertionIndex, removeFirst: nil)
+	}
+	
+	// MARK: drag and drop
+	
+	func tableView(tableView: NSTableView!, writeRowsWithIndexes rowIndexes: NSIndexSet!, toPasteboard pboard: NSPasteboard!) -> Bool {
+		return writeIndexSet(rowIndexes, toPasteboard: pboard)
+	}
+	
+	func tableView(tableView: NSTableView!, validateDrop info: NSDraggingInfo!, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+		let pb = info.draggingPasteboard()
+		
+		/* We only drop between rows */
+		if dropOperation == .Above {
+			return .None
+		}
+		
+		/* If this is a dragging operation in the table itself, show the move icon */
+		if contains((pb.types as [String]), ManPathIndexSetPboardType) && (info.draggingSource() === manPathTableView) {
+		return .Move;
+		}
+		var paths = pathsFromPasteboard(pb)
+		
+		if paths != nil {
+			for path in paths! {
+				if contains(manPathArrayPriv, path) {
+					return .Copy
+				}
+			}
+		}
+
+		return .None
+	}
+	
+	
+	func tableView(tableView: NSTableView!, acceptDrop info: NSDraggingInfo!, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+		let pb = info.draggingPasteboard()
+		let dragOp = info.draggingSourceOperationMask()
+		var pathsToAdd: [String]? = [String]()
+		var removeSet: NSIndexSet? = nil
+		
+		if contains((pb.types as [String]), ManPathIndexSetPboardType) {
+			var indexData = pb.dataForType(ManPathIndexSetPboardType)
+			if (dragOp & .Move == .Move) && indexData != nil {
+				removeSet = (NSUnarchiver.unarchiveObjectWithData(indexData) as NSIndexSet)
+				pathsToAdd = pathsAtIndexes(removeSet!)
+			}
+		} else {
+			pathsToAdd = pathsFromPasteboard(pb)
+		}
+		
+		if pathsToAdd?.count > 0 {
+			addPathDirectories(pathsToAdd!, atIndex: row, removeFirst: removeSet)
+			return true
+		}
+		
+		return false;
+	}
 }

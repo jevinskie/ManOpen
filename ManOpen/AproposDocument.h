@@ -13,7 +13,7 @@
 @property (weak) IBOutlet NSTableColumn *titleColumn;
 @property (copy) NSString *title;
 
-- (id)initWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)title;
+- (instancetype)initWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)title NS_DESIGNATED_INITIALIZER;
 - (void)parseOutput:(NSString *)output;
 
 - (IBAction)saveCurrentWindowSize:(id)sender;

@@ -14,7 +14,7 @@
     NSMutableDictionary *restoreData;
 }
 
-- initWithName:(NSString *)name section:(NSString *)section manPath:(NSString *)manPath title:(NSString *)title;
+- (instancetype) initWithName:(NSString *)name section:(NSString *)section manPath:(NSString *)manPath title:(NSString *)title NS_DESIGNATED_INITIALIZER;
 
 @property (copy) NSString *shortTitle;
 @property (unsafe_unretained) IBOutlet ManTextView *textView;

@@ -2,10 +2,10 @@
 
 @interface NSData (Utils)
 
-- (BOOL)isNroffData;
-- (BOOL)isRTFData;
-- (BOOL)isGzipData;
-- (BOOL)isBinaryData;
+@property (nonatomic, getter=isNroffData, readonly) BOOL nroffData;
+@property (nonatomic, getter=isRTFData, readonly) BOOL RTFData;
+@property (nonatomic, getter=isGzipData, readonly) BOOL gzipData;
+@property (nonatomic, getter=isBinaryData, readonly) BOOL binaryData;
 
 @end
 

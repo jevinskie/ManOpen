@@ -45,7 +45,7 @@
     [self parseOutput:[[NSString alloc] initWithData:output encoding:NSMacOSRomanStringEncoding]];
 }
 
-- (id)initWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)aTitle
+- (instancetype)initWithString:(NSString *)apropos manPath:(NSString *)manPath title:(NSString *)aTitle
 {
     if(self = [super init]) {
         [self _loadWithString:apropos manPath:manPath title:aTitle];

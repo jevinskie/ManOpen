@@ -19,149 +19,8 @@ private func dataForColor(color: NSColor) -> NSData {
 	return NSArchiver.archivedDataWithRootObject(color)
 }
 
-func ==(lhs: PrefPanelController.AppInfo, rhs: PrefPanelController.AppInfo) -> Bool {
-	var toRet = lhs.bundleID.caseInsensitiveCompare(rhs.bundleID)
-	return toRet == NSComparisonResult.OrderedSame
-}
-
-func ==(lhs: PrefPanelController.AppInfo, rhs: String) -> Bool {
-	var toRet = lhs.bundleID.caseInsensitiveCompare(rhs)
-	return toRet == NSComparisonResult.OrderedSame
-}
-
-private var allApps: [PrefPanelController.AppInfo] = []
-
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
-
-	class AppInfo: Hashable, SequenceType {
-		private var internalDisplayName: String!
-		private var internalAppURL: NSURL!
-		@objc let bundleID: String
-		@objc var displayName: String {
-			get {
-				if internalDisplayName == nil {
-					let url = appURL
-					var infoDict = CFBundleCopyInfoDictionaryForURL(url) as NSDictionary!
-					var appVersion: String!
-					var niceName: String!
-					
-					if (infoDict == nil) {
-						infoDict = NSBundle(URL: url).infoDictionary
-					}
-					
-					var niceNameRef: Unmanaged<CFString>? = nil
-					LSCopyDisplayNameForURL(url, &niceNameRef);
-					niceName = CFStringToString(niceNameRef?.takeRetainedValue())
-					if (niceName == nil) {
-						niceName = url.lastPathComponent
-					}
-					
-					appVersion = infoDict["CFBundleShortVersionString"] as? NSString as String
-					if (appVersion != nil) {
-						niceName = "\(niceName) (\(appVersion))"
-					}
-					
-					internalDisplayName = niceName;
-				}
-				return internalDisplayName
-			}
-		}
-		var appURL: NSURL {
-			get {
-				if internalAppURL == nil {
-					var path = NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier(bundleID)
-					if (path != nil) {
-						internalAppURL = NSURL(fileURLWithPath: path)
-					}
-				}
-				return internalAppURL
-			}
-		}
-
-		@objc func isEqual(other: AnyObject) -> Bool {
-			if let isAppInfo = other as? AppInfo {
-				return self == isAppInfo
-			} else {
-				return false
-			}
-		}
-		
-		func generate() -> IndexingGenerator<[PrefPanelController.AppInfo]> {
-			return allApps.generate()
-		}
-		
-		init(bundleID aBundleID: String) {
-			bundleID = aBundleID
-		}
-		
-		var hashValue: Int {
-			get {
-				return bundleID.lowercaseString.hashValue
-			}
-		}
-		
-		@objc var hash: Int {
-			get {
-				return hashValue
-			}
-		}
-		
-		class var allManViewerApps: [AppInfo] {
-			get {
-				if (allApps.count == 0) {
-					/* Ensure our app is registered
-					let url = NSBundle.mainBundle().bundleURL
-					LSRegisterURL(url, 0) */
-					
-					let allBundleIDs = LSCopyAllHandlersForURLScheme(StringToCFString(URL_SCHEME)).takeRetainedValue() as NSArray as [String]
-					
-					//allApps = [[NSMutableArray alloc] initWithCapacity:[allBundleIDs count]];
-					for bundleID in allBundleIDs {
-						addApp(ID: bundleID)
-					}
-					sortApps()
-				}
-				
-				return allApps;
-			}
-		}
-		
-		class func addApp(ID id: String, sort shouldResort: Bool = false) {
-			let info = AppInfo(bundleID: id)
-			let contains = allApps.filter { (anObj) -> Bool in
-				return anObj == info
-			}
-			if contains.count == 0 {
-				allApps.append(info)
-				if shouldResort {
-					sortApps()
-				}
-			}
-		}
-		
-		class func sortApps() {
-			allApps.sort { (lhs, rhs) -> Bool in
-				let toRet = lhs.displayName.localizedCaseInsensitiveCompare(rhs.displayName)
-				return NSComparisonResult.OrderedAscending == toRet
-			}
-		}
-		
-		class func indexOfBundleID(bundleID: String!) -> Int? {
-			if bundleID == nil {
-				return nil;
-			}
-			
-			for (i, obj) in enumerate(allApps) {
-				if obj == bundleID {
-					return i
-				}
-			}
-			
-			return nil
-		}
-
-	}
-	
+	let appInfos = ManAppInfoArray()
 	private var manPathArrayPriv = [String]()
 	dynamic var manPathArray: [String] {
 		get {
@@ -237,7 +96,6 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	private func setUpDefaultManViewerApp() {
-		AppInfo.allManViewerApps
 		resetCurrentApp()
 	}
 	
@@ -296,7 +154,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	// MARK: DefaultManApp
 	
 	func setAppPopupToCurrent() {
-		var currIndex = AppInfo.indexOfBundleID(currentAppID)
+		var currIndex = appInfos.indexOfBundleID(currentAppID)
 		
 		if (currIndex == nil) {
 			currIndex = 0;
@@ -308,14 +166,14 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func resetAppPopup()  {
-		let apps = AppInfo.allManViewerApps
+		let apps = appInfos.allManViewerApps
 		let workspace = NSWorkspace.sharedWorkspace()
 		var i = 0
 		
 		appPopup.removeAllItems()
 		appPopup.image = nil
 		
-		for (i, info) in enumerate(allApps) {
+		for (i, info) in enumerate(appInfos) {
 			var image = workspace.iconForFile(info.appURL.path).copy() as NSImage
 			var niceName = info.displayName
 			var displayName = niceName
@@ -335,10 +193,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 
 	func resetCurrentApp() {
-		var currSetID = CFStringToString((LSCopyDefaultHandlerForURLScheme(StringToCFString(URL_SCHEME)) as Unmanaged<CFString>?)?.takeRetainedValue())
+		var currSetID = MODefaultHandlerForURLScheme(URL_SCHEME) as String?
 		
 		if (currSetID == nil) {
-			currSetID = allApps[0].bundleID
+			currSetID = appInfos[0].bundleID
 		}
 		
 		if (currSetID != nil) {
@@ -346,8 +204,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			
 			currentAppID = currSetID!
 			
-			if AppInfo.indexOfBundleID(currSetID) == nil {
-				AppInfo.addApp(ID: currSetID!, sort: true)
+			if appInfos.indexOfBundleID(currSetID) == nil {
+				appInfos.addApp(ID: currSetID!, sort: true)
 				resetPopup = true
 			}
 			if (resetPopup) {
@@ -359,7 +217,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func setManPageViewer(bundleID: String) {
-		let error = LSSetDefaultHandlerForURLScheme(StringToCFString(URL_SCHEME), StringToCFString(bundleID))
+		let error = MOSetDefaultHandlerForURLScheme(URL_SCHEME, bundleID)
 		
 		if (error != noErr){
 			println("Could not set default \(URL_SCHEME_PREFIX) app: Launch Services error \(error)")
@@ -369,11 +227,11 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	@IBAction func chooseNewApp(sender: AnyObject!) {
-		let apps = AppInfo.allManViewerApps
+		let apps = appInfos.allManViewerApps
 		let choice = appPopup.indexOfSelectedItem
 		
-		if choice >= 0 && choice < allApps.count {
-			let info = allApps[choice]
+		if choice >= 0 && choice < appInfos.count {
+			let info = appInfos[choice]
 			if info.bundleID != currentAppID {
 				setManPageViewer(info.bundleID)
 			}
@@ -383,7 +241,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			panel.allowsMultipleSelection = false
 			panel.resolvesAliases = true
 			panel.canChooseFiles = true
-			panel.allowedFileTypes = [CFStringToString(kUTTypeApplicationBundle!)]
+			panel.allowedFileTypes = [kUTTypeApplicationBundle! as NSString]
 			panel.beginSheetModalForWindow(appPopup.window!) { (result) -> Void in
 				if (result == NSOKButton) {
 					let appURL = panel.URL

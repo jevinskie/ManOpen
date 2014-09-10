@@ -132,7 +132,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	func manCommandWithManPath(manPath: String?) -> String {
 		var command = MAN_BINARY
 		
-		if (manPath != nil && countElements(manPath!) > 0) {
+		if (manPath != nil && !(manPath!.isEmpty)) {
 			command += " -M '\(EscapePath(manPath!))'"
 		}
 		
@@ -145,10 +145,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var output: NSData
 		
 		if extraEnv != nil {
-			var environment = NSProcessInfo.processInfo().environment as [String: AnyObject]
-			for (key, object) in extraEnv! as [String: AnyObject] {
-				environment.updateValue(object, forKey: key)
-			}
+			var environment = NSProcessInfo.processInfo().environment
+			environment += extraEnv!
 			task.environment = environment
 		}
 		
@@ -299,7 +297,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			}
 		}
 		
-		helpTextView.readRTFDFromFile(helpPath?.path)
+		helpTextView.readRTFDFromFile(helpPath!.path)
 	}
 	
 	func openDocumentWithName(name: String, section: String? = nil, manPath: String) -> ManDocument? {
@@ -370,7 +368,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 */
 		
-		document = openDocumentWithName(base, section: section, manPath: manPathDefaults)
+		document = openDocumentWithName(base, section: section, manPath: NSUserDefaults.standardUserDefaults().manPath)
 		
 		return document
 	}

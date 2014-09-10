@@ -12,26 +12,8 @@ import CoreServices
 let ManPathIndexSetPboardType = "org.clindberg.ManOpen.ManPathIndexSetType"
 let ManPathArrayKey = "manPathArray"
 
-let manTextColorKey = "ManTextColor"
-let manLinkColorKey = "ManLinkColor"
-let manBackgroundColorKey = "ManBackgroundColor"
-let manFontKey = "ManFont"
-let manPathKey = "ManPath"
-
 let URL_SCHEME = "x-man-page"
 let URL_SCHEME_PREFIX = URL_SCHEME + ":"
-
-private func StringToCFString(string: String) -> CFString {
-	return string as NSString as CFString
-}
-
-private func CFStringToString(cfString: CFString) -> String {
-	return cfString as NSString as String
-}
-
-private func CFStringToString(cfString: CFString?) -> String? {
-	return cfString as NSString? as String?
-}
 
 private func dataForColor(color: NSColor) -> NSData {
 	return NSArchiver.archivedDataWithRootObject(color)
@@ -69,7 +51,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 					
 					var niceNameRef: Unmanaged<CFString>? = nil
 					LSCopyDisplayNameForURL(url, &niceNameRef);
-					niceName = niceNameRef?.takeRetainedValue()
+					niceName = CFStringToString(niceNameRef?.takeRetainedValue())
 					if (niceName == nil) {
 						niceName = url.lastPathComponent
 					}

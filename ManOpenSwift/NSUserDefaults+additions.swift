@@ -8,6 +8,12 @@
 
 import Cocoa
 
+let manTextColorKey = "ManTextColor"
+let manLinkColorKey = "ManLinkColor"
+let manBackgroundColorKey = "ManBackgroundColor"
+let manFontKey = "ManFont"
+let manPathKey = "ManPath"
+
 private func ColorForKey(key: String, defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) -> NSColor? {
 	let colorData = defaults.dataForKey(key)
 	

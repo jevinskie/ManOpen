@@ -42,8 +42,7 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 	return modPath;
 }
 
-
-@objc(ManDocumentController) class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegate {
+class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegate {
 
 	@IBOutlet weak var helpTextView: NSTextView!
 	@IBOutlet weak var openTextPanel: NSPanel!
@@ -140,14 +139,16 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 		return command
 	}
 	
-	func dataByExecutingCommand(command: String, maxLength: Int = 0, extraEnv: NSDictionary?) -> NSData? {
+	func dataByExecutingCommand(command: String, maxLength: Int = 0, extraEnv: NSDictionary? = nil) -> NSData? {
 		var pipe = NSPipe()
 		var task = NSTask()
 		var output: NSData
 		
 		if extraEnv != nil {
-			var environment = NSProcessInfo.processInfo().environment
-			environment += extraEnv!
+			var environment = NSProcessInfo.processInfo().environment as [String: AnyObject]
+			for (key, object) in extraEnv! as [String: AnyObject] {
+				environment.updateValue(object, forKey: key)
+			}
 			task.environment = environment
 		}
 		
@@ -168,18 +169,10 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 		return output
 	}
 	
-	func dataByExecutingCommand(command: String) -> NSData? {
-		return dataByExecutingCommand(command, maxLength: 0, extraEnv: nil)
-	}
-	
 	func dataByExecutingCommand(command: String, manPath: String) -> NSData? {
 		return dataByExecutingCommand(command, extraEnv: ["MANPATH" : manPath])
 	}
 	
-	func dataByExecutingCommand(command: String, maxLength: Int) -> NSData? {
-		return dataByExecutingCommand(command, maxLength: maxLength, extraEnv: nil)
-	}
-
 	func manFileForName(name: String, section: String? = nil, manPath: String? = nil) -> String? {
 		var command = manCommandWithManPath(manPath)
 		let spaceString: String = ""
@@ -236,18 +229,18 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 			return nil
 		}
 		
-		if fileHeader.isGzipData() {
+		if fileHeader.gzipData {
 			var command = "/usr/bin/gzip -dc '\(EscapePath(url.path!))'"
 			fileHeader = dataByExecutingCommand(command, maxLength: Int(maxLength))!
 			manType = "mangz"
 			catType = "catgz"
 		}
 		
-		if fileHeader.isBinaryData() {
+		if fileHeader.binaryData {
 			return nil
 		}
 		
-		return fileHeader.isNroffData() ? manType : catType
+		return fileHeader.nroffData ? manType : catType
 	}
 	
 	override func openDocumentWithContentsOfURL(url: NSURL!, display displayDocument: Bool, completionHandler: ((NSDocument!, Bool, NSError!) -> Void)!) {
@@ -377,7 +370,7 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 		}
 */
 		
-		document = openDocumentWithName(base, section: section, manPath: NSUserDefaults.standardUserDefaults().manPath)
+		document = openDocumentWithName(base, section: section, manPath: manPathDefaults)
 		
 		return document
 	}
@@ -452,6 +445,25 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 	
 	class func escapePath(path: String, addSurroundingQuotes addQuotes: Bool) -> String {
 		return EscapePath(path, addSurroundingQuotes: addQuotes)
+	}
+	
+	@IBAction func openSection(sender: AnyObject!) {
+		
+	}
+	@IBAction func openTextPanel(sender: AnyObject!) {
+		
+	}
+	@IBAction func openAproposPanel(sender: AnyObject!) {
+		
+	}
+	@IBAction func okApropos(sender: AnyObject!) {
+		
+	}
+	@IBAction func okText(sender: AnyObject!) {
+		
+	}
+	@IBAction func cancelText(sender: AnyObject!) {
+		
 	}
 }
 

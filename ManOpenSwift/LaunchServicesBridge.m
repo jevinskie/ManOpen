@@ -1,9 +1,8 @@
 
 #import "LaunchServicesBridge.h"
 
-@import Foundation;
-@import CoreFoundation;
-@import CoreServices;
+#import <Foundation/Foundation.h>
+#import <CoreServices/CoreServices.h>
 
 NSString *MODisplayNameForURL(NSURL *theURL)
 {

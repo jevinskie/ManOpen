@@ -288,6 +288,7 @@
 		553A5B2419BFE86F003D74A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */,
 				55C0CF1819BE07E8009C50D7 /* Apropos.xib */,
 				55C0CF1A19BE07E8009C50D7 /* DocController.xib */,
 				55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */,
@@ -319,7 +320,6 @@
 				553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */,
 				55838BFF19C0AD2900FFEDDE /* AppInfo.swift */,
 				55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */,
-				55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */,
 				553A5B2219BFE811003D74A9 /* ManDocument.swift */,
 				55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */,
 				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,

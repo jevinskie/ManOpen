@@ -8,19 +8,52 @@
 
 import Cocoa
 
-class AproposDocument: NSDocument {
+private let restoreSearchString = "SearchString"
+private let restoreTitle = "Title"
 
-    /*
+class AproposDocument: NSDocument, NSTableViewDataSource {
+	var title: String = ""
+	var searchString: String = ""
+	var titles = [String]()
+	var descriptions = [String]()
+	@IBOutlet weak var tableView: NSTableView!
+	@IBOutlet weak var titleColumn: NSTableColumn!
+
+	override class func canConcurrentlyReadDocumentsOfType(typeName: String) -> Bool {
+		return true
+	}
+	
+	override var displayName: String {
+		return title
+	}
+	
     override var windowNibName: String {
-        // Override returning the nib file name of the document
-        // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-        return "AproposDocument"
+        return "Apropos"
     }
-    */
 
+	func parseOutput(output: String) {
+		
+	}
+	
     override func windowControllerDidLoadNib(aController: NSWindowController?) {
+		var aSizeString = NSUserDefaults.standardUserDefaults().stringForKey("AproposWindowSize")
+
         super.windowControllerDidLoadNib(aController)
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
+		if let sizeString = aSizeString {
+			var windowSize = NSSizeFromString(sizeString)
+			var window = tableView.window
+			var frame = window!.frame
+			
+			if windowSize.width > 30.0 && windowSize.height > 30.0 {
+				frame.size = windowSize
+				window!.setFrame(frame, display: false)
+			}
+		}
+		
+		tableView.target = self
+		tableView.doubleAction = "openManPages:"
+		tableView.sizeLastColumnToFit()
     }
 
     override func dataOfType(typeName: String?, error outError: NSErrorPointer) -> NSData? {
@@ -38,6 +71,39 @@ class AproposDocument: NSDocument {
         return false
     }
 
+	private func loadWithString(apropos: String, manPath: String, title aTitle: String) {
+		let docController = ManDocumentController.sharedDocumentController() as ManDocumentController
+		var command = docController.manCommandWithManPath(manPath)
+		
+		title = aTitle
+		self.fileType = "apropos"
+	}
+
+	override func encodeRestorableStateWithCoder(coder: NSCoder) {
+		super.encodeRestorableStateWithCoder(coder)
+		coder.encodeObject(searchString, forKey: restoreSearchString)
+		coder.encodeObject(title, forKey: restoreTitle)
+	}
+	
+	override func restoreStateWithCoder(coder: NSCoder) {
+		super.restoreStateWithCoder(coder)
+		
+		if !coder.containsValueForKey(restoreSearchString) {
+			return
+		}
+		
+		var search: String = coder.decodeObjectForKey(restoreSearchString) as NSString
+		var theTitle = coder.decodeObjectForKey(restoreTitle) as NSString
+		var manPath = NSUserDefaults.standardUserDefaults().manPath
+		
+		loadWithString(search, manPath: manPath, title: theTitle)
+		
+		//(self.windowControllers).makeObjectsPerformSelector("synchronizeWindowTitleWithDocumentName")
+		for controller in self.windowControllers as [NSWindowController] {
+			controller.synchronizeWindowTitleWithDocumentName()
+		}
+		tableView.reloadData()
+	}
 	
 	init?(string apropos: String, manPath: String, title: String) {
 		super.init()

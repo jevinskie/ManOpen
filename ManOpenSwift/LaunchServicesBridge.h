@@ -6,10 +6,12 @@
 //
 //
 
-@import Foundation.NSString;
-@import Foundation.NSURL;
+#import <Foundation/NSString.h>
+#import <Foundation/NSURL.h>
 
-NSString *MODisplayNameForURL(NSURL *theURL);
-NSArray *MOAllHandlersForURLScheme(NSString *scheme);
-NSString *MODefaultHandlerForURLScheme(NSString *scheme);
-OSStatus MOSetDefaultHandlerForURLScheme(NSString *URLScheme, NSString *bundleID);
+#define __private_extern __attribute__((visibility("hidden")))
+
+__private_extern NSString *MODisplayNameForURL(NSURL *theURL);
+__private_extern NSArray *MOAllHandlersForURLScheme(NSString *scheme);
+__private_extern NSString *MODefaultHandlerForURLScheme(NSString *scheme);
+__private_extern OSStatus MOSetDefaultHandlerForURLScheme(NSString *URLScheme, NSString *bundleID);

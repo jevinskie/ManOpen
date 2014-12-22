@@ -91,7 +91,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 				return;
 			}
 			fontField.font = newValue
-			fontField.stringValue = String(format: "%@ %.1f", newValue.familyName, Double(newValue.pointSize))
+			fontField.stringValue = String(format: "%@ %.1f", newValue.familyName!, Double(newValue.pointSize))
 		}
 	}
 	
@@ -112,12 +112,12 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
     }
 
 	@IBAction func openFontPanel(sender: AnyObject!) {
-		self.window.makeFirstResponder(nil)
-		NSFontManager.sharedFontManager().setSelectedFont(fontField.font, isMultiple: false)
+		self.window?.makeFirstResponder(nil)
+		NSFontManager.sharedFontManager().setSelectedFont(fontField.font!, isMultiple: false)
 		NSFontPanel.sharedFontPanel().orderFront(sender)
 	}
 	
-	override func fontManager(sender: AnyObject!, willIncludeFont fontName: String!) -> Bool {
+	override func fontManager(sender: AnyObject, willIncludeFont fontName: String) -> Bool {
 		return sender.fontNamed(fontName, hasTraits: NSFontTraitMask.FixedPitchFontMask)
 	}
 	
@@ -131,7 +131,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		NSUserDefaults.standardUserDefaults().setObject(fontString, forKey: manFontKey)
 	}
 	
-	override func validateMenuItem(menuItem: NSMenuItem!) -> Bool {
+	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
 		let action = menuItem.action
 		if ((action == "cut:") || (action == "copy:") || (action == "delete:")) {
 			return manPathController.canRemove
@@ -174,7 +174,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		appPopup.image = nil
 		
 		for (i, info) in enumerate(appInfos) {
-			var image = workspace.iconForFile(info.appURL.path).copy() as NSImage
+			var image = workspace.iconForFile(info.appURL.path!).copy() as NSImage
 			var niceName = info.displayName
 			var displayName = niceName
 			var num = 2
@@ -182,11 +182,11 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			appPopup.addItemWithTitle(displayName)
 			
 			image.size = NSSize(width: 16, height: 16)
-			appPopup.itemAtIndex(i).image = image
+			appPopup.itemAtIndex(i)?.image = image
 		}
 	
 		if apps.count > 0 {
-			appPopup.menu.addItem(NSMenuItem.separatorItem())
+			appPopup.menu?.addItem(NSMenuItem.separatorItem())
 		}
 		appPopup.addItemWithTitle("Select…")
 		setAppPopupToCurrent()
@@ -244,10 +244,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			panel.allowedFileTypes = [kUTTypeApplicationBundle! as NSString]
 			panel.beginSheetModalForWindow(appPopup.window!) { (result) -> Void in
 				if (result == NSOKButton) {
-					let appURL = panel.URL
-					var appID = NSBundle(URL: appURL).bundleIdentifier
-					if (appID != nil) {
-						self.setManPageViewer(appID!)
+					if let appURL = panel.URL {
+						if let appID = NSBundle(URL: appURL)?.bundleIdentifier {
+						self.setManPageViewer(appID)
+					}
 					}
 				}
 				self.setAppPopupToCurrent()
@@ -317,7 +317,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		panel.canChooseDirectories = true
 		panel.canChooseFiles = false
 		
-		panel.beginSheetModalForWindow(window, completionHandler: { (result) -> Void in
+		panel.beginSheetModalForWindow(window!, completionHandler: { (result) -> Void in
 			if result == NSOKButton {
 				let urls = panel.URLs as [NSURL]
 				var paths = [String]()
@@ -378,7 +378,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		if bestType == NSStringPboardType {
-			return pb.stringForType(NSStringPboardType).componentsSeparatedByString(":")
+			if let aVar = pb.stringForType(NSStringPboardType) {
+				let bVar = aVar as NSString
+				return (bVar.componentsSeparatedByString(":") as [String])
+			}
 		}
 		
 		return nil
@@ -450,7 +453,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		if contains((pb.types as [String]), ManPathIndexSetPboardType) {
 			var indexData = pb.dataForType(ManPathIndexSetPboardType)
 			if (dragOp & .Move == .Move) && indexData != nil {
-				removeSet = (NSUnarchiver.unarchiveObjectWithData(indexData) as NSIndexSet)
+				removeSet = (NSUnarchiver.unarchiveObjectWithData(indexData!) as NSIndexSet)
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}
 		} else {

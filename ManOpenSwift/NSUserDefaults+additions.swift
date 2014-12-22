@@ -71,7 +71,7 @@ extension NSUserDefaults {
 				}
 			}
 			
-			return NSFont.userFixedPitchFontOfSize(12.0) // Monaco, or Menlo
+			return NSFont.userFixedPitchFontOfSize(12.0)! // Monaco, or Menlo
 		}
 	}
 }

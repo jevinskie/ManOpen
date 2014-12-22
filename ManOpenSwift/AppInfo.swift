@@ -23,45 +23,42 @@ class ManAppInfo: NSObject, Hashable {
 	private var internalAppURL: NSURL? = nil
 	let bundleID: String
 	var displayName: String {
-		get {
-			if internalDisplayName == nil {
-				let url = appURL
-				var infoDict = CFBundleCopyInfoDictionaryForURL(url) as NSDictionary?
-				var appVersion: String?
-				var niceName: String?
-				
-				if (infoDict == nil) {
-					infoDict = NSBundle(URL: url).infoDictionary
-				}
-				
-				niceName = MODisplayNameForURL(url)
-				if (niceName == nil) {
-					niceName = url.lastPathComponent
-				}
-				
-				if let adict = infoDict {
-					appVersion = adict["CFBundleShortVersionString"] as? String
-				}
-				if appVersion != nil {
-					niceName = "\(niceName) (\(appVersion))"
-				}
-				
-				internalDisplayName = niceName;
+		if internalDisplayName == nil {
+			let url = appURL
+			var infoDict = CFBundleCopyInfoDictionaryForURL(url) as NSDictionary?
+			var appVersion: String?
+			var niceName: String?
+			
+			if (infoDict == nil) {
+				infoDict = NSBundle(URL: url)!.infoDictionary
 			}
-			return internalDisplayName!
+			
+			niceName = MODisplayNameForURL(url)
+			if (niceName == nil) {
+				niceName = url.lastPathComponent
+			}
+			
+			if let adict = infoDict {
+				appVersion = adict["CFBundleShortVersionString"] as? String
+			}
+			if appVersion != nil {
+				niceName = "\(niceName) (\(appVersion))"
+			}
+			
+			internalDisplayName = niceName;
 		}
+		return internalDisplayName!
 	}
+	
 	var appURL: NSURL {
-		get {
-			if internalAppURL == nil {
-				let workSpace = NSWorkspace.sharedWorkspace()
-				var path = workSpace.absolutePathForAppBundleWithIdentifier(bundleID) as String?
-				if (path != nil) {
-					internalAppURL = NSURL(fileURLWithPath: path!)
-				}
+		if internalAppURL == nil {
+			let workSpace = NSWorkspace.sharedWorkspace()
+			var path = workSpace.absolutePathForAppBundleWithIdentifier(bundleID) as String?
+			if (path != nil) {
+				internalAppURL = NSURL(fileURLWithPath: path!)
 			}
-			return internalAppURL!
 		}
+		return internalAppURL!
 	}
 	
 	override func isEqual(other: AnyObject!) -> Bool {
@@ -78,15 +75,11 @@ class ManAppInfo: NSObject, Hashable {
 	}
 	
 	override var hashValue: Int {
-		get {
-			return bundleID.lowercaseString.hashValue
-		}
+		return bundleID.lowercaseString.hashValue
 	}
 	
 	override var hash: Int {
-		get {
-			return hashValue
-		}
+		return self.hashValue
 	}
 }
 

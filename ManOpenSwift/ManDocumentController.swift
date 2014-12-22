@@ -73,7 +73,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			ensureActive()
 		}
 		
-		openDocumentWithContentsOfURL(NSURL(fileURLWithPath: filename), display: true) { (doc, wasOpened, error) -> Void in
+		openDocumentWithContentsOfURL(NSURL(fileURLWithPath: filename)!, display: true) { (doc, wasOpened, error) -> Void in
 			//What to do??
 		}
 	}
@@ -113,7 +113,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		return false
 	}
 	
-	override func removeDocument(document: NSDocument!) {
+	override func removeDocument(document: NSDocument) {
 		var autoQuit = NSUserDefaults.standardUserDefaults().boolForKey("QuitWhenLastClosed")
 		
 		super.removeDocument(document)
@@ -220,28 +220,31 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			return catType
 		}
 		
-		var handle = NSFileHandle.fileHandleForReadingFromURL(url, error: nil)
-		var fileHeader = handle.readDataOfLength(Int(maxLength))
-		
-		if len > 1000000 {
-			return nil
+		if let handle = NSFileHandle(forReadingFromURL: url, error: nil) {
+			var fileHeader = handle.readDataOfLength(Int(maxLength))
+			
+			if len > 1000000 {
+				return nil
+			}
+			
+			if fileHeader.gzipData {
+				var command = "/usr/bin/gzip -dc '\(EscapePath(url.path!))'"
+				fileHeader = dataByExecutingCommand(command, maxLength: Int(maxLength))!
+				manType = "mangz"
+				catType = "catgz"
+			}
+			
+			if fileHeader.binaryData {
+				return nil
+			}
+			
+			return fileHeader.nroffData ? manType : catType
+		} else {
+			return catType
 		}
-		
-		if fileHeader.gzipData {
-			var command = "/usr/bin/gzip -dc '\(EscapePath(url.path!))'"
-			fileHeader = dataByExecutingCommand(command, maxLength: Int(maxLength))!
-			manType = "mangz"
-			catType = "catgz"
-		}
-		
-		if fileHeader.binaryData {
-			return nil
-		}
-		
-		return fileHeader.nroffData ? manType : catType
 	}
 	
-	override func openDocumentWithContentsOfURL(url: NSURL!, display displayDocument: Bool, completionHandler: ((NSDocument!, Bool, NSError!) -> Void)!) {
+	override func openDocumentWithContentsOfURL(url: NSURL, display displayDocument: Bool, completionHandler: ((NSDocument!, Bool, NSError!) -> Void)) {
 		let standardizedURL = url.standardizedURL!
 		var error: NSError? = nil
 		let numDocuments = documents.count
@@ -252,7 +255,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			if let type = atype {
 				document = makeDocumentWithContentsOfURL(standardizedURL, ofType: type, error: &error) as NSDocument?
 				document?.makeWindowControllers()
-				addDocument(document?)
+				addDocument(document!)
 			}
 		}
 		
@@ -261,11 +264,11 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		completionHandler(document, !docAdded, error)
 	}
 	
-	override func reopenDocumentForURL(urlOrNil: NSURL!, withContentsOfURL contentsURL: NSURL!, display displayDocument: Bool, completionHandler: ((NSDocument!, Bool, NSError!) -> Void)!) {
+	override func reopenDocumentForURL(urlOrNil: NSURL!, withContentsOfURL contentsURL: NSURL, display displayDocument: Bool, completionHandler: ((NSDocument!, Bool, NSError!) -> Void)) {
 		openDocumentWithContentsOfURL(urlOrNil, display: displayDocument, completionHandler: completionHandler)
 	}
 	
-	override func runModalOpenPanel(openPanel: NSOpenPanel!, forTypes types: [AnyObject]!) -> Int {
+	override func runModalOpenPanel(openPanel: NSOpenPanel, forTypes types: [AnyObject]) -> Int {
 		return openPanel.runModal()
 	}
 	
@@ -297,7 +300,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			}
 		}
 		
-		helpTextView.readRTFDFromFile(helpPath!.path)
+		helpTextView.readRTFDFromFile(helpPath!.path!)
 	}
 	
 	func openDocumentWithName(name: String, section: String? = nil, manPath: String) -> ManDocument? {
@@ -316,11 +319,11 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			filename = manFileForName(name, section: section, manPath: manPath)
 			if let aFilename = filename {
 				var fileURL = NSURL(fileURLWithPath: aFilename)
-				noteNewRecentDocumentURL(fileURL)
+				noteNewRecentDocumentURL(fileURL!)
 				document?.fileURL = fileURL
 			}
 			
-			addDocument(document)
+			addDocument(document!)
 			document?.makeWindowControllers()
 		}
 		
@@ -337,7 +340,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			document = AproposDocument(string: apropos, manPath: manPath, title: title)
 			
 			if document != nil {
-				addDocument(document)
+				addDocument(document!)
 			}
 			document?.makeWindowControllers()
 		}
@@ -426,9 +429,9 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		* connecting, we may be able to do this whole thing in main()...
 		*/
 		
-		var connection = NSConnection()
-		connection.registerName("ManOpenApp")
-		connection.rootObject = self
+		//var connection = NSConnection()
+		//connection.registerName("ManOpenApp")
+		//connection.rootObject = self
 		
 		PrefPanelController.registerManDefaults()
 		var tmpNibArray: NSArray? = nil
@@ -437,7 +440,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		nibObjects = tmpNibArray!
 	}
 
-	required init(coder: NSCoder!) {
+	required init(coder: NSCoder) {
 	    fatalError("init(coder:) has not been implemented")
 	}
 	
@@ -448,18 +451,23 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBAction func openSection(sender: AnyObject!) {
 		
 	}
+	
 	@IBAction func openTextPanel(sender: AnyObject!) {
 		
 	}
+	
 	@IBAction func openAproposPanel(sender: AnyObject!) {
 		
 	}
+	
 	@IBAction func okApropos(sender: AnyObject!) {
 		
 	}
+	
 	@IBAction func okText(sender: AnyObject!) {
 		
 	}
+	
 	@IBAction func cancelText(sender: AnyObject!) {
 		
 	}

@@ -14,8 +14,12 @@ private let restoreTitle = "Title"
 class AproposDocument: NSDocument, NSTableViewDataSource {
 	var title: String = ""
 	var searchString: String = ""
-	var titles = [String]()
-	var descriptions = [String]()
+	struct AproposItem {
+		var title: String
+		var description: String
+	}
+	
+	var aproposItems = [AproposItem]()
 	@IBOutlet weak var tableView: NSTableView!
 	@IBOutlet weak var titleColumn: NSTableColumn!
 
@@ -35,7 +39,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		
 	}
 	
-    override func windowControllerDidLoadNib(aController: NSWindowController?) {
+    override func windowControllerDidLoadNib(aController: NSWindowController) {
 		var aSizeString = NSUserDefaults.standardUserDefaults().stringForKey("AproposWindowSize")
 
         super.windowControllerDidLoadNib(aController)
@@ -83,6 +87,16 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		super.encodeRestorableStateWithCoder(coder)
 		coder.encodeObject(searchString, forKey: restoreSearchString)
 		coder.encodeObject(title, forKey: restoreTitle)
+	}
+	
+	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+		return aproposItems.count
+	}
+	
+	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row: Int) -> AnyObject? {
+		var item = aproposItems[row]
+		var toRet = (tableColumn === titleColumn) ? item.title : item.description
+		return toRet as NSString
 	}
 	
 	override func restoreStateWithCoder(coder: NSCoder) {

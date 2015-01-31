@@ -20,6 +20,20 @@ private func dataForColor(color: NSColor) -> NSData {
 }
 
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
+	class var sharedInstance: PrefPanelController {
+		struct Static {
+			static var onceToken: dispatch_once_t = 0
+			static var instance : PrefPanelController? = nil
+		}
+		dispatch_once(&Static.onceToken) {
+			Static.instance = PrefPanelController(windowNibName: "PrefPanel")
+			Static.instance!.shouldCascadeWindows = false
+			NSFontManager.sharedFontManager().delegate = Static.instance
+		}
+		
+		return Static.instance!
+	}
+	
 	let appInfos = ManAppInfoArray()
 	private var manPathArrayPriv = [String]()
 	dynamic var manPathArray: [String] {

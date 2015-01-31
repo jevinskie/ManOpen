@@ -45,7 +45,7 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 @NSApplicationMain
 class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegate {
 
-	@IBOutlet weak var helpTextView: NSScrollView!
+	@IBOutlet weak var helpScrollView: NSScrollView!
 	@IBOutlet weak var openTextPanel: NSPanel!
 	@IBOutlet weak var aproposPanel: NSPanel!
 	@IBOutlet weak var helpPanel: NSPanel!
@@ -301,7 +301,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			}
 		}
 		
-		(helpTextView.contentView.documentView as NSTextView).readRTFDFromFile(helpPath!.path!)
+		(helpScrollView.contentView.documentView as NSTextView).readRTFDFromFile(helpPath!.path!)
 	}
 	
 	func openDocumentWithName(name: String, section: String? = nil, manPath: String) -> ManDocument? {
@@ -414,6 +414,11 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBAction func orderFrontHelpPanel(sender: AnyObject!) {
 		helpPanel.makeKeyAndOrderFront(sender)
 	}
+	
+	@IBAction func orderFrontPreferencesPanel(sender: AnyObject?) {
+		PrefPanelController.sharedInstance.showWindow(sender)
+	}
+
 	
 	@IBAction func runPageLayout(sender: AnyObject!) {
 		(NSApp as NSApplication).runPageLayout(sender)

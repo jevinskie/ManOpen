@@ -9,6 +9,8 @@
 import Cocoa
 
 class ManDocument: NSDocument {
+	@IBOutlet weak var textScroll: NSScrollView!
+
 	var shortTitle = ""
 	
     override var windowNibName: String {

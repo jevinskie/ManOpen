@@ -10,7 +10,7 @@
                 <outlet property="aproposField" destination="10" id="33"/>
                 <outlet property="aproposPanel" destination="5" id="32"/>
                 <outlet property="helpPanel" destination="56" id="60"/>
-                <outlet property="helpTextView" destination="57" id="ilF-rd-7L1"/>
+                <outlet property="helpScrollView" destination="58" id="fry-yO-p4E"/>
                 <outlet property="openSectionPopup" destination="41" id="55"/>
                 <outlet property="openTextField" destination="6" id="34"/>
                 <outlet property="openTextPanel" destination="18" id="31"/>

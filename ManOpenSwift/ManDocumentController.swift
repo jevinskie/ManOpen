@@ -61,12 +61,19 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
-	func openName(name: String!, section: String!, manPath: String!, forceToFront force: Bool) {
-		
+	func openName(name: String!, section: String? = nil, manPath: String! = NSUserDefaults.standardUserDefaults().manPath, forceToFront force: Bool = true) {
+		if force {
+			ensureActive()
+		}
+		openDocumentWithName(name, section: section, manPath: manPath)
 	}
 	
-	func openApropos(apropos: String!, manPath: String!, forceToFront force: Bool) {
-		
+	func openApropos(apropos: String!, manPath: String! = NSUserDefaults.standardUserDefaults().manPath, forceToFront force: Bool = true) {
+		if force {
+			ensureActive()
+		}
+
+		openAproposDocument(apropos, manPath: manPath)
 	}
 	
 	@objc func openFile(filename: String!, forceToFront force: Bool = true) {
@@ -311,16 +318,14 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			title = "\(name)(\(section!))"
 		}
 		
-		document = documentForTitle(title) as ManDocument?
+		document = documentForTitle(title) as? ManDocument
 		if document == nil {
-			var filename: String? = nil
 			
 			document = ManDocument(name: name, section: section, manPath: manPath, title: title)
 			
-			filename = manFileForName(name, section: section, manPath: manPath)
-			if let aFilename = filename {
-				var fileURL = NSURL(fileURLWithPath: aFilename)
-				noteNewRecentDocumentURL(fileURL!)
+			if let filename = manFileForName(name, section: section, manPath: manPath) {
+				let fileURL = NSURL(fileURLWithPath: filename)!
+				noteNewRecentDocumentURL(fileURL)
 				document?.fileURL = fileURL
 			}
 			
@@ -335,7 +340,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	
 	func openAproposDocument(apropos: String, manPath: String) -> AproposDocument? {
 		var title = "Apropos \(apropos)"
-		var document = documentForTitle(title) as AproposDocument?
+		var document = documentForTitle(title) as? AproposDocument
 		
 		if document == nil {
 			document = AproposDocument(string: apropos, manPath: manPath, title: title)
@@ -502,22 +507,22 @@ private func GetWordArray(string: String) -> [String] {
 	while !scanner.atEnd {
 		var aWord: NSString? = nil
 		if scanner.scanCharactersFromSet(nonspaceSet, intoString: &aWord) {
-			wordArray.append(aWord! as String)
+			wordArray.append(aWord!)
 		}
 	}
 	
 	return wordArray
 }
 
-class ManOpenURLHandlerCommand : NSScriptCommand {
+@objc(ManOpenURLHandlerCommand) class ManOpenURLHandlerCommand : NSScriptCommand {
 	override func performDefaultImplementation() -> AnyObject? {
 		if directParameter == nil {
 			return nil
 		}
-		var param = directParameter as String
+		let param = directParameter as String
 		var section: String? = nil
 		
-		var aTex = NSStringCompareOptions.CaseInsensitiveSearch | NSStringCompareOptions.AnchoredSearch
+		//var aTex: NSStringCompareOptions = .CaseInsensitiveSearch | .AnchoredSearch
 		
 		var paramRange = param.rangeOfString(URL_SCHEME_PREFIX, options: .CaseInsensitiveSearch | .AnchoredSearch)
 		var pageNames = [String]()

@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5516ECE81A7CA21200760214 /* ManTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5516ECE71A7CA21200760214 /* ManTextView.swift */; };
 		55182E0D19C0B8E30016128A /* PrefPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */; };
 		55182E0E19C0BAC10016128A /* AproposDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */; };
 		55182E0F19C0BAC70016128A /* ManDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A5B2219BFE811003D74A9 /* ManDocument.swift */; };
@@ -160,6 +161,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5516ECE71A7CA21200760214 /* ManTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManTextView.swift; sourceTree = "<group>"; };
 		552A9CF619BF75D500BECDC1 /* DictionaryAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryAdditions.swift; sourceTree = "<group>"; };
 		552F6EAC18E23A2C0056F78B /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AproposDocument.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */,
 				55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */,
 				552A9CF619BF75D500BECDC1 /* DictionaryAdditions.swift */,
+				5516ECE71A7CA21200760214 /* ManTextView.swift */,
 				553A5B2419BFE86F003D74A9 /* Resources */,
 			);
 			path = ManOpenSwift;
@@ -717,6 +720,7 @@
 				55182E0D19C0B8E30016128A /* PrefPanelController.swift in Sources */,
 				55182E1019C0BACA0016128A /* ManDocumentController.swift in Sources */,
 				55838C0919C0B59600FFEDDE /* AppInfo.swift in Sources */,
+				5516ECE81A7CA21200760214 /* ManTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -52,60 +52,43 @@ class ManTextView: NSTextView {
 		
 		scrollRectToVisible(rect)
 	}
-	/*
-
-- (void)scrollRangeToTop:(NSRange)charRange
-{
-NSLayoutManager *layout = [self layoutManager];
-NSRange glyphRange = [layout glyphRangeForCharacterRange:charRange actualCharacterRange:NULL];
-NSRect rect = [layout boundingRectForGlyphRange:glyphRange inTextContainer:[self textContainer]];
-CGFloat height = NSHeight([self visibleRect]);
-
-if (height > 0)
-rect.size.height = height;
-
-[self scrollRectToVisible:rect];
-}
-
-/* Make space page down (and shift/alt-space page up) */
-- (void)keyDown:(NSEvent *)event
-{
-if ([[event charactersIgnoringModifiers] isEqual:@" "])
-{
-if ([event modifierFlags] & (NSShiftKeyMask|NSAlternateKeyMask))
-[self pageUp:self];
-else
-[self pageDown:self];
-}
-else
-{
-[super keyDown:event];
-}
-}
-
-/*
-* Draw page numbers when printing. Under early versions of MacOS X... the normal
-* NSString drawing methods don't work in the context of this method. So, I fell back on
-* CoreGraphics primitives, which did. However, I'm now just supporting Tiger (10.4) and up,
-* and it looks like the bugs have been fixed, so we can just use the higher-level
-* NSStringDrawing now, thankfully.
-*/
-- (void)drawPageBorderWithSize:(NSSize)size
-{
-NSFont *font = [[NSUserDefaults standardUserDefaults] manFont];
-
-NSInteger currPage = [[NSPrintOperation currentOperation] currentPage];
-NSString *pageString = [NSString stringWithFormat:@"%ld", (long)currPage];
-NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-NSMutableDictionary *drawAttribs = [NSMutableDictionary dictionary];
-NSRect drawRect = NSMakeRect(0.0f, 0.0f, size.width, 20.0f + [font ascender]);
-
-[style setAlignment:NSCenterTextAlignment];
-drawAttribs[NSParagraphStyleAttributeName] = style;
-drawAttribs[NSFontAttributeName] = font;
-
-[pageString drawInRect:drawRect withAttributes:drawAttribs];
-#if 0
+	
+	/// Make space page down (and shift/alt-space page up)
+	override func keyDown(event: NSEvent) {
+		if event.charactersIgnoringModifiers == " " {
+			if (event.modifierFlags & .AlternateKeyMask) == .AlternateKeyMask || (event.modifierFlags & .ShiftKeyMask) == .ShiftKeyMask {
+				pageUp(self)
+			} else {
+				pageDown(self)
+			}
+		} else {
+			super.keyDown(event)
+		}
+	}
+	
+	/**
+	* Draw page numbers when printing. Under early versions of MacOS X... the normal
+	* NSString drawing methods don't work in the context of this method. So, I fell back on
+	* CoreGraphics primitives, which did. However, I'm now just supporting Tiger (10.4) and up,
+	* and it looks like the bugs have been fixed, so we can just use the higher-level
+	* NSStringDrawing now, thankfully.
+	*/
+	override func drawPageBorderWithSize(borderSize: NSSize) {
+		let font = NSUserDefaults.standardUserDefaults().manFont
+		
+		let currPage = NSPrintOperation.currentOperation()!.currentPage
+		var pageString = "\(currPage)"
+		var style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as NSMutableParagraphStyle
+		var drawAttribs = [NSObject: AnyObject]()
+		var drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
+		
+		style.alignment = .CenterTextAlignment
+		drawAttribs[NSParagraphStyleAttributeName] = style
+		drawAttribs[NSFontAttributeName] = font
+		
+		(pageString as NSString).drawInRect(drawRect, withAttributes: drawAttribs)
+		
+		/*
 CGFloat strWidth = [str sizeWithAttributes:attribs].width;
 NSPoint point = NSMakePoint(size.width/2 - strWidth/2, 20.0f);
 CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
@@ -117,10 +100,7 @@ CGContextSetGrayFillColor(context, 0.0f, 1.0f);
 CGContextSelectFont(context, [[font fontName] cStringUsingEncoding:NSMacOSRomanStringEncoding], [font pointSize], kCGEncodingMacRoman);
 CGContextShowTextAtPoint(context, point.x, point.y, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], [str lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]);
 CGContextRestoreGState(context);
-#endif
-}
 */
-
-
+	}
 }
 

@@ -424,7 +424,6 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		PrefPanelController.sharedInstance.showWindow(sender)
 	}
 
-	
 	@IBAction func runPageLayout(sender: AnyObject!) {
 		(NSApp as NSApplication).runPageLayout(sender)
 	}
@@ -438,9 +437,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		* connecting, we may be able to do this whole thing in main()...
 		*/
 		
-		//var connection = NSConnection()
-		//connection.registerName("ManOpenApp")
-		//connection.rootObject = self
+		registerNameWithRootObject("ManOpenApp", self)
 		
 		PrefPanelController.registerManDefaults()
 		var tmpNibArray: NSArray? = nil

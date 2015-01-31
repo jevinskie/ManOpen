@@ -37,6 +37,7 @@
 		5553E2181881F666003C2DBF /* ManPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21A1881F666003C2DBF /* ManPage.xib */; };
 		5553E21B1881F670003C2DBF /* PrefPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21D1881F670003C2DBF /* PrefPanel.xib */; };
 		5553E21F1881F83E003C2DBF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
+		5567E0561A7D615E005013B3 /* ManNotificationCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 5567E0551A7D615E005013B3 /* ManNotificationCallback.m */; };
 		55838C0619C0AF8400FFEDDE /* DictionaryAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A9CF619BF75D500BECDC1 /* DictionaryAdditions.swift */; };
 		55838C0719C0AF8B00FFEDDE /* DisplayPathFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */; };
 		55838C0819C0AF9100FFEDDE /* NSUserDefaults+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */; };
@@ -181,6 +182,8 @@
 		5553E22018821265003C2DBF /* openman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openman-Info.plist"; sourceTree = "<group>"; };
 		5553E22418821455003C2DBF /* cat2html-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cat2html-Info.plist"; sourceTree = "<group>"; };
 		5553E226188214B9003C2DBF /* cat2rtf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cat2rtf-Info.plist"; sourceTree = "<group>"; };
+		5567E0541A7D615E005013B3 /* ManNotificationCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManNotificationCallback.h; sourceTree = "<group>"; };
+		5567E0551A7D615E005013B3 /* ManNotificationCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManNotificationCallback.m; sourceTree = "<group>"; };
 		55838BFF19C0AD2900FFEDDE /* AppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManAppInfoArray.swift; sourceTree = "<group>"; };
 		55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayPathFormatter.swift; sourceTree = "<group>"; };
@@ -326,6 +329,8 @@
 				55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */,
 				552A9CF619BF75D500BECDC1 /* DictionaryAdditions.swift */,
 				5516ECE71A7CA21200760214 /* ManTextView.swift */,
+				5567E0541A7D615E005013B3 /* ManNotificationCallback.h */,
+				5567E0551A7D615E005013B3 /* ManNotificationCallback.m */,
 				553A5B2419BFE86F003D74A9 /* Resources */,
 			);
 			path = ManOpenSwift;
@@ -710,6 +715,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5567E0561A7D615E005013B3 /* ManNotificationCallback.m in Sources */,
 				55838C0B19C0B61700FFEDDE /* ManAppInfoArray.swift in Sources */,
 				55838C0819C0AF9100FFEDDE /* NSUserDefaults+additions.swift in Sources */,
 				55838C0619C0AF8400FFEDDE /* DictionaryAdditions.swift in Sources */,

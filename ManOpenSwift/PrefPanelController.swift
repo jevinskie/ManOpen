@@ -188,7 +188,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		appPopup.image = nil
 		
 		for (i, info) in enumerate(appInfos) {
-			var image = workspace.iconForFile(info.appURL.path!).copy() as NSImage
+			let image = workspace.iconForFile(info.appURL.path!).copy() as NSImage
 			var niceName = info.displayName
 			var displayName = niceName
 			var num = 2

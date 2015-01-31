@@ -18,51 +18,41 @@ func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 	return toRet == NSComparisonResult.OrderedSame
 }
 
-class ManAppInfo: NSObject, Hashable {
-	private var internalDisplayName: String? = nil
-	private var internalAppURL: NSURL? = nil
+class ManAppInfo: Hashable {
 	let bundleID: String
-	var displayName: String {
-		if internalDisplayName == nil {
-			let url = appURL
-			var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url)
-			var appVersion: String?
-			var niceName: String?
-			var preNiceName: Unmanaged<CFString>? = nil
-			
-			if (infoDict == nil) {
-				infoDict = NSBundle(URL: url)!.infoDictionary
-			}
-			
-			LSCopyDisplayNameForURL(url, &preNiceName)
-			niceName = preNiceName?.takeRetainedValue()
-			if (niceName == nil) {
-				niceName = url.lastPathComponent
-			}
-			
-			if let adict = infoDict {
-				appVersion = adict["CFBundleShortVersionString"] as? String
-			}
-			if appVersion != nil {
-				niceName = "\(niceName) (\(appVersion))"
-			}
-			
-			internalDisplayName = niceName;
+	lazy var displayName: String = {
+		let url = self.appURL
+		var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url)
+		var preNiceName: Unmanaged<CFString>? = nil
+		
+		if (infoDict == nil) {
+			infoDict = NSBundle(URL: url)!.infoDictionary
 		}
-		return internalDisplayName!
-	}
-	
-	var appURL: NSURL {
-		if internalAppURL == nil {
-			let workSpace = NSWorkspace.sharedWorkspace()
-			if let path = workSpace.absolutePathForAppBundleWithIdentifier(bundleID) {
-				internalAppURL = NSURL(fileURLWithPath: path)
+		
+		LSCopyDisplayNameForURL(url, &preNiceName)
+		var niceName: String? = preNiceName?.takeRetainedValue()
+		if (niceName == nil) {
+			niceName = url.lastPathComponent
+		}
+		
+		if let adict = infoDict {
+			if let appVersion = adict["CFBundleShortVersionString"] as? String {
+				niceName = "\(niceName!) (\(appVersion))"
 			}
 		}
-		return internalAppURL!
-	}
+		
+		return niceName!
+	}()
 	
-	override func isEqual(other: AnyObject!) -> Bool {
+	lazy var appURL: NSURL = {
+		let workSpace = NSWorkspace.sharedWorkspace()
+		if let path = workSpace.absolutePathForAppBundleWithIdentifier(self.bundleID) {
+			return NSURL(fileURLWithPath: path)!
+		}
+		return NSURL()
+	}()
+	
+	func isEqual(other: AnyObject!) -> Bool {
 		if let isAppInfo = other as? ManAppInfo {
 			return self == isAppInfo
 		} else {
@@ -72,14 +62,23 @@ class ManAppInfo: NSObject, Hashable {
 	
 	init(bundleID aBundleID: String) {
 		bundleID = aBundleID
-		super.init()
+		//super.init()
 	}
 	
-	override var hashValue: Int {
+	var hashValue: Int {
 		return bundleID.lowercaseString.hashValue
 	}
 	
-	override var hash: Int {
+	var hash: Int {
 		return self.hashValue
 	}
+	
+	func compare(string: ManAppInfo) -> NSComparisonResult {
+		return displayName.compare(string.displayName, options: .CaseInsensitiveSearch | .NumericSearch)
+	}
+	
+	func localizedStandardCompare(string: ManAppInfo) -> NSComparisonResult {
+		return displayName.localizedStandardCompare(string.displayName)
+	}
+
 }

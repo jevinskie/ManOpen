@@ -15,6 +15,9 @@ let ManPathArrayKey = "manPathArray"
 let URL_SCHEME = "x-man-page"
 let URL_SCHEME_PREFIX = URL_SCHEME + ":"
 
+let kUseItalics		= "UseItalics"
+let kUseBold		= "UseBold"
+
 private func dataForColor(color: NSColor) -> NSData {
 	return NSArchiver.archivedDataWithRootObject(color)
 }
@@ -83,8 +86,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let bgDefaultColor = dataForColor(NSColor.textBackgroundColor())
 		
 		let someDefaults = ["QuitWhenLastClosed": false,
-		"UseItalics": false,
-		"UseBold": true,
+		kUseItalics: false,
+		kUseBold: true,
 		"NroffCommand": nroff,
 		manPathKey: manpath,
 		"KeepPanelsOpen": false,
@@ -219,7 +222,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			currentAppID = currSetID!
 			
 			if appInfos.indexOfBundleID(currSetID) == nil {
-				appInfos.addApp(ID: currSetID!, sort: true)
+				appInfos.addApp(ID: currSetID!, shouldResort: true)
 				resetPopup = true
 			}
 			if (resetPopup) {
@@ -255,7 +258,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			panel.allowsMultipleSelection = false
 			panel.resolvesAliases = true
 			panel.canChooseFiles = true
-			panel.allowedFileTypes = [kUTTypeApplicationBundle! as NSString]
+			panel.allowedFileTypes = [kUTTypeApplicationBundle as NSString]
 			panel.beginSheetModalForWindow(appPopup.window!) { (result) -> Void in
 				if (result == NSOKButton) {
 					if let appURL = panel.URL {
@@ -370,7 +373,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		/* This causes an NSLog if one of the paths does not exist. Hm.  May not be worth it. Might let folks drag to Trash etc. as well. */
 		//[pb setPropertyList:paths forType:NSFilenamesPboardType];
-		return pb.setString((paths as NSArray).componentsJoinedByString(":"), forType: NSStringPboardType)
+		return pb.setString(join(":", paths), forType: NSStringPboardType)
 	}
 	
 	func writeIndexSet(set: NSIndexSet, toPasteboard pb: NSPasteboard) -> Bool {

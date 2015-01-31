@@ -544,7 +544,7 @@ private func GetWordArray(string: String) -> [String] {
 			}
 			
 			if pageNames.count > 0 {
-				ManDocumentController.sharedDocumentController().openString(join(" ", pageNames))
+				(ManDocumentController.sharedDocumentController() as ManDocumentController).openString(join(" ", pageNames))
 			}
 		}
 		

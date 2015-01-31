@@ -39,14 +39,14 @@ class ManAppInfoArray: NSObject, SequenceType {
 		return allManViewerApps[location]
 	}
 		
-	func addApp(ID id: String, sort shouldResort: Bool = false) {
+	func addApp(ID id: String, shouldResort sort: Bool = false) {
 		let info = ManAppInfo(bundleID: id)
 		let contains = allManViewerApps.filter { (anObj) -> Bool in
 			return anObj == info
 		}
 		if contains.count == 0 {
 			allManViewerApps.append(info)
-			if shouldResort {
+			if sort {
 				sortApps()
 			}
 		}

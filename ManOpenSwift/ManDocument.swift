@@ -8,10 +8,43 @@
 
 import Cocoa
 
+
+private let RestoreWindowDict = "RestoreWindowInfo"
+private let RestoreSection    = "Section"
+private let RestoreTitle      = "Title"
+private let RestoreName       = "Name"
+private let RestoreFileURL    = "URL"
+private let RestoreFileType   = "DocType"
+
+var filterCommand: String {
+	let defaults = NSUserDefaults.standardUserDefaults()
+	
+	/* HTML parser in tiger got slow... RTF is faster, and is usable now that it supports hyperlinks */
+	//let tool = "cat2html"
+	let tool = "cat2rtf"
+	var command = NSBundle.mainBundle().pathForResource(tool, ofType: nil)!
+	
+	command = EscapePath(command, addSurroundingQuotes: true)
+	command += " -lH" // generate links, mark headers
+	if defaults.boolForKey(kUseItalics) {
+		command += " -i"
+	}
+	if !defaults.boolForKey(kUseBold) {
+		command += " -g"
+	}
+	
+	return command
+}
+
 class ManDocument: NSDocument {
 	@IBOutlet weak var textScroll: NSScrollView!
-
+	@IBOutlet weak var titleStringField: NSTextField!
+	@IBOutlet weak var openSelectionButton: NSButton!
+	@IBOutlet weak var sectionPopup: NSPopUpButton!
 	var shortTitle = ""
+	private var restoreData = [String: AnyObject]()
+	var copyURL: NSURL!
+	var taskData: NSData?
 	
     override var windowNibName: String {
         // Override returning the nib file name of the document
@@ -19,6 +52,9 @@ class ManDocument: NSDocument {
         return "ManPage"
     }
 	
+	override class func canConcurrentlyReadDocumentsOfType(typeName: String) -> Bool {
+		return true
+	}
 
     override func windowControllerDidLoadNib(aController: NSWindowController) {
         super.windowControllerDidLoadNib(aController)
@@ -45,4 +81,53 @@ class ManDocument: NSDocument {
 		return nil
 	}
 	
+	private func loadDocumentWithName(name: String, section: String?, manPath: String?, title: String) {
+		var docController = ManDocumentController.sharedDocumentController() as ManDocumentController
+		var command = docController.manCommandWithManPath(manPath)
+		fileType = "man"
+		shortTitle = title
+		
+		if section != nil && countElements(section!) > 0 {
+			command += " " + section!.lowercaseString
+			copyURL = NSURL(string: URL_SCHEME_PREFIX + "//\(section!)/\(title)")
+		} else {
+			copyURL = NSURL(string: URL_SCHEME_PREFIX + "//\(title)")
+		}
+		
+		restoreData = [RestoreName: name,
+			RestoreTitle: title,
+			RestoreSection: section ?? ""]
+		
+		command += " " + name
+		
+		loadCommand(command)
+	}
+	
+	func loadCommand(command: String) {
+		var docController = ManDocumentController.sharedDocumentController() as ManDocumentController
+		var fullCommand = "\(command) | \(filterCommand)"
+		taskData = docController.dataByExecutingCommand(fullCommand)
+		
+		showData()
+	}
+	
+	func showData() {
+		
+	}
+	
+	@IBAction func saveCurrentWindowSize(sender: AnyObject?) {
+
+	}
+
+	@IBAction func openSelection(sender: AnyObject?) {
+
+	}
+
+	@IBAction func displaySection(sender: AnyObject?) {
+
+	}
+
+	@IBAction func copyURL(sender: AnyObject?) {
+
+	}
 }

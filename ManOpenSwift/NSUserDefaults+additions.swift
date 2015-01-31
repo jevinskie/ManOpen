@@ -15,39 +15,29 @@ let manFontKey = "ManFont"
 let manPathKey = "ManPath"
 
 private func ColorForKey(key: String, defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) -> NSColor? {
-	let colorData = defaults.dataForKey(key)
-	
-	if (colorData == nil) {
-		return nil;
+	if let colorData = defaults.dataForKey(key) {
+		return NSUnarchiver.unarchiveObjectWithData(colorData) as NSColor?
 	}
 	
-	return NSUnarchiver.unarchiveObjectWithData(colorData!) as NSColor?
+	return nil
 }
 
 extension NSUserDefaults {
 	
 	var manTextColor: NSColor {
-		get {
-			return ColorForKey(manTextColorKey, defaults: self)!
-		}
+		return ColorForKey(manTextColorKey, defaults: self)!
 	}
 	
 	var manLinkColor: NSColor {
-		get {
-			return ColorForKey(manLinkColorKey, defaults: self)!
-		}
+		return ColorForKey(manLinkColorKey, defaults: self)!
 	}
 	
 	var manBackgroundColor: NSColor {
-		get {
-			return ColorForKey(manBackgroundColorKey, defaults: self)!
-		}
+		return ColorForKey(manBackgroundColorKey, defaults: self)!
 	}
 	
 	var manPath: String {
-		get {
-			return self.stringForKey(manPathKey)!
-		}
+		return self.stringForKey(manPathKey)!
 	}
 	
 	var manFont: NSFont {

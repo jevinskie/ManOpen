@@ -193,7 +193,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 
 	func resetCurrentApp() {
-		var currSetID = MODefaultHandlerForURLScheme(URL_SCHEME) as String?
+		var currSetID: String? = LSCopyDefaultHandlerForURLScheme(URL_SCHEME)?.takeRetainedValue()
 		
 		if (currSetID == nil) {
 			currSetID = appInfos[0].bundleID
@@ -217,7 +217,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func setManPageViewer(bundleID: String) {
-		let error = MOSetDefaultHandlerForURLScheme(URL_SCHEME, bundleID)
+		let error = LSSetDefaultHandlerForURLScheme(URL_SCHEME, bundleID)
 		
 		if (error != noErr){
 			println("Could not set default \(URL_SCHEME_PREFIX) app: Launch Services error \(error)")

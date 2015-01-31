@@ -8,11 +8,10 @@
 
 import Foundation
 
-func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>) -> Dictionary<K, V> {
+func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>) {
 	for (k, v) in right {
 		left.updateValue(v, forKey: k)
 	}
-	return left
 }
 
 func + <K,V>(left: Dictionary<K,V>, right: Dictionary<K,V>)

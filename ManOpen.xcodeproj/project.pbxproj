@@ -28,9 +28,7 @@
 		55182E1019C0BACA0016128A /* ManDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */; };
 		553A5B2519BFEDD7003D74A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E802A1188237F000037AF6 /* Cocoa.framework */; };
 		553A5B2619BFEDF6003D74A9 /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FA0821FFA400376676 /* NSData+Utils.m */; };
-		553DB70619BFEFCB0076B50E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5E74619BE11B400BF2597 /* main.swift */; };
 		5551944619BFFD5E002E4F62 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E802A1188237F000037AF6 /* Cocoa.framework */; };
-		5551944A19BFFED7002E4F62 /* LaunchServicesBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5551944719BFFE60002E4F62 /* LaunchServicesBridge.m */; };
 		5553E1FC1881F2C2003C2DBF /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
 		5553E20C1881F640003C2DBF /* Apropos.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E20E1881F640003C2DBF /* Apropos.xib */; };
 		5553E20F1881F646003C2DBF /* DocController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E2111881F646003C2DBF /* DocController.xib */; };
@@ -176,8 +174,6 @@
 		5548583C190C53750017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManOpen.strings; sourceTree = "<group>"; };
 		5548583E190C537A0017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManPage.strings; sourceTree = "<group>"; };
 		55485840190C537F0017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefPanel.strings; sourceTree = "<group>"; };
-		5551944719BFFE60002E4F62 /* LaunchServicesBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchServicesBridge.m; sourceTree = "<group>"; };
-		5551944919BFFE7B002E4F62 /* LaunchServicesBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LaunchServicesBridge.h; sourceTree = "<group>"; };
 		5553E1FF1881F2CA003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Help.rtf; sourceTree = "<group>"; };
 		5553E21E1881F83E003C2DBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ManOpen/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		5553E22018821265003C2DBF /* openman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openman-Info.plist"; sourceTree = "<group>"; };
@@ -186,7 +182,6 @@
 		55838BFF19C0AD2900FFEDDE /* AppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManAppInfoArray.swift; sourceTree = "<group>"; };
 		55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayPathFormatter.swift; sourceTree = "<group>"; };
-		55A5E74619BE11B400BF2597 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+additions.swift"; sourceTree = "<group>"; };
 		55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManDocumentController.swift; sourceTree = "<group>"; };
 		55C0CF1019BE04D8009C50D7 /* ManOpenSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpenSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,6 +283,7 @@
 		553A5B2419BFE86F003D74A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,
 				55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */,
 				55C0CF1819BE07E8009C50D7 /* Apropos.xib */,
 				55C0CF1A19BE07E8009C50D7 /* DocController.xib */,
@@ -317,19 +313,15 @@
 		55C0CF1519BE07E8009C50D7 /* ManOpenSwift */ = {
 			isa = PBXGroup;
 			children = (
+				55C0CF3E19BE07E9009C50D7 /* ManOpenSwift-Bridging-Header.h */,
 				553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */,
 				55838BFF19C0AD2900FFEDDE /* AppInfo.swift */,
 				55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */,
 				553A5B2219BFE811003D74A9 /* ManDocument.swift */,
 				55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */,
-				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,
-				55C0CF3E19BE07E9009C50D7 /* ManOpenSwift-Bridging-Header.h */,
 				55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */,
 				55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */,
 				55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */,
-				55A5E74619BE11B400BF2597 /* main.swift */,
-				5551944919BFFE7B002E4F62 /* LaunchServicesBridge.h */,
-				5551944719BFFE60002E4F62 /* LaunchServicesBridge.m */,
 				552A9CF619BF75D500BECDC1 /* DictionaryAdditions.swift */,
 				553A5B2419BFE86F003D74A9 /* Resources */,
 			);
@@ -716,7 +708,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55838C0B19C0B61700FFEDDE /* ManAppInfoArray.swift in Sources */,
-				5551944A19BFFED7002E4F62 /* LaunchServicesBridge.m in Sources */,
 				55838C0819C0AF9100FFEDDE /* NSUserDefaults+additions.swift in Sources */,
 				55838C0619C0AF8400FFEDDE /* DictionaryAdditions.swift in Sources */,
 				55838C0719C0AF8B00FFEDDE /* DisplayPathFormatter.swift in Sources */,
@@ -725,7 +716,6 @@
 				553A5B2619BFEDF6003D74A9 /* NSData+Utils.m in Sources */,
 				55182E0D19C0B8E30016128A /* PrefPanelController.swift in Sources */,
 				55182E1019C0BACA0016128A /* ManDocumentController.swift in Sources */,
-				553DB70619BFEFCB0076B50E /* main.swift in Sources */,
 				55838C0919C0B59600FFEDDE /* AppInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

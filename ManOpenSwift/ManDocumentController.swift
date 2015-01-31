@@ -42,9 +42,10 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 	return modPath;
 }
 
+@NSApplicationMain
 class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegate {
 
-	@IBOutlet weak var helpTextView: NSTextView!
+	@IBOutlet weak var helpTextView: NSScrollView!
 	@IBOutlet weak var openTextPanel: NSPanel!
 	@IBOutlet weak var aproposPanel: NSPanel!
 	@IBOutlet weak var helpPanel: NSPanel!
@@ -300,7 +301,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			}
 		}
 		
-		helpTextView.readRTFDFromFile(helpPath!.path!)
+		(helpTextView.contentView.documentView as NSTextView).readRTFDFromFile(helpPath!.path!)
 	}
 	
 	func openDocumentWithName(name: String, section: String? = nil, manPath: String) -> ManDocument? {
@@ -419,8 +420,6 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	override init() {
-		
-		
 		super.init()
 		
 		/*
@@ -491,7 +490,7 @@ private func GetWordArray(string: String) -> [String] {
 	let spaceSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
 	let nonspaceSet = spaceSet.invertedSet
 	var wordArray = [String]()
-	var scanner = NSScanner(string: string)
+	let scanner = NSScanner(string: string)
 	
 	scanner.charactersToBeSkipped = spaceSet
 	
@@ -545,4 +544,3 @@ class ManOpenURLHandlerCommand : NSScriptCommand {
 		return nil
 	}
 }
-

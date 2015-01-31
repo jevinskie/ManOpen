@@ -9,12 +9,12 @@
 import Cocoa
 
 func ==(lhs: ManAppInfo, rhs: ManAppInfo) -> Bool {
-	var toRet = lhs.bundleID.caseInsensitiveCompare(rhs.bundleID)
+	let toRet = lhs.bundleID.caseInsensitiveCompare(rhs.bundleID)
 	return toRet == NSComparisonResult.OrderedSame
 }
 
 func ==(lhs: ManAppInfo, rhs: String) -> Bool {
-	var toRet = lhs.bundleID.caseInsensitiveCompare(rhs)
+	let toRet = lhs.bundleID.caseInsensitiveCompare(rhs)
 	return toRet == NSComparisonResult.OrderedSame
 }
 
@@ -25,15 +25,17 @@ class ManAppInfo: NSObject, Hashable {
 	var displayName: String {
 		if internalDisplayName == nil {
 			let url = appURL
-			var infoDict = CFBundleCopyInfoDictionaryForURL(url) as NSDictionary?
+			var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url)
 			var appVersion: String?
 			var niceName: String?
+			var preNiceName: Unmanaged<CFString>? = nil
 			
 			if (infoDict == nil) {
 				infoDict = NSBundle(URL: url)!.infoDictionary
 			}
 			
-			niceName = MODisplayNameForURL(url)
+			LSCopyDisplayNameForURL(url, &preNiceName)
+			niceName = preNiceName?.takeRetainedValue()
 			if (niceName == nil) {
 				niceName = url.lastPathComponent
 			}
@@ -53,9 +55,8 @@ class ManAppInfo: NSObject, Hashable {
 	var appURL: NSURL {
 		if internalAppURL == nil {
 			let workSpace = NSWorkspace.sharedWorkspace()
-			var path = workSpace.absolutePathForAppBundleWithIdentifier(bundleID) as String?
-			if (path != nil) {
-				internalAppURL = NSURL(fileURLWithPath: path!)
+			if let path = workSpace.absolutePathForAppBundleWithIdentifier(bundleID) {
+				internalAppURL = NSURL(fileURLWithPath: path)
 			}
 		}
 		return internalAppURL!
@@ -82,4 +83,3 @@ class ManAppInfo: NSObject, Hashable {
 		return self.hashValue
 	}
 }
-

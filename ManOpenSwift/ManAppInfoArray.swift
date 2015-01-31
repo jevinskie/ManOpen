@@ -10,7 +10,7 @@ import Cocoa
 
 private func GenerateManInfos() -> [ManAppInfo] {
 	var anAppInfo = [ManAppInfo]()
-	let allBundleIDs = MOAllHandlersForURLScheme(URL_SCHEME) as [String]
+	let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME).takeRetainedValue() as [String]
 
 	for bundleID in allBundleIDs {
 		anAppInfo.append(ManAppInfo(bundleID: bundleID))
@@ -28,9 +28,7 @@ class ManAppInfoArray: NSObject, SequenceType {
 	}
 	
 	var count: Int {
-		get {
-			return allManViewerApps.count
-		}
+		return allManViewerApps.count
 	}
 	
 	func generate() -> IndexingGenerator<[ManAppInfo]> {
@@ -41,38 +39,37 @@ class ManAppInfoArray: NSObject, SequenceType {
 		return allManViewerApps[location]
 	}
 		
-		func addApp(ID id: String, sort shouldResort: Bool = false) {
-			let info = ManAppInfo(bundleID: id)
-			let contains = allManViewerApps.filter { (anObj) -> Bool in
-				return anObj == info
+	func addApp(ID id: String, sort shouldResort: Bool = false) {
+		let info = ManAppInfo(bundleID: id)
+		let contains = allManViewerApps.filter { (anObj) -> Bool in
+			return anObj == info
+		}
+		if contains.count == 0 {
+			allManViewerApps.append(info)
+			if shouldResort {
+				sortApps()
 			}
-			if contains.count == 0 {
-				allManViewerApps.append(info)
-				if shouldResort {
-					sortApps()
-				}
+		}
+	}
+	
+	func sortApps() {
+		allManViewerApps.sort { (lhs, rhs) -> Bool in
+			let toRet = lhs.displayName.localizedCaseInsensitiveCompare(rhs.displayName)
+			return NSComparisonResult.OrderedAscending == toRet
+		}
+	}
+	
+	func indexOfBundleID(bundleID: String!) -> Int? {
+		if bundleID == nil {
+			return nil;
+		}
+		
+		for (i, obj) in enumerate(allManViewerApps) {
+			if obj == bundleID {
+				return i
 			}
 		}
 		
-		func sortApps() {
-			allManViewerApps.sort { (lhs, rhs) -> Bool in
-				let toRet = lhs.displayName.localizedCaseInsensitiveCompare(rhs.displayName)
-				return NSComparisonResult.OrderedAscending == toRet
-			}
-		}
-		
-		func indexOfBundleID(bundleID: String!) -> Int? {
-			if bundleID == nil {
-				return nil;
-			}
-			
-			for (i, obj) in enumerate(allManViewerApps) {
-				if obj == bundleID {
-					return i
-				}
-			}
-			
-			return nil
-		}
-
+		return nil
+	}
 }

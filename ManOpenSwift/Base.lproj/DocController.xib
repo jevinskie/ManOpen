@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ManDocumentController" customModule="ManOpenSwift">
@@ -10,7 +10,7 @@
                 <outlet property="aproposField" destination="10" id="33"/>
                 <outlet property="aproposPanel" destination="5" id="32"/>
                 <outlet property="helpPanel" destination="56" id="60"/>
-                <outlet property="helpTextView" destination="57" id="snR-cd-xix"/>
+                <outlet property="helpTextView" destination="57" id="ilF-rd-7L1"/>
                 <outlet property="openSectionPopup" destination="41" id="55"/>
                 <outlet property="openTextField" destination="6" id="34"/>
                 <outlet property="openTextPanel" destination="18" id="31"/>
@@ -22,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="706" y="439" width="384" height="91"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="9">
                 <rect key="frame" x="0.0" y="0.0" width="384" height="91"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -60,7 +60,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" tag="454" translatesAutoresizingMaskIntoConstraints="NO" id="27">
-                        <rect key="frame" x="195" y="13" width="82" height="32"/>
+                        <rect key="frame" x="184" y="13" width="93" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" tag="454" inset="2" id="66">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -73,7 +73,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="40">
-                        <rect key="frame" x="6" y="10" width="151" height="22"/>
+                        <rect key="frame" x="6" y="10" width="151" height="24"/>
                         <textFieldCell key="cell" controlSize="mini" alignment="left" title="`Apropos' lists man pages whose summaries contain the given text" id="67">
                             <font key="font" metaFont="miniSystem"/>
                             <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -90,6 +90,7 @@ Gw
                     <constraint firstAttribute="bottom" secondItem="24" secondAttribute="bottom" constant="20" symbolic="YES" id="Mju-Tj-zss"/>
                     <constraint firstItem="24" firstAttribute="leading" secondItem="27" secondAttribute="trailing" constant="12" symbolic="YES" id="TRg-uk-Rab"/>
                     <constraint firstAttribute="trailing" secondItem="10" secondAttribute="trailing" constant="20" symbolic="YES" id="WPg-KZ-Vgx"/>
+                    <constraint firstItem="27" firstAttribute="width" secondItem="24" secondAttribute="width" id="Z4C-GI-kZE"/>
                     <constraint firstItem="27" firstAttribute="top" secondItem="10" secondAttribute="bottom" constant="8" symbolic="YES" id="m9D-hW-atH"/>
                     <constraint firstItem="10" firstAttribute="leading" secondItem="14" secondAttribute="trailing" constant="8" symbolic="YES" id="ngT-wX-nXV"/>
                     <constraint firstAttribute="trailing" secondItem="24" secondAttribute="trailing" constant="20" symbolic="YES" id="pf0-Ts-qPp"/>
@@ -104,13 +105,13 @@ Gw
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="530" y="673" width="384" height="120"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="23">
                 <rect key="frame" x="0.0" y="0.0" width="384" height="120"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="17">
-                        <rect key="frame" x="18" y="80" width="109" height="17"/>
+                        <rect key="frame" x="18" y="80" width="107" height="17"/>
                         <textFieldCell key="cell" alignment="right" title="Open man page:" id="77">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -118,7 +119,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6">
-                        <rect key="frame" x="133" y="78" width="231" height="22"/>
+                        <rect key="frame" x="131" y="78" width="233" height="22"/>
                         <textFieldCell key="cell" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="75">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -129,7 +130,7 @@ Gw
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="296" y="13" width="74" height="32"/>
+                        <rect key="frame" x="287" y="13" width="83" height="32"/>
                         <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="76">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -142,7 +143,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" tag="454" translatesAutoresizingMaskIntoConstraints="NO" id="21">
-                        <rect key="frame" x="214" y="13" width="82" height="32"/>
+                        <rect key="frame" x="204" y="13" width="83" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" tag="454" inset="2" id="78">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -155,7 +156,7 @@ Gw
                         </connections>
                     </button>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="41">
-                        <rect key="frame" x="131" y="46" width="236" height="26"/>
+                        <rect key="frame" x="129" y="46" width="238" height="26"/>
                         <popUpButtonCell key="cell" type="push" title="Any" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="45" id="79">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -176,7 +177,7 @@ Gw
                         </popUpButtonCell>
                     </popUpButton>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="47">
-                        <rect key="frame" x="18" y="52" width="109" height="17"/>
+                        <rect key="frame" x="18" y="52" width="107" height="17"/>
                         <textFieldCell key="cell" alignment="right" title="Section:" id="80">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -185,6 +186,7 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="21" firstAttribute="width" secondItem="7" secondAttribute="width" id="1RK-jp-Ysc"/>
                     <constraint firstItem="17" firstAttribute="trailing" secondItem="47" secondAttribute="trailing" id="2iD-P5-3al"/>
                     <constraint firstItem="17" firstAttribute="leading" secondItem="23" secondAttribute="leading" constant="20" symbolic="YES" id="36g-GO-sYW"/>
                     <constraint firstItem="47" firstAttribute="leading" secondItem="23" secondAttribute="leading" constant="20" symbolic="YES" id="B8z-2j-UJt"/>
@@ -213,7 +215,7 @@ Gw
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="477" y="445" width="490" height="481"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <value key="minSize" type="size" width="92" height="10"/>
             <view key="contentView" id="59">
                 <rect key="frame" x="0.0" y="0.0" width="490" height="481"/>

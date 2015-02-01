@@ -181,14 +181,14 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	
 	func manFileForName(name: String, section: String? = nil, manPath: String? = nil) -> String? {
 		var command = manCommandWithManPath(manPath)
-		let spaceString: String = ""
-		command += " -w \(section != nil ? section! : spaceString) \(name)"
+		let spaceString = ""
+		command += " -w \(section ?? spaceString) \(name)"
 		var data = dataByExecutingCommand(command)
 		if data != nil && data?.length > 0 {
 			let manager = NSFileManager.defaultManager()
 			var len = data!.length
 			let ptr = data!.bytes
-			var tmpNewline: String = "\n"
+			var tmpNewline = "\n"
 			var tmpnewnewline: [CChar] = tmpNewline.cStringUsingEncoding(NSASCIIStringEncoding)!
 			var tmpanotherNewline: Int8 = tmpnewnewline[0]
 			

@@ -51,6 +51,10 @@ class ManDocument: NSDocument {
 	var copyURL: NSURL!
 	var taskData: NSData?
 	
+	private var textView: ManTextView {
+		return textScroll.contentView.documentView as ManTextView
+	}
+	
     override var windowNibName: String {
         // Override returning the nib file name of the document
         // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
@@ -80,6 +84,14 @@ class ManDocument: NSDocument {
 		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
         return false
     }
+
+	/*
+	* Standard NSDocument method.  We only want to override if we aren't
+	* representing an actual file.
+	*/
+	override var displayName: String {
+		return fileURL != nil ? super.displayName : shortTitle
+	}
 
 	init?(name: String, section: String?, manPath: String, title: String) {
 		super.init()
@@ -194,8 +206,8 @@ class ManDocument: NSDocument {
 				NSLog("Exception during formatting: %@", localException);
 			})
 			
-			(textScroll.contentView.documentView as NSTextView).backgroundColor = backgroundColor
-			//[self setupSectionPopup];
+			textView.backgroundColor = backgroundColor
+			setupSectionPopup()
 			
 			/*
 			* The 10.7 document reloading stuff can cause the loading methods to be invoked more than
@@ -244,11 +256,22 @@ class ManDocument: NSDocument {
 	}
 
 	@IBAction func openSelection(sender: AnyObject?) {
-
+		var selectedRange = textView.selectedRange()
+		
+		if selectedRange.length > 0 {
+			let selectedString = (textView.string! as NSString).substringWithRange(selectedRange)
+			(ManDocumentController.sharedDocumentController() as ManDocumentController).openString(selectedString)
+		}
+		
+		textView.window?.makeFirstResponder(textView)
 	}
 
 	@IBAction func displaySection(sender: AnyObject?) {
-
+		let section = sectionPopup.indexOfSelectedItem
+		if (section > 0 && section <= sectionRanges.count) {
+			let range = sectionRanges[section - 1]
+			textView.scrollRangeToTop(range)
+		}
 	}
 
 	@IBAction func copyURL(sender: AnyObject?) {

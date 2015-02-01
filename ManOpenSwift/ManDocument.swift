@@ -41,8 +41,13 @@ class ManDocument: NSDocument {
 	@IBOutlet weak var titleStringField: NSTextField!
 	@IBOutlet weak var openSelectionButton: NSButton!
 	@IBOutlet weak var sectionPopup: NSPopUpButton!
-	var shortTitle = ""
+	private var hasLoaded = false
 	private var restoreData = [String: AnyObject]()
+	
+	var sections = [String]()
+	var sectionRanges = [NSRange]()
+	
+	var shortTitle = ""
 	var copyURL: NSURL!
 	var taskData: NSData?
 	
@@ -112,7 +117,126 @@ class ManDocument: NSDocument {
 	}
 	
 	func showData() {
+		let defaults = NSUserDefaults.standardUserDefaults()
+		var storage: NSTextStorage? = nil
+		let manFont = defaults.manFont
+		let linkColor = defaults.manLinkColor
+		let textColor = defaults.manTextColor
+		let backgroundColor = defaults.manBackgroundColor
+		if textScroll == nil || hasLoaded {
+			return
+		}
 		
+		if taskData?.RTFData ?? false {
+			storage = NSTextStorage(RTF: taskData!, documentAttributes: nil)
+		} else if taskData != nil {
+			storage = NSTextStorage(HTML: taskData!, documentAttributes: nil)
+		}
+		
+		if storage == nil {
+			storage = NSTextStorage()
+		}
+		
+		if storage?.string.rangeOfCharacterFromSet(NSCharacterSet.letterCharacterSet())?.isEmpty ?? true {
+			storage?.mutableString.setString("\nNo manual entry.")
+		}
+		
+		sections.removeAll()
+		sectionRanges.removeAll()
+		
+		if let aStorage = storage {
+			let manager = NSFontManager.sharedFontManager()
+			let family = manFont.familyName!
+			let size = manFont.pointSize
+			var currIndex = 0
+
+			tryCatchBlock({ () -> Void in
+				aStorage.beginEditing()
+				
+				while currIndex < aStorage.length {
+					var currRange = NSRange(location: 0, length: 0)
+					var attribs = aStorage.attributesAtIndex(currIndex, effectiveRange: &currRange)
+					var font = attribs[NSFontAttributeName] as? NSFont
+					var isLink = false
+					
+					if font != nil && font!.familyName == "Courier" {
+						self.addSectionHeader(aStorage.mutableString.substringWithRange(currRange), range: currRange)
+					}
+					
+					isLink = (attribs[NSLinkAttributeName] != nil)
+					
+					if (font != nil && (font!.familyName != family)) {
+					font = manager.convertFont(font!, toFamily: family) ;
+					}
+					if (font != nil && font!.pointSize != size) {
+						font = manager.convertFont(font!, toSize: size)
+					}
+					if (font != nil) {
+						storage?.addAttribute(NSFontAttributeName, value: font!, range: currRange)
+					}
+					
+					/*
+					* Starting in 10.3, there is a -setLinkTextAttributes: method to set these, without having to
+					* determine the ranges ourselves.  However, since we are already iterating all the ranges
+					* for other reasons, may as well keep the old way.
+					*/
+					if isLink {
+						storage?.addAttribute(NSForegroundColorAttributeName, value: linkColor, range: currRange)
+					} else {
+						storage?.addAttribute(NSForegroundColorAttributeName, value: textColor, range: currRange)
+					}
+					
+					currIndex = NSMaxRange(currRange)
+				}
+				
+				aStorage.endEditing()
+			}, { (localException) -> Void in
+				NSLog("Exception during formatting: %@", localException);
+			})
+			
+			(textScroll.contentView.documentView as NSTextView).backgroundColor = backgroundColor
+			//[self setupSectionPopup];
+			
+			/*
+			* The 10.7 document reloading stuff can cause the loading methods to be invoked more than
+			* once, and the second time through we have thrown away our raw data.  Probably indicates
+			* some overkill code elsewhere on my part, but putting in the hadLoaded guard to only
+			* avoid doing anything after we have loaded real data seems to help.
+			*/
+			if (taskData != nil) {
+				hasLoaded = true
+			}
+			
+			// no need to keep around rtf data
+			taskData = nil;
+		}
+	}
+
+	func setupSectionPopup() {
+		sectionPopup.removeAllItems()
+		sectionPopup.addItemWithTitle("Section:")
+		sectionPopup.enabled = sections.count > 0
+		
+		if sectionPopup.enabled {
+			sectionPopup.addItemsWithTitles(sections)
+		}
+	}
+
+	func addSectionHeader(header: String, range: NSRange) {
+		/* Make sure it is a header -- error text sometimes is not Courier, so it gets passed in here. */
+		if !header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet())!.isEmpty &&
+			!header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet())!.isEmpty {
+				var label = header
+				var count = 1
+				
+				/* Check for dups (e.g. lesskey(1) ) */
+				while find(sections, label) != nil {
+					count++
+					label = "\(header) [\(count)]"
+				}
+				sections.append(label)
+				sectionRanges.append(range)
+		}
 	}
 	
 	@IBAction func saveCurrentWindowSize(sender: AnyObject?) {

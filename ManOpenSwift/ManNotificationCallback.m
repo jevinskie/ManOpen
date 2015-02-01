@@ -14,3 +14,13 @@ void registerNameWithRootObject(NSString *aname, id aRootObject)
 	[connection registerName:aname];
 	[connection setRootObject:aRootObject];
 }
+
+void tryCatchBlock(dispatch_block_t aTry, void(^catchBlock)(NSException*))
+{
+	@try {
+		aTry();
+	}
+	@catch (NSException *exception) {
+		catchBlock(exception);
+	}
+}

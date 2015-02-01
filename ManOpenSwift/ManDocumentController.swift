@@ -188,11 +188,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			let manager = NSFileManager.defaultManager()
 			var len = data!.length
 			let ptr = data!.bytes
-			var tmpNewline = "\n"
-			var tmpnewnewline: [CChar] = tmpNewline.cStringUsingEncoding(NSASCIIStringEncoding)!
-			var tmpanotherNewline: Int8 = tmpnewnewline[0]
 			
-			var newlinePtr = memchr(ptr, Int32(tmpanotherNewline), UInt(len))
+			var newlinePtr = memchr(ptr, 0x0A, UInt(len)) // 0A is == '\n'
 			
 			if newlinePtr != nil {
 				len = ptr.distanceTo(newlinePtr)

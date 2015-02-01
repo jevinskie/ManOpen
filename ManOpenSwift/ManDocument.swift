@@ -43,7 +43,6 @@ class ManDocument: NSDocument {
 	@IBOutlet weak var sectionPopup: NSPopUpButton!
 	private var hasLoaded = false
 	private var restoreData = [String: AnyObject]()
-	
 	var sections = [String]()
 	var sectionRanges = [NSRange]()
 	
@@ -93,9 +92,10 @@ class ManDocument: NSDocument {
 		return fileURL != nil ? super.displayName : shortTitle
 	}
 
-	init?(name: String, section: String?, manPath: String, title: String) {
+	init?(name: String, section: String?, manPath: String?, title: String) {
 		super.init()
-		return nil
+		loadDocumentWithName(name, section: section, manPath: manPath, title: title)
+
 	}
 	
 	private func loadDocumentWithName(name: String, section: String?, manPath: String?, title: String) {
@@ -251,8 +251,36 @@ class ManDocument: NSDocument {
 		}
 	}
 	
+	func loadManFile(filename: String, isGzip: Bool = false) {
+		let defaults = NSUserDefaults.standardUserDefaults()
+		var nroffFormat = defaults.stringForKey("NroffCommand")!
+		var nroffCommand: String
+		let hasQuote = nroffFormat.rangeOfString("'%@'") != nil
+		
+		/* If Gzip, change the command into a filter of the output of gzcat.  I'm
+		getting the feeling that the customizable nroff command is more trouble
+		than it's worth, especially now that OSX uses the good version of gnroff */
+		if isGzip {
+			var repl = hasQuote ? "'%@'" : "%@"
+			if let replRange = nroffFormat.rangeOfString(repl) {
+				var formatCopy = nroffFormat
+				formatCopy.replaceRange(replRange, with: "")
+				nroffFormat = "/usr/bin/gzip -dc \(repl) | \(formatCopy)"
+			}
+		}
+		
+		nroffCommand = NSString(format: nroffFormat, EscapePath(filename, addSurroundingQuotes: !hasQuote))
+		loadCommand(nroffCommand)
+	}
+	
+	func loadCatFile(filename: String, isGzip: Bool = false) {
+		let binary = isGzip ? "/usr/bin/gzip -dc" : "/bin/cat"
+		loadCommand("\(binary) '\(EscapePath(filename, addSurroundingQuotes: false))'")
+	}
+	
 	@IBAction func saveCurrentWindowSize(sender: AnyObject?) {
-
+		let size = textView.window!.frame.size
+		NSUserDefaults.standardUserDefaults().setObject(NSStringFromSize(size), forKey: "ManWindowSize")
 	}
 
 	@IBAction func openSelection(sender: AnyObject?) {
@@ -275,6 +303,22 @@ class ManDocument: NSDocument {
 	}
 
 	@IBAction func copyURL(sender: AnyObject?) {
-
+		if let aCopyURL = copyURL {
+			let pb = NSPasteboard.generalPasteboard()
+			var types = [String]()
+			
+			types.append(NSURLPboardType)
+			if aCopyURL.fileURL {
+				types.append(NSFilenamesPboardType)
+			}
+			types.append(NSStringPboardType)
+			pb.declareTypes(types, owner: nil)
+			
+			aCopyURL.writeToPasteboard(pb)
+			pb.setString("<\(aCopyURL.absoluteString!)>", forType: NSStringPboardType)
+			if aCopyURL.fileURL {
+				pb.setPropertyList([aCopyURL.path!], forType: NSFilenamesPboardType)
+			}
+		}
 	}
 }

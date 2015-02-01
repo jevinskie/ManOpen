@@ -21,12 +21,12 @@ class DisplayPathFormatter: NSFormatter {
 			if (anew as NSString).absolutePath {
 				
 				if anew.hasPrefix(resHome) {
-				anew = "~/" + (anew as NSString).substringFromIndex((resHome as NSString).length)
+					anew = "~/" + (anew as NSString).substringFromIndex((resHome as NSString).length)
 				}
 			}
 			
 			return anew;
-
+			
 		}
 		return nil;
 	}

@@ -68,7 +68,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		if manager.fileExistsAtPath("/sw/share/man") { // fink
 			manpath = "/sw/share/man:" + manpath
-	}
+		}
 		if manager.fileExistsAtPath("/opt/local/share/man") {  //macports
 			manpath = "/opt/local/share/man:" + manpath
 		}
@@ -77,7 +77,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		} else if manager.fileExistsAtPath("/usr/X11/share/man") {
 			manpath += ":/usr/X11/share/man"
 		} else if manager.fileExistsAtPath("/usr/X11R6/man") {
-		manpath += ":/usr/X11R6/man"
+			manpath += ":/usr/X11R6/man"
 		}
 
 		
@@ -108,7 +108,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 				return;
 			}
 			fontField.font = newValue
-			fontField.stringValue = String(format: "%@ %.1f", newValue.familyName!, Double(newValue.pointSize))
+			fontField.stringValue = String(format: "%@ %.1f", newValue.familyName!, newValue.pointSize)
 		}
 	}
 	

@@ -14,7 +14,7 @@ private let MANPATH_FORMAT = " -M '%@'"
 
 func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 	var modPath = path
-	if (path as NSString).rangeOfString("'").length > 0 {
+	if path.rangeOfString("'") != nil {
 		var newString = ""
 		let scanner = NSScanner(string: path)
 		
@@ -364,38 +364,31 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var section: String? = nil
 		let lparenRange = word.rangeOfString("(")
 		let rparenRange = word.rangeOfString(")")
-		var document: ManDocument? = nil
 		
 		if lparenRange != nil && rparenRange != nil && lparenRange!.startIndex < rparenRange!.startIndex {
-			let lp = lparenRange!
+			var lp = lparenRange!
+			var rp = rparenRange!
 			
 			base = word[word.startIndex ..< lp.startIndex]
-			section = word[lp.startIndex ... rparenRange!.endIndex]
+			section = word[++lp.startIndex ..< --rp.endIndex]
 		}
-		/*
-		if (lparenRange.length != 0 && rparenRange.length != 0 &&
-			lparenRange.location < rparenRange.location)
-		{
-			NSRange sectionRange;
-			
-			sectionRange.location = NSMaxRange(lparenRange);
-			sectionRange.length = rparenRange.location - sectionRange.location;
-			
-			base = [word substringToIndex:lparenRange.location];
-			section = [word substringWithRange:sectionRange];
-		}
-*/
 		
-		document = openDocumentWithName(base, section: section, manPath: NSUserDefaults.standardUserDefaults().manPath)
-		
-		return document
+		return openDocumentWithName(base, section: section, manPath: NSUserDefaults.standardUserDefaults().manPath)
 	}
 	
 	func openString(string: String) {
 		var words = GetWordArray(string)
 		if words.count > 20 {
+			let locCount = NSNumberFormatter.localizedStringFromNumber(words.count, numberStyle: .DecimalStyle)
 			let alert = NSAlert()
-			
+			alert.messageText = NSLocalizedString("Warning", comment: "Warning")
+			alert.informativeText = String(format: NSLocalizedString("This will open approximately %@ windows!", comment: "This will open approximately (the number of) windows!"), locCount)
+			alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: "Cancel"))
+			alert.addButtonWithTitle(NSLocalizedString("Continue", comment: "Continue"))
+			let aNum = alert.runModal()
+			if aNum != NSAlertSecondButtonReturn {
+				return
+			}
 		}
 		
 		openString(string, oneWordOnly: false)
@@ -514,7 +507,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		
 		if useModalPanels {
 			if (NSApp as NSApplication).runModalForWindow(aproposPanel) == NSOKButton {
-				openTitleFromPanel()
+				openAproposFromPanel()
 			}
 		} else {
 			aproposPanel.makeKeyAndOrderFront(self)

@@ -205,7 +205,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		if apps.count > 0 {
 			appPopup.menu?.addItem(NSMenuItem.separatorItem())
 		}
-		appPopup.addItemWithTitle("Select…")
+		appPopup.addItemWithTitle(NSLocalizedString("Select...", comment: "Select..."))
 		setAppPopupToCurrent()
 	}
 
@@ -236,7 +236,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	func setManPageViewer(bundleID: String) {
 		let error = LSSetDefaultHandlerForURLScheme(URL_SCHEME, bundleID)
 		
-		if (error != noErr){
+		if (error != noErr) {
 			println("Could not set default \(URL_SCHEME_PREFIX) app: Launch Services error \(error)")
 		}
 		

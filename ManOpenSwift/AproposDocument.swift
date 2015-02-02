@@ -17,9 +17,9 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	var title: String = ""
 	var searchString: String = ""
-	var aproposItems = [AproposItem]()
+	private var aproposItems = [AproposItem]()
 	
-	struct AproposItem {
+	private struct AproposItem {
 		var title: String
 		var description: String
 	}
@@ -41,7 +41,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			return
 		}
 		
-		var lines = output.componentsSeparatedByString("\n") as [String]
+		var lines = output.componentsSeparatedByString("\n")
 		if lines.count == 0 {
 			return
 		}
@@ -73,7 +73,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			
 			if let aDashRange = dashRange {
 				let title = line[line.startIndex ..< aDashRange.startIndex]
-				let adescription = line[aDashRange.endIndex ... aDashRange.endIndex]
+				let adescription = line[aDashRange.endIndex ..< line.endIndex]
 				aproposItems.append(AproposItem(title: title, description: adescription))
 			}
 		}
@@ -124,7 +124,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		fileType = "apropos"
 		
 		/* Searching for a blank string doesn't work anymore... use a catchall regex */
-		if countElements(apropos) == 0{
+		if countElements(apropos) == 0 {
 			aapropos = "."
 		}
 		searchString = aapropos
@@ -160,9 +160,17 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		super.init()
 	}
 	
-	init?(string apropos: String, manPath: String, title: String) {
+	init?(string apropos: String, manPath: String, title aTitle: String) {
 		super.init()
-		return nil
+		loadWithString(apropos, manPath: manPath, title: aTitle)
+		
+		if aproposItems.count == 0 {
+			let anAlert = NSAlert()
+			anAlert.messageText = NSLocalizedString("Nothing found", comment: "Nothing found")
+			anAlert.informativeText = String(format: NSLocalizedString("No pages related to '%@' found", comment: "When a page couldn't be found"), apropos)
+			anAlert.runModal()
+			return nil;
+		}
 	}
 	
 	// MARK: NSTableView data sources
@@ -173,7 +181,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row: Int) -> AnyObject? {
 		var item = aproposItems[row]
 		var toRet = (tableColumn === titleColumn) ? item.title : item.description
-		return toRet as NSString
+		return toRet
 	}
 	
 	// MARK: Document restoration

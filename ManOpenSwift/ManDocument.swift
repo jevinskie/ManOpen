@@ -83,7 +83,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		}
 		
 		titleStringField.stringValue = shortTitle
-		textView.textStorage?.mutableString.setString("Loading...")
+		textView.textStorage?.mutableString.setString(NSLocalizedString("Loading...", comment: "Before the man page is loaded"))
 		textView.backgroundColor = defaults.manBackgroundColor
 		textView.textColor = defaults.manTextColor
 		
@@ -127,7 +127,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		
 		if taskData == nil {
 			if outError != nil {
-				outError.memory = NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: "Could not read manual data"])
+				outError.memory = NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data")])
 			}
 			return false
 		}
@@ -205,7 +205,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		}
 		
 		if storage?.string.rangeOfCharacterFromSet(NSCharacterSet.letterCharacterSet())?.isEmpty ?? true {
-			storage?.mutableString.setString("\nNo manual entry.")
+			storage?.mutableString.setString(NSLocalizedString("\nNo manual entry.", comment: "\"No manual entry\", preceeded by a newline"))
 		}
 		
 		sections.removeAll()

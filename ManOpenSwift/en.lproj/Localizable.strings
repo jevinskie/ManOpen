@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  ManOpen
+
+  Created by C.W. Betts on 2/2/15.
+
+*/
+
+/* \"No manual entry\", preceeded by a newline */
+"\nNo manual entry." = "\nNo manual entry.";
+
+/* Cancel */
+"Cancel" = "Cancel";
+
+/* Continue */
+"Continue" = "Continue";
+
+/* Could not read manual data */
+"Could not read manual data" = "Could not read manual data";
+
+/* Before the man page is loaded */
+"Loading..." = "Loading…";
+
+/* When a page couldn't be found */
+"No pages related to '%@' found" = "No pages related to '%@' found";
+
+/* Nothing found */
+"Nothing found" = "Nothing found";
+
+/* Select... */
+"Select..." = "Select…";
+
+/* This will open approximately (the number of) windows! */
+"This will open approximately %@ windows!" = "This will open approximately %@ windows!";
+
+/* Warning */
+"Warning" = "Warning";
+

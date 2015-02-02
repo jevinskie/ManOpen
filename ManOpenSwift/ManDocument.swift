@@ -73,7 +73,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		// Add any code here that needs to be executed once the windowController has loaded the document's window.
 		
 		if let aSizeString = sizeString {
-			var windowSize = NSSizeFromString(aSizeString)
+			var windowSize = NSSize(string: aSizeString)
 			let window = textView.window!
 			var frame = window.frame
 			
@@ -337,7 +337,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	
 	@IBAction func saveCurrentWindowSize(sender: AnyObject?) {
 		let size = textView.window!.frame.size
-		NSUserDefaults.standardUserDefaults().setObject(NSStringFromSize(size), forKey: "ManWindowSize")
+		NSUserDefaults.standardUserDefaults().setObject(size.stringValue, forKey: "ManWindowSize")
 	}
 
 	@IBAction func openSelection(sender: AnyObject?) {

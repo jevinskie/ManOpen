@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftAdditions
 
 private let restoreSearchString = "SearchString"
 private let restoreTitle = "Title"
@@ -85,7 +86,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
         super.windowControllerDidLoadNib(aController)
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
 		if let sizeString = aSizeString {
-			var windowSize = NSSizeFromString(sizeString)
+			var windowSize = NSSize(string: sizeString)
 			var window = tableView.window
 			var frame = window!.frame
 			
@@ -158,6 +159,11 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			let manPage = aproposItems[sender!.clickedRow].title
 			(ManDocumentController.sharedDocumentController() as ManDocumentController).openString(manPage, oneWordOnly: true)
 		}
+	}
+	
+	@IBAction func saveCurrentWindowSize(sender: AnyObject?) {
+		let size = tableView.window!.frame.size
+		NSUserDefaults.standardUserDefaults()["AproposWindowSize"] = size.stringValue
 	}
 
 	override init() {

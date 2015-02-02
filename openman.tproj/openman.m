@@ -39,7 +39,6 @@ int main (int argc, char * const *argv)
         BOOL              aproposMode = NO;
         BOOL              forceToFront = YES;
         NSInteger         argIndex;
-        NSUInteger        fileIndex;
         char              c;
         NSDistantObject <ManOpen>  *server;
         NSInteger         maxConnectTries;

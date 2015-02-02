@@ -13,7 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
-				D38A245414E4C3FE00F6AFFE /* PBXTargetDependency */,
+				557AFB561A8036A8008BDF46 /* PBXTargetDependency */,
 				D38A247D14E4C7FC00F6AFFE /* PBXTargetDependency */,
 			);
 			name = Aggregate;
@@ -29,14 +29,6 @@
 		55182E1019C0BACA0016128A /* ManDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */; };
 		553A5B2519BFEDD7003D74A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E802A1188237F000037AF6 /* Cocoa.framework */; };
 		553A5B2619BFEDF6003D74A9 /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FA0821FFA400376676 /* NSData+Utils.m */; };
-		5551944619BFFD5E002E4F62 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E802A1188237F000037AF6 /* Cocoa.framework */; };
-		5553E1FC1881F2C2003C2DBF /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
-		5553E20C1881F640003C2DBF /* Apropos.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E20E1881F640003C2DBF /* Apropos.xib */; };
-		5553E20F1881F646003C2DBF /* DocController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E2111881F646003C2DBF /* DocController.xib */; };
-		5553E2151881F65A003C2DBF /* ManOpen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E2171881F65A003C2DBF /* ManOpen.xib */; };
-		5553E2181881F666003C2DBF /* ManPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21A1881F666003C2DBF /* ManPage.xib */; };
-		5553E21B1881F670003C2DBF /* PrefPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21D1881F670003C2DBF /* PrefPanel.xib */; };
-		5553E21F1881F83E003C2DBF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
 		5567E0561A7D615E005013B3 /* ManNotificationCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 5567E0551A7D615E005013B3 /* ManNotificationCallback.m */; };
 		557AFAF61A800C4F008BDF46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 557AFAF81A800C4F008BDF46 /* Localizable.strings */; };
 		557AFB4B1A801CD8008BDF46 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557AFB401A801CC8008BDF46 /* SwiftAdditions.framework */; };
@@ -60,23 +52,9 @@
 		55C0CF4719BE07E9009C50D7 /* ManOpen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */; };
 		55C0CF4819BE07E9009C50D7 /* ManPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1E19BE07E9009C50D7 /* ManPage.xib */; };
 		55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */; };
-		55C0CF5D19BE0865009C50D7 /* AproposDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F20821FFA400376676 /* AproposDocument.m */; };
-		55C0CF5E19BE0865009C50D7 /* ManDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F60821FFA400376676 /* ManDocument.m */; };
-		55C0CF5F19BE0865009C50D7 /* ManDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278F80821FFA400376676 /* ManDocumentController.m */; };
-		55C0CF6019BE0865009C50D7 /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FA0821FFA400376676 /* NSData+Utils.m */; };
-		55C0CF6119BE0865009C50D7 /* PrefPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FC0821FFA400376676 /* PrefPanelController.m */; };
-		55F13AB415103C1E0095B5A9 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
-		D38A241514E4C3FE00F6AFFE /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
-		D38A241814E4C3FE00F6AFFE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D39279350821FFA400376676 /* Credits.rtf */; };
-		D38A241914E4C3FE00F6AFFE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D39279380821FFA400376676 /* InfoPlist.strings */; };
-		D38A242114E4C3FE00F6AFFE /* ManOpen_main.m in Sources */ = {isa = PBXBuildFile; fileRef = D39279100821FFA400376676 /* ManOpen_main.m */; settings = {ATTRIBUTES = (); }; };
-		D38A242314E4C3FE00F6AFFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
-		D38A242414E4C3FE00F6AFFE /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279850821FFA400376676 /* AppKit.framework */; };
 		D38A244914E4C3FE00F6AFFE /* openman.m in Sources */ = {isa = PBXBuildFile; fileRef = D39279770821FFA400376676 /* openman.m */; settings = {ATTRIBUTES = (); }; };
 		D38A244B14E4C3FE00F6AFFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
 		D38A244C14E4C3FE00F6AFFE /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279850821FFA400376676 /* AppKit.framework */; };
-		D38A245C14E4C3FE00F6AFFE /* cat2rtf in CopyFiles */ = {isa = PBXBuildFile; fileRef = D38A243814E4C3FE00F6AFFE /* cat2rtf */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D38A245D14E4C3FE00F6AFFE /* cat2html in CopyFiles */ = {isa = PBXBuildFile; fileRef = D38A244414E4C3FE00F6AFFE /* cat2html */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D38A24F414E5AC0600F6AFFE /* cat2rtf.l in Sources */ = {isa = PBXBuildFile; fileRef = D39279560821FFA400376676 /* cat2rtf.l */; };
 		D38A250514E5B05300F6AFFE /* cat2html.l in Sources */ = {isa = PBXBuildFile; fileRef = D39279690821FFA400376676 /* cat2html.l */; };
 		D3EA5C4014EDC3BE00AB000A /* openman.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D392797F0821FFA400376676 /* openman.1 */; };
@@ -132,6 +110,13 @@
 			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
 			remoteInfo = SwiftAdditions;
 		};
+		557AFB551A8036A8008BDF46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D39279890821FFA400376676 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55C0CEEF19BE04D8009C50D7;
+			remoteInfo = ManOpenSwift;
+		};
 		55C0CEF119BE04D8009C50D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D39279890821FFA400376676 /* Project object */;
@@ -140,27 +125,6 @@
 			remoteInfo = "cat2rtf (Tool) (Upgraded)";
 		};
 		55C0CEF319BE04D8009C50D7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D39279890821FFA400376676 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D38A243A14E4C3FE00F6AFFE;
-			remoteInfo = "cat2html (Tool) (Upgraded)";
-		};
-		D38A245314E4C3FE00F6AFFE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D39279890821FFA400376676 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D38A23FD14E4C3FE00F6AFFE;
-			remoteInfo = "ManOpen (Application) (Upgraded)";
-		};
-		D38A245714E4C3FE00F6AFFE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D39279890821FFA400376676 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D38A242F14E4C3FE00F6AFFE;
-			remoteInfo = "cat2rtf (Tool) (Upgraded)";
-		};
-		D38A245914E4C3FE00F6AFFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D39279890821FFA400376676 /* Project object */;
 			proxyType = 1;
@@ -199,17 +163,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D38A242614E4C3FE00F6AFFE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-				D38A245C14E4C3FE00F6AFFE /* cat2rtf in CopyFiles */,
-				D38A245D14E4C3FE00F6AFFE /* cat2html in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D3EA5C4314EDC3C100AB000A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
@@ -224,19 +177,8 @@
 
 /* Begin PBXFileReference section */
 		5516ECE71A7CA21200760214 /* ManTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManTextView.swift; sourceTree = "<group>"; };
-		552F6EAC18E23A2C0056F78B /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
 		553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AproposDocument.swift; sourceTree = "<group>"; };
 		553A5B2219BFE811003D74A9 /* ManDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManDocument.swift; sourceTree = "<group>"; };
-		55485832190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Apropos.xib; sourceTree = "<group>"; };
-		55485833190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocController.xib; sourceTree = "<group>"; };
-		55485834190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ManOpen.xib; sourceTree = "<group>"; };
-		55485835190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ManPage.xib; sourceTree = "<group>"; };
-		55485836190C53570017BB41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrefPanel.xib; sourceTree = "<group>"; };
-		55485838190C53610017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Apropos.strings; sourceTree = "<group>"; };
-		5548583A190C536D0017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DocController.strings; sourceTree = "<group>"; };
-		5548583C190C53750017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManOpen.strings; sourceTree = "<group>"; };
-		5548583E190C537A0017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManPage.strings; sourceTree = "<group>"; };
-		55485840190C537F0017BB41 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefPanel.strings; sourceTree = "<group>"; };
 		5553E1FF1881F2CA003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Help.rtf; sourceTree = "<group>"; };
 		5553E21E1881F83E003C2DBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ManOpen/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		5553E22018821265003C2DBF /* openman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openman-Info.plist"; sourceTree = "<group>"; };
@@ -272,27 +214,15 @@
 		55E8029F188237E000037AF6 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55E802A1188237F000037AF6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		55E802A3188237FA00037AF6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		55F13AB515103C1E0095B5A9 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = English; path = English.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
-		D38A242C14E4C3FE00F6AFFE /* Info-ManOpen.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ManOpen.plist"; sourceTree = "<group>"; };
-		D38A242D14E4C3FE00F6AFFE /* ManOpen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55F13AB515103C1E0095B5A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = en; path = en.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A243814E4C3FE00F6AFFE /* cat2rtf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2rtf; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A244414E4C3FE00F6AFFE /* cat2html */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2html; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A245114E4C3FE00F6AFFE /* openman */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = openman; sourceTree = BUILT_PRODUCTS_DIR; };
-		D39278F20821FFA400376676 /* AproposDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AproposDocument.m; sourceTree = "<group>"; usesTabs = 0; };
-		D39278F60821FFA400376676 /* ManDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManDocument.m; sourceTree = "<group>"; usesTabs = 0; };
-		D39278F80821FFA400376676 /* ManDocumentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManDocumentController.m; sourceTree = "<group>"; usesTabs = 0; };
 		D39278FA0821FFA400376676 /* NSData+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Utils.m"; sourceTree = "<group>"; usesTabs = 0; };
-		D39278FC0821FFA400376676 /* PrefPanelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefPanelController.m; sourceTree = "<group>"; usesTabs = 0; };
-		D39278FF0821FFA400376676 /* AproposDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AproposDocument.h; sourceTree = "<group>"; usesTabs = 0; };
-		D39279030821FFA400376676 /* ManDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManDocument.h; sourceTree = "<group>"; usesTabs = 0; };
-		D39279050821FFA400376676 /* ManDocumentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManDocumentController.h; sourceTree = "<group>"; usesTabs = 0; };
 		D39279070821FFA400376676 /* ManOpenProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManOpenProtocol.h; sourceTree = "<group>"; usesTabs = 0; };
 		D39279090821FFA400376676 /* NSData+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; usesTabs = 0; };
-		D392790B0821FFA400376676 /* PrefPanelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPanelController.h; sourceTree = "<group>"; usesTabs = 0; };
-		D39279100821FFA400376676 /* ManOpen_main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManOpen_main.m; sourceTree = "<group>"; usesTabs = 0; };
 		D392792F0821FFA400376676 /* ManOpen.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptSuite; path = ManOpen.scriptSuite; sourceTree = "<group>"; };
-		D39279370821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
-		D392793A0821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D39279370821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		D39279560821FFA400376676 /* cat2rtf.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2rtf.l; sourceTree = "<group>"; usesTabs = 0; };
 		D39279690821FFA400376676 /* cat2html.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2html.l; sourceTree = "<group>"; usesTabs = 0; };
 		D39279770821FFA400376676 /* openman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = openman.m; sourceTree = "<group>"; usesTabs = 0; };
@@ -310,16 +240,6 @@
 				553A5B2519BFEDD7003D74A9 /* Cocoa.framework in Frameworks */,
 				55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */,
 				55C0CF0919BE04D8009C50D7 /* AppKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D38A242214E4C3FE00F6AFFE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5551944619BFFD5E002E4F62 /* Cocoa.framework in Frameworks */,
-				D38A242314E4C3FE00F6AFFE /* Foundation.framework in Frameworks */,
-				D38A242414E4C3FE00F6AFFE /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,8 +367,6 @@
 			isa = PBXGroup;
 			children = (
 				D39278F10821FFA400376676 /* Classes */,
-				D392790F0821FFA400376676 /* Other Sources */,
-				D39279120821FFA400376676 /* Interfaces */,
 				D39279270821FFA400376676 /* Images */,
 				D392792E0821FFA400376676 /* Resources */,
 				D392793B0821FFA400376676 /* Supporting Files */,
@@ -460,7 +378,6 @@
 		D39278ED0821FFA400376676 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D38A242D14E4C3FE00F6AFFE /* ManOpen.app */,
 				D38A243814E4C3FE00F6AFFE /* cat2rtf */,
 				D38A244414E4C3FE00F6AFFE /* cat2html */,
 				D38A245114E4C3FE00F6AFFE /* openman */,
@@ -472,39 +389,11 @@
 		D39278F10821FFA400376676 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D39278FF0821FFA400376676 /* AproposDocument.h */,
-				D39278F20821FFA400376676 /* AproposDocument.m */,
-				D39279030821FFA400376676 /* ManDocument.h */,
-				D39278F60821FFA400376676 /* ManDocument.m */,
-				D39279050821FFA400376676 /* ManDocumentController.h */,
-				D39278F80821FFA400376676 /* ManDocumentController.m */,
 				D39279070821FFA400376676 /* ManOpenProtocol.h */,
 				D39279090821FFA400376676 /* NSData+Utils.h */,
 				D39278FA0821FFA400376676 /* NSData+Utils.m */,
-				D392790B0821FFA400376676 /* PrefPanelController.h */,
-				D39278FC0821FFA400376676 /* PrefPanelController.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		D392790F0821FFA400376676 /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				D39279100821FFA400376676 /* ManOpen_main.m */,
-			);
-			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		D39279120821FFA400376676 /* Interfaces */ = {
-			isa = PBXGroup;
-			children = (
-				5553E20E1881F640003C2DBF /* Apropos.xib */,
-				5553E2111881F646003C2DBF /* DocController.xib */,
-				5553E2171881F65A003C2DBF /* ManOpen.xib */,
-				5553E21A1881F666003C2DBF /* ManPage.xib */,
-				5553E21D1881F670003C2DBF /* PrefPanel.xib */,
-			);
-			name = Interfaces;
 			sourceTree = "<group>";
 		};
 		D39279270821FFA400376676 /* Images */ = {
@@ -518,11 +407,9 @@
 		D392792E0821FFA400376676 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				552F6EAC18E23A2C0056F78B /* Info-ManOpen.plist */,
 				D392792F0821FFA400376676 /* ManOpen.scriptSuite */,
 				55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */,
 				D39279350821FFA400376676 /* Credits.rtf */,
-				D39279380821FFA400376676 /* InfoPlist.strings */,
 				5553E1FE1881F2C2003C2DBF /* Help.rtf */,
 			);
 			name = Resources;
@@ -531,7 +418,6 @@
 		D392793B0821FFA400376676 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D38A242C14E4C3FE00F6AFFE /* Info-ManOpen.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -625,9 +511,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		55C0CEEF19BE04D8009C50D7 /* ManOpenSwift */ = {
+		55C0CEEF19BE04D8009C50D7 /* ManOpen */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55C0CF0D19BE04D8009C50D7 /* Build configuration list for PBXNativeTarget "ManOpenSwift" */;
+			buildConfigurationList = 55C0CF0D19BE04D8009C50D7 /* Build configuration list for PBXNativeTarget "ManOpen" */;
 			buildPhases = (
 				55C0CEF419BE04D8009C50D7 /* Resources */,
 				55C0CF0019BE04D8009C50D7 /* Sources */,
@@ -642,31 +528,10 @@
 				55C0CEF219BE04D8009C50D7 /* PBXTargetDependency */,
 				557AFB4E1A801CD8008BDF46 /* PBXTargetDependency */,
 			);
-			name = ManOpenSwift;
-			productInstallPath = "$(HOME)/Apps";
-			productName = "ManOpen (Application)";
-			productReference = 55C0CF1019BE04D8009C50D7 /* ManOpen.app */;
-			productType = "com.apple.product-type.application";
-		};
-		D38A23FD14E4C3FE00F6AFFE /* ManOpen */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D38A242914E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "ManOpen" */;
-			buildPhases = (
-				D38A240B14E4C3FE00F6AFFE /* Resources */,
-				D38A241A14E4C3FE00F6AFFE /* Sources */,
-				D38A242214E4C3FE00F6AFFE /* Frameworks */,
-				D38A242614E4C3FE00F6AFFE /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D38A245814E4C3FE00F6AFFE /* PBXTargetDependency */,
-				D38A245A14E4C3FE00F6AFFE /* PBXTargetDependency */,
-			);
 			name = ManOpen;
 			productInstallPath = "$(HOME)/Apps";
 			productName = "ManOpen (Application)";
-			productReference = D38A242D14E4C3FE00F6AFFE /* ManOpen.app */;
+			productReference = 55C0CF1019BE04D8009C50D7 /* ManOpen.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D38A242F14E4C3FE00F6AFFE /* cat2rtf */ = {
@@ -756,8 +621,7 @@
 			projectRoot = "";
 			targets = (
 				D38A23F314E4C3FE00F6AFFE /* Aggregate */,
-				D38A23FD14E4C3FE00F6AFFE /* ManOpen */,
-				55C0CEEF19BE04D8009C50D7 /* ManOpenSwift */,
+				55C0CEEF19BE04D8009C50D7 /* ManOpen */,
 				D38A242F14E4C3FE00F6AFFE /* cat2rtf */,
 				D38A243A14E4C3FE00F6AFFE /* cat2html */,
 				D38A244614E4C3FE00F6AFFE /* openman */,
@@ -830,24 +694,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D38A240B14E4C3FE00F6AFFE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5553E21F1881F83E003C2DBF /* Images.xcassets in Resources */,
-				D38A241514E4C3FE00F6AFFE /* ManOpen.scriptSuite in Resources */,
-				55F13AB415103C1E0095B5A9 /* ManOpen.scriptTerminology in Resources */,
-				D38A241814E4C3FE00F6AFFE /* Credits.rtf in Resources */,
-				5553E1FC1881F2C2003C2DBF /* Help.rtf in Resources */,
-				5553E2151881F65A003C2DBF /* ManOpen.xib in Resources */,
-				5553E2181881F666003C2DBF /* ManPage.xib in Resources */,
-				5553E20F1881F646003C2DBF /* DocController.xib in Resources */,
-				5553E20C1881F640003C2DBF /* Apropos.xib in Resources */,
-				D38A241914E4C3FE00F6AFFE /* InfoPlist.strings in Resources */,
-				5553E21B1881F670003C2DBF /* PrefPanel.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -866,19 +712,6 @@
 				55182E1019C0BACA0016128A /* ManDocumentController.swift in Sources */,
 				55838C0919C0B59600FFEDDE /* AppInfo.swift in Sources */,
 				5516ECE81A7CA21200760214 /* ManTextView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D38A241A14E4C3FE00F6AFFE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				55C0CF6019BE0865009C50D7 /* NSData+Utils.m in Sources */,
-				D38A242114E4C3FE00F6AFFE /* ManOpen_main.m in Sources */,
-				55C0CF5F19BE0865009C50D7 /* ManDocumentController.m in Sources */,
-				55C0CF5D19BE0865009C50D7 /* AproposDocument.m in Sources */,
-				55C0CF5E19BE0865009C50D7 /* ManDocument.m in Sources */,
-				55C0CF6119BE0865009C50D7 /* PrefPanelController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -914,6 +747,11 @@
 			name = SwiftAdditions;
 			targetProxy = 557AFB4D1A801CD8008BDF46 /* PBXContainerItemProxy */;
 		};
+		557AFB561A8036A8008BDF46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55C0CEEF19BE04D8009C50D7 /* ManOpen */;
+			targetProxy = 557AFB551A8036A8008BDF46 /* PBXContainerItemProxy */;
+		};
 		55C0CEF019BE04D8009C50D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D38A242F14E4C3FE00F6AFFE /* cat2rtf */;
@@ -923,21 +761,6 @@
 			isa = PBXTargetDependency;
 			target = D38A243A14E4C3FE00F6AFFE /* cat2html */;
 			targetProxy = 55C0CEF319BE04D8009C50D7 /* PBXContainerItemProxy */;
-		};
-		D38A245414E4C3FE00F6AFFE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D38A23FD14E4C3FE00F6AFFE /* ManOpen */;
-			targetProxy = D38A245314E4C3FE00F6AFFE /* PBXContainerItemProxy */;
-		};
-		D38A245814E4C3FE00F6AFFE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D38A242F14E4C3FE00F6AFFE /* cat2rtf */;
-			targetProxy = D38A245714E4C3FE00F6AFFE /* PBXContainerItemProxy */;
-		};
-		D38A245A14E4C3FE00F6AFFE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D38A243A14E4C3FE00F6AFFE /* cat2html */;
-			targetProxy = D38A245914E4C3FE00F6AFFE /* PBXContainerItemProxy */;
 		};
 		D38A247D14E4C7FC00F6AFFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -953,51 +776,6 @@
 				5553E1FF1881F2CA003C2DBF /* en */,
 			);
 			name = Help.rtf;
-			sourceTree = "<group>";
-		};
-		5553E20E1881F640003C2DBF /* Apropos.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55485832190C53570017BB41 /* Base */,
-				55485838190C53610017BB41 /* en */,
-			);
-			name = Apropos.xib;
-			sourceTree = "<group>";
-		};
-		5553E2111881F646003C2DBF /* DocController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55485833190C53570017BB41 /* Base */,
-				5548583A190C536D0017BB41 /* en */,
-			);
-			name = DocController.xib;
-			sourceTree = "<group>";
-		};
-		5553E2171881F65A003C2DBF /* ManOpen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55485834190C53570017BB41 /* Base */,
-				5548583C190C53750017BB41 /* en */,
-			);
-			name = ManOpen.xib;
-			sourceTree = "<group>";
-		};
-		5553E21A1881F666003C2DBF /* ManPage.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55485835190C53570017BB41 /* Base */,
-				5548583E190C537A0017BB41 /* en */,
-			);
-			name = ManPage.xib;
-			sourceTree = "<group>";
-		};
-		5553E21D1881F670003C2DBF /* PrefPanel.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55485836190C53570017BB41 /* Base */,
-				55485840190C537F0017BB41 /* en */,
-			);
-			name = PrefPanel.xib;
 			sourceTree = "<group>";
 		};
 		557AFAF81A800C4F008BDF46 /* Localizable.strings */ = {
@@ -1064,7 +842,7 @@
 		55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55F13AB515103C1E0095B5A9 /* English */,
+				55F13AB515103C1E0095B5A9 /* en */,
 			);
 			name = ManOpen.scriptTerminology;
 			sourceTree = "<group>";
@@ -1075,14 +853,6 @@
 				D39279370821FFA400376676 /* English */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		D39279380821FFA400376676 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D392793A0821FFA400376676 /* English */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1115,9 +885,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "ManOpenSwift/Info-ManOpen.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_NAME = ManOpen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpenSwift/ManOpenSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1153,8 +922,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "ManOpenSwift/Info-ManOpen.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_NAME = ManOpen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpenSwift/ManOpenSwift-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = ManOpen;
@@ -1201,7 +969,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				SDKROOT = macosx;
@@ -1251,7 +1019,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -1261,6 +1029,7 @@
 		D38A23FB14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SECTORDER_FLAGS = "";
 			};
 			name = Debug;
@@ -1268,36 +1037,8 @@
 		D38A23FC14E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SECTORDER_FLAGS = "";
-			};
-			name = Release;
-		};
-		D38A242A14E4C3FE00F6AFFE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = NO;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		D38A242B14E4C3FE00F6AFFE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = NO;
-				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
@@ -1364,7 +1105,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		55C0CF0D19BE04D8009C50D7 /* Build configuration list for PBXNativeTarget "ManOpenSwift" */ = {
+		55C0CF0D19BE04D8009C50D7 /* Build configuration list for PBXNativeTarget "ManOpen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55C0CF0E19BE04D8009C50D7 /* Debug */,
@@ -1387,15 +1128,6 @@
 			buildConfigurations = (
 				D38A23FB14E4C3FE00F6AFFE /* Debug */,
 				D38A23FC14E4C3FE00F6AFFE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D38A242914E4C3FE00F6AFFE /* Build configuration list for PBXNativeTarget "ManOpen" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D38A242A14E4C3FE00F6AFFE /* Debug */,
-				D38A242B14E4C3FE00F6AFFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

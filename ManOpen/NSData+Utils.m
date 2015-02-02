@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <errno.h>
 #include <assert.h>
+#include <alloca.h>
 
 @implementation NSData (Utils)
 
@@ -105,35 +106,25 @@
 - (NSData *)readDataToEndOfFileIgnoreInterrupt
 {
     int fd = [self fileDescriptor];
-    size_t offset = 0;
     size_t allocated = 16384;
-    unsigned char *bytes = malloc(allocated);
+    unsigned char *bytes = alloca(allocated);
     ssize_t bytesRead;
+    NSMutableData *ourData = [[NSMutableData alloc] init];
     
     do {
-        if (offset >= allocated) {
-            allocated *= 2;
-            bytes = reallocf(bytes, allocated);
-        }
-        assert(bytes != NULL);
-
         do {
-            bytesRead = read(fd, bytes + offset, allocated - offset);
+            bytesRead = read(fd, bytes, allocated);
+            if (bytesRead > 0) {
+                [ourData appendBytes:bytes length:bytesRead];
+            }
         } while (bytesRead < 0 && ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK)));
-        
-        if (bytesRead > 0) {
-            offset += bytesRead;
-        }
-
     } while (bytesRead > 0);
     
     if (bytesRead < 0) {
-        free(bytes);
         [NSException raise:NSFileHandleOperationException format:@"%s: %s", __FUNCTION__, strerror(errno)];
     }
 
-    bytes = reallocf(bytes, offset);
-    return [NSData dataWithBytesNoCopy:bytes length:(NSUInteger)offset];
+    return [ourData copy];
 }
 
 @end

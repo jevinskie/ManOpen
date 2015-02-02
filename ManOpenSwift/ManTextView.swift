@@ -25,7 +25,7 @@ class ManTextView: NSTextView {
 			var attribs = storage?.attributesAtIndex(currIndex, effectiveRange: &currRange)
 			var isLinkSection = attribs?[NSLinkAttributeName] != nil
 			if isLinkSection {
-				let ignoreRange = NSRange.notFoundRange
+				let ignoreRange = NSRange.notFound
 				var rectCount = 0
 				
 				let rects = layout?.rectArrayForCharacterRange(currRange, withinSelectedCharacterRange: ignoreRange, inTextContainer: container!, rectCount: &rectCount)

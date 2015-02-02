@@ -86,6 +86,10 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
+	var useModalPanels: Bool {
+		return !NSUserDefaults.standardUserDefaults().boolForKey("KeepPanelsOpen")
+	}
+	
 	func applicationDidFinishLaunching(notification: NSNotification!) {
 		(NSApp as NSApplication).servicesProvider = self
 		openTextPanel.setFrameUsingName("OpenTitlePanel")
@@ -152,9 +156,9 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var task = NSTask()
 		var output: NSData
 		
-		if extraEnv != nil {
+		if let anExtraEnv = extraEnv {
 			var environment = NSProcessInfo.processInfo().environment
-			environment += extraEnv!
+			environment += anExtraEnv
 			task.environment = environment
 		}
 		
@@ -183,11 +187,14 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var command = manCommandWithManPath(manPath)
 		let spaceString = ""
 		command += " -w \(section ?? spaceString) \(name)"
-		var data = dataByExecutingCommand(command)
-		if data != nil && data?.length > 0 {
+		if let data = dataByExecutingCommand(command) {
+			if data.length <= 0 {
+				return nil
+			}
+			
 			let manager = NSFileManager.defaultManager()
-			var len = data!.length
-			let ptr = data!.bytes
+			var len = data.length
+			let ptr = data.bytes
 			
 			var newlinePtr = memchr(ptr, 0x0A, UInt(len)) // 0A is == '\n'
 			
@@ -210,9 +217,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var attributes = manager.attributesOfItemAtPath(url.path!.stringByResolvingSymlinksInPath, error: nil)
 		var len: UInt64
 		if let anAttrib = attributes {
-			let tmplen: AnyObject? = anAttrib[NSFileSize]
-			if let aTmp: AnyObject = tmplen {
-				len = (aTmp as NSNumber).unsignedLongLongValue
+			if let tmplen = anAttrib[NSFileSize] as? NSNumber {
+				len = tmplen.unsignedLongLongValue
 			} else {
 				len = 0
 			}
@@ -254,11 +260,11 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var error: NSError? = nil
 		let numDocuments = documents.count
 		
-		var document = documentForURL(standardizedURL) as NSDocument?
+		var document = documentForURL(standardizedURL) as? NSDocument
 		if document == nil {
 			var atype = typeFromURL(standardizedURL)
 			if let type = atype {
-				document = makeDocumentWithContentsOfURL(standardizedURL, ofType: type, error: &error) as NSDocument?
+				document = makeDocumentWithContentsOfURL(standardizedURL, ofType: type, error: &error) as? NSDocument
 				document?.makeWindowControllers()
 				addDocument(document!)
 			}
@@ -360,6 +366,12 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		let rparenRange = word.rangeOfString(")")
 		var document: ManDocument? = nil
 		
+		if lparenRange != nil && rparenRange != nil && lparenRange!.startIndex < rparenRange!.startIndex {
+			let lp = lparenRange!
+			
+			base = word[word.startIndex ..< lp.startIndex]
+			section = word[lp.startIndex ... rparenRange!.endIndex]
+		}
 		/*
 		if (lparenRange.length != 0 && rparenRange.length != 0 &&
 			lparenRange.location < rparenRange.location)
@@ -411,6 +423,15 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 				}
 			}
 		}
+		
+		if (lastWord != nil) {
+			if lastWord.hasSuffix(",") {
+				var lastIndex = lastWord.endIndex
+				lastWord = lastWord[lastWord.startIndex..<lastIndex--]
+			}
+			openWord(lastWord)
+		}
+
 	}
 
 	@IBAction func orderFrontHelpPanel(sender: AnyObject!) {
@@ -447,8 +468,21 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	    fatalError("init(coder:) has not been implemented")
 	}
 	
-	class func escapePath(path: String, addSurroundingQuotes addQuotes: Bool) -> String {
-		return EscapePath(path, addSurroundingQuotes: addQuotes)
+	func openTitleFromPanel() {
+		var aString = openTextField.stringValue
+		var words = GetWordArray(aString)
+		
+		/* If the string is of the form "3 printf", arrange it better for our parser.  Requested by Eskimo.  Also accept 'n' as a section */
+		if words.count == 2 && aString.rangeOfString("(") == nil && IsSectionWord(words[0]) {
+			aString = "\(words[1])(\(words[0]))"
+		}
+		
+		/* Append the section if chosen in the popup and not explicity defined in the string */
+		if countElements(aString) > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.rangeOfString("(") == nil {
+			aString += "(\(openSectionPopup.indexOfSelectedItem))"
+		}
+		openString(aString)
+		openTextField.selectText(self)
 	}
 	
 	@IBAction func openSection(sender: AnyObject!) {
@@ -456,23 +490,66 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	@IBAction func openTextPanel(sender: AnyObject!) {
+		if !openTextPanel.visible {
+			openSectionPopup.selectItemAtIndex(0)
+		}
+		openTextField.selectText(self)
 		
+		if useModalPanels {
+			if (NSApp as NSApplication).runModalForWindow(openTextPanel) == NSOKButton {
+				openTitleFromPanel()
+			}
+		} else {
+			openTextPanel.makeKeyAndOrderFront(self)
+		}
 	}
 	
-	@IBAction func openAproposPanel(sender: AnyObject!) {
-		
+	func openAproposFromPanel() {
+		openApropos(aproposField.stringValue)
+		aproposField.selectText(self)
 	}
 	
-	@IBAction func okApropos(sender: AnyObject!) {
+	@IBAction func openAproposPanel(sender: NSView!) {
+		aproposField.selectText(self)
 		
+		if useModalPanels {
+			if (NSApp as NSApplication).runModalForWindow(aproposPanel) == NSOKButton {
+				openTitleFromPanel()
+			}
+		} else {
+			aproposPanel.makeKeyAndOrderFront(self)
+		}
 	}
 	
-	@IBAction func okText(sender: AnyObject!) {
+	@IBAction func okApropos(sender: NSView!) {
+		if useModalPanels {
+			sender.window?.orderOut(self)
+		}
 		
+		if sender.window!.level == Int(CGWindowLevelForKey(Int32(kCGModalPanelWindowLevelKey))) {
+			(NSApp as NSApplication).stopModalWithCode(NSOKButton)
+		} else {
+			openAproposFromPanel()
+		}
 	}
 	
-	@IBAction func cancelText(sender: AnyObject!) {
+	@IBAction func okText(sender: NSView!) {
+		if useModalPanels {
+			sender.window?.orderOut(self)
+		}
 		
+		if sender.window!.level == Int(CGWindowLevelForKey(Int32(kCGModalPanelWindowLevelKey))) {
+			(NSApp as NSApplication).stopModalWithCode(NSOKButton)
+		} else {
+			openTitleFromPanel()
+		}
+	}
+	
+	@IBAction func cancelText(sender: NSView!) {
+		sender.window?.orderOut(self)
+		if sender.window!.level == Int(CGWindowLevelForKey(Int32(kCGModalPanelWindowLevelKey))) {
+			(NSApp as NSApplication).stopModalWithCode(NSCancelButton)
+		}
 	}
 }
 

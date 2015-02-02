@@ -36,7 +36,7 @@ var filterCommand: String {
 	return command
 }
 
-class ManDocument: NSDocument {
+class ManDocument: NSDocument, NSWindowDelegate {
 	@IBOutlet weak var textScroll: NSScrollView!
 	@IBOutlet weak var titleStringField: NSTextField!
 	@IBOutlet weak var openSelectionButton: NSButton!
@@ -64,25 +64,76 @@ class ManDocument: NSDocument {
 		return true
 	}
 
-    override func windowControllerDidLoadNib(aController: NSWindowController) {
-        super.windowControllerDidLoadNib(aController)
-        // Add any code here that needs to be executed once the windowController has loaded the document's window.
-    }
+	override func windowControllerDidLoadNib(aController: NSWindowController) {
+		let defaults = NSUserDefaults.standardUserDefaults()
+		let sizeString = defaults.stringForKey("ManWindowSize")
+		
+		super.windowControllerDidLoadNib(aController)
+		// Add any code here that needs to be executed once the windowController has loaded the document's window.
+		
+		if let aSizeString = sizeString {
+			var windowSize = NSSizeFromString(aSizeString)
+			let window = textView.window!
+			var frame = window.frame
+			
+			if windowSize.width > 30.0 && windowSize.height > 30 {
+				frame.size = windowSize
+				window.setFrame(frame, display: false)
+			}
+		}
+		
+		titleStringField.stringValue = shortTitle
+		textView.textStorage?.mutableString.setString("Loading...")
+		textView.backgroundColor = defaults.manBackgroundColor
+		textView.textColor = defaults.manTextColor
+		
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000), dispatch_get_main_queue()) {
+			self.showData()
+		}
+		
+		textView.window?.makeFirstResponder(textView)
+		textView.window?.delegate = self
+	}
 
-    override func dataOfType(typeName: String?, error outError: NSErrorPointer) -> NSData? {
-        // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
-        // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return nil
-    }
-
-    override func readFromData(data: NSData?, ofType typeName: String?, error outError: NSErrorPointer) -> Bool {
-        // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
-        // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
-        // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return false
-    }
+	override func readFromURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
+		switch typeName {
+		case "man":
+			loadManFile(url.path!, isGzip: false)
+			
+		case "mangz":
+			loadManFile(url.path!, isGzip: true)
+			
+		case "cat":
+			loadCatFile(url.path!, isGzip: false)
+			
+		case "catgz":
+			loadCatFile(url.path!, isGzip: true)
+			
+		default:
+			if outError != nil {
+				outError.memory = NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSLocalizedDescriptionKey: "Invalid document type"])
+			}
+			return false
+			
+		}
+		
+		// strip extension twice in case it is a e.g. "1.gz" filename
+		self.shortTitle = url.path!.lastPathComponent.stringByDeletingPathExtension.stringByDeletingPathExtension
+		copyURL = url;
+		
+		restoreData = [
+			RestoreFileURL: url,
+			RestoreFileType: typeName];
+		
+		if taskData == nil {
+			if outError != nil {
+				outError.memory = NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: "Could not read manual data"])
+			}
+			return false
+		}
+		
+		return true
+	}
 
 	/*
 	* Standard NSDocument method.  We only want to override if we aren't
@@ -90,6 +141,10 @@ class ManDocument: NSDocument {
 	*/
 	override var displayName: String {
 		return fileURL != nil ? super.displayName : shortTitle
+	}
+	
+	override init() {
+		super.init()
 	}
 
 	init?(name: String, section: String?, manPath: String?, title: String) {
@@ -121,8 +176,8 @@ class ManDocument: NSDocument {
 	}
 	
 	func loadCommand(command: String) {
-		var docController = ManDocumentController.sharedDocumentController() as ManDocumentController
-		var fullCommand = "\(command) | \(filterCommand)"
+		let docController = ManDocumentController.sharedDocumentController() as ManDocumentController
+		let fullCommand = "\(command) | \(filterCommand)"
 		taskData = docController.dataByExecutingCommand(fullCommand)
 		
 		showData()
@@ -161,7 +216,7 @@ class ManDocument: NSDocument {
 			let family = manFont.familyName!
 			let size = manFont.pointSize
 			var currIndex = 0
-
+			
 			tryCatchBlock({ () -> Void in
 				aStorage.beginEditing()
 				
@@ -171,20 +226,20 @@ class ManDocument: NSDocument {
 					var font = attribs[NSFontAttributeName] as? NSFont
 					var isLink = false
 					
-					if font != nil && font!.familyName == "Courier" {
+					if font != nil && font!.familyName != "Courier" {
 						self.addSectionHeader(aStorage.mutableString.substringWithRange(currRange), range: currRange)
 					}
 					
 					isLink = (attribs[NSLinkAttributeName] != nil)
 					
 					if (font != nil && (font!.familyName != family)) {
-					font = manager.convertFont(font!, toFamily: family) ;
+						font = manager.convertFont(font!, toFamily: family) ;
 					}
 					if (font != nil && font!.pointSize != size) {
 						font = manager.convertFont(font!, toSize: size)
 					}
 					if (font != nil) {
-						storage?.addAttribute(NSFontAttributeName, value: font!, range: currRange)
+						aStorage.addAttribute(NSFontAttributeName, value: font!, range: currRange)
 					}
 					
 					/*
@@ -193,35 +248,37 @@ class ManDocument: NSDocument {
 					* for other reasons, may as well keep the old way.
 					*/
 					if isLink {
-						storage?.addAttribute(NSForegroundColorAttributeName, value: linkColor, range: currRange)
+						aStorage.addAttribute(NSForegroundColorAttributeName, value: linkColor, range: currRange)
 					} else {
-						storage?.addAttribute(NSForegroundColorAttributeName, value: textColor, range: currRange)
+						aStorage.addAttribute(NSForegroundColorAttributeName, value: textColor, range: currRange)
 					}
 					
 					currIndex = NSMaxRange(currRange)
 				}
 				
 				aStorage.endEditing()
-			}, { (localException) -> Void in
-				NSLog("Exception during formatting: %@", localException);
+				}, { (localException) -> Void in
+					NSLog("Exception during formatting: %@", localException);
 			})
 			
-			textView.backgroundColor = backgroundColor
-			setupSectionPopup()
-			
-			/*
-			* The 10.7 document reloading stuff can cause the loading methods to be invoked more than
-			* once, and the second time through we have thrown away our raw data.  Probably indicates
-			* some overkill code elsewhere on my part, but putting in the hadLoaded guard to only
-			* avoid doing anything after we have loaded real data seems to help.
-			*/
-			if (taskData != nil) {
-				hasLoaded = true
-			}
-			
-			// no need to keep around rtf data
-			taskData = nil;
+			textView.layoutManager?.replaceTextStorage(aStorage)
+			textView.window?.invalidateCursorRectsForView(textView)
 		}
+		textView.backgroundColor = backgroundColor
+		setupSectionPopup()
+		
+		/*
+		* The 10.7 document reloading stuff can cause the loading methods to be invoked more than
+		* once, and the second time through we have thrown away our raw data.  Probably indicates
+		* some overkill code elsewhere on my part, but putting in the hadLoaded guard to only
+		* avoid doing anything after we have loaded real data seems to help.
+		*/
+		if (taskData != nil) {
+			hasLoaded = true
+		}
+		
+		// no need to keep around rtf data
+		taskData = nil;
 	}
 
 	func setupSectionPopup() {
@@ -236,8 +293,8 @@ class ManDocument: NSDocument {
 
 	func addSectionHeader(header: String, range: NSRange) {
 		/* Make sure it is a header -- error text sometimes is not Courier, so it gets passed in here. */
-		if !header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet())!.isEmpty &&
-			!header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet())!.isEmpty {
+		if header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet()) != nil &&
+			header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet()) != nil {
 				var label = header
 				var count = 1
 				
@@ -319,6 +376,41 @@ class ManDocument: NSDocument {
 			if aCopyURL.fileURL {
 				pb.setPropertyList([aCopyURL.path!], forType: NSFilenamesPboardType)
 			}
+		}
+	}
+	
+	// MARK: NSWindowRestoration functions
+	override func encodeRestorableStateWithCoder(coder: NSCoder) {
+		super.encodeRestorableStateWithCoder(coder)
+		coder.encodeObject(restoreData, forKey: RestoreWindowDict)
+	}
+	
+	override func restoreStateWithCoder(coder: NSCoder) {
+		super.restoreStateWithCoder(coder)
+		
+		if !coder.containsValueForKey(RestoreWindowDict) {
+			return
+		}
+		
+		if let restoreInfo = coder.decodeObjectForKey(RestoreWindowDict) as? [String: AnyObject] {
+			if let aRestoreName = restoreInfo[RestoreName] as? String {
+				let section = restoreInfo[RestoreSection] as? String
+				let title = restoreInfo[RestoreTitle] as String
+				let manPath = NSUserDefaults.standardUserDefaults().manPath
+				
+				loadDocumentWithName(aRestoreName, section: section, manPath: manPath, title: title)
+				/* Usually, URL-backed documents have been automatically restored already
+				(the copyURL would be set), but just in case... */
+			} else if restoreInfo[RestoreFileURL] != nil && copyURL == nil {
+				let url = restoreInfo[RestoreFileURL] as NSURL
+				let type = restoreInfo[RestoreFileType] as String
+				
+				readFromURL(url, ofType: type, error: nil)
+			}
+			
+			titleStringField.stringValue = shortTitle
+			
+			(windowControllers as [NSWindowController]).map({vc in vc.synchronizeWindowTitleWithDocumentName()})
 		}
 	}
 }

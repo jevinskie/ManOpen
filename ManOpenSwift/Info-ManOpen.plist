@@ -20,7 +20,7 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
+			<string>${PRODUCT_MODULE_NAME}.ManDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeName</key>
@@ -28,7 +28,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>NSDocumentClass</key>
-			<string>AproposDocument</string>
+			<string>${PRODUCT_MODULE_NAME}.AproposDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -44,7 +44,7 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
+			<string>${PRODUCT_MODULE_NAME}.ManDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -60,7 +60,7 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
+			<string>${PRODUCT_MODULE_NAME}.ManDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -76,7 +76,7 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
+			<string>${PRODUCT_MODULE_NAME}.ManDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -92,7 +92,7 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
-			<string>ManDocument</string>
+			<string>${PRODUCT_MODULE_NAME}.ManDocument</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>

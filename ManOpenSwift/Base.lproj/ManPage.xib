@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
@@ -62,7 +61,7 @@
                             <rect key="frame" x="1" y="1" width="603" height="384"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView">
+                                <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpenSwift" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="603" height="384"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -120,6 +119,7 @@
                 </constraints>
             </view>
             <connections>
+                <outlet property="delegate" destination="-2" id="19j-iP-JbH"/>
                 <outlet property="initialFirstResponder" destination="c9g-sk-2DN" id="Lcf-u6-1xi"/>
             </connections>
         </window>

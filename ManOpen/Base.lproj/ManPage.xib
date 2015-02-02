@@ -55,13 +55,13 @@
                             <action selector="openSelection:" target="-2" id="27"/>
                         </connections>
                     </button>
-                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnW-DY-KgJ">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnW-DY-KgJ">
                         <rect key="frame" x="0.0" y="0.0" width="605" height="386"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="7dm-xg-Oeo">
                             <rect key="frame" x="1" y="1" width="603" height="384"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpenSwift" customModuleProvider="target">
+                                <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpen" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="603" height="384"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -81,7 +81,7 @@
                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="deh-ox-tjw">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="deh-ox-tjw">
                             <rect key="frame" x="588" y="1" width="16" height="384"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>

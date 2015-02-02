@@ -205,7 +205,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		}
 		
 		if storage?.string.rangeOfCharacterFromSet(NSCharacterSet.letterCharacterSet())?.isEmpty ?? true {
-			storage?.mutableString.setString(NSLocalizedString("\nNo manual entry.", comment: "\"No manual entry\", preceeded by a newline"))
+			storage?.mutableString.setString(NSLocalizedString("\nNo manual entry.", comment: "'No manual entry', preceeded by a newline"))
 		}
 		
 		sections.removeAll()
@@ -258,7 +258,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 				
 				aStorage.endEditing()
 				}, { (localException) -> Void in
-					NSLog("Exception during formatting: %@", localException);
+					println("Exception during formatting: \(localException)")
 			})
 			
 			textView.layoutManager?.replaceTextStorage(aStorage)

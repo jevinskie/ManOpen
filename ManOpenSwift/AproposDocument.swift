@@ -141,7 +141,11 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		command += " \(EscapePath(aapropos, addSurroundingQuotes: true))"
 		let output = docController.dataByExecutingCommand(command, manPath: manPath)!
 		/* The whatis database appears to not be UTF8 -- at least, UTF8 can fail, even on 10.7 */
-		parseOutput(NSString(data: output, encoding: NSMacOSRomanStringEncoding))
+		var outString = NSString(data: output, encoding: NSUTF8StringEncoding)
+		if outString == nil {
+			outString = NSString(data: output, encoding: NSMacOSRomanStringEncoding)
+		}
+		parseOutput(outString)
 	}
 
 	override func printOperationWithSettings(printSettings: [NSObject : AnyObject], error outError: NSErrorPointer) -> NSPrintOperation? {

@@ -15,12 +15,11 @@ let ManPathArrayKey = "manPathArray"
 let URL_SCHEME = "x-man-page"
 let URL_SCHEME_PREFIX = URL_SCHEME + ":"
 
-let kUseItalics		= "UseItalics"
-let kUseBold		= "UseBold"
-
-private func dataForColor(color: NSColor) -> NSData {
-	return NSArchiver.archivedDataWithRootObject(color)
-}
+let kUseItalics			= "UseItalics"
+let kUseBold			= "UseBold"
+let kKeepPanelsOpen		= "KeepPanelsOpen"
+let kQuitWhenLastClosed	= "QuitWhenLastClosed"
+let kNroffCommand		= "NroffCommand"
 
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	class var sharedInstance: PrefPanelController {
@@ -85,16 +84,16 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let textDefaultColor = dataForColor(NSColor.textColor())
 		let bgDefaultColor = dataForColor(NSColor.textBackgroundColor())
 		
-		let someDefaults = ["QuitWhenLastClosed": false,
-		kUseItalics: false,
-		kUseBold: true,
-		"NroffCommand": nroff,
-		manPathKey: manpath,
-		"KeepPanelsOpen": false,
-		manTextColorKey: textDefaultColor,
-		manLinkColorKey: linkDefaultColor,
-		manBackgroundColorKey: bgDefaultColor,
-		"NSQuitAlwaysKeepsWindows": true]
+		let someDefaults = [kQuitWhenLastClosed: false,
+		kUseItalics:		false,
+		kUseBold:			true,
+		kNroffCommand:		nroff,
+		manPathKey:			manpath,
+		kKeepPanelsOpen:	false,
+		manTextColorKey:	textDefaultColor,
+		manLinkColorKey:	linkDefaultColor,
+		manBackgroundColorKey:		bgDefaultColor,
+		"NSQuitAlwaysKeepsWindows":	true]
 		
 		userDefaults.registerDefaults(someDefaults)
 	}

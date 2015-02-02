@@ -7,7 +7,8 @@
 //
 
 import Cocoa
-
+import ApplicationServices
+import SwiftAdditions
 
 private let RestoreWindowDict = "RestoreWindowInfo"
 private let RestoreSection    = "Section"
@@ -150,7 +151,6 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	init?(name: String, section: String?, manPath: String?, title: String) {
 		super.init()
 		loadDocumentWithName(name, section: section, manPath: manPath, title: title)
-
 	}
 	
 	private func loadDocumentWithName(name: String, section: String?, manPath: String?, title: String) {
@@ -204,7 +204,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			storage = NSTextStorage()
 		}
 		
-		if storage?.string.rangeOfCharacterFromSet(NSCharacterSet.letterCharacterSet())?.isEmpty ?? true {
+		if storage?.string.rangeOfCharacterFromSet(NSCharacterSet.letterCharacterSet()) == nil {
 			storage?.mutableString.setString(NSLocalizedString("\nNo manual entry.", comment: "'No manual entry', preceeded by a newline"))
 		}
 		
@@ -253,7 +253,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 						aStorage.addAttribute(NSForegroundColorAttributeName, value: textColor, range: currRange)
 					}
 					
-					currIndex = NSMaxRange(currRange)
+					currIndex = currRange.max
 				}
 				
 				aStorage.endEditing()
@@ -310,7 +310,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	
 	func loadManFile(filename: String, isGzip: Bool = false) {
 		let defaults = NSUserDefaults.standardUserDefaults()
-		var nroffFormat = defaults.stringForKey("NroffCommand")!
+		var nroffFormat = defaults.stringForKey(kNroffCommand)!
 		var nroffCommand: String
 		let hasQuote = nroffFormat.rangeOfString("'%@'") != nil
 		
@@ -379,6 +379,28 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		}
 	}
 	
+	override func runPageLayout(sender: AnyObject?) {
+		NSApplication.sharedApplication().runPageLayout(sender)
+	}
+	
+	override func printOperationWithSettings(printSettings: [NSObject : AnyObject], error outError: NSErrorPointer) -> NSPrintOperation? {
+		let operation = NSPrintOperation(view: textView, printInfo: NSPrintInfo(dictionary: printSettings))
+		let printInfo = operation.printInfo
+		printInfo.verticallyCentered = false
+		printInfo.horizontallyCentered = true
+		printInfo.horizontalPagination = .FitPagination
+		
+		return operation
+	}
+
+	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+		if menuItem.action == "copyURL:" {
+			return copyURL != nil
+		}
+		
+		return super.validateMenuItem(menuItem)
+	}
+
 	// MARK: NSWindowRestoration functions
 	override func encodeRestorableStateWithCoder(coder: NSCoder) {
 		super.encodeRestorableStateWithCoder(coder)

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftAdditions
 
 class ManTextView: NSTextView {
 	
@@ -24,19 +25,18 @@ class ManTextView: NSTextView {
 			var attribs = storage?.attributesAtIndex(currIndex, effectiveRange: &currRange)
 			var isLinkSection = attribs?[NSLinkAttributeName] != nil
 			if isLinkSection {
-				var ignoreRange = NSRange(location: NSNotFound, length: 0)
-				var i = 0
+				let ignoreRange = NSRange.notFoundRange
 				var rectCount = 0
 				
-				var rects = layout?.rectArrayForCharacterRange(currRange, withinSelectedCharacterRange: ignoreRange, inTextContainer: container!, rectCount: &rectCount)
+				let rects = layout?.rectArrayForCharacterRange(currRange, withinSelectedCharacterRange: ignoreRange, inTextContainer: container!, rectCount: &rectCount)
 				
-				for (i=0; i<rectCount; i++) {
+				for i in 0 ..< rectCount {
 					if (NSIntersectsRect(visible, rects![i])) {
 						addCursorRect(rects![i], cursor: NSCursor.pointingHandCursor())
 					}
 				}
 			}
-			currIndex = NSMaxRange(currRange);
+			currIndex = currRange.max;
 		}
 	}
 	

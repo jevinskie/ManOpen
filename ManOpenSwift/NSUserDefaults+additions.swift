@@ -10,9 +10,9 @@ import Cocoa
 
 let manTextColorKey = "ManTextColor"
 let manLinkColorKey = "ManLinkColor"
+let manFontKey		= "ManFont"
+let manPathKey		= "ManPath"
 let manBackgroundColorKey = "ManBackgroundColor"
-let manFontKey = "ManFont"
-let manPathKey = "ManPath"
 
 private func ColorForKey(key: String, defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) -> NSColor? {
 	if let colorData = defaults.dataForKey(key) {
@@ -22,18 +22,37 @@ private func ColorForKey(key: String, defaults: NSUserDefaults = NSUserDefaults.
 	return nil
 }
 
+internal func dataForColor(color: NSColor) -> NSData {
+	return NSArchiver.archivedDataWithRootObject(color)
+}
+
 extension NSUserDefaults {
 	
 	var manTextColor: NSColor {
-		return ColorForKey(manTextColorKey, defaults: self)!
+		get {
+			return ColorForKey(manTextColorKey, defaults: self)!
+		}
+		set {
+			self.setObject(dataForColor(newValue), forKey: manTextColorKey)
+		}
 	}
 	
 	var manLinkColor: NSColor {
-		return ColorForKey(manLinkColorKey, defaults: self)!
+		get {
+			return ColorForKey(manLinkColorKey, defaults: self)!
+		}
+		set {
+			self.setObject(dataForColor(newValue), forKey: manLinkColorKey)
+		}
 	}
 	
 	var manBackgroundColor: NSColor {
-		return ColorForKey(manBackgroundColorKey, defaults: self)!
+		get {
+			return ColorForKey(manBackgroundColorKey, defaults: self)!
+		}
+		set {
+			self.setObject(dataForColor(newValue), forKey: manBackgroundColorKey)
+		}
 	}
 	
 	var manPath: String {
@@ -46,27 +65,22 @@ extension NSUserDefaults {
 	}
 	
 	var manFont: NSFont {
-		get {
-			let fontString = self.stringForKey(manFontKey);
-			
-			if fontString != nil {
-				let spaceRange = fontString!.rangeOfString(" ")
-				if spaceRange != nil {
-					func getEndIdx(string: String) -> String.Index {
-						var endIdx = string.endIndex
-						return --endIdx
-					}
-					let size = CGFloat((fontString![fontString!.startIndex..<spaceRange!.startIndex] as NSString).floatValue)
-					let endIdx = getEndIdx(fontString!)
-					var name = fontString![spaceRange!.endIndex..<endIdx]
-					let font = NSFont(name: name, size: size)
-					if font != nil {
-						return font!
-					}
+		if let fontString = self.stringForKey(manFontKey) {
+			if let spaceRange = fontString.rangeOfString(" ") {
+				func getEndIdx(string: String) -> String.Index {
+					var endIdx = string.endIndex
+					return --endIdx
+				}
+				let size = CGFloat((fontString[fontString.startIndex..<spaceRange.startIndex] as NSString).floatValue)
+				let endIdx = getEndIdx(fontString)
+				var name = fontString[spaceRange.endIndex..<endIdx]
+				let font = NSFont(name: name, size: size)
+				if font != nil {
+					return font!
 				}
 			}
-			
-			return NSFont.userFixedPitchFontOfSize(12.0)! // Monaco, or Menlo
 		}
+		
+		return NSFont.userFixedPitchFontOfSize(12.0)! // Monaco, or Menlo
 	}
 }

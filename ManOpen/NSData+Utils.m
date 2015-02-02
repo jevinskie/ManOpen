@@ -105,8 +105,8 @@
  */
 - (NSData *)readDataToEndOfFileIgnoreInterrupt
 {
-    int fd = [self fileDescriptor];
-    size_t allocated = 16384;
+    const int fd = [self fileDescriptor];
+    static const size_t allocated = 16384;
     unsigned char *bytes = alloca(allocated);
     ssize_t bytesRead;
     NSMutableData *ourData = [[NSMutableData alloc] init];

@@ -88,7 +88,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	var useModalPanels: Bool {
-		return !NSUserDefaults.standardUserDefaults().boolForKey("KeepPanelsOpen")
+		return !NSUserDefaults.standardUserDefaults().boolForKey(kKeepPanelsOpen)
 	}
 	
 	func applicationDidFinishLaunching(notification: NSNotification!) {
@@ -127,7 +127,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	override func removeDocument(document: NSDocument) {
-		var autoQuit = NSUserDefaults.standardUserDefaults().boolForKey("QuitWhenLastClosed")
+		var autoQuit = NSUserDefaults.standardUserDefaults().boolForKey(kQuitWhenLastClosed)
 		
 		super.removeDocument(document)
 		

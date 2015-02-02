@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftAdditions
 
 private let MAN_BINARY = "/usr/bin/man"
 //#define MANPATH_FORMAT @" -m '%@'"  // There's a bug in man(1) on OSX and OSXS
@@ -519,7 +520,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			sender.window?.orderOut(self)
 		}
 		
-		if sender.window!.level == Int(CGWindowLevelForKey(Int32(kCGModalPanelWindowLevelKey))) {
+		if sender.window!.level == NSModalPanelWindowLevel {
 			(NSApp as NSApplication).stopModalWithCode(NSOKButton)
 		} else {
 			openAproposFromPanel()
@@ -531,7 +532,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			sender.window?.orderOut(self)
 		}
 		
-		if sender.window!.level == Int(CGWindowLevelForKey(Int32(kCGModalPanelWindowLevelKey))) {
+		if sender.window!.level == NSModalPanelWindowLevel {
 			(NSApp as NSApplication).stopModalWithCode(NSOKButton)
 		} else {
 			openTitleFromPanel()
@@ -540,7 +541,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	
 	@IBAction func cancelText(sender: NSView!) {
 		sender.window?.orderOut(self)
-		if sender.window!.level == Int(CGWindowLevelForKey(Int32(kCGModalPanelWindowLevelKey))) {
+		if sender.window!.level == NSModalPanelWindowLevel {
 			(NSApp as NSApplication).stopModalWithCode(NSCancelButton)
 		}
 	}

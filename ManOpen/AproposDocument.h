@@ -2,7 +2,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AproposDocument : NSDocument
+@interface AproposDocument : NSDocument <NSTableViewDataSource>
 {
     NSString *title;
     NSString *searchString;

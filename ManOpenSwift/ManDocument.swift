@@ -16,7 +16,7 @@ private let RestoreName       = "Name"
 private let RestoreFileURL    = "URL"
 private let RestoreFileType   = "DocType"
 
-var filterCommand: String {
+private var filterCommand: String {
 	let defaults = NSUserDefaults.standardUserDefaults()
 	
 	/* HTML parser in tiger got slow... RTF is faster, and is usable now that it supports hyperlinks */
@@ -43,8 +43,8 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	@IBOutlet weak var sectionPopup: NSPopUpButton!
 	private var hasLoaded = false
 	private var restoreData = [String: AnyObject]()
-	var sections = [String]()
-	var sectionRanges = [NSRange]()
+	var sections: [String] = [String]()
+	var sectionRanges: [NSRange] = [NSRange]()
 	
 	var shortTitle = ""
 	var copyURL: NSURL!
@@ -299,7 +299,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 				var count = 1
 				
 				/* Check for dups (e.g. lesskey(1) ) */
-				while find(sections, label) != nil {
+				while contains(sections, label) {
 					count++
 					label = "\(header) [\(count)]"
 				}
@@ -326,7 +326,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			}
 		}
 		
-		nroffCommand = NSString(format: nroffFormat, EscapePath(filename, addSurroundingQuotes: !hasQuote))
+		nroffCommand = String(format: nroffFormat, EscapePath(filename, addSurroundingQuotes: !hasQuote))
 		loadCommand(nroffCommand)
 	}
 	

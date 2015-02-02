@@ -180,7 +180,7 @@
 		553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AproposDocument.swift; sourceTree = "<group>"; };
 		553A5B2219BFE811003D74A9 /* ManDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManDocument.swift; sourceTree = "<group>"; };
 		5553E1FF1881F2CA003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Help.rtf; sourceTree = "<group>"; };
-		5553E21E1881F83E003C2DBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ManOpen/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		5553E21E1881F83E003C2DBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5553E22018821265003C2DBF /* openman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openman-Info.plist"; sourceTree = "<group>"; };
 		5553E22418821455003C2DBF /* cat2html-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cat2html-Info.plist"; sourceTree = "<group>"; };
 		5553E226188214B9003C2DBF /* cat2rtf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cat2rtf-Info.plist"; sourceTree = "<group>"; };
@@ -272,6 +272,11 @@
 		553A5B2419BFE86F003D74A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5553E21E1881F83E003C2DBF /* Images.xcassets */,
+				D392792F0821FFA400376676 /* ManOpen.scriptSuite */,
+				55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */,
+				D39279350821FFA400376676 /* Credits.rtf */,
+				5553E1FE1881F2C2003C2DBF /* Help.rtf */,
 				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,
 				55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */,
 				557AFAF81A800C4F008BDF46 /* Localizable.strings */,
@@ -322,10 +327,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		55C0CF1519BE07E8009C50D7 /* ManOpenSwift */ = {
+		55C0CF1519BE07E8009C50D7 /* ManOpen */ = {
 			isa = PBXGroup;
 			children = (
 				55C0CF3E19BE07E9009C50D7 /* ManOpenSwift-Bridging-Header.h */,
+				55EBB7991A803DF3001A27BC /* Classes */,
+				553A5B2419BFE86F003D74A9 /* Resources */,
+				D39279420821FFA400376676 /* Subprojects */,
+			);
+			path = ManOpen;
+			sourceTree = "<group>";
+		};
+		55EBB7991A803DF3001A27BC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D39279070821FFA400376676 /* ManOpenProtocol.h */,
 				553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */,
 				55838BFF19C0AD2900FFEDDE /* AppInfo.swift */,
 				55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */,
@@ -337,9 +353,10 @@
 				5516ECE71A7CA21200760214 /* ManTextView.swift */,
 				5567E0541A7D615E005013B3 /* ManNotificationCallback.h */,
 				5567E0551A7D615E005013B3 /* ManNotificationCallback.m */,
-				553A5B2419BFE86F003D74A9 /* Resources */,
+				D39279090821FFA400376676 /* NSData+Utils.h */,
+				D39278FA0821FFA400376676 /* NSData+Utils.m */,
 			);
-			path = ManOpenSwift;
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		D39278DB0821FF9D00376676 /* ManOpen */ = {
@@ -356,23 +373,10 @@
 		D39278E40821FFA400376676 /* Subprojects */ = {
 			isa = PBXGroup;
 			children = (
-				D39278E50821FFA400376676 /* ManOpen */,
-				55C0CF1519BE07E8009C50D7 /* ManOpenSwift */,
+				55C0CF1519BE07E8009C50D7 /* ManOpen */,
 				D392796A0821FFA400376676 /* openman */,
 			);
 			name = Subprojects;
-			sourceTree = "<group>";
-		};
-		D39278E50821FFA400376676 /* ManOpen */ = {
-			isa = PBXGroup;
-			children = (
-				D39278F10821FFA400376676 /* Classes */,
-				D39279270821FFA400376676 /* Images */,
-				D392792E0821FFA400376676 /* Resources */,
-				D392793B0821FFA400376676 /* Supporting Files */,
-				D39279420821FFA400376676 /* Subprojects */,
-			);
-			path = ManOpen;
 			sourceTree = "<group>";
 		};
 		D39278ED0821FFA400376676 /* Products */ = {
@@ -384,42 +388,6 @@
 				55C0CF1019BE04D8009C50D7 /* ManOpen.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D39278F10821FFA400376676 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				D39279070821FFA400376676 /* ManOpenProtocol.h */,
-				D39279090821FFA400376676 /* NSData+Utils.h */,
-				D39278FA0821FFA400376676 /* NSData+Utils.m */,
-			);
-			name = Classes;
-			sourceTree = "<group>";
-		};
-		D39279270821FFA400376676 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				5553E21E1881F83E003C2DBF /* Images.xcassets */,
-			);
-			name = Images;
-			sourceTree = "<group>";
-		};
-		D392792E0821FFA400376676 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D392792F0821FFA400376676 /* ManOpen.scriptSuite */,
-				55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */,
-				D39279350821FFA400376676 /* Credits.rtf */,
-				5553E1FE1881F2C2003C2DBF /* Help.rtf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		D392793B0821FFA400376676 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		D39279420821FFA400376676 /* Subprojects */ = {
@@ -883,12 +851,12 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "ManOpenSwift/Info-ManOpen.plist";
+				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "ManOpenSwift/ManOpenSwift-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = ManOpen;
 				WRAPPER_EXTENSION = app;
@@ -920,11 +888,11 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "ManOpenSwift/Info-ManOpen.plist";
+				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "ManOpenSwift/ManOpenSwift-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = ManOpen;
 				WRAPPER_EXTENSION = app;
 			};

@@ -16,7 +16,7 @@ let manBackgroundColorKey = "ManBackgroundColor"
 
 private func ColorForKey(key: String, defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) -> NSColor? {
 	if let colorData = defaults.dataForKey(key) {
-		return NSUnarchiver.unarchiveObjectWithData(colorData) as NSColor?
+		return NSUnarchiver.unarchiveObjectWithData(colorData) as? NSColor
 	}
 	
 	return nil

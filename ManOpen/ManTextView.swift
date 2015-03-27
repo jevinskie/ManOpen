@@ -78,7 +78,7 @@ class ManTextView: NSTextView {
 		
 		let currPage = NSPrintOperation.currentOperation()!.currentPage
 		var pageString = "\(currPage)"
-		var style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as NSMutableParagraphStyle
+		var style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
 		var drawAttribs = [NSObject: AnyObject]()
 		var drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
 		

@@ -53,7 +53,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		}
 		
 		for line in lines {
-			if countElements(line) == 0 {
+			if count(line) == 0 {
 				continue
 			}
 			
@@ -118,14 +118,14 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 
 	private func loadWithString(apropos: String, manPath: String, title aTitle: String) {
 		var aapropos = apropos
-		let docController = ManDocumentController.sharedDocumentController() as ManDocumentController
+		let docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
 		var command = docController.manCommandWithManPath(manPath)
 		
 		title = aTitle
 		fileType = "apropos"
 		
 		/* Searching for a blank string doesn't work anymore... use a catchall regex */
-		if countElements(apropos) == 0 {
+		if count(apropos) == 0 {
 			aapropos = "."
 		}
 		searchString = aapropos
@@ -142,9 +142,9 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		command += " \(EscapePath(aapropos, addSurroundingQuotes: true))"
 		let output = docController.dataByExecutingCommand(command, manPath: manPath)!
 		/* The whatis database appears to not be UTF8 -- at least, UTF8 can fail, even on 10.7 */
-		var outString = NSString(data: output, encoding: NSUTF8StringEncoding)
+		var outString = NSString(data: output, encoding: NSUTF8StringEncoding) as? String
 		if outString == nil {
-			outString = NSString(data: output, encoding: NSMacOSRomanStringEncoding)
+			outString = NSString(data: output, encoding: NSMacOSRomanStringEncoding) as? String
 		}
 		parseOutput(outString)
 	}
@@ -157,7 +157,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	@IBAction func openManPages(sender: NSTableView?) {
 		if sender?.clickedRow >= 0 {
 			let manPage = aproposItems[sender!.clickedRow].title
-			(ManDocumentController.sharedDocumentController() as ManDocumentController).openString(manPage, oneWordOnly: true)
+			(ManDocumentController.sharedDocumentController() as! ManDocumentController).openString(manPage, oneWordOnly: true)
 		}
 	}
 	
@@ -188,7 +188,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		return aproposItems.count
 	}
 	
-	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row: Int) -> AnyObject? {
+	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
 		var item = aproposItems[row]
 		var toRet = (tableColumn === titleColumn) ? item.title : item.description
 		return toRet
@@ -208,13 +208,13 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			return
 		}
 		
-		var search: String = coder.decodeObjectForKey(restoreSearchString) as NSString
-		var theTitle = coder.decodeObjectForKey(restoreTitle) as NSString
+		var search: String = coder.decodeObjectForKey(restoreSearchString) as! String
+		var theTitle = coder.decodeObjectForKey(restoreTitle) as! String
 		var manPath = NSUserDefaults.standardUserDefaults().manPath
 		
 		loadWithString(search, manPath: manPath, title: theTitle)
 		
-		(windowControllers as [NSWindowController]).map({vc in vc.synchronizeWindowTitleWithDocumentName()})
+		(windowControllers as! [NSWindowController]).map({vc in vc.synchronizeWindowTitleWithDocumentName()})
 		tableView.reloadData()
 	}
 }

@@ -30,7 +30,13 @@ class ManAppInfo: Hashable {
 		}
 		
 		LSCopyDisplayNameForURL(url, &preNiceName)
-		var niceName: String? = preNiceName?.takeRetainedValue()
+		var niceName: String? = {
+			if let aName = preNiceName?.takeRetainedValue() {
+				return aName as String
+			}
+			
+			return nil
+		}()
 		if (niceName == nil) {
 			niceName = url.lastPathComponent
 		}

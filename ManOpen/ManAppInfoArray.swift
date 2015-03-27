@@ -10,7 +10,7 @@ import Cocoa
 
 private func GenerateManInfos() -> [ManAppInfo] {
 	var anAppInfo = [ManAppInfo]()
-	let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME).takeRetainedValue() as [String]
+	let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME).takeRetainedValue() as! [String]
 
 	for bundleID in allBundleIDs {
 		anAppInfo.append(ManAppInfo(bundleID: bundleID))

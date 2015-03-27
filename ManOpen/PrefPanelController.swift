@@ -190,7 +190,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		appPopup.image = nil
 		
 		for (i, info) in enumerate(appInfos) {
-			let image = workspace.iconForFile(info.appURL.path!).copy() as NSImage
+			let image = workspace.iconForFile(info.appURL.path!).copy() as! NSImage
 			var niceName = info.displayName
 			var displayName = niceName
 			var num = 2
@@ -209,7 +209,13 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 
 	func resetCurrentApp() {
-		var currSetID: String? = LSCopyDefaultHandlerForURLScheme(URL_SCHEME)?.takeRetainedValue()
+		var currSetID: String? = {
+			if let aSetID = LSCopyDefaultHandlerForURLScheme(URL_SCHEME)?.takeRetainedValue() {
+				return aSetID as String
+			}
+			
+			return nil
+		}()
 		
 		if (currSetID == nil) {
 			currSetID = appInfos[0].bundleID
@@ -335,7 +341,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		panel.beginSheetModalForWindow(window!, completionHandler: { (result) -> Void in
 			if result == NSOKButton {
-				let urls = panel.URLs as [NSURL]
+				let urls = panel.URLs as! [NSURL]
 				var paths = [String]()
 				
 				for url in urls {
@@ -390,13 +396,13 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		var bestType = pb.availableTypeFromArray([NSFilenamesPboardType, NSStringPboardType])
 		
 		if bestType == NSFilenamesPboardType {
-			return pb.propertyListForType(NSFilenamesPboardType) as [String]!
+			return pb.propertyListForType(NSFilenamesPboardType) as! [String]!
 		}
 		
 		if bestType == NSStringPboardType {
 			if let aVar = pb.stringForType(NSStringPboardType) {
 				let bVar = aVar as NSString
-				return (bVar.componentsSeparatedByString(":") as [String])
+				return (bVar.componentsSeparatedByString(":") as! [String])
 			}
 		}
 		
@@ -430,11 +436,11 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
 	// MARK: drag and drop
 	
-	func tableView(tableView: NSTableView!, writeRowsWithIndexes rowIndexes: NSIndexSet!, toPasteboard pboard: NSPasteboard!) -> Bool {
+	func tableView(tableView: NSTableView, writeRowsWithIndexes rowIndexes: NSIndexSet, toPasteboard pboard: NSPasteboard) -> Bool {
 		return writeIndexSet(rowIndexes, toPasteboard: pboard)
 	}
 	
-	func tableView(tableView: NSTableView!, validateDrop info: NSDraggingInfo!, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+	func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
 		let pb = info.draggingPasteboard()
 		
 		/* We only drop between rows */
@@ -443,7 +449,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		/* If this is a dragging operation in the table itself, show the move icon */
-		if contains((pb.types as [String]), ManPathIndexSetPboardType) && (info.draggingSource() === manPathTableView) {
+		if contains((pb.types as! [String]), ManPathIndexSetPboardType) && (info.draggingSource() === manPathTableView) {
 		return .Move;
 		}
 		var paths = pathsFromPasteboard(pb)
@@ -460,16 +466,16 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	
-	func tableView(tableView: NSTableView!, acceptDrop info: NSDraggingInfo!, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
 		let pb = info.draggingPasteboard()
 		let dragOp = info.draggingSourceOperationMask()
 		var pathsToAdd: [String]? = [String]()
 		var removeSet: NSIndexSet? = nil
 		
-		if contains((pb.types as [String]), ManPathIndexSetPboardType) {
+		if contains((pb.types as! [String]), ManPathIndexSetPboardType) {
 			var indexData = pb.dataForType(ManPathIndexSetPboardType)
 			if (dragOp & .Move == .Move) && indexData != nil {
-				removeSet = (NSUnarchiver.unarchiveObjectWithData(indexData!) as NSIndexSet)
+				removeSet = (NSUnarchiver.unarchiveObjectWithData(indexData!) as! NSIndexSet)
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}
 		} else {

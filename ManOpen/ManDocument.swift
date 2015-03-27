@@ -52,7 +52,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	var taskData: NSData?
 	
 	private var textView: ManTextView {
-		return textScroll.contentView.documentView as ManTextView
+		return textScroll.contentView.documentView as! ManTextView
 	}
 	
     override var windowNibName: String {
@@ -154,12 +154,12 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	private func loadDocumentWithName(name: String, section: String?, manPath: String?, title: String) {
-		var docController = ManDocumentController.sharedDocumentController() as ManDocumentController
+		var docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
 		var command = docController.manCommandWithManPath(manPath)
 		fileType = "man"
 		shortTitle = title
 		
-		if section != nil && countElements(section!) > 0 {
+		if section != nil && count(section!) > 0 {
 			command += " " + section!.lowercaseString
 			copyURL = NSURL(string: URL_SCHEME_PREFIX + "//\(section!)/\(title)")
 		} else {
@@ -176,7 +176,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	func loadCommand(command: String) {
-		let docController = ManDocumentController.sharedDocumentController() as ManDocumentController
+		let docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
 		let fullCommand = "\(command) | \(filterCommand)"
 		taskData = docController.dataByExecutingCommand(fullCommand)
 		
@@ -345,7 +345,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		
 		if selectedRange.length > 0 {
 			let selectedString = (textView.string! as NSString).substringWithRange(selectedRange)
-			(ManDocumentController.sharedDocumentController() as ManDocumentController).openString(selectedString)
+			(ManDocumentController.sharedDocumentController() as! ManDocumentController).openString(selectedString)
 		}
 		
 		textView.window?.makeFirstResponder(textView)
@@ -417,22 +417,22 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		if let restoreInfo = coder.decodeObjectForKey(RestoreWindowDict) as? [String: AnyObject] {
 			if let aRestoreName = restoreInfo[RestoreName] as? String {
 				let section = restoreInfo[RestoreSection] as? String
-				let title = restoreInfo[RestoreTitle] as String
+				let title = restoreInfo[RestoreTitle] as! String
 				let manPath = NSUserDefaults.standardUserDefaults().manPath
 				
 				loadDocumentWithName(aRestoreName, section: section, manPath: manPath, title: title)
 				/* Usually, URL-backed documents have been automatically restored already
 				(the copyURL would be set), but just in case... */
 			} else if restoreInfo[RestoreFileURL] != nil && copyURL == nil {
-				let url = restoreInfo[RestoreFileURL] as NSURL
-				let type = restoreInfo[RestoreFileType] as String
+				let url = restoreInfo[RestoreFileURL] as! NSURL
+				let type = restoreInfo[RestoreFileType] as! String
 				
 				readFromURL(url, ofType: type, error: nil)
 			}
 			
 			titleStringField.stringValue = shortTitle
 			
-			(windowControllers as [NSWindowController]).map({vc in vc.synchronizeWindowTitleWithDocumentName()})
+			(windowControllers as! [NSWindowController]).map({vc in vc.synchronizeWindowTitleWithDocumentName()})
 		}
 	}
 }

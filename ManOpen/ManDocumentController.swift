@@ -25,7 +25,7 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 			var betweenString: NSString? = nil
 			if scanner.scanUpToString("'", intoString: &betweenString) {
 				if let aBetweenString = betweenString {
-					newString += aBetweenString
+					newString += aBetweenString as String
 				}
 				if scanner.scanString("'", intoString: nil) {
 					newString += "'\\''"
@@ -91,8 +91,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		return !NSUserDefaults.standardUserDefaults().boolForKey(kKeepPanelsOpen)
 	}
 	
-	func applicationDidFinishLaunching(notification: NSNotification!) {
-		(NSApp as NSApplication).servicesProvider = self
+	func applicationDidFinishLaunching(notification: NSNotification) {
+		(NSApp as! NSApplication).servicesProvider = self
 		openTextPanel.setFrameUsingName("OpenTitlePanel")
 		openTextPanel.setFrameAutosaveName("OpenTitlePanel")
 		aproposPanel.setFrameUsingName("AproposPanel")
@@ -101,7 +101,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		startedUp = true
 	}
 	
-	func applicationShouldOpenUntitledFile(sender: NSApplication!) -> Bool {
+	func applicationShouldOpenUntitledFile(sender: NSApplication) -> Bool {
 		if startedUp {
 			return NSUserDefaults.standardUserDefaults().boolForKey("OpenPanelWhenNoWindows")
 		} else {
@@ -109,7 +109,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
-	func applicationOpenUntitledFile(sender: NSApplication!) -> Bool {
+	func applicationOpenUntitledFile(sender: NSApplication) -> Bool {
 		if applicationShouldOpenUntitledFile(sender) {
 			if !openTextPanel.visible {
 				openSectionPopup.selectItemAtIndex(0)
@@ -159,7 +159,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		
 		if let anExtraEnv = extraEnv {
 			var environment = NSProcessInfo.processInfo().environment
-			environment += anExtraEnv
+			environment += anExtraEnv as Dictionary<NSObject, AnyObject>
 			task.environment = environment
 		}
 		
@@ -197,7 +197,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			var len = data.length
 			let ptr = data.bytes
 			
-			var newlinePtr = memchr(ptr, 0x0A, UInt(len)) // 0A is == '\n'
+			var newlinePtr = memchr(ptr, 0x0A, len) // 0A is == '\n'
 			
 			if newlinePtr != nil {
 				len = ptr.distanceTo(newlinePtr)
@@ -312,7 +312,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			}
 		}
 		
-		(helpScrollView.contentView.documentView as NSTextView).readRTFDFromFile(helpPath!.path!)
+		(helpScrollView.contentView.documentView as! NSTextView).readRTFDFromFile(helpPath!.path!)
 	}
 	
 	func openDocumentWithName(name: String, section: String? = nil, manPath: String) -> ManDocument? {
@@ -407,9 +407,11 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		while !scanner.atEnd {
 			if scanner.scanCharactersFromSet(nonwhitespaceSet, intoString: &aWord) {
 				if lastWord == nil {
-					lastWord = aWord
+					if let aWord = aWord {
+						lastWord = aWord as String
+					}
 				} else if aWord!.hasPrefix("(") && aWord!.hasSuffix(")") {
-					openWord(lastWord + aWord!)
+					openWord(lastWord + (aWord! as String))
 					lastWord = nil
 					if oneOnly {
 						break
@@ -437,7 +439,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 
 	@IBAction func runPageLayout(sender: AnyObject!) {
-		(NSApp as NSApplication).runPageLayout(sender)
+		(NSApp as! NSApplication).runPageLayout(sender)
 	}
 	
 	override init() {
@@ -455,7 +457,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var tmpNibArray: NSArray? = nil
 		NSBundle.mainBundle().loadNibNamed("DocController", owner: self, topLevelObjects: &tmpNibArray)
 		
-		nibObjects = tmpNibArray!
+		nibObjects = tmpNibArray! as [(AnyObject)]
 	}
 
 	required init(coder: NSCoder) {
@@ -472,7 +474,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		/* Append the section if chosen in the popup and not explicity defined in the string */
-		if countElements(aString) > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.rangeOfString("(") == nil {
+		if count(aString) > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.rangeOfString("(") == nil {
 			aString += "(\(openSectionPopup.indexOfSelectedItem))"
 		}
 		openString(aString)
@@ -490,7 +492,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		openTextField.selectText(self)
 		
 		if useModalPanels {
-			if (NSApp as NSApplication).runModalForWindow(openTextPanel) == NSOKButton {
+			if (NSApp as! NSApplication).runModalForWindow(openTextPanel) == NSModalResponseOK {
 				openTitleFromPanel()
 			}
 		} else {
@@ -507,7 +509,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		aproposField.selectText(self)
 		
 		if useModalPanels {
-			if (NSApp as NSApplication).runModalForWindow(aproposPanel) == NSOKButton {
+			if (NSApp as! NSApplication).runModalForWindow(aproposPanel) == NSModalResponseOK {
 				openAproposFromPanel()
 			}
 		} else {
@@ -521,7 +523,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as NSApplication).stopModalWithCode(NSOKButton)
+			(NSApp as! NSApplication).stopModalWithCode(NSModalResponseOK)
 		} else {
 			openAproposFromPanel()
 		}
@@ -533,7 +535,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as NSApplication).stopModalWithCode(NSOKButton)
+			(NSApp as! NSApplication).stopModalWithCode(NSModalResponseOK)
 		} else {
 			openTitleFromPanel()
 		}
@@ -542,7 +544,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBAction func cancelText(sender: NSView!) {
 		sender.window?.orderOut(self)
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as NSApplication).stopModalWithCode(NSCancelButton)
+			(NSApp as! NSApplication).stopModalWithCode(NSModalResponseCancel)
 		}
 	}
 }
@@ -572,7 +574,7 @@ private func GetWordArray(string: String) -> [String] {
 	while !scanner.atEnd {
 		var aWord: NSString? = nil
 		if scanner.scanCharactersFromSet(nonspaceSet, intoString: &aWord) {
-			wordArray.append(aWord!)
+			wordArray.append(aWord! as String)
 		}
 	}
 	
@@ -584,7 +586,7 @@ private func GetWordArray(string: String) -> [String] {
 		if directParameter == nil {
 			return nil
 		}
-		let param = directParameter as String
+		let param = directParameter as! String
 		var section: String? = nil
 		
 		//var aTex: NSStringCompareOptions = .CaseInsensitiveSearch | .AnchoredSearch
@@ -597,7 +599,7 @@ private func GetWordArray(string: String) -> [String] {
 			var components = path.pathComponents
 			
 			for name in components {
-				if countElements(name) == 0 || name == "" {
+				if count(name) == 0 || name == "" {
 					continue
 				}
 				if IsSectionWord(name) {
@@ -612,7 +614,7 @@ private func GetWordArray(string: String) -> [String] {
 			}
 			
 			if pageNames.count > 0 {
-				(ManDocumentController.sharedDocumentController() as ManDocumentController).openString(join(" ", pageNames))
+				(ManDocumentController.sharedDocumentController() as! ManDocumentController).openString(join(" ", pageNames))
 			}
 		}
 		

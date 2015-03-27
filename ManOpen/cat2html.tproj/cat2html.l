@@ -223,7 +223,7 @@ SGRSTART     \x1B\[
                 for(i=0; i<yyleng; i++)
                     if (href[i] == '\n') href[i] = ' ';
  
-                emitRaw("<a href=\"manpage:");
+                emitRaw("<a href=\"x-man-page:");
                 emitRaw(href);
                 emitRaw("\">");
                 emitString(yytext);
@@ -341,7 +341,7 @@ static void usage() {
         "\tTranslate output of (g)nroff to HTML. If no\n"
         "\t<filename> is given, cat2html reads stdin.\n"
         "\toption -i uses italic characters for underlining.\n"
-        "\toption -l adds 'manpage:' HREF links to other man pages.\n"
+        "\toption -l adds 'x-man-page:' HREF links to other man pages.\n"
         "\tHTML output is sent to stdout.\n");
     exit(1); 
 }

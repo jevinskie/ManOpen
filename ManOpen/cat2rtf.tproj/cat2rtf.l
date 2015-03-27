@@ -244,7 +244,7 @@ SGRSTART     \x1B\[
                     if (namebuf[i] == '\n') namebuf[i] = ' ';
 
 #ifdef RTF_HYPERLINKS
-                emitString("{\\field{\\*\\fldinst{HYPERLINK \"manpage:");
+                emitString("{\\field{\\*\\fldinst{HYPERLINK \"x-man-page:");
                 emitString(namebuf);
                 emitString("\"}}{\\fldrslt ");
                 emitChars(yytext, yyleng);
@@ -260,7 +260,7 @@ SGRSTART     \x1B\[
                 emitString("{{\\NeXTHelpLink");
                 emitString(numbuf);
                 emitString(" \\markername ");
-                emitString(";\\linkFilename manpage:");  // linkFilename is the parameter to set
+                emitString(";\\linkFilename x-man-page:");  // linkFilename is the parameter to set
                 emitString(namebuf);
                 emitString(";\\linkMarkername ");
                 emitString(";}\n\\254}");

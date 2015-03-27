@@ -62,14 +62,14 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
-	func openName(name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true) {
+	@objc func openName(name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
 		}
 		openDocumentWithName(name, section: section, manPath: manPath ?? NSUserDefaults.standardUserDefaults().manPath)
 	}
 	
-	func openApropos(apropos: String, manPath: String? = nil, forceToFront force: Bool = true) {
+	@objc func openApropos(apropos: String, manPath: String? = nil, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
 		}

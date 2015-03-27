@@ -62,22 +62,22 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
-	func openName(name: String!, section: String? = nil, manPath: String! = NSUserDefaults.standardUserDefaults().manPath, forceToFront force: Bool = true) {
+	func openName(name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
 		}
-		openDocumentWithName(name, section: section, manPath: manPath)
+		openDocumentWithName(name, section: section, manPath: manPath ?? NSUserDefaults.standardUserDefaults().manPath)
 	}
 	
-	func openApropos(apropos: String!, manPath: String! = NSUserDefaults.standardUserDefaults().manPath, forceToFront force: Bool = true) {
+	func openApropos(apropos: String, manPath: String? = nil, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
 		}
 
-		openAproposDocument(apropos, manPath: manPath)
+		openAproposDocument(apropos, manPath: manPath ?? NSUserDefaults.standardUserDefaults().manPath)
 	}
 	
-	@objc func openFile(filename: String!, forceToFront force: Bool = true) {
+	@objc func openFile(filename: String, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
 		}
@@ -316,19 +316,18 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	func openDocumentWithName(name: String, section: String? = nil, manPath: String) -> ManDocument? {
-		var document: ManDocument? = nil
 		var title = name
 		if (section != nil && section!.isEmpty == false) {
 			title = "\(name)(\(section!))"
 		}
 		
-		document = documentForTitle(title) as? ManDocument
+		var document = documentForTitle(title) as? ManDocument
 		if document == nil {
-			
 			document = ManDocument(name: name, section: section, manPath: manPath, title: title)
 			
 			if let filename = manFileForName(name, section: section, manPath: manPath) {
-				let fileURL = NSURL(fileURLWithPath: filename)!
+				let afn = filename.stringByResolvingSymlinksInPath
+				let fileURL = NSURL(fileURLWithPath: afn)!
 				noteNewRecentDocumentURL(fileURL)
 				document?.fileURL = fileURL
 			}
@@ -366,9 +365,9 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		let lparenRange = word.rangeOfString("(")
 		let rparenRange = word.rangeOfString(")")
 		
-		if lparenRange != nil && rparenRange != nil && lparenRange!.startIndex < rparenRange!.startIndex {
-			var lp = lparenRange!
-			var rp = rparenRange!
+		if let lparenRange = lparenRange, rparenRange = rparenRange where lparenRange.startIndex < rparenRange.startIndex {
+			var lp = lparenRange
+			var rp = rparenRange
 			
 			base = word[word.startIndex ..< lp.startIndex]
 			section = word[++lp.startIndex ..< --rp.endIndex]
@@ -457,7 +456,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var tmpNibArray: NSArray? = nil
 		NSBundle.mainBundle().loadNibNamed("DocController", owner: self, topLevelObjects: &tmpNibArray)
 		
-		nibObjects = tmpNibArray! as [(AnyObject)]
+		nibObjects = tmpNibArray! as [AnyObject]
 	}
 
 	required init(coder: NSCoder) {

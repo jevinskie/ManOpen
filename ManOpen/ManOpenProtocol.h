@@ -8,8 +8,8 @@
 
 @protocol ManOpen <NSObject>
 
-- (oneway void)openName:(NSString *)name section:(NSString *)section manPath:(NSString *)manPath forceToFront:(BOOL)force;
-- (oneway void)openApropos:(NSString *)apropos manPath:(NSString *)manPath forceToFront:(BOOL)force;
-- (oneway void)openFile:(NSString *)filename forceToFront:(BOOL)force;
+- (oneway void)openName:(nonnull NSString *)name section:(nullable NSString *)section manPath:(nullable NSString *)manPath forceToFront:(BOOL)force;
+- (oneway void)openApropos:(nonnull NSString *)apropos manPath:(nullable NSString *)manPath forceToFront:(BOOL)force;
+- (oneway void)openFile:(nonnull NSString *)filename forceToFront:(BOOL)force;
 
 @end

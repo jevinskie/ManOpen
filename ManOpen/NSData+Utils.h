@@ -11,6 +11,6 @@
 
 @interface NSFileHandle (Utils)
 
-- (NSData *)readDataToEndOfFileIgnoreInterrupt;
+- (nonnull NSData *)readDataToEndOfFileIgnoreInterrupt;
 
 @end

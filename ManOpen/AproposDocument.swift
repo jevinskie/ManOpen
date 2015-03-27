@@ -18,13 +18,8 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	var title: String = ""
 	var searchString: String = ""
-	private var aproposItems = [AproposItem]()
+	private var aproposItems: [(title: String, description: String)] = []
 	
-	private struct AproposItem {
-		var title: String
-		var description: String
-	}
-
 	override class func canConcurrentlyReadDocumentsOfType(typeName: String) -> Bool {
 		return true
 	}
@@ -42,14 +37,18 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			return
 		}
 		
-		var lines = output.componentsSeparatedByString("\n")
+		let lines: [String] = {
+			var aLines = output.componentsSeparatedByString("\n")
+			
+			aLines.sort { (lhs, rhs) -> Bool in
+				let toRet = lhs.caseInsensitiveCompare(rhs)
+				return toRet == .OrderedAscending
+			}
+			return aLines
+			}()
+		
 		if lines.count == 0 {
 			return
-		}
-		
-		lines.sort { (lhs, rhs) -> Bool in
-			let toRet = lhs.caseInsensitiveCompare(rhs)
-			return toRet == .OrderedAscending
 		}
 		
 		for line in lines {
@@ -66,7 +65,6 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			}
 			if dashRange == nil {
 				dashRange = line.rangeOfString(" - ") //MacOSX
-
 			}
 			if dashRange == nil {
 				dashRange = line.rangeOfString(" -", options: .BackwardsSearch | .AnchoredSearch)
@@ -75,7 +73,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			if let aDashRange = dashRange {
 				let title = line[line.startIndex ..< aDashRange.startIndex]
 				let adescription = line[aDashRange.endIndex ..< line.endIndex]
-				aproposItems.append(AproposItem(title: title, description: adescription))
+				aproposItems.append((title: title, description: adescription))
 			}
 		}
 	}

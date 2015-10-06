@@ -103,7 +103,7 @@
  * cases is fine, but sometimes not when running under a debugger.  So... this is more to help
  * folks working on the code, rather the users ;-)
  */
-- (NSData *)readDataToEndOfFileIgnoreInterrupt
+- (NSData *)readDataToEndOfFileIgnoreInterruptAndReturnError:(NSError **)error;
 {
     const int fd = [self fileDescriptor];
     static const size_t allocated = 16384;
@@ -121,7 +121,10 @@
     } while (bytesRead > 0);
     
     if (bytesRead < 0) {
-        [NSException raise:NSFileHandleOperationException format:@"%s: %s", __FUNCTION__, strerror(errno)];
+        if (error) {
+            *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:nil];
+        }
+        return nil;
     }
 
     return [ourData copy];

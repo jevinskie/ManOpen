@@ -18,7 +18,7 @@ func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 	return toRet == NSComparisonResult.OrderedSame
 }
 
-class ManAppInfo: Hashable {
+final class ManAppInfo: Hashable {
 	let bundleID: String
 	lazy var displayName: String = {
 		let url = self.appURL

@@ -155,7 +155,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	func dataByExecutingCommand(command: String, maxLength: Int = 0, extraEnv: Dictionary<String, String>? = nil) -> NSData? {
 		let pipe = NSPipe()
 		let task = NSTask()
-		var output: NSData
+		var output: NSData?
 		
 		if let anExtraEnv = extraEnv {
 			var environment = NSProcessInfo.processInfo().environment
@@ -173,7 +173,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			output = pipe.fileHandleForReading.readDataOfLength(maxLength)
 			task.terminate()
 		} else {
-			output = pipe.fileHandleForReading.readDataToEndOfFileIgnoreInterrupt()
+			output = try? pipe.fileHandleForReading.readDataToEndOfFileIgnoreInterrupt()
 		}
 		task.waitUntilExit()
 		

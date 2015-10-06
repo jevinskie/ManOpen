@@ -22,7 +22,7 @@
 "Loading..." = "Loading…";
 
 /* When a page couldn't be found */
-"No pages related to '%@' found" = "No pages related to '%@' found";
+"No pages related to '%@' found" = "No pages related to ‘%@’ found";
 
 /* Nothing found */
 "Nothing found" = "Nothing found";

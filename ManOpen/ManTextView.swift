@@ -15,7 +15,7 @@ class ManTextView: NSTextView {
 		let container = textContainer
 		let layout = layoutManager
 		let storage = textStorage
-		var visible = visibleRect
+		let visible = visibleRect
 		var currIndex = 0
 		
 		super.resetCursorRects()
@@ -23,7 +23,7 @@ class ManTextView: NSTextView {
 		while currIndex < (storage?.length ?? 0) {
 			var currRange = NSRange(location: 0, length: 0)
 			var attribs = storage?.attributesAtIndex(currIndex, effectiveRange: &currRange)
-			var isLinkSection = attribs?[NSLinkAttributeName] != nil
+			let isLinkSection = attribs?[NSLinkAttributeName] != nil
 			if isLinkSection {
 				let ignoreRange = NSRange.notFound
 				var rectCount = 0
@@ -42,9 +42,9 @@ class ManTextView: NSTextView {
 	
 	func scrollRangeToTop(charRange: NSRange) {
 		let layout = layoutManager!
-		var glyphRange = layout.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil)
+		let glyphRange = layout.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil)
 		var rect = layout.boundingRectForGlyphRange(glyphRange, inTextContainer: textContainer!)
-		var height = visibleRect.height
+		let height = visibleRect.height
 		
 		if height > 0 {
 			rect.size.height = height
@@ -56,7 +56,7 @@ class ManTextView: NSTextView {
 	/// Make space page down (and shift/alt-space page up)
 	override func keyDown(event: NSEvent) {
 		if event.charactersIgnoringModifiers == " " {
-			if (event.modifierFlags & .AlternateKeyMask) == .AlternateKeyMask || (event.modifierFlags & .ShiftKeyMask) == .ShiftKeyMask {
+			if (event.modifierFlags.intersect(.AlternateKeyMask)) == .AlternateKeyMask || (event.modifierFlags.intersect(.ShiftKeyMask)) == .ShiftKeyMask {
 				pageUp(self)
 			} else {
 				pageDown(self)
@@ -77,12 +77,12 @@ class ManTextView: NSTextView {
 		let font = NSUserDefaults.standardUserDefaults().manFont
 		
 		let currPage = NSPrintOperation.currentOperation()!.currentPage
-		var pageString = "\(currPage)"
-		var style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-		var drawAttribs = [NSObject: AnyObject]()
-		var drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
+		let pageString = "\(currPage)"
+		let style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+		var drawAttribs = [String: AnyObject]()
+		let drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
 		
-		style.alignment = .CenterTextAlignment
+		style.alignment = .Center
 		drawAttribs[NSParagraphStyleAttributeName] = style
 		drawAttribs[NSFontAttributeName] = font
 		

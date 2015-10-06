@@ -73,7 +73,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		// Add any code here that needs to be executed once the windowController has loaded the document's window.
 		
 		if let aSizeString = sizeString {
-			var windowSize = NSSize(string: aSizeString)
+			let windowSize = NSSize(string: aSizeString)
 			let window = textView.window!
 			var frame = window.frame
 			
@@ -96,7 +96,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		textView.window?.delegate = self
 	}
 
-	override func readFromURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
+	override func readFromURL(url: NSURL, ofType typeName: String) throws {
 		switch typeName {
 		case "man":
 			loadManFile(url.path!, isGzip: false)
@@ -111,15 +111,12 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			loadCatFile(url.path!, isGzip: true)
 			
 		default:
-			if outError != nil {
-				outError.memory = NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSLocalizedDescriptionKey: "Invalid document type"])
-			}
-			return false
+			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSLocalizedDescriptionKey: "Invalid document type"])
 			
 		}
 		
 		// strip extension twice in case it is a e.g. "1.gz" filename
-		self.shortTitle = url.path!.lastPathComponent.stringByDeletingPathExtension.stringByDeletingPathExtension
+		self.shortTitle = (((url.path! as NSString).lastPathComponent as NSString).stringByDeletingPathExtension as NSString).stringByDeletingPathExtension
 		copyURL = url;
 		
 		restoreData = [
@@ -127,13 +124,8 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			RestoreFileType: typeName];
 		
 		if taskData == nil {
-			if outError != nil {
-				outError.memory = NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data")])
-			}
-			return false
+			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data")])
 		}
-		
-		return true
 	}
 
 	/*
@@ -154,14 +146,14 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	private func loadDocumentWithName(name: String, section: String?, manPath: String?, title: String) {
-		var docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
+		let docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
 		var command = docController.manCommandWithManPath(manPath)
 		fileType = "man"
 		shortTitle = title
 		
-		if section != nil && count(section!) > 0 {
-			command += " " + section!.lowercaseString
-			copyURL = NSURL(string: URL_SCHEME_PREFIX + "//\(section!)/\(title)")
+		if let section = section where section.characters.count > 0 {
+			command += " " + section.lowercaseString
+			copyURL = NSURL(string: URL_SCHEME_PREFIX + "//\(section)/\(title)")
 		} else {
 			copyURL = NSURL(string: URL_SCHEME_PREFIX + "//\(title)")
 		}
@@ -258,7 +250,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 				
 				aStorage.endEditing()
 				}, { (localException) -> Void in
-					println("Exception during formatting: \(localException)")
+					print("Exception during formatting: \(localException)")
 			})
 			
 			textView.layoutManager?.replaceTextStorage(aStorage)
@@ -299,7 +291,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 				var count = 1
 				
 				/* Check for dups (e.g. lesskey(1) ) */
-				while contains(sections, label) {
+				while sections.contains(label) {
 					count++
 					label = "\(header) [\(count)]"
 				}
@@ -318,7 +310,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		getting the feeling that the customizable nroff command is more trouble
 		than it's worth, especially now that OSX uses the good version of gnroff */
 		if isGzip {
-			var repl = hasQuote ? "'%@'" : "%@"
+			let repl = hasQuote ? "'%@'" : "%@"
 			if let replRange = nroffFormat.rangeOfString(repl) {
 				var formatCopy = nroffFormat
 				formatCopy.replaceRange(replRange, with: "")
@@ -341,7 +333,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	}
 
 	@IBAction func openSelection(sender: AnyObject?) {
-		var selectedRange = textView.selectedRange()
+		let selectedRange = textView.selectedRange()
 		
 		if selectedRange.length > 0 {
 			let selectedString = (textView.string! as NSString).substringWithRange(selectedRange)
@@ -372,7 +364,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			pb.declareTypes(types, owner: nil)
 			
 			aCopyURL.writeToPasteboard(pb)
-			pb.setString("<\(aCopyURL.absoluteString!)>", forType: NSStringPboardType)
+			pb.setString("<\(aCopyURL.absoluteString)>", forType: NSStringPboardType)
 			if aCopyURL.fileURL {
 				pb.setPropertyList([aCopyURL.path!], forType: NSFilenamesPboardType)
 			}
@@ -383,7 +375,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		NSApplication.sharedApplication().runPageLayout(sender)
 	}
 	
-	override func printOperationWithSettings(printSettings: [NSObject : AnyObject], error outError: NSErrorPointer) -> NSPrintOperation? {
+	override func printOperationWithSettings(printSettings: [String : AnyObject]) throws -> NSPrintOperation {
 		let operation = NSPrintOperation(view: textView, printInfo: NSPrintInfo(dictionary: printSettings))
 		let printInfo = operation.printInfo
 		printInfo.verticallyCentered = false
@@ -427,12 +419,17 @@ class ManDocument: NSDocument, NSWindowDelegate {
 				let url = restoreInfo[RestoreFileURL] as! NSURL
 				let type = restoreInfo[RestoreFileType] as! String
 				
-				readFromURL(url, ofType: type, error: nil)
+				do {
+					try readFromURL(url, ofType: type)
+				} catch _ {
+				}
 			}
 			
 			titleStringField.stringValue = shortTitle
 			
-			(windowControllers as! [NSWindowController]).map({vc in vc.synchronizeWindowTitleWithDocumentName()})
+			for vc in windowControllers {
+				vc.synchronizeWindowTitleWithDocumentName()
+			}
 		}
 	}
 }

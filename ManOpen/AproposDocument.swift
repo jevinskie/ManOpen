@@ -40,7 +40,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		let lines: [String] = {
 			var aLines = output.componentsSeparatedByString("\n")
 			
-			aLines.sort { (lhs, rhs) -> Bool in
+			aLines.sortInPlace { (lhs, rhs) -> Bool in
 				let toRet = lhs.caseInsensitiveCompare(rhs)
 				return toRet == .OrderedAscending
 			}
@@ -52,7 +52,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		}
 		
 		for line in lines {
-			if count(line) == 0 {
+			if line.characters.count == 0 {
 				continue
 			}
 			
@@ -61,13 +61,13 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 				dashRange = line.rangeOfString("\t- ") //OPENSTEP
 			}
 			if dashRange == nil {
-				dashRange = line.rangeOfString("\t-", options: .BackwardsSearch | .AnchoredSearch)
+				dashRange = line.rangeOfString("\t-", options: [.BackwardsSearch, .AnchoredSearch])
 			}
 			if dashRange == nil {
 				dashRange = line.rangeOfString(" - ") //MacOSX
 			}
 			if dashRange == nil {
-				dashRange = line.rangeOfString(" -", options: .BackwardsSearch | .AnchoredSearch)
+				dashRange = line.rangeOfString(" -", options: [.BackwardsSearch, .AnchoredSearch])
 			}
 			
 			if let aDashRange = dashRange {
@@ -79,13 +79,13 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	}
 	
     override func windowControllerDidLoadNib(aController: NSWindowController) {
-		var aSizeString = NSUserDefaults.standardUserDefaults().stringForKey("AproposWindowSize")
+		let aSizeString = NSUserDefaults.standardUserDefaults().stringForKey("AproposWindowSize")
 
         super.windowControllerDidLoadNib(aController)
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
 		if let sizeString = aSizeString {
-			var windowSize = NSSize(string: sizeString)
-			var window = tableView.window
+			let windowSize = NSSize(string: sizeString)
+			let window = tableView.window
 			var frame = window!.frame
 			
 			if windowSize.width > 30.0 && windowSize.height > 30.0 {
@@ -99,19 +99,17 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		tableView.sizeLastColumnToFit()
     }
 
-    override func dataOfType(typeName: String?, error outError: NSErrorPointer) -> NSData? {
+    override func dataOfType(typeName: String?) throws -> NSData {
         // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
         // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return nil
+		throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
 
-    override func readFromData(data: NSData?, ofType typeName: String?, error outError: NSErrorPointer) -> Bool {
+    override func readFromData(data: NSData?, ofType typeName: String?) throws {
         // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
         // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
         // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return false
+		throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
 
 	private func loadWithString(apropos: String, manPath: String, title aTitle: String) {
@@ -123,7 +121,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		fileType = "apropos"
 		
 		/* Searching for a blank string doesn't work anymore... use a catchall regex */
-		if count(apropos) == 0 {
+		if apropos.characters.count == 0 {
 			aapropos = "."
 		}
 		searchString = aapropos
@@ -147,7 +145,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		parseOutput(outString)
 	}
 
-	override func printOperationWithSettings(printSettings: [NSObject : AnyObject], error outError: NSErrorPointer) -> NSPrintOperation? {
+	override func printOperationWithSettings(printSettings: [String : AnyObject]) throws -> NSPrintOperation {
 		let op = NSPrintOperation(view: tableView, printInfo: NSPrintInfo(dictionary: printSettings))
 		return op
 	}
@@ -187,8 +185,8 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	}
 	
 	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
-		var item = aproposItems[row]
-		var toRet = (tableColumn === titleColumn) ? item.title : item.description
+		let item = aproposItems[row]
+		let toRet = (tableColumn === titleColumn) ? item.title : item.description
 		return toRet
 	}
 	
@@ -206,13 +204,15 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			return
 		}
 		
-		var search: String = coder.decodeObjectForKey(restoreSearchString) as! String
-		var theTitle = coder.decodeObjectForKey(restoreTitle) as! String
-		var manPath = NSUserDefaults.standardUserDefaults().manPath
+		let search: String = coder.decodeObjectForKey(restoreSearchString) as! String
+		let theTitle = coder.decodeObjectForKey(restoreTitle) as! String
+		let manPath = NSUserDefaults.standardUserDefaults().manPath
 		
 		loadWithString(search, manPath: manPath, title: theTitle)
 		
-		(windowControllers as! [NSWindowController]).map({vc in vc.synchronizeWindowTitleWithDocumentName()})
+		for wc in windowControllers {
+			wc.synchronizeWindowTitleWithDocumentName()
+		}
 		tableView.reloadData()
 	}
 }

@@ -61,6 +61,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		55553AF31BC46B8700377516 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55E11DE11AE7114000815555;
+			remoteInfo = SwiftAudioAdditions;
+		};
+		55553AF51BC46B8700377516 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55E11DEB1AE7114000815555;
+			remoteInfo = SwiftAudioAdditionsTests;
+		};
 		557AFB3F1A801CC8008BDF46 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
@@ -323,6 +337,8 @@
 				557AFB461A801CC8008BDF46 /* SwiftIOKitAdditionsTests.xctest */,
 				557AFB481A801CC8008BDF46 /* ForceFeedbackAdditions.framework */,
 				557AFB4A1A801CC8008BDF46 /* ForceFeedbackAdditionsTests.xctest */,
+				55553AF41BC46B8700377516 /* SwiftAudioAdditions.framework */,
+				55553AF61BC46B8700377516 /* SwiftAudioAdditionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -558,7 +574,9 @@
 		D39279890821FFA400376676 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = D38A23BC14E38E1E00F6AFFE /* Build configuration list for PBXProject "ManOpen" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -598,6 +616,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		55553AF41BC46B8700377516 /* SwiftAudioAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftAudioAdditions.framework;
+			remoteRef = 55553AF31BC46B8700377516 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55553AF61BC46B8700377516 /* SwiftAudioAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SwiftAudioAdditionsTests.xctest;
+			remoteRef = 55553AF51BC46B8700377516 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		557AFB401A801CC8008BDF46 /* SwiftAdditions.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -840,6 +872,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -854,6 +887,7 @@
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
@@ -877,6 +911,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -890,6 +925,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
@@ -921,6 +957,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1016,6 +1053,7 @@
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1026,6 +1064,7 @@
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1036,6 +1075,7 @@
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1046,6 +1086,7 @@
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1055,6 +1096,7 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 			};
@@ -1065,6 +1107,7 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 			};

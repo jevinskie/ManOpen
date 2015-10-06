@@ -41,7 +41,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	dynamic var manPathArray: [String] {
 		get {
 			if manPathArrayPriv.count == 0 {
-				var path = NSUserDefaults.standardUserDefaults().manPath
+				let path = NSUserDefaults.standardUserDefaults().manPath
 				manPathArrayPriv = path.componentsSeparatedByString(":")
 			}
 			return manPathArrayPriv
@@ -184,16 +184,16 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	func resetAppPopup()  {
 		let apps = appInfos.allManViewerApps
 		let workspace = NSWorkspace.sharedWorkspace()
-		var i = 0
+		//var i = 0
 		
 		appPopup.removeAllItems()
 		appPopup.image = nil
 		
-		for (i, info) in enumerate(appInfos) {
+		for (i, info) in appInfos.enumerate() {
 			let image = workspace.iconForFile(info.appURL.path!).copy() as! NSImage
-			var niceName = info.displayName
-			var displayName = niceName
-			var num = 2
+			let niceName = info.displayName
+			let displayName = niceName
+			//var num = 2
 			
 			appPopup.addItemWithTitle(displayName)
 			
@@ -242,14 +242,14 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let error = LSSetDefaultHandlerForURLScheme(URL_SCHEME, bundleID)
 		
 		if (error != noErr) {
-			println("Could not set default \(URL_SCHEME_PREFIX) app: Launch Services error \(error)")
+			print("Could not set default \(URL_SCHEME_PREFIX) app: Launch Services error \(error)")
 		}
 		
 		resetCurrentApp()
 	}
 	
 	@IBAction func chooseNewApp(sender: AnyObject!) {
-		let apps = appInfos.allManViewerApps
+		_ = appInfos.allManViewerApps
 		let choice = appPopup.indexOfSelectedItem
 		
 		if choice >= 0 && choice < appInfos.count {
@@ -263,9 +263,9 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			panel.allowsMultipleSelection = false
 			panel.resolvesAliases = true
 			panel.canChooseFiles = true
-			panel.allowedFileTypes = [kUTTypeApplicationBundle as NSString]
+			panel.allowedFileTypes = [kUTTypeApplicationBundle as String]
 			panel.beginSheetModalForWindow(appPopup.window!) { (result) -> Void in
-				if (result == NSOKButton) {
+				if result == NSModalResponseOK {
 					if let appURL = panel.URL {
 						if let appID = NSBundle(URL: appURL)?.bundleIdentifier {
 						self.setManPageViewer(appID)
@@ -284,7 +284,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		manPathTableView.verticalMotionCanBeginDrag = true
 		// XXX NSDragOperationDelete -- not sure the "poof" drag can show that
 		manPathTableView.setDraggingSourceOperationMask(.Copy, forLocal: false)
-		manPathTableView.setDraggingSourceOperationMask(.Copy | .Move | .Private, forLocal: true)
+		manPathTableView.setDraggingSourceOperationMask([.Copy, .Move, .Private], forLocal: true)
 	}
 
 	func saveManPath() {
@@ -296,7 +296,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	func addPathDirectories(directories: [String], atIndex: Int, removeFirst removeIndexes: NSIndexSet?) {
 		
 		func insertObject(anObj: String, atIndex: Int) {
-			var hasObject = manPathArrayPriv.filter { (otherObj) -> Bool in
+			let hasObject = manPathArrayPriv.filter { (otherObj) -> Bool in
 				return anObj == otherObj
 			}
 			if hasObject.count == 0 {
@@ -322,10 +322,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		for directory in directories {
-			var path = directory.stringByExpandingTildeInPath
+			var path = (directory as NSString).stringByExpandingTildeInPath
 			path = path.stringByReplacingOccurrencesOfString(":", withString: "")
 			
-			insertObject(path, insertIndex++)
+			insertObject(path, atIndex: insertIndex++)
 		}
 		
 		self.didChangeValueForKey(ManPathArrayKey)
@@ -340,8 +340,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		panel.canChooseFiles = false
 		
 		panel.beginSheetModalForWindow(window!, completionHandler: { (result) -> Void in
-			if result == NSOKButton {
-				let urls = panel.URLs as! [NSURL]
+			if result == NSModalResponseOK {
+				let urls = panel.URLs 
 				var paths = [String]()
 				
 				for url in urls {
@@ -364,7 +364,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	func pathsAtIndexes(set: NSIndexSet) -> [String] {
 		var paths = [String]()
 		
-		for (currIndex, path) in enumerate(manPathArrayPriv) {
+		for (currIndex, path) in manPathArrayPriv.enumerate() {
 			if set.containsIndex(currIndex) {
 				paths.append(path)
 			}
@@ -378,11 +378,11 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		/* This causes an NSLog if one of the paths does not exist. Hm.  May not be worth it. Might let folks drag to Trash etc. as well. */
 		//[pb setPropertyList:paths forType:NSFilenamesPboardType];
-		return pb.setString(join(":", paths), forType: NSStringPboardType)
+		return pb.setString(paths.joinWithSeparator(":"), forType: NSStringPboardType)
 	}
 	
 	func writeIndexSet(set: NSIndexSet, toPasteboard pb: NSPasteboard) -> Bool {
-		var files = pathsAtIndexes(set)
+		let files = pathsAtIndexes(set)
 		
 		if writePaths(files, toPasteboard: pb) {
 			pb.addTypes([ManPathIndexSetPboardType], owner: nil)
@@ -393,7 +393,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func pathsFromPasteboard(pb: NSPasteboard) -> [String]? {
-		var bestType = pb.availableTypeFromArray([NSFilenamesPboardType, NSStringPboardType])
+		let bestType = pb.availableTypeFromArray([NSFilenamesPboardType, NSStringPboardType])
 		
 		if bestType == NSFilenamesPboardType {
 			return pb.propertyListForType(NSFilenamesPboardType) as! [String]!
@@ -402,7 +402,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		if bestType == NSStringPboardType {
 			if let aVar = pb.stringForType(NSStringPboardType) {
 				let bVar = aVar as NSString
-				return (bVar.componentsSeparatedByString(":") as! [String])
+				return (bVar.componentsSeparatedByString(":") )
 			}
 		}
 		
@@ -410,7 +410,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	@IBAction func copy(sender: AnyObject!) {
-		var files = pathsAtIndexes(manPathController.selectionIndexes)
+		let files = pathsAtIndexes(manPathController.selectionIndexes)
 		writePaths(files, toPasteboard: NSPasteboard.generalPasteboard())
 	}
 	
@@ -425,7 +425,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	@IBAction func paste(sender: AnyObject!) {
-		var paths = pathsFromPasteboard(NSPasteboard.generalPasteboard())
+		let paths = pathsFromPasteboard(NSPasteboard.generalPasteboard())
 		var insertionIndex = manPathController.selectionIndex
 		if insertionIndex == NSNotFound {
 			insertionIndex = manPathArrayPriv.count //add it on the end
@@ -449,19 +449,18 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		/* If this is a dragging operation in the table itself, show the move icon */
-		if contains((pb.types as! [String]), ManPathIndexSetPboardType) && (info.draggingSource() === manPathTableView) {
-		return .Move;
+		if let pbtypes = pb.types where pbtypes.contains(ManPathIndexSetPboardType) && (info.draggingSource() === manPathTableView) {
+			return .Move;
 		}
-		var paths = pathsFromPasteboard(pb)
 		
-		if paths != nil {
-			for path in paths! {
-				if contains(manPathArrayPriv, path) {
+		if let paths = pathsFromPasteboard(pb) {
+			for path in paths {
+				if manPathArrayPriv.contains(path) {
 					return .Copy
 				}
 			}
 		}
-
+		
 		return .None
 	}
 	
@@ -472,10 +471,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		var pathsToAdd: [String]? = [String]()
 		var removeSet: NSIndexSet? = nil
 		
-		if contains((pb.types as! [String]), ManPathIndexSetPboardType) {
-			var indexData = pb.dataForType(ManPathIndexSetPboardType)
-			if (dragOp & .Move == .Move) && indexData != nil {
-				removeSet = (NSUnarchiver.unarchiveObjectWithData(indexData!) as! NSIndexSet)
+		if let pbtypes = pb.types where pbtypes.contains(ManPathIndexSetPboardType) {
+			let indexData = pb.dataForType(ManPathIndexSetPboardType)
+			if let indexData = indexData where (dragOp.intersect(.Move) == .Move) {
+				removeSet = (NSUnarchiver.unarchiveObjectWithData(indexData) as! NSIndexSet)
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}
 		} else {

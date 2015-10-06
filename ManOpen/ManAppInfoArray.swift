@@ -10,10 +10,12 @@ import Cocoa
 
 private func GenerateManInfos() -> [ManAppInfo] {
 	var anAppInfo = [ManAppInfo]()
-	let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME).takeRetainedValue() as! [String]
-
-	for bundleID in allBundleIDs {
-		anAppInfo.append(ManAppInfo(bundleID: bundleID))
+	let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME)?.takeRetainedValue() as? [String]
+	
+	if let allBundleIDs = allBundleIDs {
+		for bundleID in allBundleIDs {
+			anAppInfo.append(ManAppInfo(bundleID: bundleID))
+		}
 	}
 	return anAppInfo
 }
@@ -53,7 +55,7 @@ class ManAppInfoArray: NSObject, SequenceType {
 	}
 	
 	func sortApps() {
-		allManViewerApps.sort { (lhs, rhs) -> Bool in
+		allManViewerApps.sortInPlace { (lhs, rhs) -> Bool in
 			let toRet = lhs.displayName.localizedCaseInsensitiveCompare(rhs.displayName)
 			return NSComparisonResult.OrderedAscending == toRet
 		}
@@ -64,7 +66,7 @@ class ManAppInfoArray: NSObject, SequenceType {
 			return nil;
 		}
 		
-		for (i, obj) in enumerate(allManViewerApps) {
+		for (i, obj) in allManViewerApps.enumerate() {
 			if obj == bundleID {
 				return i
 			}

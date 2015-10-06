@@ -82,7 +82,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			ensureActive()
 		}
 		
-		openDocumentWithContentsOfURL(NSURL(fileURLWithPath: filename)!, display: true) { (doc, wasOpened, error) -> Void in
+		openDocumentWithContentsOfURL(NSURL(fileURLWithPath: filename), display: true) { (doc, wasOpened, error) -> Void in
 			//What to do??
 		}
 	}
@@ -92,7 +92,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	func applicationDidFinishLaunching(notification: NSNotification) {
-		(NSApp as! NSApplication).servicesProvider = self
+		(NSApp as NSApplication).servicesProvider = self
 		openTextPanel.setFrameUsingName("OpenTitlePanel")
 		openTextPanel.setFrameAutosaveName("OpenTitlePanel")
 		aproposPanel.setFrameUsingName("AproposPanel")
@@ -127,7 +127,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	override func removeDocument(document: NSDocument) {
-		var autoQuit = NSUserDefaults.standardUserDefaults().boolForKey(kQuitWhenLastClosed)
+		let autoQuit = NSUserDefaults.standardUserDefaults().boolForKey(kQuitWhenLastClosed)
 		
 		super.removeDocument(document)
 		
@@ -152,14 +152,14 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		return command
 	}
 	
-	func dataByExecutingCommand(command: String, maxLength: Int = 0, extraEnv: NSDictionary? = nil) -> NSData? {
-		var pipe = NSPipe()
-		var task = NSTask()
+	func dataByExecutingCommand(command: String, maxLength: Int = 0, extraEnv: Dictionary<String, String>? = nil) -> NSData? {
+		let pipe = NSPipe()
+		let task = NSTask()
 		var output: NSData
 		
 		if let anExtraEnv = extraEnv {
 			var environment = NSProcessInfo.processInfo().environment
-			environment += anExtraEnv as Dictionary<NSObject, AnyObject>
+			environment += anExtraEnv
 			task.environment = environment
 		}
 		
@@ -197,13 +197,13 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			var len = data.length
 			let ptr = data.bytes
 			
-			var newlinePtr = memchr(ptr, 0x0A, len) // 0A is == '\n'
+			let newlinePtr = memchr(ptr, 0x0A, len) // 0A is == '\n'
 			
 			if newlinePtr != nil {
 				len = ptr.distanceTo(newlinePtr)
 			}
 			
-			var filename = manager.stringWithFileSystemRepresentation(UnsafePointer<Int8>(ptr), length: len)
+			let filename = manager.stringWithFileSystemRepresentation(UnsafePointer<Int8>(ptr), length: len)
 			if manager.fileExistsAtPath(filename) {
 				return filename
 			}
@@ -215,7 +215,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		let manager = NSFileManager.defaultManager()
 		var catType = "cat"
 		var manType = "man"
-		var attributes = manager.attributesOfItemAtPath(url.path!.stringByResolvingSymlinksInPath, error: nil)
+		let attributes = try? manager.attributesOfItemAtPath((url.path! as NSString).stringByResolvingSymlinksInPath)
 		var len: UInt64
 		if let anAttrib = attributes {
 			if let tmplen = anAttrib[NSFileSize] as? NSNumber {
@@ -232,7 +232,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			return catType
 		}
 		
-		if let handle = NSFileHandle(forReadingFromURL: url, error: nil) {
+		if let handle = try? NSFileHandle(forReadingFromURL: url) {
 			var fileHeader = handle.readDataOfLength(Int(maxLength))
 			
 			if len > 1000000 {
@@ -240,7 +240,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			}
 			
 			if fileHeader.gzipData {
-				var command = "/usr/bin/gzip -dc '\(EscapePath(url.path!))'"
+				let command = "/usr/bin/gzip -dc '\(EscapePath(url.path!))'"
 				fileHeader = dataByExecutingCommand(command, maxLength: Int(maxLength))!
 				manType = "mangz"
 				catType = "catgz"
@@ -256,18 +256,21 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
-	override func openDocumentWithContentsOfURL(url: NSURL, display displayDocument: Bool, completionHandler: ((NSDocument!, Bool, NSError!) -> Void)) {
+	override func openDocumentWithContentsOfURL(url: NSURL, display displayDocument: Bool, completionHandler: ((NSDocument?, Bool, NSError?) -> Void)) {
 		let standardizedURL = url.standardizedURL!
 		var error: NSError? = nil
 		let numDocuments = documents.count
 		
-		var document = documentForURL(standardizedURL) as? NSDocument
+		var document = documentForURL(standardizedURL)
 		if document == nil {
-			var atype = typeFromURL(standardizedURL)
-			if let type = atype {
-				document = makeDocumentWithContentsOfURL(standardizedURL, ofType: type, error: &error) as? NSDocument
-				document?.makeWindowControllers()
+			if let type = typeFromURL(standardizedURL) {
+				do {
+				document = try makeDocumentWithContentsOfURL(standardizedURL, ofType: type)
+				document!.makeWindowControllers()
 				addDocument(document!)
+				} catch let anErr as NSError {
+					error = anErr
+				}
 			}
 		}
 		
@@ -276,11 +279,11 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		completionHandler(document, !docAdded, error)
 	}
 	
-	override func reopenDocumentForURL(urlOrNil: NSURL!, withContentsOfURL contentsURL: NSURL, display displayDocument: Bool, completionHandler: ((NSDocument!, Bool, NSError!) -> Void)) {
+	override func reopenDocumentForURL(urlOrNil: NSURL!, withContentsOfURL contentsURL: NSURL, display displayDocument: Bool, completionHandler: ((NSDocument?, Bool, NSError?) -> Void)) {
 		openDocumentWithContentsOfURL(urlOrNil, display: displayDocument, completionHandler: completionHandler)
 	}
 	
-	override func runModalOpenPanel(openPanel: NSOpenPanel, forTypes types: [AnyObject]) -> Int {
+	override func runModalOpenPanel(openPanel: NSOpenPanel, forTypes types: [String]?) -> Int {
 		return openPanel.runModal()
 	}
 	
@@ -326,8 +329,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			document = ManDocument(name: name, section: section, manPath: manPath, title: title)
 			
 			if let filename = manFileForName(name, section: section, manPath: manPath) {
-				let afn = filename.stringByResolvingSymlinksInPath
-				let fileURL = NSURL(fileURLWithPath: afn)!
+				let afn = (filename as NSString).stringByResolvingSymlinksInPath
+				let fileURL = NSURL(fileURLWithPath: afn)
 				noteNewRecentDocumentURL(fileURL)
 				document?.fileURL = fileURL
 			}
@@ -342,7 +345,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	func openAproposDocument(apropos: String, manPath: String) -> AproposDocument? {
-		var title = "Apropos \(apropos)"
+		let title = "Apropos \(apropos)"
 		var document = documentForTitle(title) as? AproposDocument
 		
 		if document == nil {
@@ -377,7 +380,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	func openString(string: String) {
-		var words = GetWordArray(string)
+		let words = GetWordArray(string)
 		if words.count > 20 {
 			let locCount = NSNumberFormatter.localizedStringFromNumber(words.count, numberStyle: .DecimalStyle)
 			let alert = NSAlert()
@@ -438,7 +441,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 
 	@IBAction func runPageLayout(sender: AnyObject!) {
-		(NSApp as! NSApplication).runPageLayout(sender)
+		(NSApp as NSApplication).runPageLayout(sender)
 	}
 	
 	override init() {
@@ -473,7 +476,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		/* Append the section if chosen in the popup and not explicity defined in the string */
-		if count(aString) > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.rangeOfString("(") == nil {
+		if aString.characters.count > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.rangeOfString("(") == nil {
 			aString += "(\(openSectionPopup.indexOfSelectedItem))"
 		}
 		openString(aString)
@@ -491,7 +494,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		openTextField.selectText(self)
 		
 		if useModalPanels {
-			if (NSApp as! NSApplication).runModalForWindow(openTextPanel) == NSModalResponseOK {
+			if (NSApp as NSApplication).runModalForWindow(openTextPanel) == NSModalResponseOK {
 				openTitleFromPanel()
 			}
 		} else {
@@ -508,7 +511,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		aproposField.selectText(self)
 		
 		if useModalPanels {
-			if (NSApp as! NSApplication).runModalForWindow(aproposPanel) == NSModalResponseOK {
+			if (NSApp as NSApplication).runModalForWindow(aproposPanel) == NSModalResponseOK {
 				openAproposFromPanel()
 			}
 		} else {
@@ -522,7 +525,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as! NSApplication).stopModalWithCode(NSModalResponseOK)
+			(NSApp as NSApplication).stopModalWithCode(NSModalResponseOK)
 		} else {
 			openAproposFromPanel()
 		}
@@ -534,7 +537,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as! NSApplication).stopModalWithCode(NSModalResponseOK)
+			(NSApp as NSApplication).stopModalWithCode(NSModalResponseOK)
 		} else {
 			openTitleFromPanel()
 		}
@@ -543,7 +546,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBAction func cancelText(sender: NSView!) {
 		sender.window?.orderOut(self)
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as! NSApplication).stopModalWithCode(NSModalResponseCancel)
+			(NSApp as NSApplication).stopModalWithCode(NSModalResponseCancel)
 		}
 	}
 }
@@ -590,15 +593,15 @@ private func GetWordArray(string: String) -> [String] {
 		
 		//var aTex: NSStringCompareOptions = .CaseInsensitiveSearch | .AnchoredSearch
 		
-		var paramRange = param.rangeOfString(URL_SCHEME_PREFIX, options: .CaseInsensitiveSearch | .AnchoredSearch)
+		let paramRange = param.rangeOfString(URL_SCHEME_PREFIX, options: [.CaseInsensitiveSearch, .AnchoredSearch])
 		var pageNames = [String]()
 		
 		if let aRange = paramRange {
 			let path = param.substringFromIndex(aRange.endIndex)
-			var components = path.pathComponents
+			let components = (path as NSString).pathComponents
 			
 			for name in components {
-				if count(name) == 0 || name == "" {
+				if name.characters.count == 0 || name == "" {
 					continue
 				}
 				if IsSectionWord(name) {
@@ -613,7 +616,7 @@ private func GetWordArray(string: String) -> [String] {
 			}
 			
 			if pageNames.count > 0 {
-				(ManDocumentController.sharedDocumentController() as! ManDocumentController).openString(join(" ", pageNames))
+				(ManDocumentController.sharedDocumentController() as! ManDocumentController).openString(pageNames.joinWithSeparator(" "))
 			}
 		}
 		

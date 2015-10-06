@@ -53,7 +53,7 @@ class ManAppInfo: Hashable {
 	lazy var appURL: NSURL = {
 		let workSpace = NSWorkspace.sharedWorkspace()
 		if let path = workSpace.absolutePathForAppBundleWithIdentifier(self.bundleID) {
-			return NSURL(fileURLWithPath: path)!
+			return NSURL(fileURLWithPath: path)
 		}
 		return NSURL()
 	}()
@@ -80,7 +80,7 @@ class ManAppInfo: Hashable {
 	}
 	
 	func compare(string: ManAppInfo) -> NSComparisonResult {
-		return displayName.compare(string.displayName, options: .CaseInsensitiveSearch | .NumericSearch)
+		return displayName.compare(string.displayName, options: [.CaseInsensitiveSearch, .NumericSearch])
 	}
 	
 	func localizedStandardCompare(string: ManAppInfo) -> NSComparisonResult {

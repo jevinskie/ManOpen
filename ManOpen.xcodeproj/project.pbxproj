@@ -357,20 +357,20 @@
 		55EBB7991A803DF3001A27BC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D39279070821FFA400376676 /* ManOpenProtocol.h */,
-				553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */,
 				55838BFF19C0AD2900FFEDDE /* AppInfo.swift */,
+				553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */,
+				55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */,
 				55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */,
 				553A5B2219BFE811003D74A9 /* ManDocument.swift */,
 				55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */,
-				55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */,
-				55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */,
-				55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */,
-				5516ECE71A7CA21200760214 /* ManTextView.swift */,
 				5567E0541A7D615E005013B3 /* ManNotificationCallback.h */,
 				5567E0551A7D615E005013B3 /* ManNotificationCallback.m */,
+				D39279070821FFA400376676 /* ManOpenProtocol.h */,
+				5516ECE71A7CA21200760214 /* ManTextView.swift */,
 				D39279090821FFA400376676 /* NSData+Utils.h */,
 				D39278FA0821FFA400376676 /* NSData+Utils.m */,
+				55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */,
+				55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

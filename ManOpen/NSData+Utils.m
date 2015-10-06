@@ -107,7 +107,7 @@
 {
     const int fd = [self fileDescriptor];
     static const size_t allocated = 16384;
-    unsigned char *bytes = alloca(allocated);
+    unsigned char bytes[allocated] = {0};
     ssize_t bytesRead;
     NSMutableData *ourData = [[NSMutableData alloc] init];
     
@@ -127,6 +127,9 @@
         return nil;
     }
 
+    if (error) {
+        *error = nil;
+    }
     return [ourData copy];
 }
 

@@ -170,14 +170,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	// MARK: DefaultManApp
 	
 	func setAppPopupToCurrent() {
-		var currIndex = appInfos.indexOfBundleID(currentAppID)
+		let currIndex = appInfos.indexOfBundleID(currentAppID) ?? 0
 		
-		if (currIndex == nil) {
-			currIndex = 0;
-		}
-		
-		if currIndex! < appPopup.numberOfItems {
-			appPopup.selectItemAtIndex(currIndex!)
+		if currIndex < appPopup.numberOfItems {
+			appPopup.selectItemAtIndex(currIndex)
 		}
 	}
 	

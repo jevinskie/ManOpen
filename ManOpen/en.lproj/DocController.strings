@@ -51,7 +51,7 @@
 "66.title" = "Cancel";
 
 /* Class = "NSTextFieldCell"; title = "`Apropos' lists man pages whose summaries contain the given text"; ObjectID = "67"; */
-"67.title" = "`Apropos' lists man pages whose summaries contain the given text";
+"67.title" = "‘Apropos’ lists man pages whose summaries contain the given text";
 
 /* Class = "NSButtonCell"; title = "Open"; ObjectID = "76"; */
 "76.title" = "Open";

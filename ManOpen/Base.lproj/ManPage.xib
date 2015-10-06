@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7528.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ManDocument" customModule="ManOpen" customModuleProvider="target">
@@ -27,6 +27,7 @@
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="10">
                         <rect key="frame" x="74" y="412" width="384" height="22"/>
+                        <animations/>
                         <textFieldCell key="cell" alignment="left" title="Title" id="62">
                             <font key="font" metaFont="system" size="18"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -39,6 +40,7 @@
                             <constraint firstAttribute="width" constant="48" id="cUc-92-zE4"/>
                             <constraint firstAttribute="height" constant="48" id="zCf-Y2-x6P"/>
                         </constraints>
+                        <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ManOpen" id="63"/>
                     </imageView>
                     <button toolTip=" Open selection " translatesAutoresizingMaskIntoConstraints="NO" id="25">
@@ -47,6 +49,7 @@
                             <constraint firstAttribute="height" constant="40" id="DBq-iQ-6v7"/>
                             <constraint firstAttribute="width" constant="40" id="VBy-Pn-Y2B"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="helpQMark" imagePosition="only" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="64">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -64,6 +67,7 @@
                                 <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpen" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="603" height="384"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="603" height="384"/>
                                     <size key="maxSize" width="10000000" height="10000000"/>
@@ -75,19 +79,24 @@
                                     </connections>
                                 </textView>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </clipView>
+                        <animations/>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="mJG-7p-W92">
                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="deh-ox-tjw">
                             <rect key="frame" x="588" y="1" width="16" height="384"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
                     </scrollView>
                     <popUpButton horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="45">
                         <rect key="frame" x="461" y="402" width="79" height="22"/>
+                        <animations/>
                         <popUpButtonCell key="cell" type="push" title="Section:" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" borderStyle="border" inset="2" pullsDown="YES" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="49" id="65">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -117,6 +126,7 @@
                     <constraint firstItem="21" firstAttribute="top" secondItem="9" secondAttribute="top" constant="5" id="w3Z-G0-ci4"/>
                     <constraint firstAttribute="trailing" secondItem="cnW-DY-KgJ" secondAttribute="trailing" id="zJh-u1-xBR"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="19j-iP-JbH"/>

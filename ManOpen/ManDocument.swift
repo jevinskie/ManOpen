@@ -72,8 +72,8 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		super.windowControllerDidLoadNib(aController)
 		// Add any code here that needs to be executed once the windowController has loaded the document's window.
 		
-		if let aSizeString = sizeString {
-			let windowSize = NSSize(string: aSizeString)
+		if let sizeString = sizeString {
+			let windowSize = NSSize(string: sizeString)
 			let window = textView.window!
 			var frame = window.frame
 			
@@ -88,7 +88,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		textView.backgroundColor = defaults.manBackgroundColor
 		textView.textColor = defaults.manTextColor
 		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000), dispatch_get_main_queue()) {
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10), dispatch_get_main_queue()) {
 			self.showData()
 		}
 		
@@ -140,8 +140,8 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		super.init()
 	}
 
-	init?(name: String, section: String?, manPath: String?, title: String) {
-		super.init()
+	convenience init?(name: String, section: String?, manPath: String?, title: String) {
+		self.init()
 		loadDocumentWithName(name, section: section, manPath: manPath, title: title)
 	}
 	

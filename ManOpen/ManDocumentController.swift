@@ -276,6 +276,10 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		
 		let docAdded = numDocuments < documents.count
 
+		if displayDocument {
+			document?.showWindows()
+		}
+		
 		completionHandler(document, !docAdded, error)
 	}
 	

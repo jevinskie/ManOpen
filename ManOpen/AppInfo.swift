@@ -41,10 +41,8 @@ final class ManAppInfo: Hashable {
 			niceName = url.lastPathComponent
 		}
 		
-		if let adict = infoDict {
-			if let appVersion = adict["CFBundleShortVersionString"] as? String {
-				niceName = "\(niceName!) (\(appVersion))"
-			}
+		if let adict = infoDict, appVersion = adict["CFBundleShortVersionString"] as? String {
+			niceName = "\(niceName!) (\(appVersion))"
 		}
 		
 		return niceName!
@@ -86,5 +84,4 @@ final class ManAppInfo: Hashable {
 	func localizedStandardCompare(string: ManAppInfo) -> NSComparisonResult {
 		return displayName.localizedStandardCompare(string.displayName)
 	}
-
 }

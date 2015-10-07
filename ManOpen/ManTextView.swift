@@ -28,11 +28,15 @@ class ManTextView: NSTextView {
 				let ignoreRange = NSRange.notFound
 				var rectCount = 0
 				
-				let rects = layout?.rectArrayForCharacterRange(currRange, withinSelectedCharacterRange: ignoreRange, inTextContainer: container!, rectCount: &rectCount)
+				let rects: UnsafeBufferPointer<NSRect> = {
+					let aRec = layout!.rectArrayForCharacterRange(currRange, withinSelectedCharacterRange: ignoreRange, inTextContainer: container!, rectCount: &rectCount)
+					return UnsafeBufferPointer(start: aRec, count: rectCount)
+				}()
 				
-				for i in 0 ..< rectCount {
-					if (NSIntersectsRect(visible, rects![i])) {
-						addCursorRect(rects![i], cursor: NSCursor.pointingHandCursor())
+				
+				for aRect in rects {
+					if aRect.intersects(visible) {
+						addCursorRect(aRect, cursor: NSCursor.pointingHandCursor())
 					}
 				}
 			}
@@ -56,7 +60,7 @@ class ManTextView: NSTextView {
 	/// Make space page down (and shift/alt-space page up)
 	override func keyDown(event: NSEvent) {
 		if event.charactersIgnoringModifiers == " " {
-			if (event.modifierFlags.intersect(.AlternateKeyMask)) == .AlternateKeyMask || (event.modifierFlags.intersect(.ShiftKeyMask)) == .ShiftKeyMask {
+			if event.modifierFlags.contains(.AlternateKeyMask) || event.modifierFlags.contains(.ShiftKeyMask) {
 				pageUp(self)
 			} else {
 				pageDown(self)

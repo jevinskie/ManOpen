@@ -28,10 +28,10 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		return title
 	}
 	
-    override var windowNibName: String {
-        return "Apropos"
-    }
-
+	override var windowNibName: String {
+		return "Apropos"
+	}
+	
 	func parseOutput(output: String!) {
 		if output == nil {
 			return
@@ -78,11 +78,11 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		}
 	}
 	
-    override func windowControllerDidLoadNib(aController: NSWindowController) {
+	override func windowControllerDidLoadNib(aController: NSWindowController) {
 		let aSizeString = NSUserDefaults.standardUserDefaults().stringForKey("AproposWindowSize")
-
-        super.windowControllerDidLoadNib(aController)
-        // Add any code here that needs to be executed once the windowController has loaded the document's window.
+		
+		super.windowControllerDidLoadNib(aController)
+		// Add any code here that needs to be executed once the windowController has loaded the document's window.
 		if let sizeString = aSizeString {
 			let windowSize = NSSize(string: sizeString)
 			let window = tableView.window
@@ -97,21 +97,21 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		tableView.target = self
 		tableView.doubleAction = "openManPages:"
 		tableView.sizeLastColumnToFit()
-    }
-
-    override func dataOfType(typeName: String?) throws -> NSData {
-        // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
-        // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
+	}
+	
+	override func dataOfType(typeName: String?) throws -> NSData {
+		// Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
+		// You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
 		throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-    }
-
-    override func readFromData(data: NSData?, ofType typeName: String?) throws {
-        // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
-        // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
-        // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
+	}
+	
+	override func readFromData(data: NSData?, ofType typeName: String?) throws {
+		// Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
+		// You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
+		// If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
 		throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-    }
-
+	}
+	
 	private func loadWithString(apropos: String, manPath: String, title aTitle: String) {
 		var aapropos = apropos
 		let docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
@@ -125,7 +125,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			aapropos = "."
 		}
 		searchString = aapropos
-
+		
 		/*
 		* Starting on Tiger, man -k doesn't quite work the same as apropos directly.
 		* Use apropos then, even on Panther.  Panther/Tiger no longer accept the -M
@@ -134,7 +134,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		*/
 		// [command appendString:@" -k"];
 		command = "/usr/bin/apropos"
-
+		
 		command += " \(EscapePath(aapropos, addSurroundingQuotes: true))"
 		let output = docController.dataByExecutingCommand(command, manPath: manPath)!
 		/* The whatis database appears to not be UTF8 -- at least, UTF8 can fail, even on 10.7 */
@@ -144,7 +144,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		}
 		parseOutput(outString)
 	}
-
+	
 	override func printOperationWithSettings(printSettings: [String : AnyObject]) throws -> NSPrintOperation {
 		let op = NSPrintOperation(view: tableView, printInfo: NSPrintInfo(dictionary: printSettings))
 		return op
@@ -161,13 +161,13 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		let size = tableView.window!.frame.size
 		NSUserDefaults.standardUserDefaults()["AproposWindowSize"] = size.stringValue
 	}
-
+	
 	override init() {
 		super.init()
 	}
 	
-	init?(string apropos: String, manPath: String, title aTitle: String) {
-		super.init()
+	convenience init?(string apropos: String, manPath: String, title aTitle: String) {
+		self.init()
 		loadWithString(apropos, manPath: manPath, title: aTitle)
 		
 		if aproposItems.count == 0 {

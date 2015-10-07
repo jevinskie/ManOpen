@@ -36,7 +36,7 @@ final class ManAppInfo: Hashable {
 			}
 			
 			return nil
-		}()
+			}()
 		if (niceName == nil) {
 			niceName = url.lastPathComponent
 		}
@@ -46,7 +46,7 @@ final class ManAppInfo: Hashable {
 		}
 		
 		return niceName!
-	}()
+		}()
 	
 	lazy var appURL: NSURL = {
 		let workSpace = NSWorkspace.sharedWorkspace()
@@ -54,7 +54,7 @@ final class ManAppInfo: Hashable {
 			return NSURL(fileURLWithPath: path)
 		}
 		return NSURL()
-	}()
+		}()
 	
 	func isEqual(other: AnyObject!) -> Bool {
 		if let isAppInfo = other as? ManAppInfo {

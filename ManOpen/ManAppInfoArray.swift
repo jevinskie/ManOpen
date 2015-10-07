@@ -20,9 +20,8 @@ private func GenerateManInfos() -> [ManAppInfo] {
 	return anAppInfo
 }
 
-class ManAppInfoArray: NSObject, SequenceType {
+final class ManAppInfoArray: NSObject, SequenceType {
 	private(set) var allManViewerApps = GenerateManInfos()
-		
 	override init() {
 		super.init()
 		
@@ -36,11 +35,11 @@ class ManAppInfoArray: NSObject, SequenceType {
 	func generate() -> IndexingGenerator<[ManAppInfo]> {
 		return allManViewerApps.generate();
 	}
-
+	
 	subscript(location: Int) -> ManAppInfo {
 		return allManViewerApps[location]
 	}
-		
+	
 	func addApp(ID id: String, shouldResort sort: Bool = false) {
 		let info = ManAppInfo(bundleID: id)
 		let contains = allManViewerApps.filter { (anObj) -> Bool in

@@ -55,16 +55,16 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		return textScroll.contentView.documentView as! ManTextView
 	}
 	
-    override var windowNibName: String {
-        // Override returning the nib file name of the document
-        // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-        return "ManPage"
-    }
+	override var windowNibName: String {
+		// Override returning the nib file name of the document
+		// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
+		return "ManPage"
+	}
 	
 	override class func canConcurrentlyReadDocumentsOfType(typeName: String) -> Bool {
 		return true
 	}
-
+	
 	override func windowControllerDidLoadNib(aController: NSWindowController) {
 		let defaults = NSUserDefaults.standardUserDefaults()
 		let sizeString = defaults.stringForKey("ManWindowSize")
@@ -95,7 +95,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		textView.window?.makeFirstResponder(textView)
 		textView.window?.delegate = self
 	}
-
+	
 	override func readFromURL(url: NSURL, ofType typeName: String) throws {
 		switch typeName {
 		case "man":
@@ -127,8 +127,8 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data")])
 		}
 	}
-
-	/*
+	
+	/**
 	* Standard NSDocument method.  We only want to override if we aren't
 	* representing an actual file.
 	*/
@@ -139,7 +139,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 	override init() {
 		super.init()
 	}
-
+	
 	convenience init?(name: String, section: String?, manPath: String?, title: String) {
 		self.init()
 		loadDocumentWithName(name, section: section, manPath: manPath, title: title)
@@ -272,7 +272,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		// no need to keep around rtf data
 		taskData = nil;
 	}
-
+	
 	func setupSectionPopup() {
 		sectionPopup.removeAllItems()
 		sectionPopup.addItemWithTitle("Section:")
@@ -282,7 +282,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			sectionPopup.addItemsWithTitles(sections)
 		}
 	}
-
+	
 	func addSectionHeader(header: String, range: NSRange) {
 		/* Make sure it is a header -- error text sometimes is not Courier, so it gets passed in here. */
 		if header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet()) != nil &&
@@ -331,7 +331,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		let size = textView.window!.frame.size
 		NSUserDefaults.standardUserDefaults().setObject(size.stringValue, forKey: "ManWindowSize")
 	}
-
+	
 	@IBAction func openSelection(sender: AnyObject?) {
 		let selectedRange = textView.selectedRange()
 		
@@ -342,7 +342,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		
 		textView.window?.makeFirstResponder(textView)
 	}
-
+	
 	@IBAction func displaySection(sender: AnyObject?) {
 		let section = sectionPopup.indexOfSelectedItem
 		if (section > 0 && section <= sectionRanges.count) {
@@ -350,7 +350,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			textView.scrollRangeToTop(range)
 		}
 	}
-
+	
 	@IBAction func copyURL(sender: AnyObject?) {
 		if let aCopyURL = copyURL {
 			let pb = NSPasteboard.generalPasteboard()
@@ -384,7 +384,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		
 		return operation
 	}
-
+	
 	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
 		if menuItem.action == "copyURL:" {
 			return copyURL != nil
@@ -392,7 +392,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		
 		return super.validateMenuItem(menuItem)
 	}
-
+	
 	// MARK: NSWindowRestoration functions
 	override func encodeRestorableStateWithCoder(coder: NSCoder) {
 		super.encodeRestorableStateWithCoder(coder)

@@ -45,7 +45,6 @@ func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
 
 @NSApplicationMain
 class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegate {
-
 	@IBOutlet weak var helpScrollView: NSScrollView!
 	@IBOutlet weak var openTextPanel: NSPanel!
 	@IBOutlet weak var aproposPanel: NSPanel!
@@ -55,7 +54,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBOutlet weak var openSectionPopup: NSPopUpButton!
 	var startedUp = false
 	private var nibObjects = [AnyObject]()
-
+	
 	func ensureActive() {
 		if NSApplication.sharedApplication().active {
 			NSApplication.sharedApplication().activateIgnoringOtherApps(true)
@@ -73,7 +72,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		if force {
 			ensureActive()
 		}
-
+		
 		openAproposDocument(apropos, manPath: manPath ?? NSUserDefaults.standardUserDefaults().manPath)
 	}
 	
@@ -138,7 +137,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 					NSApplication.sharedApplication().terminate(self)
 				})
 			})
-
+			
 		}
 	}
 	
@@ -265,9 +264,9 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		if document == nil {
 			if let type = typeFromURL(standardizedURL) {
 				do {
-				document = try makeDocumentWithContentsOfURL(standardizedURL, ofType: type)
-				document!.makeWindowControllers()
-				addDocument(document!)
+					document = try makeDocumentWithContentsOfURL(standardizedURL, ofType: type)
+					document!.makeWindowControllers()
+					addDocument(document!)
 				} catch let anErr as NSError {
 					error = anErr
 				}
@@ -275,7 +274,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		let docAdded = numDocuments < documents.count
-
+		
 		if displayDocument {
 			document?.showWindows()
 		}
@@ -433,9 +432,9 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			}
 			openWord(lastWord)
 		}
-
+		
 	}
-
+	
 	@IBAction func orderFrontHelpPanel(sender: AnyObject!) {
 		helpPanel.makeKeyAndOrderFront(sender)
 	}
@@ -443,7 +442,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBAction func orderFrontPreferencesPanel(sender: AnyObject?) {
 		PrefPanelController.sharedInstance.showWindow(sender)
 	}
-
+	
 	@IBAction func runPageLayout(sender: AnyObject!) {
 		(NSApp as NSApplication).runPageLayout(sender)
 	}
@@ -465,9 +464,9 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		
 		nibObjects = tmpNibArray! as [AnyObject]
 	}
-
+	
 	required init(coder: NSCoder) {
-	    fatalError("init(coder:) has not been implemented")
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	func openTitleFromPanel() {
@@ -488,7 +487,14 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	@IBAction func openSection(sender: AnyObject!) {
-		
+		let aTag = sender.tag()
+		if aTag == 0 {
+			openApropos("") // all pages
+		} else if aTag == 20 {
+			openApropos("(n)")
+		} else {
+			openApropos("(\(aTag))")
+		}
 	}
 	
 	@IBAction func openTextPanel(sender: AnyObject!) {

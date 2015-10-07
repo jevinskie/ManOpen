@@ -27,7 +27,6 @@ internal func dataForColor(color: NSColor) -> NSData {
 }
 
 extension NSUserDefaults {
-	
 	var manTextColor: NSColor {
 		get {
 			return ColorForKey(manTextColorKey, defaults: self)!

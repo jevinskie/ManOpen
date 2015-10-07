@@ -111,7 +111,7 @@ class ManDocument: NSDocument, NSWindowDelegate {
 			loadCatFile(url.path!, isGzip: true)
 			
 		default:
-			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSLocalizedDescriptionKey: "Invalid document type"])
+			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid document type", comment:"Invalid document type")])
 			
 		}
 		

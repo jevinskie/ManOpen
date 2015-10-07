@@ -36,3 +36,5 @@
 /* Warning */
 "Warning" = "Warning";
 
+/* Invalid document type */
+"Invalid document type" = "Invalid document type";

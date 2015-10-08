@@ -10,7 +10,6 @@ import Cocoa
 import SwiftAdditions
 
 class ManTextView: NSTextView {
-	
 	override func resetCursorRects() {
 		let container = textContainer
 		let layout = layoutManager
@@ -70,13 +69,12 @@ class ManTextView: NSTextView {
 		}
 	}
 	
-	/**
-	* Draw page numbers when printing. Under early versions of MacOS X... the normal
-	* NSString drawing methods don't work in the context of this method. So, I fell back on
-	* CoreGraphics primitives, which did. However, I'm now just supporting Tiger (10.4) and up,
-	* and it looks like the bugs have been fixed, so we can just use the higher-level
-	* NSStringDrawing now, thankfully.
-	*/
+	
+	/// Draw page numbers when printing. Under early versions of MacOS X... the normal
+	/// NSString drawing methods don't work in the context of this method. So, I fell back on
+	/// CoreGraphics primitives, which did. However, I'm now just supporting Tiger (10.4) and up,
+	/// and it looks like the bugs have been fixed, so we can just use the higher-level
+	/// NSStringDrawing now, thankfully.
 	override func drawPageBorderWithSize(borderSize: NSSize) {
 		let font = NSUserDefaults.standardUserDefaults().manFont
 		

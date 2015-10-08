@@ -10,7 +10,7 @@ import Cocoa
 
 private let resHome = (NSHomeDirectory() as NSString).stringByResolvingSymlinksInPath + "/"
 
-/** Formatter to abbreviate folders in the user's home directory for a nicer display. */
+/// Formatter to abbreviate folders in the user's home directory for a nicer display.
 class DisplayPathFormatter: NSFormatter {
 	override func stringForObjectValue(obj: AnyObject) -> String? {
 		if let aStr = obj as? NSString {

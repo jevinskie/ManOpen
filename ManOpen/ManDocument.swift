@@ -37,7 +37,7 @@ private var filterCommand: String {
 	return command
 }
 
-class ManDocument: NSDocument, NSWindowDelegate {
+final class ManDocument: NSDocument, NSWindowDelegate {
 	@IBOutlet weak var textScroll: NSScrollView!
 	@IBOutlet weak var titleStringField: NSTextField!
 	@IBOutlet weak var openSelectionButton: NSButton!
@@ -128,10 +128,9 @@ class ManDocument: NSDocument, NSWindowDelegate {
 		}
 	}
 	
-	/**
-	* Standard NSDocument method.  We only want to override if we aren't
-	* representing an actual file.
-	*/
+	
+	/// Standard NSDocument method.  We only want to override if we aren't
+	/// representing an actual file.
 	override var displayName: String {
 		return fileURL != nil ? super.displayName : shortTitle
 	}

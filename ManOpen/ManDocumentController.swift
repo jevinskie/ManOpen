@@ -383,7 +383,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	func openString(string: String) {
-		let words = GetWordArray(string)
+		let words = getWordArray(string)
 		if words.count > 20 {
 			let locCount = NSNumberFormatter.localizedStringFromNumber(words.count, numberStyle: .DecimalStyle)
 			let alert = NSAlert()
@@ -471,7 +471,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	
 	func openTitleFromPanel() {
 		var aString = openTextField.stringValue
-		var words = GetWordArray(aString)
+		var words = getWordArray(aString)
 		
 		/* If the string is of the form "3 printf", arrange it better for our parser.  Requested by Eskimo.  Also accept 'n' as a section */
 		if words.count == 2 && aString.rangeOfString("(") == nil && IsSectionWord(words[0]) {
@@ -575,7 +575,7 @@ private func IsSectionWord(word: String) -> Bool
 	return false
 }
 
-private func GetWordArray(string: String) -> [String] {
+private func getWordArray(string: String) -> [String] {
 	let spaceSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
 	let nonspaceSet = spaceSet.invertedSet
 	var wordArray = [String]()

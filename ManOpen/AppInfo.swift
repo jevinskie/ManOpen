@@ -59,6 +59,8 @@ final class ManAppInfo: Hashable {
 	func isEqual(other: AnyObject!) -> Bool {
 		if let isAppInfo = other as? ManAppInfo {
 			return self == isAppInfo
+		} else if let isString = other as? String {
+			return self == isString
 		} else {
 			return false
 		}

@@ -160,7 +160,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		/* The menu on our app popup may call this validate method ;-) */
-		if action == "chooseNewApp" {
+		if action == "chooseNewApp:" {
 			return true;
 		}
 

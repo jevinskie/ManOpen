@@ -127,9 +127,6 @@
         return nil;
     }
 
-    if (error) {
-        *error = nil;
-    }
     return [ourData copy];
 }
 

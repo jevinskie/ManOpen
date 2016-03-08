@@ -10,7 +10,8 @@
 
 void registerNameWithRootObject(NSString *aname, id aRootObject)
 {
-	NSConnection *connection = [NSConnection new];
+	static NSConnection *connection;
+	connection = [NSConnection new];
 	[connection registerName:aname];
 	[connection setRootObject:aRootObject];
 }
@@ -21,6 +22,8 @@ void tryCatchBlock(dispatch_block_t aTry, void(^catchBlock)(NSException*))
 		aTry();
 	}
 	@catch (NSException *exception) {
-		catchBlock(exception);
+		if (catchBlock) {
+			catchBlock(exception);
+		}
 	}
 }

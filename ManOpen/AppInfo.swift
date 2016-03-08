@@ -68,7 +68,6 @@ final class ManAppInfo: Hashable {
 	
 	init(bundleID aBundleID: String) {
 		bundleID = aBundleID
-		//super.init()
 	}
 	
 	var hashValue: Int {

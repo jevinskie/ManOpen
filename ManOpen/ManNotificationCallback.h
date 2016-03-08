@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-void registerNameWithRootObject(NSString * __nonnull aname, id __nonnull aRootObject);
+NS_ASSUME_NONNULL_BEGIN
 
-void tryCatchBlock(dispatch_block_t __nonnull aTry, void(^ __nonnull catchBlock)(NSException* __nonnull));
+void registerNameWithRootObject(NSString *aname, id aRootObject);
+
+void tryCatchBlock(dispatch_block_t aTry, void(^ __nullable catchBlock)(NSException*));
+
+NS_ASSUME_NONNULL_END

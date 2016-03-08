@@ -61,6 +61,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
+	//@objc(openName:section:manPath:forceToFront:) func open(name name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true)
 	@objc func openName(name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
@@ -91,7 +92,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	func applicationDidFinishLaunching(notification: NSNotification) {
-		(NSApp as NSApplication).servicesProvider = self
+		NSApp.servicesProvider = self
 		openTextPanel.setFrameUsingName("OpenTitlePanel")
 		openTextPanel.setFrameAutosaveName("OpenTitlePanel")
 		aproposPanel.setFrameUsingName("AproposPanel")
@@ -444,7 +445,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	@IBAction func runPageLayout(sender: AnyObject!) {
-		(NSApp as NSApplication).runPageLayout(sender)
+		NSApp.runPageLayout(sender)
 	}
 	
 	override init() {
@@ -504,7 +505,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		openTextField.selectText(self)
 		
 		if useModalPanels {
-			if (NSApp as NSApplication).runModalForWindow(openTextPanel) == NSModalResponseOK {
+			if NSApp.runModalForWindow(openTextPanel) == NSModalResponseOK {
 				openTitleFromPanel()
 			}
 		} else {
@@ -521,7 +522,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		aproposField.selectText(self)
 		
 		if useModalPanels {
-			if (NSApp as NSApplication).runModalForWindow(aproposPanel) == NSModalResponseOK {
+			if NSApp.runModalForWindow(aproposPanel) == NSModalResponseOK {
 				openAproposFromPanel()
 			}
 		} else {
@@ -535,7 +536,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as NSApplication).stopModalWithCode(NSModalResponseOK)
+			NSApp.stopModalWithCode(NSModalResponseOK)
 		} else {
 			openAproposFromPanel()
 		}
@@ -547,7 +548,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 		
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as NSApplication).stopModalWithCode(NSModalResponseOK)
+			NSApp.stopModalWithCode(NSModalResponseOK)
 		} else {
 			openTitleFromPanel()
 		}
@@ -556,7 +557,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBAction func cancelText(sender: NSView!) {
 		sender.window?.orderOut(self)
 		if sender.window!.level == NSModalPanelWindowLevel {
-			(NSApp as NSApplication).stopModalWithCode(NSModalResponseCancel)
+			NSApp.stopModalWithCode(NSModalResponseCancel)
 		}
 	}
 }

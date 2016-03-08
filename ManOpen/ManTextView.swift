@@ -8,6 +8,9 @@
 
 import Cocoa
 import SwiftAdditions
+#if USE_CGCONTEXT_FOR_PRINTING
+import CoreText
+#endif
 
 class ManTextView: NSTextView {
 	override func resetCursorRects() {
@@ -82,27 +85,40 @@ class ManTextView: NSTextView {
 		let pageString = "\(currPage)"
 		let style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
 		var drawAttribs = [String: AnyObject]()
-		let drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
 		
 		style.alignment = .Center
 		drawAttribs[NSParagraphStyleAttributeName] = style
 		drawAttribs[NSFontAttributeName] = font
-		
-		(pageString as NSString).drawInRect(drawRect, withAttributes: drawAttribs)
-		
-		/*
-CGFloat strWidth = [str sizeWithAttributes:attribs].width;
-NSPoint point = NSMakePoint(size.width/2 - strWidth/2, 20.0f);
-CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+		#if !USE_CGCONTEXT_FOR_PRINTING
+			let drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
+			
+			(pageString as NSString).drawInRect(drawRect, withAttributes: drawAttribs)
+		#else
+			let strWidth = (pageString as NSString).sizeWithAttributes(drawAttribs).width
+			let point = NSPoint(x: borderSize.width/2 - strWidth/2, y: 20.0)
+			let context = NSGraphicsContext.currentContext()!.CGContext
+			CGContextSaveGState(context);
+			CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+			CGContextSetTextDrawingMode(context, .Fill);  //needed?
+			CGContextSetGrayFillColor(context, 0.0, 1.0);
+						
+			CGContextSetFont(context, CGFontCreateWithFontName(font.fontName))
+			CGContextSetFontSize(context, font.pointSize)
+			let ctfont = CTFontCreateWithName(font.fontName, font.pointSize, nil)
+			let ctDict = [kCTFontAttributeName as String: ctfont]
+			let attrStr = NSAttributedString(string: pageString, attributes: ctDict)
+			CGContextSetTextPosition(context, point.x, point.y)
+			let line = CTLineCreateWithAttributedString(attrStr)
 
-CGContextSaveGState(context);
-CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-CGContextSetTextDrawingMode(context, kCGTextFill);  //needed?
-CGContextSetGrayFillColor(context, 0.0f, 1.0f);
-CGContextSelectFont(context, [[font fontName] cStringUsingEncoding:NSMacOSRomanStringEncoding], [font pointSize], kCGEncodingMacRoman);
-CGContextShowTextAtPoint(context, point.x, point.y, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], [str lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]);
-CGContextRestoreGState(context);
-*/
+			// Core Text uses a reference coordinate system with the origin on the bottom-left
+			// flip the coordinate system before drawing or the text will appear upside down
+			CGContextTranslateCTM(context, 0, borderSize.height);
+			CGContextScaleCTM(context, 1.0, -1.0);
+			
+			CTLineDraw(line, context)
+			
+			CGContextRestoreGState(context);
+		#endif
 	}
 }
 

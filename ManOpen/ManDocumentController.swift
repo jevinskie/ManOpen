@@ -56,7 +56,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	private var nibObjects = [AnyObject]()
 	
 	func ensureActive() {
-		if NSApplication.sharedApplication().active {
+		if !NSApplication.sharedApplication().active {
 			NSApplication.sharedApplication().activateIgnoringOtherApps(true)
 		}
 	}
@@ -145,8 +145,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	func manCommandWithManPath(manPath: String?) -> String {
 		var command = MAN_BINARY
 		
-		if (manPath != nil && !(manPath!.isEmpty)) {
-			command += " -M '\(EscapePath(manPath!))'"
+		if let manPath = manPath where !manPath.isEmpty {
+			command += " -M '\(EscapePath(manPath))'"
 		}
 		
 		return command

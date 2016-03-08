@@ -18,7 +18,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	var title: String = ""
 	var searchString: String = ""
-	private var aproposItems: [(title: String, description: String)] = []
+	private var aproposItems: [(title: String, desc: String)] = []
 	
 	override class func canConcurrentlyReadDocumentsOfType(typeName: String) -> Bool {
 		return true
@@ -71,9 +71,9 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			}
 			
 			if let aDashRange = dashRange {
-				let title = line[line.startIndex ..< aDashRange.startIndex]
+				let title = line[line.startIndex ..< aDashRange.startIndex].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
 				let adescription = line[aDashRange.endIndex ..< line.endIndex]
-				aproposItems.append((title: title, description: adescription))
+				aproposItems.append((title: title, desc: adescription))
 			}
 		}
 	}
@@ -136,7 +136,11 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		command = "/usr/bin/apropos"
 		
 		command += " \(EscapePath(aapropos, addSurroundingQuotes: true))"
-		let output = docController.dataByExecutingCommand(command, manPath: manPath)!
+		guard let output = docController.dataByExecutingCommand(command, manPath: manPath) else {
+			parseOutput("")
+
+			return
+		}
 		/* The whatis database appears to not be UTF8 -- at least, UTF8 can fail, even on 10.7 */
 		var outString = NSString(data: output, encoding: NSUTF8StringEncoding) as? String
 		if outString == nil {
@@ -186,7 +190,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
 		let item = aproposItems[row]
-		let toRet = (tableColumn === titleColumn) ? item.title : item.description
+		let toRet = (tableColumn === titleColumn) ? item.title : item.desc
 		return toRet
 	}
 	

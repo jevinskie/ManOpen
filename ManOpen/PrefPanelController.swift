@@ -460,7 +460,6 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		return .None
 	}
 	
-	
 	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
 		let pb = info.draggingPasteboard()
 		let dragOp = info.draggingSourceOperationMask()

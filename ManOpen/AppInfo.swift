@@ -23,29 +23,28 @@ final class ManAppInfo: Hashable {
 	lazy var displayName: String = {
 		let url = self.appURL
 		var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url)
-		var preNiceName: Unmanaged<CFString>? = nil
 		
 		if (infoDict == nil) {
 			infoDict = NSBundle(URL: url)!.infoDictionary
 		}
 		
-		LSCopyDisplayNameForURL(url, &preNiceName)
-		var niceName: String? = {
-			if let aName = preNiceName?.takeRetainedValue() {
-				return aName as String
-			}
+		var niceName: String = {
+			do {
+				var preNiceStr: AnyObject?
+				try url.getResourceValue(&preNiceStr, forKey: NSURLLocalizedNameKey)
+				if let aNiceStr = preNiceStr as? NSString {
+					return aNiceStr as String
+				}
+			} catch _ {}
 			
-			return nil
+			return url.lastPathComponent!
 			}()
-		if (niceName == nil) {
-			niceName = url.lastPathComponent
-		}
 		
 		if let adict = infoDict, appVersion = adict["CFBundleShortVersionString"] as? String {
-			niceName = "\(niceName!) (\(appVersion))"
+			niceName = "\(niceName) (\(appVersion))"
 		}
 		
-		return niceName!
+		return niceName
 		}()
 	
 	lazy var appURL: NSURL = {

@@ -187,8 +187,8 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		
 		if taskData?.RTFData ?? false {
 			storage = NSTextStorage(RTF: taskData!, documentAttributes: nil)
-		} else if taskData != nil {
-			storage = NSTextStorage(HTML: taskData!, documentAttributes: nil)
+		} else if let taskData = taskData {
+			storage = NSTextStorage(HTML: taskData, documentAttributes: nil)
 		}
 		
 		if storage == nil {
@@ -204,7 +204,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		
 		if let aStorage = storage {
 			let manager = NSFontManager.sharedFontManager()
-			let family = manFont.familyName!
+			let family = manFont.familyName ?? manFont.fontName
 			let size = manFont.pointSize
 			var currIndex = 0
 			

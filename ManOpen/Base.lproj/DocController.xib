@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ManDocumentController" customModule="ManOpen" customModuleProvider="target">
@@ -21,15 +21,14 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="706" y="439" width="384" height="91"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="9">
                 <rect key="frame" x="0.0" y="0.0" width="384" height="91"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="14">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="105" translatesAutoresizingMaskIntoConstraints="NO" id="14">
                         <rect key="frame" x="18" y="52" width="109" height="17"/>
-                        <animations/>
-                        <textFieldCell key="cell" alignment="right" title="List pages about:" id="64">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="right" title="List pages about:" id="64">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -37,7 +36,6 @@
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="10">
                         <rect key="frame" x="133" y="49" width="231" height="22"/>
-                        <animations/>
                         <textFieldCell key="cell" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="63">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -49,7 +47,6 @@
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="24">
                         <rect key="frame" x="279" y="13" width="91" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Apropos" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="65">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -63,7 +60,6 @@ DQ
                     </button>
                     <button verticalHuggingPriority="750" tag="454" translatesAutoresizingMaskIntoConstraints="NO" id="27">
                         <rect key="frame" x="188" y="13" width="91" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" tag="454" inset="2" id="66">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -75,9 +71,8 @@ Gw
                             <action selector="cancelText:" target="-2" id="35"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="40">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="147" translatesAutoresizingMaskIntoConstraints="NO" id="40">
                         <rect key="frame" x="6" y="10" width="151" height="22"/>
-                        <animations/>
                         <textFieldCell key="cell" controlSize="mini" alignment="left" title="`Apropos' lists man pages whose summaries contain the given text" id="67">
                             <font key="font" metaFont="miniSystem"/>
                             <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -100,7 +95,6 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="24" secondAttribute="trailing" constant="20" symbolic="YES" id="pf0-Ts-qPp"/>
                     <constraint firstAttribute="bottom" secondItem="40" secondAttribute="bottom" constant="10" id="pfY-xb-Chf"/>
                 </constraints>
-                <animations/>
             </view>
             <connections>
                 <outlet property="initialFirstResponder" destination="10" id="gsu-QZ-dM9"/>
@@ -110,15 +104,14 @@ Gw
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="530" y="673" width="384" height="120"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="23">
                 <rect key="frame" x="0.0" y="0.0" width="384" height="120"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="17">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="100" translatesAutoresizingMaskIntoConstraints="NO" id="17">
                         <rect key="frame" x="18" y="81" width="104" height="17"/>
-                        <animations/>
-                        <textFieldCell key="cell" alignment="right" title="Open man page:" id="77">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="right" title="Open man page:" id="77">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -126,7 +119,6 @@ Gw
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6">
                         <rect key="frame" x="128" y="78" width="236" height="22"/>
-                        <animations/>
                         <textFieldCell key="cell" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="75">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -138,7 +130,6 @@ Gw
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7">
                         <rect key="frame" x="288" y="13" width="82" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="76">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -152,7 +143,6 @@ DQ
                     </button>
                     <button verticalHuggingPriority="750" tag="454" translatesAutoresizingMaskIntoConstraints="NO" id="21">
                         <rect key="frame" x="206" y="13" width="82" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" tag="454" inset="2" id="78">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -166,7 +156,6 @@ Gw
                     </button>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="41">
                         <rect key="frame" x="126" y="46" width="241" height="26"/>
-                        <animations/>
                         <popUpButtonCell key="cell" type="push" title="Any" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="45" id="79">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -186,10 +175,9 @@ Gw
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="47">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="100" translatesAutoresizingMaskIntoConstraints="NO" id="47">
                         <rect key="frame" x="18" y="52" width="104" height="17"/>
-                        <animations/>
-                        <textFieldCell key="cell" alignment="right" title="Section:" id="80">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="right" title="Section:" id="80">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -217,7 +205,6 @@ Gw
                     <constraint firstItem="7" firstAttribute="baseline" secondItem="21" secondAttribute="baseline" id="w7Y-bn-tXx"/>
                     <constraint firstItem="41" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" id="yOl-Ww-IyD"/>
                 </constraints>
-                <animations/>
             </view>
             <connections>
                 <outlet property="initialFirstResponder" destination="6" id="HEv-lB-fJW"/>
@@ -227,7 +214,7 @@ Gw
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="477" y="445" width="490" height="481"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <value key="minSize" type="size" width="92" height="10"/>
             <view key="contentView" id="59">
                 <rect key="frame" x="0.0" y="0.0" width="490" height="481"/>
@@ -242,28 +229,23 @@ Gw
                                 <textView editable="NO" findStyle="bar" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" id="57">
                                     <rect key="frame" x="0.0" y="0.0" width="475" height="481"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="475" height="481"/>
+                                    <size key="minSize" width="490" height="481"/>
                                     <size key="maxSize" width="490" height="10000000"/>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="475" height="481"/>
+                                    <size key="minSize" width="490" height="481"/>
                                     <size key="maxSize" width="490" height="10000000"/>
                                 </textView>
                             </subviews>
-                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </clipView>
-                        <animations/>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="81">
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="82">
-                            <rect key="frame" x="475" y="0.0" width="15" height="481"/>
+                            <rect key="frame" x="474" y="0.0" width="16" height="481"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                     </scrollView>
                 </subviews>
@@ -273,7 +255,6 @@ Gw
                     <constraint firstItem="58" firstAttribute="leading" secondItem="59" secondAttribute="leading" id="c5B-Gt-ZNK"/>
                     <constraint firstAttribute="trailing" secondItem="58" secondAttribute="trailing" id="mUc-J7-7o6"/>
                 </constraints>
-                <animations/>
             </view>
         </window>
     </objects>

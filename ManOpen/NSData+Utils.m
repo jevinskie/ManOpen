@@ -107,7 +107,7 @@
 {
     const int fd = [self fileDescriptor];
     static const size_t allocated = 16384;
-    unsigned char bytes[allocated] = {0};
+    unsigned char *bytes = malloc(allocated);
     ssize_t bytesRead;
     NSMutableData *ourData = [[NSMutableData alloc] init];
     
@@ -119,6 +119,7 @@
             }
         } while (bytesRead < 0 && ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK)));
     } while (bytesRead > 0);
+    free(bytes);
     
     if (bytesRead < 0) {
         if (error) {

@@ -95,7 +95,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		}
 		
 		tableView.target = self
-		tableView.doubleAction = "openManPages:"
+		tableView.doubleAction = #selector(AproposDocument.openManPages(_:))
 		tableView.sizeLastColumnToFit()
 	}
 	

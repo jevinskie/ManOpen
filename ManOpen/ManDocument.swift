@@ -291,7 +291,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				
 				/* Check for dups (e.g. lesskey(1) ) */
 				while sections.contains(label) {
-					count++
+					count += 1
 					label = "\(header) [\(count)]"
 				}
 				sections.append(label)
@@ -385,7 +385,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
-		if menuItem.action == "copyURL:" {
+		if menuItem.action == #selector(ManDocument.copyURL(_:)) {
 			return copyURL != nil
 		}
 		

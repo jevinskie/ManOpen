@@ -149,18 +149,18 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
 	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
 		let action = menuItem.action
-		if ((action == "cut:") || (action == "copy:") || (action == "delete:")) {
+		if ((action == #selector(PrefPanelController.cut(_:))) || (action == #selector(PrefPanelController.copy(_:))) || (action == #selector(PrefPanelController.delete(_:)))) {
 			return manPathController.canRemove
 		}
 		
-		if action == "paste:" {
+		if action == #selector(PrefPanelController.paste(_:)) {
 			let types: NSArray! = NSPasteboard.generalPasteboard().types
 			return manPathController.canInsert &&
 				(types.containsObject(NSFilenamesPboardType) || types.containsObject(NSStringPboardType));
 		}
 		
 		/* The menu on our app popup may call this validate method ;-) */
-		if action == "chooseNewApp:" {
+		if action == #selector(PrefPanelController.chooseNewApp(_:)) {
 			return true;
 		}
 
@@ -306,11 +306,11 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		if let removeIndexesUn = removeIndexes {
 			var numBeforeInsertion = 0
 			
-			for var i = manPathArrayPriv.count - 1; i >= 0; i-- {
+			for i in (0..<manPathArrayPriv.count).reverse() {
 				if removeIndexesUn.containsIndex(i) {
 					manPathArrayPriv.removeAtIndex(i)
 					if i <= insertIndex {
-						numBeforeInsertion++
+						numBeforeInsertion += 1
 					}
 				}
 			}
@@ -321,7 +321,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			var path = (directory as NSString).stringByExpandingTildeInPath
 			path = path.stringByReplacingOccurrencesOfString(":", withString: "")
 			
-			insertObject(path, atIndex: insertIndex++)
+			insertObject(path, atIndex: insertIndex)
+			insertIndex += 1
 		}
 		
 		self.didChangeValueForKey(ManPathArrayKey)

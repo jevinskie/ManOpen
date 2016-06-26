@@ -67,8 +67,8 @@ extension NSUserDefaults {
 		if let fontString = self.stringForKey(manFontKey) {
 			if let spaceRange = fontString.rangeOfString(" ") {
 				func getEndIdx(string: String) -> String.Index {
-					var endIdx = string.endIndex
-					return --endIdx
+					let endIdx = string.endIndex
+					return endIdx.predecessor()
 				}
 				let size = CGFloat((fontString[fontString.startIndex..<spaceRange.startIndex] as NSString).floatValue)
 				let endIdx = getEndIdx(fontString)

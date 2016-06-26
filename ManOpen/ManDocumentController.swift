@@ -377,7 +377,9 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			var rp = rparenRange
 			
 			base = word[word.startIndex ..< lp.startIndex]
-			section = word[++lp.startIndex ..< --rp.endIndex]
+			lp.startIndex = lp.startIndex.successor()
+			rp.endIndex = rp.endIndex.predecessor()
+			section = word[lp.startIndex ..< rp.endIndex]
 		}
 		
 		return openDocumentWithName(base, section: section, manPath: NSUserDefaults.standardUserDefaults().manPath)
@@ -429,7 +431,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		if (lastWord != nil) {
 			if lastWord.hasSuffix(",") {
 				var lastIndex = lastWord.endIndex
-				lastWord = lastWord[lastWord.startIndex..<lastIndex--]
+				lastWord = lastWord[lastWord.startIndex..<lastIndex]
+				lastIndex = lastIndex.predecessor()
 			}
 			openWord(lastWord)
 		}

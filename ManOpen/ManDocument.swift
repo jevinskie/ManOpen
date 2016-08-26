@@ -116,7 +116,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		}
 		
 		// strip extension twice in case it is a e.g. "1.gz" filename
-		self.shortTitle = (((url.path! as NSString).lastPathComponent as NSString).stringByDeletingPathExtension as NSString).stringByDeletingPathExtension
+		self.shortTitle = ((url.lastPathComponent! as NSString).stringByDeletingPathExtension as NSString).stringByDeletingPathExtension
 		copyURL = url;
 		
 		restoreData = [
@@ -224,7 +224,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 					isLink = (attribs[NSLinkAttributeName] != nil)
 					
 					if (font != nil && (font!.familyName != family)) {
-						font = manager.convertFont(font!, toFamily: family) ;
+						font = manager.convertFont(font!, toFamily: family)
 					}
 					if (font != nil && font!.pointSize != size) {
 						font = manager.convertFont(font!, toSize: size)
@@ -264,12 +264,12 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		* some overkill code elsewhere on my part, but putting in the hadLoaded guard to only
 		* avoid doing anything after we have loaded real data seems to help.
 		*/
-		if (taskData != nil) {
+		if taskData != nil {
 			hasLoaded = true
 		}
 		
 		// no need to keep around rtf data
-		taskData = nil;
+		taskData = nil
 	}
 	
 	func setupSectionPopup() {

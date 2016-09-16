@@ -52,6 +52,7 @@
 		55C0CF4719BE07E9009C50D7 /* ManOpen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */; };
 		55C0CF4819BE07E9009C50D7 /* ManPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1E19BE07E9009C50D7 /* ManPage.xib */; };
 		55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */; };
+		55EEBEC81D8B71DC00DDBF3F /* Data+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEBEC71D8B71DC00DDBF3F /* Data+Utils.swift */; };
 		D38A244914E4C3FE00F6AFFE /* openman.m in Sources */ = {isa = PBXBuildFile; fileRef = D39279770821FFA400376676 /* openman.m */; settings = {ATTRIBUTES = (); }; };
 		D38A244B14E4C3FE00F6AFFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
 		D38A244C14E4C3FE00F6AFFE /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279850821FFA400376676 /* AppKit.framework */; };
@@ -228,6 +229,7 @@
 		55E8029F188237E000037AF6 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55E802A1188237F000037AF6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		55E802A3188237FA00037AF6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		55EEBEC71D8B71DC00DDBF3F /* Data+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Utils.swift"; sourceTree = "<group>"; };
 		55F13AB515103C1E0095B5A9 /* en */ = {isa = PBXFileReference; explicitFileType = text.plist.scriptTerminology; name = en; path = en.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A243814E4C3FE00F6AFFE /* cat2rtf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2rtf; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A244414E4C3FE00F6AFFE /* cat2html */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2html; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -367,6 +369,7 @@
 				5567E0551A7D615E005013B3 /* ManNotificationCallback.m */,
 				D39279070821FFA400376676 /* ManOpenProtocol.h */,
 				5516ECE71A7CA21200760214 /* ManTextView.swift */,
+				55EEBEC71D8B71DC00DDBF3F /* Data+Utils.swift */,
 				D39279090821FFA400376676 /* NSData+Utils.h */,
 				D39278FA0821FFA400376676 /* NSData+Utils.m */,
 				55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */,
@@ -576,7 +579,12 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
+				TargetAttributes = {
+					55C0CEEF19BE04D8009C50D7 = {
+						LastSwiftMigration = 0800;
+					};
+				};
 			};
 			buildConfigurationList = D38A23BC14E38E1E00F6AFFE /* Build configuration list for PBXProject "ManOpen" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -702,6 +710,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5567E0561A7D615E005013B3 /* ManNotificationCallback.m in Sources */,
+				55EEBEC81D8B71DC00DDBF3F /* Data+Utils.swift in Sources */,
 				55838C0B19C0B61700FFEDDE /* ManAppInfoArray.swift in Sources */,
 				55838C0819C0AF9100FFEDDE /* NSUserDefaults+additions.swift in Sources */,
 				55838C0719C0AF8B00FFEDDE /* DisplayPathFormatter.swift in Sources */,
@@ -861,6 +870,7 @@
 		55C0CF0E19BE04D8009C50D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -874,7 +884,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -892,6 +901,7 @@
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = ManOpen;
 				WRAPPER_EXTENSION = app;
 			};
@@ -900,6 +910,7 @@
 		55C0CF0F19BE04D8009C50D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -913,7 +924,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -929,6 +939,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = ManOpen;
 				WRAPPER_EXTENSION = app;
 			};
@@ -939,6 +950,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -949,14 +961,17 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -964,6 +979,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -989,6 +1005,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -999,8 +1016,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1008,11 +1027,13 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1028,6 +1049,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};

@@ -8,6 +8,26 @@
 
 import Cocoa
 import CoreServices
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 let ManPathIndexSetPboardType = "org.clindberg.ManOpen.ManPathIndexSetType"
 let ManPathArrayKey = "manPathArray"
@@ -21,28 +41,30 @@ let kKeepPanelsOpen		= "KeepPanelsOpen"
 let kQuitWhenLastClosed	= "QuitWhenLastClosed"
 let kNroffCommand		= "NroffCommand"
 
+private struct Static {
+	static var instance : PrefPanelController? = nil
+}
+
+
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
-	class var sharedInstance: PrefPanelController {
-		struct Static {
-			static var onceToken: dispatch_once_t = 0
-			static var instance : PrefPanelController? = nil
-		}
-		dispatch_once(&Static.onceToken) {
+	private static var __once: () = {
 			Static.instance = PrefPanelController(windowNibName: "PrefPanel")
 			Static.instance!.shouldCascadeWindows = false
-			NSFontManager.sharedFontManager().delegate = Static.instance
-		}
+			NSFontManager.shared().delegate = Static.instance
+		}()
+	class var sharedInstance: PrefPanelController {
+		_ = PrefPanelController.__once
 		
 		return Static.instance!
 	}
 	
 	let appInfos = ManAppInfoArray()
-	private var manPathArrayPriv = [String]()
+	fileprivate var manPathArrayPriv = [String]()
 	dynamic var manPathArray: [String] {
 		get {
 			if manPathArrayPriv.count == 0 {
-				let path = NSUserDefaults.standardUserDefaults().manPath
-				manPathArrayPriv = path.componentsSeparatedByString(":")
+				let path = UserDefaults.standard.manPath
+				manPathArrayPriv = path.components(separatedBy: ":")
 			}
 			return manPathArrayPriv
 		}
@@ -51,7 +73,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			saveManPath()
 		}
 	}
-	private var currentAppID = ""
+	fileprivate var currentAppID = ""
 	@IBOutlet weak var manPathController: NSArrayController!
 	@IBOutlet weak var manPathTableView: NSTableView!
 	@IBOutlet weak var fontField: NSTextField!
@@ -59,30 +81,30 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	@IBOutlet weak var appPopup: NSPopUpButton!
 	
 	class func registerManDefaults() {
-		let userDefaults = NSUserDefaults.standardUserDefaults()
-		let manager = NSFileManager.defaultManager()
+		let userDefaults = UserDefaults.standard
+		let manager = FileManager.default
 		let nroff = "nroff -mandoc '%@'"
 		var manpath = "/usr/local/man:/usr/share/man"
 		
 		
-		if manager.fileExistsAtPath("/sw/share/man") { // fink
+		if manager.fileExists(atPath: "/sw/share/man") { // fink
 			manpath = "/sw/share/man:" + manpath
 		}
-		if manager.fileExistsAtPath("/opt/local/share/man") {  //macports
+		if manager.fileExists(atPath: "/opt/local/share/man") {  //macports
 			manpath = "/opt/local/share/man:" + manpath
 		}
-		if manager.fileExistsAtPath("/opt/X11/share/man") {
+		if manager.fileExists(atPath: "/opt/X11/share/man") {
 			manpath += ":/opt/X11/share/man"
-		} else if manager.fileExistsAtPath("/usr/X11/share/man") {
+		} else if manager.fileExists(atPath: "/usr/X11/share/man") {
 			manpath += ":/usr/X11/share/man"
-		} else if manager.fileExistsAtPath("/usr/X11R6/man") {
+		} else if manager.fileExists(atPath: "/usr/X11R6/man") {
 			manpath += ":/usr/X11R6/man"
 		}
 
 		
-		let linkDefaultColor = dataForColor(NSColor(SRGBRed: 0.10, green: 0.10, blue: 1.0, alpha: 1.0))
-		let textDefaultColor = dataForColor(NSColor.textColor())
-		let bgDefaultColor = dataForColor(NSColor.textBackgroundColor())
+		let linkDefaultColor = dataForColor(NSColor(srgbRed: 0.10, green: 0.10, blue: 1.0, alpha: 1.0))
+		let textDefaultColor = dataForColor(NSColor.textColor)
+		let bgDefaultColor = dataForColor(NSColor.textBackgroundColor)
 		
 		let someDefaults = [kQuitWhenLastClosed: false,
 		kUseItalics:		false,
@@ -93,12 +115,12 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		manTextColorKey:	textDefaultColor,
 		manLinkColorKey:	linkDefaultColor,
 		manBackgroundColorKey:		bgDefaultColor,
-		"NSQuitAlwaysKeepsWindows":	true]
+		"NSQuitAlwaysKeepsWindows":	true] as [String : Any]
 		
-		userDefaults.registerDefaults(someDefaults)
+		userDefaults.register(defaults: someDefaults)
 	}
 	
-	private var fontFieldFont: NSFont! {
+	fileprivate var fontFieldFont: NSFont! {
 		get {
 			return fontField.font
 		}
@@ -111,52 +133,52 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 	}
 	
-	private func setUpDefaultManViewerApp() {
+	fileprivate func setUpDefaultManViewerApp() {
 		resetCurrentApp()
 	}
 	
     override func windowDidLoad() {
 		self.shouldCascadeWindows = false
-		NSFontManager.sharedFontManager().delegate = self
+		NSFontManager.shared().delegate = self
         super.windowDidLoad()
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 		
 		setUpDefaultManViewerApp()
 		setUpManPathUI()
-		fontFieldFont = NSUserDefaults.standardUserDefaults().manFont
+		fontFieldFont = UserDefaults.standard.manFont
     }
 
-	@IBAction func openFontPanel(sender: AnyObject!) {
+	@IBAction func openFontPanel(_ sender: AnyObject!) {
 		self.window?.makeFirstResponder(nil)
-		NSFontManager.sharedFontManager().setSelectedFont(fontField.font!, isMultiple: false)
-		NSFontPanel.sharedFontPanel().orderFront(sender)
+		NSFontManager.shared().setSelectedFont(fontField.font!, isMultiple: false)
+		NSFontPanel.shared().orderFront(sender)
 	}
 	
-	override func fontManager(sender: AnyObject, willIncludeFont fontName: String) -> Bool {
-		return sender.fontNamed(fontName, hasTraits: NSFontTraitMask.FixedPitchFontMask)
+	override func fontManager(_ sender: Any, willIncludeFont fontName: String) -> Bool {
+		return (sender as AnyObject).fontNamed(fontName, hasTraits: NSFontTraitMask.fixedPitchFontMask)
 	}
 	
-	override func changeFont(sender: AnyObject!) {
+	override func changeFont(_ sender: Any!) {
 		var font = fontFieldFont;
 		//NSString *fontString;
 		
-		font = sender.convertFont(font)
+		font = (sender as! NSFontManager).convert(font!)
 		self.fontFieldFont = font
-		let fontString = "\(font.pointSize) \(font.fontName)"
-		NSUserDefaults.standardUserDefaults().setObject(fontString, forKey: manFontKey)
+		let fontString = "\(font?.pointSize) \(font?.fontName)"
+		UserDefaults.standard.set(fontString, forKey: manFontKey)
 	}
 	
-	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
 		let action = menuItem.action
 		if ((action == #selector(PrefPanelController.cut(_:))) || (action == #selector(PrefPanelController.copy(_:))) || (action == #selector(PrefPanelController.delete(_:)))) {
 			return manPathController.canRemove
 		}
 		
 		if action == #selector(PrefPanelController.paste(_:)) {
-			let types: NSArray! = NSPasteboard.generalPasteboard().types
+			let types: NSArray! = NSPasteboard.general().types as NSArray!
 			return manPathController.canInsert &&
-				(types.containsObject(NSFilenamesPboardType) || types.containsObject(NSStringPboardType));
+				(types.contains(NSFilenamesPboardType) || types.contains(NSStringPboardType));
 		}
 		
 		/* The menu on our app popup may call this validate method ;-) */
@@ -173,40 +195,40 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let currIndex = appInfos.indexOfBundleID(currentAppID) ?? 0
 		
 		if currIndex < appPopup.numberOfItems {
-			appPopup.selectItemAtIndex(currIndex)
+			appPopup.selectItem(at: currIndex)
 		}
 	}
 	
 	func resetAppPopup()  {
 		let apps = appInfos.allManViewerApps
-		let workspace = NSWorkspace.sharedWorkspace()
+		let workspace = NSWorkspace.shared()
 		//var i = 0
 		
 		appPopup.removeAllItems()
 		appPopup.image = nil
 		
-		for (i, info) in appInfos.enumerate() {
-			let image = workspace.iconForFile(info.appURL.path!).copy() as! NSImage
+		for (i, info) in appInfos.enumerated() {
+			let image = workspace.icon(forFile: info.appURL.path).copy() as! NSImage
 			let niceName = info.displayName
 			let displayName = niceName
 			//var num = 2
 			
-			appPopup.addItemWithTitle(displayName)
+			appPopup.addItem(withTitle: displayName)
 			
 			image.size = NSSize(width: 16, height: 16)
-			appPopup.itemAtIndex(i)?.image = image
+			appPopup.item(at: i)?.image = image
 		}
 	
 		if apps.count > 0 {
-			appPopup.menu?.addItem(NSMenuItem.separatorItem())
+			appPopup.menu?.addItem(NSMenuItem.separator())
 		}
-		appPopup.addItemWithTitle(NSLocalizedString("Select...", comment: "Select..."))
+		appPopup.addItem(withTitle: NSLocalizedString("Select...", comment: "Select..."))
 		setAppPopupToCurrent()
 	}
 
 	func resetCurrentApp() {
 		var currSetID: String? = {
-			if let aSetID = LSCopyDefaultHandlerForURLScheme(URL_SCHEME)?.takeRetainedValue() {
+			if let aSetID = LSCopyDefaultHandlerForURLScheme(URL_SCHEME as CFString)?.takeRetainedValue() {
 				return aSetID as String
 			}
 			
@@ -234,8 +256,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 	}
 	
-	func setManPageViewer(bundleID: String) {
-		let error = LSSetDefaultHandlerForURLScheme(URL_SCHEME, bundleID)
+	func setManPageViewer(_ bundleID: String) {
+		let error = LSSetDefaultHandlerForURLScheme(URL_SCHEME as CFString, bundleID as CFString)
 		
 		if (error != noErr) {
 			print("Could not set default \(URL_SCHEME_PREFIX) app: Launch Services error \(error)")
@@ -244,7 +266,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		resetCurrentApp()
 	}
 	
-	@IBAction func chooseNewApp(sender: AnyObject!) {
+	@IBAction func chooseNewApp(_ sender: AnyObject!) {
 		_ = appInfos.allManViewerApps
 		let choice = appPopup.indexOfSelectedItem
 		
@@ -260,10 +282,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			panel.resolvesAliases = true
 			panel.canChooseFiles = true
 			panel.allowedFileTypes = [kUTTypeApplicationBundle as String]
-			panel.beginSheetModalForWindow(appPopup.window!) { (result) -> Void in
+			panel.beginSheetModal(for: appPopup.window!) { (result) -> Void in
 				if result == NSModalResponseOK {
-					if let appURL = panel.URL {
-						if let appID = NSBundle(URL: appURL)?.bundleIdentifier {
+					if let appURL = panel.url {
+						if let appID = Bundle(url: appURL)?.bundleIdentifier {
 						self.setManPageViewer(appID)
 					}
 					}
@@ -276,39 +298,39 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	// MARK: man paths
 
 	func setUpManPathUI() {
-		manPathTableView.registerForDraggedTypes([NSFilenamesPboardType, NSStringPboardType, ManPathIndexSetPboardType])
+		manPathTableView.register(forDraggedTypes: [NSFilenamesPboardType, NSStringPboardType, ManPathIndexSetPboardType])
 		manPathTableView.verticalMotionCanBeginDrag = true
 		// XXX NSDragOperationDelete -- not sure the "poof" drag can show that
-		manPathTableView.setDraggingSourceOperationMask(.Copy, forLocal: false)
-		manPathTableView.setDraggingSourceOperationMask([.Copy, .Move, .Private], forLocal: true)
+		manPathTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
+		manPathTableView.setDraggingSourceOperationMask([.copy, .move, .private], forLocal: true)
 	}
 
 	func saveManPath() {
 		if manPathArray.count > 0 {
-			NSUserDefaults.standardUserDefaults().setObject((manPathArray as NSArray).componentsJoinedByString(":"), forKey: manPathKey)
+			UserDefaults.standard.set((manPathArray as NSArray).componentsJoined(by: ":"), forKey: manPathKey)
 		}
 	}
 	
-	func addPathDirectories(directories: [String], atIndex: Int, removeFirst removeIndexes: NSIndexSet?) {
+	func addPathDirectories(_ directories: [String], atIndex: Int, removeFirst removeIndexes: IndexSet?) {
 		
-		func insertObject(anObj: String, atIndex: Int) {
+		func insertObject(_ anObj: String, atIndex: Int) {
 			let hasObject = manPathArrayPriv.filter { (otherObj) -> Bool in
 				return anObj == otherObj
 			}
 			if hasObject.count == 0 {
-				manPathArrayPriv.insert(anObj, atIndex: atIndex)
+				manPathArrayPriv.insert(anObj, at: atIndex)
 			}
 		}
 		
 		var insertIndex = atIndex
 		
-		self.willChangeValueForKey(ManPathArrayKey)
+		self.willChangeValue(forKey: ManPathArrayKey)
 		if let removeIndexesUn = removeIndexes {
 			var numBeforeInsertion = 0
 			
-			for i in (0..<manPathArrayPriv.count).reverse() {
-				if removeIndexesUn.containsIndex(i) {
-					manPathArrayPriv.removeAtIndex(i)
+			for i in (0..<manPathArrayPriv.count).reversed() {
+				if removeIndexesUn.contains(i) {
+					manPathArrayPriv.remove(at: i)
 					if i <= insertIndex {
 						numBeforeInsertion += 1
 					}
@@ -318,32 +340,32 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		for directory in directories {
-			var path = (directory as NSString).stringByExpandingTildeInPath
-			path = path.stringByReplacingOccurrencesOfString(":", withString: "")
+			var path = (directory as NSString).expandingTildeInPath
+			path = path.replacingOccurrences(of: ":", with: "")
 			
 			insertObject(path, atIndex: insertIndex)
 			insertIndex += 1
 		}
 		
-		self.didChangeValueForKey(ManPathArrayKey)
+		self.didChangeValue(forKey: ManPathArrayKey)
 		saveManPath()
 	}
 	
-	@IBAction func addPathFromPanel(sender: AnyObject!) {
+	@IBAction func addPathFromPanel(_ sender: AnyObject!) {
 		let panel = NSOpenPanel()
 		
 		panel.allowsMultipleSelection = true
 		panel.canChooseDirectories = true
 		panel.canChooseFiles = false
 		
-		panel.beginSheetModalForWindow(window!, completionHandler: { (result) -> Void in
+		panel.beginSheetModal(for: window!, completionHandler: { (result) -> Void in
 			if result == NSModalResponseOK {
-				let urls = panel.URLs 
+				let urls = panel.urls 
 				var paths = [String]()
 				
 				for url in urls {
-					if url.fileURL {
-						paths.append(url.path!)
+					if url.isFileURL {
+						paths.append(url.path)
 					}
 					
 				}
@@ -358,11 +380,11 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		})
 	}
 	
-	func pathsAtIndexes(set: NSIndexSet) -> [String] {
+	func pathsAtIndexes(_ set: IndexSet) -> [String] {
 		var paths = [String]()
 		
-		for (currIndex, path) in manPathArrayPriv.enumerate() {
-			if set.containsIndex(currIndex) {
+		for (currIndex, path) in manPathArrayPriv.enumerated() {
+			if set.contains(currIndex) {
 				paths.append(path)
 			}
 		}
@@ -370,59 +392,60 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		return paths
 	}
 	
-	func writePaths(paths: [String], toPasteboard pb: NSPasteboard) -> Bool {
+	@discardableResult
+	func writePaths(_ paths: [String], toPasteboard pb: NSPasteboard) -> Bool {
 		pb.declareTypes([NSStringPboardType], owner: nil)
 		
 		/* This causes an NSLog if one of the paths does not exist. Hm.  May not be worth it. Might let folks drag to Trash etc. as well. */
 		//[pb setPropertyList:paths forType:NSFilenamesPboardType];
-		return pb.setString(paths.joinWithSeparator(":"), forType: NSStringPboardType)
+		return pb.setString(paths.joined(separator: ":"), forType: NSStringPboardType)
 	}
 	
-	func writeIndexSet(set: NSIndexSet, toPasteboard pb: NSPasteboard) -> Bool {
+	func writeIndexSet(_ set: IndexSet, toPasteboard pb: NSPasteboard) -> Bool {
 		let files = pathsAtIndexes(set)
 		
 		if writePaths(files, toPasteboard: pb) {
 			pb.addTypes([ManPathIndexSetPboardType], owner: nil)
-			return pb.setData(NSArchiver.archivedDataWithRootObject(set), forType: ManPathIndexSetPboardType)
+			return pb.setData(NSArchiver.archivedData(withRootObject: set), forType: ManPathIndexSetPboardType)
 		}
 		
 		return false
 	}
 	
-	func pathsFromPasteboard(pb: NSPasteboard) -> [String]? {
-		let bestType = pb.availableTypeFromArray([NSFilenamesPboardType, NSStringPboardType])
+	func pathsFromPasteboard(_ pb: NSPasteboard) -> [String]? {
+		let bestType = pb.availableType(from: [NSFilenamesPboardType, NSStringPboardType])
 		
 		if bestType == NSFilenamesPboardType {
-			return pb.propertyListForType(NSFilenamesPboardType) as! [String]!
+			return pb.propertyList(forType: NSFilenamesPboardType) as! [String]!
 		}
 		
 		if bestType == NSStringPboardType {
-			if let aVar = pb.stringForType(NSStringPboardType) {
+			if let aVar = pb.string(forType: NSStringPboardType) {
 				let bVar = aVar as NSString
-				return (bVar.componentsSeparatedByString(":") )
+				return (bVar.components(separatedBy: ":") )
 			}
 		}
 		
 		return nil
 	}
 	
-	@IBAction func copy(sender: AnyObject!) {
+	@IBAction func copy(_ sender: AnyObject!) {
 		let files = pathsAtIndexes(manPathController.selectionIndexes)
-		writePaths(files, toPasteboard: NSPasteboard.generalPasteboard())
+		writePaths(files, toPasteboard: NSPasteboard.general())
 	}
 	
 	
-	@IBAction func delete(sender: AnyObject!) {
+	@IBAction func delete(_ sender: AnyObject!) {
 		manPathController.remove(sender)
 	}
 	
-	@IBAction func cut(sender: AnyObject!) {
+	@IBAction func cut(_ sender: AnyObject!) {
 		copy(sender)
 		delete(sender)
 	}
 	
-	@IBAction func paste(sender: AnyObject!) {
-		let paths = pathsFromPasteboard(NSPasteboard.generalPasteboard())
+	@IBAction func paste(_ sender: AnyObject!) {
+		let paths = pathsFromPasteboard(NSPasteboard.general())
 		var insertionIndex = manPathController.selectionIndex
 		if insertionIndex == NSNotFound {
 			insertionIndex = manPathArrayPriv.count //add it on the end
@@ -433,44 +456,44 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
 	// MARK: drag and drop
 	
-	func tableView(tableView: NSTableView, writeRowsWithIndexes rowIndexes: NSIndexSet, toPasteboard pboard: NSPasteboard) -> Bool {
+	func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pboard: NSPasteboard) -> Bool {
 		return writeIndexSet(rowIndexes, toPasteboard: pboard)
 	}
 	
-	func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+	func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
 		let pb = info.draggingPasteboard()
 		
 		/* We only drop between rows */
-		if dropOperation == .Above {
-			return .None
+		if dropOperation == .above {
+			return NSDragOperation()
 		}
 		
 		/* If this is a dragging operation in the table itself, show the move icon */
-		if let pbtypes = pb.types where pbtypes.contains(ManPathIndexSetPboardType) && (info.draggingSource() === manPathTableView) {
-			return .Move;
+		if let pbtypes = pb.types , pbtypes.contains(ManPathIndexSetPboardType) && ((info.draggingSource() as AnyObject?) === manPathTableView) {
+			return .move;
 		}
 		
 		if let paths = pathsFromPasteboard(pb) {
 			for path in paths {
 				if manPathArrayPriv.contains(path) {
-					return .Copy
+					return .copy
 				}
 			}
 		}
 		
-		return .None
+		return NSDragOperation()
 	}
 	
-	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
 		let pb = info.draggingPasteboard()
 		let dragOp = info.draggingSourceOperationMask()
 		var pathsToAdd: [String]? = [String]()
-		var removeSet: NSIndexSet? = nil
+		var removeSet: IndexSet? = nil
 		
-		if let pbtypes = pb.types where pbtypes.contains(ManPathIndexSetPboardType) {
-			let indexData = pb.dataForType(ManPathIndexSetPboardType)
-			if let indexData = indexData where (dragOp.intersect(.Move) == .Move) {
-				removeSet = (NSUnarchiver.unarchiveObjectWithData(indexData) as! NSIndexSet)
+		if let pbtypes = pb.types , pbtypes.contains(ManPathIndexSetPboardType) {
+			let indexData = pb.data(forType: ManPathIndexSetPboardType)
+			if let indexData = indexData , (dragOp.intersection(.move) == .move) {
+				removeSet = (NSUnarchiver.unarchiveObject(with: indexData) as! IndexSet)
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}
 		} else {

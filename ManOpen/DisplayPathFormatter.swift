@@ -8,19 +8,19 @@
 
 import Cocoa
 
-private let resHome = (NSHomeDirectory() as NSString).stringByResolvingSymlinksInPath + "/"
+private let resHome = (NSHomeDirectory() as NSString).resolvingSymlinksInPath + "/"
 
 /// Formatter to abbreviate folders in the user's home directory for a nicer display.
-class DisplayPathFormatter: NSFormatter {
-	override func stringForObjectValue(obj: AnyObject) -> String? {
+final class DisplayPathFormatter: Formatter {
+	override func string(for obj: Any?) -> String? {
 		if let aStr = obj as? NSString {
-			var anew = aStr.stringByAbbreviatingWithTildeInPath;
+			var anew = aStr.abbreviatingWithTildeInPath;
 			
 			/* The above method may not work if the home directory is a symlink, and our path is already resolved */
-			if (anew as NSString).absolutePath {
+			if (anew as NSString).isAbsolutePath {
 				
 				if anew.hasPrefix(resHome) {
-					anew = "~/" + (anew as NSString).substringFromIndex((resHome as NSString).length)
+					anew = "~/" + (anew as NSString).substring(from: (resHome as NSString).length)
 				}
 			}
 			
@@ -29,8 +29,10 @@ class DisplayPathFormatter: NSFormatter {
 		return nil;
 	}
 	
-	override func getObjectValue(obj: AutoreleasingUnsafeMutablePointer<AnyObject?>, forString string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>) -> Bool {
-		obj.memory = (string as NSString).stringByExpandingTildeInPath
+	
+	
+	override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool{
+		obj?.pointee = (string as NSString).expandingTildeInPath as NSString
 		
 		return true
 	}

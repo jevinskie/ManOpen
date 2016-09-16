@@ -10,52 +10,52 @@ import Cocoa
 
 func ==(lhs: ManAppInfo, rhs: ManAppInfo) -> Bool {
 	let toRet = lhs.bundleID.caseInsensitiveCompare(rhs.bundleID)
-	return toRet == NSComparisonResult.OrderedSame
+	return toRet == ComparisonResult.orderedSame
 }
 
 func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 	let toRet = lhs.bundleID.caseInsensitiveCompare(rhs)
-	return toRet == NSComparisonResult.OrderedSame
+	return toRet == ComparisonResult.orderedSame
 }
 
 final class ManAppInfo: Hashable {
 	let bundleID: String
 	lazy var displayName: String = {
 		let url = self.appURL
-		var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url)
+		var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url as CFURL!)
 		
 		if (infoDict == nil) {
-			infoDict = NSBundle(URL: url)!.infoDictionary
+			infoDict = Bundle(url: url)!.infoDictionary as NSDictionary?
 		}
 		
 		var niceName: String = {
 			do {
 				var preNiceStr: AnyObject?
-				try url.getResourceValue(&preNiceStr, forKey: NSURLLocalizedNameKey)
+				try (url as NSURL).getResourceValue(&preNiceStr, forKey: URLResourceKey.localizedNameKey)
 				if let aNiceStr = preNiceStr as? NSString {
 					return aNiceStr as String
 				}
 			} catch _ {}
 			
-			return url.lastPathComponent!
+			return url.lastPathComponent
 			}()
 		
-		if let adict = infoDict, appVersion = adict["CFBundleShortVersionString"] as? String {
+		if let adict = infoDict, let appVersion = adict["CFBundleShortVersionString"] as? String {
 			niceName = "\(niceName) (\(appVersion))"
 		}
 		
 		return niceName
 		}()
 	
-	lazy var appURL: NSURL = {
-		let workSpace = NSWorkspace.sharedWorkspace()
-		if let path = workSpace.absolutePathForAppBundleWithIdentifier(self.bundleID) {
-			return NSURL(fileURLWithPath: path)
+	lazy var appURL: URL = {
+		let workSpace = NSWorkspace.shared()
+		if let path = workSpace.absolutePathForApplication(withBundleIdentifier: self.bundleID) {
+			return URL(fileURLWithPath: path)
 		}
-		return NSURL()
+		return URL(fileURLWithPath: "/dev/null")
 		}()
 	
-	func isEqual(other: AnyObject!) -> Bool {
+	func isEqual(_ other: AnyObject!) -> Bool {
 		if let isAppInfo = other as? ManAppInfo {
 			return self == isAppInfo
 		} else if let isString = other as? String {
@@ -70,18 +70,18 @@ final class ManAppInfo: Hashable {
 	}
 	
 	var hashValue: Int {
-		return bundleID.lowercaseString.hashValue
+		return bundleID.lowercased().hashValue
 	}
 	
 	var hash: Int {
 		return self.hashValue
 	}
 	
-	func compare(string: ManAppInfo) -> NSComparisonResult {
-		return displayName.compare(string.displayName, options: [.CaseInsensitiveSearch, .NumericSearch])
+	func compare(_ string: ManAppInfo) -> ComparisonResult {
+		return displayName.compare(string.displayName, options: [.caseInsensitive, .numeric])
 	}
 	
-	func localizedStandardCompare(string: ManAppInfo) -> NSComparisonResult {
+	func localizedStandardCompare(_ string: ManAppInfo) -> ComparisonResult {
 		return displayName.localizedStandardCompare(string.displayName)
 	}
 }

@@ -13,21 +13,21 @@ private let MAN_BINARY = "/usr/bin/man"
 //#define MANPATH_FORMAT @" -m '%@'"  // There's a bug in man(1) on OSX and OSXS
 private let MANPATH_FORMAT = " -M '%@'"
 
-func EscapePath(path: String, addSurroundingQuotes: Bool = false) -> String {
+func EscapePath(_ path: String, addSurroundingQuotes: Bool = false) -> String {
 	var modPath = path
-	if path.rangeOfString("'") != nil {
+	if path.range(of: "'") != nil {
 		var newString = ""
-		let scanner = NSScanner(string: path)
+		let scanner = Scanner(string: path)
 		
 		scanner.charactersToBeSkipped = nil
 		
-		while !scanner.atEnd {
+		while !scanner.isAtEnd {
 			var betweenString: NSString? = nil
-			if scanner.scanUpToString("'", intoString: &betweenString) {
+			if scanner.scanUpTo("'", into: &betweenString) {
 				if let aBetweenString = betweenString {
 					newString += aBetweenString as String
 				}
-				if scanner.scanString("'", intoString: nil) {
+				if scanner.scanString("'", into: nil) {
 					newString += "'\\''"
 				}
 			}
@@ -53,45 +53,45 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBOutlet weak var openTextField: NSTextField!
 	@IBOutlet weak var openSectionPopup: NSPopUpButton!
 	var startedUp = false
-	private var nibObjects = [AnyObject]()
+	fileprivate var nibObjects = [AnyObject]()
 	
 	func ensureActive() {
-		if !NSApplication.sharedApplication().active {
-			NSApplication.sharedApplication().activateIgnoringOtherApps(true)
+		if !NSApplication.shared().isActive {
+			NSApplication.shared().activate(ignoringOtherApps: true)
 		}
 	}
 	
 	//@objc(openName:section:manPath:forceToFront:) func open(name name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true)
-	@objc func openName(name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true) {
+	@objc func openName(_ name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
 		}
-		openDocumentWithName(name, section: section, manPath: manPath ?? NSUserDefaults.standardUserDefaults().manPath)
+		openDocumentWithName(name, section: section, manPath: manPath ?? UserDefaults.standard.manPath)
 	}
 	
-	@objc func openApropos(apropos: String, manPath: String? = nil, forceToFront force: Bool = true) {
+	@objc func openApropos(_ apropos: String, manPath: String? = nil, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
 		}
 		
-		openAproposDocument(apropos, manPath: manPath ?? NSUserDefaults.standardUserDefaults().manPath)
+		openAproposDocument(apropos, manPath: manPath ?? UserDefaults.standard.manPath)
 	}
 	
-	@objc func openFile(filename: String, forceToFront force: Bool = true) {
+	@objc func openFile(_ filename: String, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()
 		}
 		
-		openDocumentWithContentsOfURL(NSURL(fileURLWithPath: filename), display: true) { (doc, wasOpened, error) -> Void in
+		openDocument(withContentsOf: URL(fileURLWithPath: filename), display: true) { (doc, wasOpened, error) -> Void in
 			//What to do??
 		}
 	}
 	
 	var useModalPanels: Bool {
-		return !NSUserDefaults.standardUserDefaults().boolForKey(kKeepPanelsOpen)
+		return !UserDefaults.standard.bool(forKey: kKeepPanelsOpen)
 	}
 	
-	func applicationDidFinishLaunching(notification: NSNotification) {
+	func applicationDidFinishLaunching(_ notification: Notification) {
 		NSApp.servicesProvider = self
 		openTextPanel.setFrameUsingName("OpenTitlePanel")
 		openTextPanel.setFrameAutosaveName("OpenTitlePanel")
@@ -101,23 +101,23 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		startedUp = true
 	}
 	
-	func applicationShouldOpenUntitledFile(sender: NSApplication) -> Bool {
+	func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
 		if startedUp {
-			return NSUserDefaults.standardUserDefaults().boolForKey("OpenPanelWhenNoWindows")
+			return UserDefaults.standard.bool(forKey: "OpenPanelWhenNoWindows")
 		} else {
-			return NSUserDefaults.standardUserDefaults().boolForKey("OpenPanelOnStartup")
+			return UserDefaults.standard.bool(forKey: "OpenPanelOnStartup")
 		}
 	}
 	
-	func applicationOpenUntitledFile(sender: NSApplication) -> Bool {
+	func applicationOpenUntitledFile(_ sender: NSApplication) -> Bool {
 		if applicationShouldOpenUntitledFile(sender) {
-			if !openTextPanel.visible {
-				openSectionPopup.selectItemAtIndex(0)
+			if !openTextPanel.isVisible {
+				openSectionPopup.selectItem(at: 0)
 			}
 			openTextField.selectText(self)
-			dispatch_async(dispatch_get_global_queue(0, 0), { () -> Void in
+			DispatchQueue.global().async(execute: { () -> Void in
 				usleep(0)
-				dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+				DispatchQueue.main.sync(execute: { () -> Void in
 					self.openTextPanel.makeKeyAndOrderFront(self)
 				})
 			})
@@ -126,39 +126,39 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		return false
 	}
 	
-	override func removeDocument(document: NSDocument) {
-		let autoQuit = NSUserDefaults.standardUserDefaults().boolForKey(kQuitWhenLastClosed)
+	override func removeDocument(_ document: NSDocument) {
+		let autoQuit = UserDefaults.standard.bool(forKey: kQuitWhenLastClosed)
 		
 		super.removeDocument(document)
 		
 		if documents.count == 0 && autoQuit {
-			dispatch_async(dispatch_get_global_queue(0, 0), { () -> Void in
+			DispatchQueue.global().async(execute: { () -> Void in
 				usleep(0)
-				dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-					NSApplication.sharedApplication().terminate(self)
+				DispatchQueue.main.sync(execute: { () -> Void in
+					NSApplication.shared().terminate(self)
 				})
 			})
 			
 		}
 	}
 	
-	func manCommandWithManPath(manPath: String?) -> String {
+	func manCommandWithManPath(_ manPath: String?) -> String {
 		var command = MAN_BINARY
 		
-		if let manPath = manPath where !manPath.isEmpty {
+		if let manPath = manPath , !manPath.isEmpty {
 			command += " -M '\(EscapePath(manPath))'"
 		}
 		
 		return command
 	}
 	
-	func dataByExecutingCommand(command: String, maxLength: Int = 0, extraEnv: Dictionary<String, String>? = nil) -> NSData? {
-		let pipe = NSPipe()
-		let task = NSTask()
-		var output: NSData?
+	func dataByExecutingCommand(_ command: String, maxLength: Int = 0, extraEnv: Dictionary<String, String>? = nil) -> Data? {
+		let pipe = Pipe()
+		let task = Process()
+		var output: Data?
 		
 		if let anExtraEnv = extraEnv {
-			var environment = NSProcessInfo.processInfo().environment
+			var environment = ProcessInfo.processInfo.environment
 			environment += anExtraEnv
 			task.environment = environment
 		}
@@ -166,11 +166,11 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		task.launchPath = "/bin/sh"
 		task.arguments = ["-c", command]
 		task.standardOutput = pipe
-		task.standardError = NSFileHandle.fileHandleWithNullDevice()
+		task.standardError = FileHandle.nullDevice
 		task.launch()
 		
 		if maxLength > 0 {
-			output = pipe.fileHandleForReading.readDataOfLength(maxLength)
+			output = pipe.fileHandleForReading.readData(ofLength: maxLength)
 			task.terminate()
 		} else {
 			output = try? pipe.fileHandleForReading.readDataToEndOfFileIgnoreInterrupt()
@@ -180,46 +180,46 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		return output
 	}
 	
-	func dataByExecutingCommand(command: String, manPath: String) -> NSData? {
+	func dataByExecutingCommand(_ command: String, manPath: String) -> Data? {
 		return dataByExecutingCommand(command, extraEnv: ["MANPATH" : manPath])
 	}
 	
-	func manFileForName(name: String, section: String? = nil, manPath: String? = nil) -> String? {
+	func manFileForName(_ name: String, section: String? = nil, manPath: String? = nil) -> String? {
 		var command = manCommandWithManPath(manPath)
 		let spaceString = ""
 		command += " -w \(section ?? spaceString) \(name)"
 		if let data = dataByExecutingCommand(command) {
-			if data.length <= 0 {
+			if data.count <= 0 {
 				return nil
 			}
 			
-			let manager = NSFileManager.defaultManager()
-			var len = data.length
-			let ptr = data.bytes
+			let manager = FileManager.default
+			var len = data.count
+			let ptr = (data as NSData).bytes
 			
 			let newlinePtr = memchr(ptr, 0x0A, len) // 0A is == '\n'
 			
-			if newlinePtr != nil {
-				len = ptr.distanceTo(newlinePtr)
+			if let newlinePtr = newlinePtr {
+				len = ptr.distance(to: newlinePtr)
 			}
 			
-			let filename = manager.stringWithFileSystemRepresentation(UnsafePointer<Int8>(ptr), length: len)
-			if manager.fileExistsAtPath(filename) {
+			let filename = manager.string(withFileSystemRepresentation: ptr.assumingMemoryBound(to: Int8.self), length: len)
+			if manager.fileExists(atPath: filename) {
 				return filename
 			}
 		}
 		return nil
 	}
 	
-	func typeFromURL(url: NSURL) -> String? {
-		let manager = NSFileManager.defaultManager()
+	func typeFromURL(_ url: URL) -> String? {
+		let manager = FileManager.default
 		var catType = "cat"
 		var manType = "man"
-		let attributes = try? manager.attributesOfItemAtPath((url.path! as NSString).stringByResolvingSymlinksInPath)
+		let attributes = try? manager.attributesOfItem(atPath: (url.path as NSString).resolvingSymlinksInPath)
 		var len: UInt64
 		if let anAttrib = attributes {
-			if let tmplen = anAttrib[NSFileSize] as? NSNumber {
-				len = tmplen.unsignedLongLongValue
+			if let tmplen = anAttrib[FileAttributeKey.size] as? NSNumber {
+				len = tmplen.uint64Value
 			} else {
 				len = 0
 			}
@@ -232,40 +232,40 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			return catType
 		}
 		
-		if let handle = try? NSFileHandle(forReadingFromURL: url) {
-			var fileHeader = handle.readDataOfLength(Int(maxLength))
+		if let handle = try? FileHandle(forReadingFrom: url) {
+			var fileHeader = handle.readData(ofLength: Int(maxLength))
 			
 			if len > 1000000 {
 				return nil
 			}
 			
-			if fileHeader.gzipData {
-				let command = "/usr/bin/gzip -dc '\(EscapePath(url.path!))'"
+			if fileHeader.isGzipData {
+				let command = "/usr/bin/gzip -dc '\(EscapePath(url.path))'"
 				fileHeader = dataByExecutingCommand(command, maxLength: Int(maxLength))!
 				manType = "mangz"
 				catType = "catgz"
 			}
 			
-			if fileHeader.binaryData {
+			if fileHeader.isBinaryData {
 				return nil
 			}
 			
-			return fileHeader.nroffData ? manType : catType
+			return fileHeader.isNroffData ? manType : catType
 		} else {
 			return catType
 		}
 	}
 	
-	override func openDocumentWithContentsOfURL(url: NSURL, display displayDocument: Bool, completionHandler: ((NSDocument?, Bool, NSError?) -> Void)) {
-		let standardizedURL = url.standardizedURL!
+	override func openDocument(withContentsOf url: URL, display displayDocument: Bool, completionHandler: (@escaping (NSDocument?, Bool, Error?) -> Void)) {
+		let standardizedURL = url.standardized
 		var error: NSError? = nil
 		let numDocuments = documents.count
 		
-		var document = documentForURL(standardizedURL)
+		var document = self.document(for: standardizedURL)
 		if document == nil {
 			if let type = typeFromURL(standardizedURL) {
 				do {
-					document = try makeDocumentWithContentsOfURL(standardizedURL, ofType: type)
+					document = try makeDocument(withContentsOf: standardizedURL, ofType: type)
 					document!.makeWindowControllers()
 					addDocument(document!)
 				} catch let anErr as NSError {
@@ -283,15 +283,15 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		completionHandler(document, !docAdded, error)
 	}
 	
-	override func reopenDocumentForURL(urlOrNil: NSURL!, withContentsOfURL contentsURL: NSURL, display displayDocument: Bool, completionHandler: ((NSDocument?, Bool, NSError?) -> Void)) {
-		openDocumentWithContentsOfURL(urlOrNil, display: displayDocument, completionHandler: completionHandler)
+	override func reopenDocument(for urlOrNil: URL!, withContentsOf contentsURL: URL, display displayDocument: Bool, completionHandler: (@escaping (NSDocument?, Bool, Error?) -> Void)) {
+		openDocument(withContentsOf: urlOrNil, display: displayDocument, completionHandler: completionHandler)
 	}
 	
-	override func runModalOpenPanel(openPanel: NSOpenPanel, forTypes types: [String]?) -> Int {
+	override func runModalOpenPanel(_ openPanel: NSOpenPanel, forTypes types: [String]?) -> Int {
 		return openPanel.runModal()
 	}
 	
-	func documentForTitle(title: String) -> NSDocument? {
+	func documentForTitle(_ title: String) -> NSDocument? {
 		for document in documents {
 			if let manDoc = document as? ManDocument {
 				if document.fileURL == nil && manDoc.shortTitle == title {
@@ -311,18 +311,19 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		var helpPath = NSBundle.mainBundle().URLForResource("Help", withExtension: "rtf")
+		var helpPath = Bundle.main.url(forResource: "Help", withExtension: "rtf")
 		if helpPath == nil {
-			helpPath = NSBundle.mainBundle().URLForResource("Help", withExtension: "rtfd")
+			helpPath = Bundle.main.url(forResource: "Help", withExtension: "rtfd")
 			if helpPath == nil {
 				return
 			}
 		}
 		
-		(helpScrollView.contentView.documentView as! NSTextView).readRTFDFromFile(helpPath!.path!)
+		(helpScrollView.contentView.documentView as! NSTextView).readRTFD(fromFile: helpPath!.path)
 	}
 	
-	func openDocumentWithName(name: String, section: String? = nil, manPath: String) -> ManDocument? {
+	@discardableResult
+	func openDocumentWithName(_ name: String, section: String? = nil, manPath: String) -> ManDocument? {
 		var title = name
 		if (section != nil && section!.isEmpty == false) {
 			title = "\(name)(\(section!))"
@@ -333,8 +334,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			document = ManDocument(name: name, section: section, manPath: manPath, title: title)
 			
 			if let filename = manFileForName(name, section: section, manPath: manPath) {
-				let afn = (filename as NSString).stringByResolvingSymlinksInPath
-				let fileURL = NSURL(fileURLWithPath: afn)
+				let afn = (filename as NSString).resolvingSymlinksInPath
+				let fileURL = URL(fileURLWithPath: afn)
 				noteNewRecentDocumentURL(fileURL)
 				document?.fileURL = fileURL
 			}
@@ -348,7 +349,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		return document
 	}
 	
-	func openAproposDocument(apropos: String, manPath: String) -> AproposDocument? {
+	@discardableResult
+	func openAproposDocument(_ apropos: String, manPath: String) -> AproposDocument? {
 		let title = "Apropos \(apropos)"
 		var document = documentForTitle(title) as? AproposDocument
 		
@@ -366,34 +368,33 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		return document
 	}
 	
-	func openWord(word: String) -> ManDocument? {
+	@discardableResult
+	func openWord(_ word: String) -> ManDocument? {
 		var base = word
 		var section: String? = nil
-		let lparenRange = word.rangeOfString("(")
-		let rparenRange = word.rangeOfString(")")
+		let lparenRange = word.range(of: "(")
+		let rparenRange = word.range(of: ")")
 		
-		if let lparenRange = lparenRange, rparenRange = rparenRange where lparenRange.startIndex < rparenRange.startIndex {
-			var lp = lparenRange
-			var rp = rparenRange
+		if let lparenRange = lparenRange, let rparenRange = rparenRange , lparenRange.lowerBound < rparenRange.lowerBound {
+			let lp = lparenRange
+			let rp = rparenRange
 			
-			base = word[word.startIndex ..< lp.startIndex]
-			lp.startIndex = lp.startIndex.successor()
-			rp.endIndex = rp.endIndex.predecessor()
-			section = word[lp.startIndex ..< rp.endIndex]
+			base = word[word.startIndex ..< lp.lowerBound]
+			section = word[word.index(after: lp.lowerBound) ..< word.index(before: rp.upperBound)]
 		}
 		
-		return openDocumentWithName(base, section: section, manPath: NSUserDefaults.standardUserDefaults().manPath)
+		return openDocumentWithName(base, section: section, manPath: UserDefaults.standard.manPath)
 	}
 	
-	func openString(string: String) {
+	func openString(_ string: String) {
 		let words = getWordArray(string)
 		if words.count > 20 {
-			let locCount = NSNumberFormatter.localizedStringFromNumber(words.count, numberStyle: .DecimalStyle)
+			let locCount = NumberFormatter.localizedString(from: NSNumber(value: words.count), number: .decimal)
 			let alert = NSAlert()
 			alert.messageText = NSLocalizedString("Warning", comment: "Warning")
 			alert.informativeText = String(format: NSLocalizedString("This will open approximately %@ windows!", comment: "This will open approximately (the number of) windows!"), locCount)
-			alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: "Cancel"))
-			alert.addButtonWithTitle(NSLocalizedString("Continue", comment: "Continue"))
+			alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel"))
+			alert.addButton(withTitle: NSLocalizedString("Continue", comment: "Continue"))
 			let aNum = alert.runModal()
 			if aNum != NSAlertSecondButtonReturn {
 				return
@@ -403,17 +404,17 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		openString(string, oneWordOnly: false)
 	}
 	
-	func openString(string: String, oneWordOnly oneOnly: Bool) {
-		let scanner = NSScanner(string: string)
-		let whitespaceSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-		let nonwhitespaceSet = whitespaceSet.invertedSet
+	func openString(_ string: String, oneWordOnly oneOnly: Bool) {
+		let scanner = Scanner(string: string)
+		let whitespaceSet = CharacterSet.whitespacesAndNewlines
+		let nonwhitespaceSet = whitespaceSet.inverted
 		var aWord: NSString? = nil
 		var lastWord: String! = nil
 		
 		scanner.charactersToBeSkipped = whitespaceSet
 		
-		while !scanner.atEnd {
-			if scanner.scanCharactersFromSet(nonwhitespaceSet, intoString: &aWord) {
+		while !scanner.isAtEnd {
+			if scanner.scanCharacters(from: nonwhitespaceSet, into: &aWord) {
 				if lastWord == nil {
 					if let aWord = aWord {
 						lastWord = aWord as String
@@ -432,22 +433,22 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			if lastWord.hasSuffix(",") {
 				var lastIndex = lastWord.endIndex
 				lastWord = lastWord[lastWord.startIndex..<lastIndex]
-				lastIndex = lastIndex.predecessor()
+				lastIndex = lastWord.index(before: lastIndex)
 			}
 			openWord(lastWord)
 		}
 		
 	}
 	
-	@IBAction func orderFrontHelpPanel(sender: AnyObject!) {
+	@IBAction func orderFrontHelpPanel(_ sender: AnyObject!) {
 		helpPanel.makeKeyAndOrderFront(sender)
 	}
 	
-	@IBAction func orderFrontPreferencesPanel(sender: AnyObject?) {
+	@IBAction func orderFrontPreferencesPanel(_ sender: AnyObject?) {
 		PrefPanelController.sharedInstance.showWindow(sender)
 	}
 	
-	@IBAction func runPageLayout(sender: AnyObject!) {
+	@IBAction func runPageLayout(_ sender: AnyObject!) {
 		NSApp.runPageLayout(sender)
 	}
 	
@@ -464,7 +465,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		
 		PrefPanelController.registerManDefaults()
 		var tmpNibArray: NSArray? = nil
-		NSBundle.mainBundle().loadNibNamed("DocController", owner: self, topLevelObjects: &tmpNibArray)
+		Bundle.main.loadNibNamed("DocController", owner: self, topLevelObjects: &tmpNibArray!)
 		
 		nibObjects = tmpNibArray! as [AnyObject]
 	}
@@ -478,20 +479,20 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var words = getWordArray(aString)
 		
 		/* If the string is of the form "3 printf", arrange it better for our parser.  Requested by Eskimo.  Also accept 'n' as a section */
-		if words.count == 2 && aString.rangeOfString("(") == nil && IsSectionWord(words[0]) {
+		if words.count == 2 && aString.range(of: "(") == nil && IsSectionWord(words[0]) {
 			aString = "\(words[1])(\(words[0]))"
 		}
 		
 		/* Append the section if chosen in the popup and not explicity defined in the string */
-		if aString.characters.count > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.rangeOfString("(") == nil {
+		if aString.characters.count > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.range(of: "(") == nil {
 			aString += "(\(openSectionPopup.indexOfSelectedItem))"
 		}
 		openString(aString)
 		openTextField.selectText(self)
 	}
 	
-	@IBAction func openSection(sender: AnyObject!) {
-		let aTag = sender.tag()
+	@IBAction func openSection(_ sender: AnyObject!) {
+		let aTag = sender.tag
 		if aTag == 0 {
 			openApropos("") // all pages
 		} else if aTag == 20 {
@@ -501,14 +502,14 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
-	@IBAction func openTextPanel(sender: AnyObject!) {
-		if !openTextPanel.visible {
-			openSectionPopup.selectItemAtIndex(0)
+	@IBAction func openTextPanel(_ sender: AnyObject!) {
+		if !openTextPanel.isVisible {
+			openSectionPopup.selectItem(at: 0)
 		}
 		openTextField.selectText(self)
 		
 		if useModalPanels {
-			if NSApp.runModalForWindow(openTextPanel) == NSModalResponseOK {
+			if NSApp.runModal(for: openTextPanel) == NSModalResponseOK {
 				openTitleFromPanel()
 			}
 		} else {
@@ -521,11 +522,11 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		aproposField.selectText(self)
 	}
 	
-	@IBAction func openAproposPanel(sender: NSView!) {
+	@IBAction func openAproposPanel(_ sender: NSView!) {
 		aproposField.selectText(self)
 		
 		if useModalPanels {
-			if NSApp.runModalForWindow(aproposPanel) == NSModalResponseOK {
+			if NSApp.runModal(for: aproposPanel) == NSModalResponseOK {
 				openAproposFromPanel()
 			}
 		} else {
@@ -533,44 +534,44 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
-	@IBAction func okApropos(sender: NSView!) {
+	@IBAction func okApropos(_ sender: NSView!) {
 		if useModalPanels {
 			sender.window?.orderOut(self)
 		}
 		
 		if sender.window!.level == NSModalPanelWindowLevel {
-			NSApp.stopModalWithCode(NSModalResponseOK)
+			NSApp.stopModal(withCode: NSModalResponseOK)
 		} else {
 			openAproposFromPanel()
 		}
 	}
 	
-	@IBAction func okText(sender: NSView!) {
+	@IBAction func okText(_ sender: NSView!) {
 		if useModalPanels {
 			sender.window?.orderOut(self)
 		}
 		
 		if sender.window!.level == NSModalPanelWindowLevel {
-			NSApp.stopModalWithCode(NSModalResponseOK)
+			NSApp.stopModal(withCode: NSModalResponseOK)
 		} else {
 			openTitleFromPanel()
 		}
 	}
 	
-	@IBAction func cancelText(sender: NSView!) {
+	@IBAction func cancelText(_ sender: NSView!) {
 		sender.window?.orderOut(self)
 		if sender.window!.level == NSModalPanelWindowLevel {
-			NSApp.stopModalWithCode(NSModalResponseCancel)
+			NSApp.stopModal(withCode: NSModalResponseCancel)
 		}
 	}
 }
 
-private func IsSectionWord(word: String) -> Bool
+private func IsSectionWord(_ word: String) -> Bool
 {
 	if word.isEmpty {
 		return false
 	}
-	if NSCharacterSet.decimalDigitCharacterSet().characterIsMember((word as NSString).characterAtIndex(0)) {
+	if CharacterSet.decimalDigits.contains(UnicodeScalar((word as NSString).character(at: 0))!) {
 		return true
 	}
 	if word == "n" {
@@ -579,17 +580,17 @@ private func IsSectionWord(word: String) -> Bool
 	return false
 }
 
-private func getWordArray(string: String) -> [String] {
-	let spaceSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-	let nonspaceSet = spaceSet.invertedSet
+private func getWordArray(_ string: String) -> [String] {
+	let spaceSet = CharacterSet.whitespacesAndNewlines
+	let nonspaceSet = spaceSet.inverted
 	var wordArray = [String]()
-	let scanner = NSScanner(string: string)
+	let scanner = Scanner(string: string)
 	
 	scanner.charactersToBeSkipped = spaceSet
 	
-	while !scanner.atEnd {
+	while !scanner.isAtEnd {
 		var aWord: NSString? = nil
-		if scanner.scanCharactersFromSet(nonspaceSet, intoString: &aWord) {
+		if scanner.scanCharacters(from: nonspaceSet, into: &aWord) {
 			wordArray.append(aWord! as String)
 		}
 	}
@@ -598,7 +599,7 @@ private func getWordArray(string: String) -> [String] {
 }
 
 @objc(ManOpenURLHandlerCommand) class ManOpenURLHandlerCommand : NSScriptCommand {
-	override func performDefaultImplementation() -> AnyObject? {
+	override func performDefaultImplementation() -> Any? {
 		if directParameter == nil {
 			return nil
 		}
@@ -607,11 +608,11 @@ private func getWordArray(string: String) -> [String] {
 		
 		//var aTex: NSStringCompareOptions = .CaseInsensitiveSearch | .AnchoredSearch
 		
-		let paramRange = param.rangeOfString(URL_SCHEME_PREFIX, options: [.CaseInsensitiveSearch, .AnchoredSearch])
+		let paramRange = param.range(of: URL_SCHEME_PREFIX, options: [.caseInsensitive, .anchored])
 		var pageNames = [String]()
 		
 		if let aRange = paramRange {
-			let path = param.substringFromIndex(aRange.endIndex)
+			let path = param.substring(from: aRange.upperBound)
 			let components = (path as NSString).pathComponents
 			
 			for name in components {
@@ -630,7 +631,7 @@ private func getWordArray(string: String) -> [String] {
 			}
 			
 			if pageNames.count > 0 {
-				(ManDocumentController.sharedDocumentController() as! ManDocumentController).openString(pageNames.joinWithSeparator(" "))
+				(ManDocumentController.shared() as! ManDocumentController).openString(pageNames.joined(separator: " "))
 			}
 		}
 		

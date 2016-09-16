@@ -8,6 +8,26 @@
 
 import Cocoa
 import SwiftAdditions
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 private let restoreSearchString = "SearchString"
 private let restoreTitle = "Title"
@@ -18,31 +38,36 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	var title: String = ""
 	var searchString: String = ""
-	private var aproposItems: [(title: String, desc: String)] = []
+	fileprivate var aproposItems: [(title: String, desc: String)] = []
 	
-	override class func canConcurrentlyReadDocumentsOfType(typeName: String) -> Bool {
+	override class func canConcurrentlyReadDocuments(ofType typeName: String) -> Bool {
 		return true
 	}
 	
-	override var displayName: String {
+	override var displayName: String! {
+		get {
 		return title
+		}
+		set {
+			//do nothing
+		}
 	}
 	
 	override var windowNibName: String {
 		return "Apropos"
 	}
 	
-	func parseOutput(output: String!) {
+	func parseOutput(_ output: String!) {
 		if output == nil {
 			return
 		}
 		
 		let lines: [String] = {
-			var aLines = output.componentsSeparatedByString("\n")
+			var aLines = output.components(separatedBy: "\n")
 			
-			aLines.sortInPlace { (lhs, rhs) -> Bool in
+			aLines.sort { (lhs, rhs) -> Bool in
 				let toRet = lhs.caseInsensitiveCompare(rhs)
-				return toRet == .OrderedAscending
+				return toRet == .orderedAscending
 			}
 			return aLines
 			}()
@@ -56,30 +81,30 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 				continue
 			}
 			
-			var dashRange = line.rangeOfString("\t\t- ") //OPENSTEP
+			var dashRange = line.range(of: "\t\t- ") //OPENSTEP
 			if dashRange == nil {
-				dashRange = line.rangeOfString("\t- ") //OPENSTEP
+				dashRange = line.range(of: "\t- ") //OPENSTEP
 			}
 			if dashRange == nil {
-				dashRange = line.rangeOfString("\t-", options: [.BackwardsSearch, .AnchoredSearch])
+				dashRange = line.range(of: "\t-", options: [.backwards, .anchored])
 			}
 			if dashRange == nil {
-				dashRange = line.rangeOfString(" - ") //MacOSX
+				dashRange = line.range(of: " - ") //MacOSX
 			}
 			if dashRange == nil {
-				dashRange = line.rangeOfString(" -", options: [.BackwardsSearch, .AnchoredSearch])
+				dashRange = line.range(of: " -", options: [.backwards, .anchored])
 			}
 			
 			if let aDashRange = dashRange {
-				let title = line[line.startIndex ..< aDashRange.startIndex].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-				let adescription = line[aDashRange.endIndex ..< line.endIndex]
+				let title = line[line.startIndex ..< aDashRange.lowerBound].trimmingCharacters(in: CharacterSet.whitespaces)
+				let adescription = line[aDashRange.upperBound ..< line.endIndex]
 				aproposItems.append((title: title, desc: adescription))
 			}
 		}
 	}
 	
-	override func windowControllerDidLoadNib(aController: NSWindowController) {
-		let aSizeString = NSUserDefaults.standardUserDefaults().stringForKey("AproposWindowSize")
+	override func windowControllerDidLoadNib(_ aController: NSWindowController) {
+		let aSizeString = UserDefaults.standard.string(forKey: "AproposWindowSize")
 		
 		super.windowControllerDidLoadNib(aController)
 		// Add any code here that needs to be executed once the windowController has loaded the document's window.
@@ -99,22 +124,22 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		tableView.sizeLastColumnToFit()
 	}
 	
-	override func dataOfType(typeName: String?) throws -> NSData {
+	override func data(ofType typeName: String?) throws -> Data {
 		// Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
 		// You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
 		throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
 	}
 	
-	override func readFromData(data: NSData?, ofType typeName: String?) throws {
+	override func read(from data: Data, ofType typeName: String?) throws {
 		// Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
 		// You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
 		// If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
 		throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
 	}
 	
-	private func loadWithString(apropos: String, manPath: String, title aTitle: String) {
+	fileprivate func loadWithString(_ apropos: String, manPath: String, title aTitle: String) {
 		var aapropos = apropos
-		let docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
+		let docController = ManDocumentController.shared() as! ManDocumentController
 		var command = docController.manCommandWithManPath(manPath)
 		
 		title = aTitle
@@ -142,28 +167,28 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			return
 		}
 		/* The whatis database appears to not be UTF8 -- at least, UTF8 can fail, even on 10.7 */
-		var outString = NSString(data: output, encoding: NSUTF8StringEncoding) as? String
+		var outString = String(data: output, encoding: String.Encoding.utf8)
 		if outString == nil {
-			outString = NSString(data: output, encoding: NSMacOSRomanStringEncoding) as? String
+			outString = String(data: output, encoding: String.Encoding.macOSRoman)
 		}
 		parseOutput(outString)
 	}
 	
-	override func printOperationWithSettings(printSettings: [String : AnyObject]) throws -> NSPrintOperation {
+	override func printOperation(withSettings printSettings: [String : Any]) throws -> NSPrintOperation {
 		let op = NSPrintOperation(view: tableView, printInfo: NSPrintInfo(dictionary: printSettings))
 		return op
 	}
 	
-	@IBAction func openManPages(sender: NSTableView?) {
+	@IBAction func openManPages(_ sender: NSTableView?) {
 		if sender?.clickedRow >= 0 {
 			let manPage = aproposItems[sender!.clickedRow].title
-			(ManDocumentController.sharedDocumentController() as! ManDocumentController).openString(manPage, oneWordOnly: true)
+			(ManDocumentController.shared() as! ManDocumentController).openString(manPage, oneWordOnly: true)
 		}
 	}
 	
-	@IBAction func saveCurrentWindowSize(sender: AnyObject?) {
+	@IBAction func saveCurrentWindowSize(_ sender: AnyObject?) {
 		let size = tableView.window!.frame.size
-		NSUserDefaults.standardUserDefaults()["AproposWindowSize"] = size.stringValue
+		UserDefaults.standard["AproposWindowSize"] = size.stringValue
 	}
 	
 	override init() {
@@ -184,33 +209,33 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	}
 	
 	// MARK: NSTableView data sources
-	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+	func numberOfRows(in tableView: NSTableView) -> Int {
 		return aproposItems.count
 	}
 	
-	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
 		let item = aproposItems[row]
 		let toRet = (tableColumn === titleColumn) ? item.title : item.desc
 		return toRet
 	}
 	
 	// MARK: Document restoration
-	override func encodeRestorableStateWithCoder(coder: NSCoder) {
-		super.encodeRestorableStateWithCoder(coder)
-		coder.encodeObject(searchString, forKey: restoreSearchString)
-		coder.encodeObject(title, forKey: restoreTitle)
+	override func encodeRestorableState(with coder: NSCoder) {
+		super.encodeRestorableState(with: coder)
+		coder.encode(searchString, forKey: restoreSearchString)
+		coder.encode(title, forKey: restoreTitle)
 	}
 	
-	override func restoreStateWithCoder(coder: NSCoder) {
-		super.restoreStateWithCoder(coder)
+	override func restoreState(with coder: NSCoder) {
+		super.restoreState(with: coder)
 		
-		if !coder.containsValueForKey(restoreSearchString) {
+		if !coder.containsValue(forKey: restoreSearchString) {
 			return
 		}
 		
-		let search: String = coder.decodeObjectForKey(restoreSearchString) as! String
-		let theTitle = coder.decodeObjectForKey(restoreTitle) as! String
-		let manPath = NSUserDefaults.standardUserDefaults().manPath
+		let search: String = coder.decodeObject(forKey: restoreSearchString) as! String
+		let theTitle = coder.decodeObject(forKey: restoreTitle) as! String
+		let manPath = UserDefaults.standard.manPath
 		
 		loadWithString(search, manPath: manPath, title: theTitle)
 		

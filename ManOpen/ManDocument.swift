@@ -18,19 +18,19 @@ private let RestoreFileURL    = "URL"
 private let RestoreFileType   = "DocType"
 
 private var filterCommand: String {
-	let defaults = NSUserDefaults.standardUserDefaults()
+	let defaults = UserDefaults.standard
 	
 	/* HTML parser in tiger got slow... RTF is faster, and is usable now that it supports hyperlinks */
 	//let tool = "cat2html"
 	let tool = "cat2rtf"
-	var command = NSBundle.mainBundle().pathForResource(tool, ofType: nil)!
+	var command = Bundle.main.path(forResource: tool, ofType: nil)!
 	
 	command = EscapePath(command, addSurroundingQuotes: true)
 	command += " -lH" // generate links, mark headers
-	if defaults.boolForKey(kUseItalics) {
+	if defaults.bool(forKey: kUseItalics) {
 		command += " -i"
 	}
-	if !defaults.boolForKey(kUseBold) {
+	if !defaults.bool(forKey: kUseBold) {
 		command += " -g"
 	}
 	
@@ -42,16 +42,16 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	@IBOutlet weak var titleStringField: NSTextField!
 	@IBOutlet weak var openSelectionButton: NSButton!
 	@IBOutlet weak var sectionPopup: NSPopUpButton!
-	private var hasLoaded = false
-	private var restoreData = [String: AnyObject]()
+	fileprivate var hasLoaded = false
+	fileprivate var restoreData = [String: AnyObject]()
 	var sections: [String] = [String]()
 	var sectionRanges: [NSRange] = [NSRange]()
 	
 	var shortTitle = ""
-	var copyURL: NSURL!
-	var taskData: NSData?
+	var copyURL: URL!
+	var taskData: Data?
 	
-	private var textView: ManTextView {
+	fileprivate var textView: ManTextView {
 		return textScroll.contentView.documentView as! ManTextView
 	}
 	
@@ -61,13 +61,13 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		return "ManPage"
 	}
 	
-	override class func canConcurrentlyReadDocumentsOfType(typeName: String) -> Bool {
+	override class func canConcurrentlyReadDocuments(ofType typeName: String) -> Bool {
 		return true
 	}
 	
-	override func windowControllerDidLoadNib(aController: NSWindowController) {
-		let defaults = NSUserDefaults.standardUserDefaults()
-		let sizeString = defaults.stringForKey("ManWindowSize")
+	override func windowControllerDidLoadNib(_ aController: NSWindowController) {
+		let defaults = UserDefaults.standard
+		let sizeString = defaults.string(forKey: "ManWindowSize")
 		
 		super.windowControllerDidLoadNib(aController)
 		// Add any code here that needs to be executed once the windowController has loaded the document's window.
@@ -88,7 +88,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		textView.backgroundColor = defaults.manBackgroundColor
 		textView.textColor = defaults.manTextColor
 		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10), dispatch_get_main_queue()) {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(10) / Double(NSEC_PER_SEC)) {
 			self.showData()
 		}
 		
@@ -96,19 +96,19 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		textView.window?.delegate = self
 	}
 	
-	override func readFromURL(url: NSURL, ofType typeName: String) throws {
+	override func read(from url: URL, ofType typeName: String) throws {
 		switch typeName {
 		case "man":
-			loadManFile(url.path!, isGzip: false)
+			loadManFile(url.path, isGzip: false)
 			
 		case "mangz":
-			loadManFile(url.path!, isGzip: true)
+			loadManFile(url.path, isGzip: true)
 			
 		case "cat":
-			loadCatFile(url.path!, isGzip: false)
+			loadCatFile(url.path, isGzip: false)
 			
 		case "catgz":
-			loadCatFile(url.path!, isGzip: true)
+			loadCatFile(url.path, isGzip: true)
 			
 		default:
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid document type", comment:"Invalid document type")])
@@ -116,12 +116,12 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		}
 		
 		// strip extension twice in case it is a e.g. "1.gz" filename
-		self.shortTitle = ((url.lastPathComponent! as NSString).stringByDeletingPathExtension as NSString).stringByDeletingPathExtension
+		self.shortTitle = ((url.lastPathComponent as NSString).deletingPathExtension as NSString).deletingPathExtension
 		copyURL = url;
 		
 		restoreData = [
-			RestoreFileURL: url,
-			RestoreFileType: typeName];
+			RestoreFileURL: url as AnyObject,
+			RestoreFileType: typeName as AnyObject];
 		
 		if taskData == nil {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data")])
@@ -131,8 +131,13 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	/// Standard NSDocument method.  We only want to override if we aren't
 	/// representing an actual file.
-	override var displayName: String {
+	override var displayName: String! {
+		get {
 		return fileURL != nil ? super.displayName : shortTitle
+		}
+		set {
+			//Do nothing
+		}
 	}
 	
 	override init() {
@@ -144,30 +149,30 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		loadDocumentWithName(name, section: section, manPath: manPath, title: title)
 	}
 	
-	private func loadDocumentWithName(name: String, section: String?, manPath: String?, title: String) {
-		let docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
+	fileprivate func loadDocumentWithName(_ name: String, section: String?, manPath: String?, title: String) {
+		let docController = ManDocumentController.shared() as! ManDocumentController
 		var command = docController.manCommandWithManPath(manPath)
 		fileType = "man"
 		shortTitle = title
 		
-		if let section = section where section.characters.count > 0 {
-			command += " " + section.lowercaseString
-			copyURL = NSURL(string: URL_SCHEME_PREFIX + "//\(section)/\(title)")
+		if let section = section , section.characters.count > 0 {
+			command += " " + section.lowercased()
+			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(section)/\(title)")
 		} else {
-			copyURL = NSURL(string: URL_SCHEME_PREFIX + "//\(title)")
+			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(title)")
 		}
 		
-		restoreData = [RestoreName: name,
-			RestoreTitle: title,
-			RestoreSection: section ?? ""]
+		restoreData = [RestoreName: name as AnyObject,
+			RestoreTitle: title as AnyObject,
+			RestoreSection: section as AnyObject? ?? "" as AnyObject]
 		
 		command += " " + name
 		
 		loadCommand(command)
 	}
 	
-	func loadCommand(command: String) {
-		let docController = ManDocumentController.sharedDocumentController() as! ManDocumentController
+	func loadCommand(_ command: String) {
+		let docController = ManDocumentController.shared() as! ManDocumentController
 		let fullCommand = "\(command) | \(filterCommand)"
 		taskData = docController.dataByExecutingCommand(fullCommand)
 		
@@ -175,7 +180,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	func showData() {
-		let defaults = NSUserDefaults.standardUserDefaults()
+		let defaults = UserDefaults.standard
 		var storage: NSTextStorage? = nil
 		let manFont = defaults.manFont
 		let linkColor = defaults.manLinkColor
@@ -185,17 +190,17 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			return
 		}
 		
-		if taskData?.RTFData ?? false {
-			storage = NSTextStorage(RTF: taskData!, documentAttributes: nil)
+		if taskData?.isRTFData ?? false {
+			storage = NSTextStorage(rtf: taskData!, documentAttributes: nil)
 		} else if let taskData = taskData {
-			storage = NSTextStorage(HTML: taskData, documentAttributes: nil)
+			storage = NSTextStorage(html: taskData, options: [:], documentAttributes: nil)
 		}
 		
 		if storage == nil {
 			storage = NSTextStorage()
 		}
 		
-		if storage?.string.rangeOfCharacterFromSet(NSCharacterSet.letterCharacterSet()) == nil {
+		if storage?.string.rangeOfCharacter(from: CharacterSet.letters) == nil {
 			storage?.mutableString.setString(NSLocalizedString("\nNo manual entry.", comment: "'No manual entry', preceeded by a newline"))
 		}
 		
@@ -203,7 +208,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		sectionRanges.removeAll()
 		
 		if let aStorage = storage {
-			let manager = NSFontManager.sharedFontManager()
+			let manager = NSFontManager.shared()
 			let family = manFont.familyName ?? manFont.fontName
 			let size = manFont.pointSize
 			var currIndex = 0
@@ -213,21 +218,21 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				
 				while currIndex < aStorage.length {
 					var currRange = NSRange(location: 0, length: 0)
-					var attribs = aStorage.attributesAtIndex(currIndex, effectiveRange: &currRange)
+					var attribs = aStorage.attributes(at: currIndex, effectiveRange: &currRange)
 					var font = attribs[NSFontAttributeName] as? NSFont
 					var isLink = false
 					
 					if font != nil && font!.familyName != "Courier" {
-						self.addSectionHeader(aStorage.mutableString.substringWithRange(currRange), range: currRange)
+						self.addSectionHeader(aStorage.mutableString.substring(with: currRange), range: currRange)
 					}
 					
 					isLink = (attribs[NSLinkAttributeName] != nil)
 					
 					if (font != nil && (font!.familyName != family)) {
-						font = manager.convertFont(font!, toFamily: family)
+						font = manager.convert(font!, toFamily: family)
 					}
 					if (font != nil && font!.pointSize != size) {
-						font = manager.convertFont(font!, toSize: size)
+						font = manager.convert(font!, toSize: size)
 					}
 					if (font != nil) {
 						aStorage.addAttribute(NSFontAttributeName, value: font!, range: currRange)
@@ -249,11 +254,11 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				
 				aStorage.endEditing()
 				}, { (localException) -> Void in
-					print("Exception during formatting: \(localException)")
+					Swift.print("Exception during formatting: \(localException)")
 			})
 			
 			textView.layoutManager?.replaceTextStorage(aStorage)
-			textView.window?.invalidateCursorRectsForView(textView)
+			textView.window?.invalidateCursorRects(for: textView)
 		}
 		textView.backgroundColor = backgroundColor
 		setupSectionPopup()
@@ -274,18 +279,18 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	func setupSectionPopup() {
 		sectionPopup.removeAllItems()
-		sectionPopup.addItemWithTitle("Section:")
-		sectionPopup.enabled = sections.count > 0
+		sectionPopup.addItem(withTitle: "Section:")
+		sectionPopup.isEnabled = sections.count > 0
 		
-		if sectionPopup.enabled {
-			sectionPopup.addItemsWithTitles(sections)
+		if sectionPopup.isEnabled {
+			sectionPopup.addItems(withTitles: sections)
 		}
 	}
 	
-	func addSectionHeader(header: String, range: NSRange) {
+	func addSectionHeader(_ header: String, range: NSRange) {
 		/* Make sure it is a header -- error text sometimes is not Courier, so it gets passed in here. */
-		if header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet()) != nil &&
-			header.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet()) != nil {
+		if header.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil &&
+			header.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil {
 				var label = header
 				var count = 1
 				
@@ -299,20 +304,20 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		}
 	}
 	
-	func loadManFile(filename: String, isGzip: Bool = false) {
-		let defaults = NSUserDefaults.standardUserDefaults()
-		var nroffFormat = defaults.stringForKey(kNroffCommand)!
+	func loadManFile(_ filename: String, isGzip: Bool = false) {
+		let defaults = UserDefaults.standard
+		var nroffFormat = defaults.string(forKey: kNroffCommand)!
 		var nroffCommand: String
-		let hasQuote = nroffFormat.rangeOfString("'%@'") != nil
+		let hasQuote = nroffFormat.range(of: "'%@'") != nil
 		
 		/* If Gzip, change the command into a filter of the output of gzcat.  I'm
 		getting the feeling that the customizable nroff command is more trouble
 		than it's worth, especially now that OSX uses the good version of gnroff */
 		if isGzip {
 			let repl = hasQuote ? "'%@'" : "%@"
-			if let replRange = nroffFormat.rangeOfString(repl) {
+			if let replRange = nroffFormat.range(of: repl) {
 				var formatCopy = nroffFormat
-				formatCopy.replaceRange(replRange, with: "")
+				formatCopy.replaceSubrange(replRange, with: "")
 				nroffFormat = "/usr/bin/gzip -dc \(repl) | \(formatCopy)"
 			}
 		}
@@ -321,28 +326,28 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		loadCommand(nroffCommand)
 	}
 	
-	func loadCatFile(filename: String, isGzip: Bool = false) {
+	func loadCatFile(_ filename: String, isGzip: Bool = false) {
 		let binary = isGzip ? "/usr/bin/gzip -dc" : "/bin/cat"
 		loadCommand("\(binary) '\(EscapePath(filename, addSurroundingQuotes: false))'")
 	}
 	
-	@IBAction func saveCurrentWindowSize(sender: AnyObject?) {
+	@IBAction func saveCurrentWindowSize(_ sender: AnyObject?) {
 		let size = textView.window!.frame.size
-		NSUserDefaults.standardUserDefaults().setObject(size.stringValue, forKey: "ManWindowSize")
+		UserDefaults.standard.set(size.stringValue, forKey: "ManWindowSize")
 	}
 	
-	@IBAction func openSelection(sender: AnyObject?) {
+	@IBAction func openSelection(_ sender: AnyObject?) {
 		let selectedRange = textView.selectedRange()
 		
 		if selectedRange.length > 0 {
-			let selectedString = (textView.string! as NSString).substringWithRange(selectedRange)
-			(ManDocumentController.sharedDocumentController() as! ManDocumentController).openString(selectedString)
+			let selectedString = (textView.string! as NSString).substring(with: selectedRange)
+			(ManDocumentController.shared() as! ManDocumentController).openString(selectedString)
 		}
 		
 		textView.window?.makeFirstResponder(textView)
 	}
 	
-	@IBAction func displaySection(sender: AnyObject?) {
+	@IBAction func displaySection(_ sender: AnyObject?) {
 		let section = sectionPopup.indexOfSelectedItem
 		if (section > 0 && section <= sectionRanges.count) {
 			let range = sectionRanges[section - 1]
@@ -350,41 +355,41 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		}
 	}
 	
-	@IBAction func copyURL(sender: AnyObject?) {
+	@IBAction func copyURL(_ sender: AnyObject?) {
 		if let aCopyURL = copyURL {
-			let pb = NSPasteboard.generalPasteboard()
+			let pb = NSPasteboard.general()
 			var types = [String]()
 			
 			types.append(NSURLPboardType)
-			if aCopyURL.fileURL {
+			if aCopyURL.isFileURL {
 				types.append(NSFilenamesPboardType)
 			}
 			types.append(NSStringPboardType)
 			pb.declareTypes(types, owner: nil)
 			
-			aCopyURL.writeToPasteboard(pb)
+			(aCopyURL as NSURL).write(to: pb)
 			pb.setString("<\(aCopyURL.absoluteString)>", forType: NSStringPboardType)
-			if aCopyURL.fileURL {
-				pb.setPropertyList([aCopyURL.path!], forType: NSFilenamesPboardType)
+			if aCopyURL.isFileURL {
+				pb.setPropertyList([aCopyURL.path], forType: NSFilenamesPboardType)
 			}
 		}
 	}
 	
-	override func runPageLayout(sender: AnyObject?) {
-		NSApplication.sharedApplication().runPageLayout(sender)
+	override func runPageLayout(_ sender: Any?) {
+		NSApplication.shared().runPageLayout(sender)
 	}
 	
-	override func printOperationWithSettings(printSettings: [String : AnyObject]) throws -> NSPrintOperation {
+	override func printOperation(withSettings printSettings: [String : Any]) throws -> NSPrintOperation {
 		let operation = NSPrintOperation(view: textView, printInfo: NSPrintInfo(dictionary: printSettings))
 		let printInfo = operation.printInfo
-		printInfo.verticallyCentered = false
-		printInfo.horizontallyCentered = true
-		printInfo.horizontalPagination = .FitPagination
+		printInfo.isVerticallyCentered = false
+		printInfo.isHorizontallyCentered = true
+		printInfo.horizontalPagination = .fitPagination
 		
 		return operation
 	}
 	
-	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
 		if menuItem.action == #selector(ManDocument.copyURL(_:)) {
 			return copyURL != nil
 		}
@@ -393,33 +398,33 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	// MARK: NSWindowRestoration functions
-	override func encodeRestorableStateWithCoder(coder: NSCoder) {
-		super.encodeRestorableStateWithCoder(coder)
-		coder.encodeObject(restoreData, forKey: RestoreWindowDict)
+	override func encodeRestorableState(with coder: NSCoder) {
+		super.encodeRestorableState(with: coder)
+		coder.encode(restoreData, forKey: RestoreWindowDict)
 	}
 	
-	override func restoreStateWithCoder(coder: NSCoder) {
-		super.restoreStateWithCoder(coder)
+	override func restoreState(with coder: NSCoder) {
+		super.restoreState(with: coder)
 		
-		if !coder.containsValueForKey(RestoreWindowDict) {
+		if !coder.containsValue(forKey: RestoreWindowDict) {
 			return
 		}
 		
-		if let restoreInfo = coder.decodeObjectForKey(RestoreWindowDict) as? [String: AnyObject] {
+		if let restoreInfo = coder.decodeObject(forKey: RestoreWindowDict) as? [String: AnyObject] {
 			if let aRestoreName = restoreInfo[RestoreName] as? String {
 				let section = restoreInfo[RestoreSection] as? String
 				let title = restoreInfo[RestoreTitle] as! String
-				let manPath = NSUserDefaults.standardUserDefaults().manPath
+				let manPath = UserDefaults.standard.manPath
 				
 				loadDocumentWithName(aRestoreName, section: section, manPath: manPath, title: title)
 				/* Usually, URL-backed documents have been automatically restored already
 				(the copyURL would be set), but just in case... */
 			} else if restoreInfo[RestoreFileURL] != nil && copyURL == nil {
-				let url = restoreInfo[RestoreFileURL] as! NSURL
+				let url = restoreInfo[RestoreFileURL] as! URL
 				let type = restoreInfo[RestoreFileType] as! String
 				
 				do {
-					try readFromURL(url, ofType: type)
+					try read(from: url, ofType: type)
 				} catch _ {
 				}
 			}

@@ -10,7 +10,7 @@ import Cocoa
 
 private func GenerateManInfos() -> [ManAppInfo] {
 	var anAppInfo = [ManAppInfo]()
-	let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME)?.takeRetainedValue() as? [String]
+	let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME as CFString)?.takeRetainedValue() as? [String]
 	
 	if let allBundleIDs = allBundleIDs {
 		for bundleID in allBundleIDs {
@@ -20,8 +20,8 @@ private func GenerateManInfos() -> [ManAppInfo] {
 	return anAppInfo
 }
 
-final class ManAppInfoArray: NSObject, SequenceType {
-	private(set) var allManViewerApps = GenerateManInfos()
+final class ManAppInfoArray: NSObject, Sequence {
+	fileprivate(set) var allManViewerApps = GenerateManInfos()
 	override init() {
 		super.init()
 		
@@ -32,8 +32,8 @@ final class ManAppInfoArray: NSObject, SequenceType {
 		return allManViewerApps.count
 	}
 	
-	func generate() -> IndexingGenerator<[ManAppInfo]> {
-		return allManViewerApps.generate();
+	func makeIterator() -> IndexingIterator<[ManAppInfo]> {
+		return allManViewerApps.makeIterator();
 	}
 	
 	subscript(location: Int) -> ManAppInfo {
@@ -54,18 +54,18 @@ final class ManAppInfoArray: NSObject, SequenceType {
 	}
 	
 	func sortApps() {
-		allManViewerApps.sortInPlace { (lhs, rhs) -> Bool in
+		allManViewerApps.sort { (lhs, rhs) -> Bool in
 			let toRet = lhs.displayName.localizedCaseInsensitiveCompare(rhs.displayName)
-			return NSComparisonResult.OrderedAscending == toRet
+			return ComparisonResult.orderedAscending == toRet
 		}
 	}
 	
-	func indexOfBundleID(bundleID: String!) -> Int? {
+	func indexOfBundleID(_ bundleID: String!) -> Int? {
 		if bundleID == nil {
 			return nil;
 		}
 		
-		for (i, obj) in allManViewerApps.enumerate() {
+		for (i, obj) in allManViewerApps.enumerated() {
 			if obj == bundleID {
 				return i
 			}

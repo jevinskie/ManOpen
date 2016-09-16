@@ -24,21 +24,21 @@ class ManTextView: NSTextView {
 		
 		while currIndex < (storage?.length ?? 0) {
 			var currRange = NSRange(location: 0, length: 0)
-			var attribs = storage?.attributesAtIndex(currIndex, effectiveRange: &currRange)
+			var attribs = storage?.attributes(at: currIndex, effectiveRange: &currRange)
 			let isLinkSection = attribs?[NSLinkAttributeName] != nil
 			if isLinkSection {
 				let ignoreRange = NSRange.notFound
 				var rectCount = 0
 				
 				let rects: UnsafeBufferPointer<NSRect> = {
-					let aRec = layout!.rectArrayForCharacterRange(currRange, withinSelectedCharacterRange: ignoreRange, inTextContainer: container!, rectCount: &rectCount)
+					let aRec = layout!.rectArray(forCharacterRange: currRange, withinSelectedCharacterRange: ignoreRange, in: container!, rectCount: &rectCount)
 					return UnsafeBufferPointer(start: aRec, count: rectCount)
 				}()
 				
 				
 				for aRect in rects {
 					if aRect.intersects(visible) {
-						addCursorRect(aRect, cursor: NSCursor.pointingHandCursor())
+						addCursorRect(aRect, cursor: NSCursor.pointingHand())
 					}
 				}
 			}
@@ -46,29 +46,29 @@ class ManTextView: NSTextView {
 		}
 	}
 	
-	func scrollRangeToTop(charRange: NSRange) {
+	func scrollRangeToTop(_ charRange: NSRange) {
 		let layout = layoutManager!
-		let glyphRange = layout.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil)
-		var rect = layout.boundingRectForGlyphRange(glyphRange, inTextContainer: textContainer!)
+		let glyphRange = layout.glyphRange(forCharacterRange: charRange, actualCharacterRange: nil)
+		var rect = layout.boundingRect(forGlyphRange: glyphRange, in: textContainer!)
 		let height = visibleRect.height
 		
 		if height > 0 {
 			rect.size.height = height
 		}
 		
-		scrollRectToVisible(rect)
+		scrollToVisible(rect)
 	}
 	
 	/// Make space page down (and shift/alt-space page up)
-	override func keyDown(event: NSEvent) {
+	override func keyDown(with event: NSEvent) {
 		if event.charactersIgnoringModifiers == " " {
-			if event.modifierFlags.contains(.AlternateKeyMask) || event.modifierFlags.contains(.ShiftKeyMask) {
+			if event.modifierFlags.contains(.option) || event.modifierFlags.contains(.shift) {
 				pageUp(self)
 			} else {
 				pageDown(self)
 			}
 		} else {
-			super.keyDown(event)
+			super.keyDown(with: event)
 		}
 	}
 	
@@ -78,21 +78,21 @@ class ManTextView: NSTextView {
 	/// CoreGraphics primitives, which did. However, I'm now just supporting Tiger (10.4) and up,
 	/// and it looks like the bugs have been fixed, so we can just use the higher-level
 	/// NSStringDrawing now, thankfully.
-	override func drawPageBorderWithSize(borderSize: NSSize) {
-		let font = NSUserDefaults.standardUserDefaults().manFont
+	override func drawPageBorder(with borderSize: NSSize) {
+		let font = UserDefaults.standard.manFont
 		
-		let currPage = NSPrintOperation.currentOperation()!.currentPage
+		let currPage = NSPrintOperation.current()!.currentPage
 		let pageString = "\(currPage)"
-		let style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+		let style = NSParagraphStyle.default().mutableCopy() as! NSMutableParagraphStyle
 		var drawAttribs = [String: AnyObject]()
 		
-		style.alignment = .Center
+		style.alignment = .center
 		drawAttribs[NSParagraphStyleAttributeName] = style
 		drawAttribs[NSFontAttributeName] = font
 		#if !USE_CGCONTEXT_FOR_PRINTING
 			let drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
 			
-			(pageString as NSString).drawInRect(drawRect, withAttributes: drawAttribs)
+			(pageString as NSString).draw(in: drawRect, withAttributes: drawAttribs)
 		#else
 			let strWidth = (pageString as NSString).sizeWithAttributes(drawAttribs).width
 			let point = NSPoint(x: borderSize.width/2 - strWidth/2, y: 20.0)

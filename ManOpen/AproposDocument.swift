@@ -8,26 +8,6 @@
 
 import Cocoa
 import SwiftAdditions
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
-
 
 private let restoreSearchString = "SearchString"
 private let restoreTitle = "Title"
@@ -58,7 +38,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	}
 	
 	func parseOutput(_ output: String!) {
-		if output == nil {
+		guard let output = output else {
 			return
 		}
 		
@@ -180,7 +160,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	}
 	
 	@IBAction func openManPages(_ sender: NSTableView?) {
-		if sender?.clickedRow >= 0 {
+		if let clickedRow = sender?.clickedRow, clickedRow >= 0 {
 			let manPage = aproposItems[sender!.clickedRow].title
 			(ManDocumentController.shared() as! ManDocumentController).openString(manPage, oneWordOnly: true)
 		}

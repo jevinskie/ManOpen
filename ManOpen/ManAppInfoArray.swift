@@ -60,7 +60,7 @@ final class ManAppInfoArray: NSObject, Sequence {
 		}
 	}
 	
-	func indexOfBundleID(_ bundleID: String!) -> Int? {
+	func index(bundleID: String!) -> Int? {
 		if bundleID == nil {
 			return nil;
 		}

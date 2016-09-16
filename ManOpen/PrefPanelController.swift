@@ -8,25 +8,6 @@
 
 import Cocoa
 import CoreServices
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
 
 
 let ManPathIndexSetPboardType = "org.clindberg.ManOpen.ManPathIndexSetType"
@@ -192,7 +173,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	// MARK: DefaultManApp
 	
 	func setAppPopupToCurrent() {
-		let currIndex = appInfos.indexOfBundleID(currentAppID) ?? 0
+		let currIndex = appInfos.index(bundleID: currentAppID) ?? 0
 		
 		if currIndex < appPopup.numberOfItems {
 			appPopup.selectItem(at: currIndex)
@@ -244,7 +225,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			
 			currentAppID = currSetID!
 			
-			if appInfos.indexOfBundleID(currSetID) == nil {
+			if appInfos.index(bundleID: currSetID) == nil {
 				appInfos.addApp(ID: currSetID!, shouldResort: true)
 				resetPopup = true
 			}
@@ -490,9 +471,9 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		var pathsToAdd: [String]? = [String]()
 		var removeSet: IndexSet? = nil
 		
-		if let pbtypes = pb.types , pbtypes.contains(ManPathIndexSetPboardType) {
+		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) {
 			let indexData = pb.data(forType: ManPathIndexSetPboardType)
-			if let indexData = indexData , (dragOp.intersection(.move) == .move) {
+			if let indexData = indexData, (dragOp.intersection(.move) == .move) {
 				removeSet = (NSUnarchiver.unarchiveObject(with: indexData) as! IndexSet)
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}
@@ -500,7 +481,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			pathsToAdd = pathsFromPasteboard(pb)
 		}
 		
-		if pathsToAdd?.count > 0 {
+		if let pathsCount = pathsToAdd?.count, pathsCount > 0 {
 			addPathDirectories(pathsToAdd!, atIndex: row, removeFirst: removeSet)
 			return true
 		}

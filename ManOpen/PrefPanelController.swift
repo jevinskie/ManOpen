@@ -22,12 +22,12 @@ let kKeepPanelsOpen		= "KeepPanelsOpen"
 let kQuitWhenLastClosed	= "QuitWhenLastClosed"
 let kNroffCommand		= "NroffCommand"
 
-private struct Static {
-	static var instance : PrefPanelController? = nil
-}
-
 
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
+	private struct Static {
+		static var instance : PrefPanelController? = nil
+	}
+	
 	private static var __once: () = {
 			Static.instance = PrefPanelController(windowNibName: "PrefPanel")
 			Static.instance!.shouldCascadeWindows = false
@@ -87,7 +87,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let textDefaultColor = dataForColor(NSColor.textColor)
 		let bgDefaultColor = dataForColor(NSColor.textBackgroundColor)
 		
-		let someDefaults = [kQuitWhenLastClosed: false,
+		let someDefaults: [String : Any] = [kQuitWhenLastClosed: false,
 		kUseItalics:		false,
 		kUseBold:			true,
 		kNroffCommand:		nroff,
@@ -96,7 +96,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		manTextColorKey:	textDefaultColor,
 		manLinkColorKey:	linkDefaultColor,
 		manBackgroundColorKey:		bgDefaultColor,
-		"NSQuitAlwaysKeepsWindows":	true] as [String : Any]
+		"NSQuitAlwaysKeepsWindows":	true]
 		
 		userDefaults.register(defaults: someDefaults)
 	}
@@ -137,7 +137,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	override func fontManager(_ sender: Any, willIncludeFont fontName: String) -> Bool {
-		return (sender as AnyObject).fontNamed(fontName, hasTraits: NSFontTraitMask.fixedPitchFontMask)
+		return (sender as! NSFontManager).fontNamed(fontName, hasTraits: .fixedPitchFontMask)
 	}
 	
 	override func changeFont(_ sender: Any!) {
@@ -146,8 +146,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		font = (sender as! NSFontManager).convert(font!)
 		self.fontFieldFont = font
-		let fontString = "\(font?.pointSize) \(font?.fontName)"
-		UserDefaults.standard.set(fontString, forKey: manFontKey)
+		if let font = font {
+			let fontString = "\(font.pointSize) \(font.fontName)"
+			UserDefaults.standard.set(fontString, forKey: manFontKey)
+		}
 	}
 	
 	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
@@ -209,27 +211,27 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 
 	func resetCurrentApp() {
 		var currSetID: String? = {
-			if let aSetID = LSCopyDefaultHandlerForURLScheme(URL_SCHEME as CFString)?.takeRetainedValue() {
+			if let aSetID = LSCopyDefaultHandlerForURLScheme(URL_SCHEME as NSString)?.takeRetainedValue() {
 				return aSetID as String
 			}
 			
 			return nil
 		}()
 		
-		if (currSetID == nil) {
+		if currSetID == nil {
 			currSetID = appInfos[0].bundleID
 		}
 		
-		if (currSetID != nil) {
+		if let currSetID = currSetID {
 			var resetPopup = (currentAppID == "") //first time
 			
-			currentAppID = currSetID!
+			currentAppID = currSetID
 			
 			if appInfos.index(bundleID: currSetID) == nil {
-				appInfos.addApp(ID: currSetID!, shouldResort: true)
+				appInfos.addApp(ID: currSetID, shouldResort: true)
 				resetPopup = true
 			}
-			if (resetPopup) {
+			if resetPopup {
 				resetAppPopup()
 			} else {
 				setAppPopupToCurrent()
@@ -238,7 +240,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func setManPageViewer(_ bundleID: String) {
-		let error = LSSetDefaultHandlerForURLScheme(URL_SCHEME as CFString, bundleID as CFString)
+		let error = LSSetDefaultHandlerForURLScheme(URL_SCHEME as NSString, bundleID as NSString)
 		
 		if (error != noErr) {
 			print("Could not set default \(URL_SCHEME_PREFIX) app: Launch Services error \(error)")
@@ -348,7 +350,6 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 					if url.isFileURL {
 						paths.append(url.path)
 					}
-					
 				}
 				
 				var insertionIndex = self.manPathController.selectionIndex
@@ -364,10 +365,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	func pathsAtIndexes(_ set: IndexSet) -> [String] {
 		var paths = [String]()
 		
-		for (currIndex, path) in manPathArrayPriv.enumerated() {
-			if set.contains(currIndex) {
-				paths.append(path)
-			}
+		for i in set {
+			paths.append(manPathArrayPriv[i])
 		}
 		
 		return paths

@@ -61,7 +61,7 @@
     return NO;
 }
 
-- (BOOL)hasPrefixBytes:(void *)bytes length:(NSUInteger)len
+- (BOOL)hasPrefixBytes:(const void *)bytes length:(NSUInteger)len
 {
     if ([self length] < len) return NO;
     return (memcmp([self bytes], bytes, len) == 0);
@@ -69,7 +69,7 @@
 
 - (BOOL)isRTFData
 {
-    char *header = "{\\rtf";
+    const char *header = "{\\rtf";
     return [self hasPrefixBytes:header length:strlen(header)];
 }
 
@@ -83,12 +83,11 @@
 - (BOOL)isBinaryData
 {
     NSUInteger checklen = MIN(100, [self length]);
-    NSUInteger i;
     NSUInteger badByteCount = 0;
     unsigned const char *bytes = [self bytes];
 
     if (checklen == 0) return NO;
-    for (i=0; i<checklen; i++, bytes++)
+    for (NSUInteger i=0; i<checklen; i++, bytes++)
         if (*bytes == '\0' || !isascii((int)*bytes)) badByteCount++;
 
     return (badByteCount > 0) && (checklen / badByteCount) <= 2;

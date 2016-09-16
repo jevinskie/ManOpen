@@ -258,7 +258,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	
 	override func openDocument(withContentsOf url: URL, display displayDocument: Bool, completionHandler: (@escaping (NSDocument?, Bool, Error?) -> Void)) {
 		let standardizedURL = url.standardized
-		var error: NSError? = nil
+		var error: Error? = nil
 		let numDocuments = documents.count
 		
 		var document = self.document(for: standardizedURL)
@@ -268,7 +268,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 					document = try makeDocument(withContentsOf: standardizedURL, ofType: type)
 					document!.makeWindowControllers()
 					addDocument(document!)
-				} catch let anErr as NSError {
+				} catch let anErr {
 					error = anErr
 				}
 			}

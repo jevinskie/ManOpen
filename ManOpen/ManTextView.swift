@@ -27,10 +27,10 @@ class ManTextView: NSTextView {
 			var attribs = storage?.attributes(at: currIndex, effectiveRange: &currRange)
 			let isLinkSection = attribs?[NSLinkAttributeName] != nil
 			if isLinkSection {
-				let ignoreRange = NSRange.notFound
-				var rectCount = 0
 				
 				let rects: UnsafeBufferPointer<NSRect> = {
+					let ignoreRange = NSRange.notFound
+					var rectCount = 0
 					let aRec = layout!.rectArray(forCharacterRange: currRange, withinSelectedCharacterRange: ignoreRange, in: container!, rectCount: &rectCount)
 					return UnsafeBufferPointer(start: aRec, count: rectCount)
 				}()

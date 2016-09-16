@@ -238,7 +238,7 @@
 		D39279070821FFA400376676 /* ManOpenProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManOpenProtocol.h; sourceTree = "<group>"; usesTabs = 0; };
 		D39279090821FFA400376676 /* NSData+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; usesTabs = 0; };
 		D392792F0821FFA400376676 /* ManOpen.scriptSuite */ = {isa = PBXFileReference; explicitFileType = text.plist.scriptSuite; path = ManOpen.scriptSuite; sourceTree = "<group>"; };
-		D39279370821FFA400376676 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D39279370821FFA400376676 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		D39279560821FFA400376676 /* cat2rtf.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2rtf.l; sourceTree = "<group>"; usesTabs = 0; };
 		D39279690821FFA400376676 /* cat2html.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2html.l; sourceTree = "<group>"; usesTabs = 0; };
 		D39279770821FFA400376676 /* openman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = openman.m; sourceTree = "<group>"; usesTabs = 0; };
@@ -600,7 +600,6 @@
 			);
 			knownRegions = (
 				en,
-				English,
 				Base,
 			);
 			mainGroup = D39278DB0821FF9D00376676 /* ManOpen */;
@@ -859,7 +858,7 @@
 		D39279350821FFA400376676 /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D39279370821FFA400376676 /* English */,
+				D39279370821FFA400376676 /* en */,
 			);
 			name = Credits.rtf;
 			sourceTree = "<group>";

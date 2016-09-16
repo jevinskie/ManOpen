@@ -461,7 +461,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		* connecting, we may be able to do this whole thing in main()...
 		*/
 		
-		registerNameWithRootObject("ManOpenApp", self)
+		register(name: "ManOpenApp", rootObject: self)
 		
 		PrefPanelController.registerManDefaults()
 		var tmpNibArray = NSArray()

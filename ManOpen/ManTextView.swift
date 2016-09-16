@@ -94,30 +94,30 @@ class ManTextView: NSTextView {
 			
 			(pageString as NSString).draw(in: drawRect, withAttributes: drawAttribs)
 		#else
-			let strWidth = (pageString as NSString).sizeWithAttributes(drawAttribs).width
+			let strWidth = (pageString as NSString).size(withAttributes: drawAttribs).width
 			let point = NSPoint(x: borderSize.width/2 - strWidth/2, y: 20.0)
-			let context = NSGraphicsContext.currentContext()!.CGContext
-			CGContextSaveGState(context);
-			CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-			CGContextSetTextDrawingMode(context, .Fill);  //needed?
-			CGContextSetGrayFillColor(context, 0.0, 1.0);
+			let context = NSGraphicsContext.current()!.cgContext
+			context.saveGState();
+			context.textMatrix = CGAffineTransform.identity;
+			context.setTextDrawingMode(.fill);  //needed?
+			context.setFillColor(gray: 0.0, alpha: 1.0);
 						
-			CGContextSetFont(context, CGFontCreateWithFontName(font.fontName))
-			CGContextSetFontSize(context, font.pointSize)
-			let ctfont = CTFontCreateWithName(font.fontName, font.pointSize, nil)
+			context.setFont(CGFont(font.fontName as CFString)!)
+			context.setFontSize(font.pointSize)
+			let ctfont = CTFontCreateWithName(font.fontName as NSString, font.pointSize, nil)
 			let ctDict = [kCTFontAttributeName as String: ctfont]
 			let attrStr = NSAttributedString(string: pageString, attributes: ctDict)
-			CGContextSetTextPosition(context, point.x, point.y)
+			context.textPosition = point
 			let line = CTLineCreateWithAttributedString(attrStr)
 
 			// Core Text uses a reference coordinate system with the origin on the bottom-left
 			// flip the coordinate system before drawing or the text will appear upside down
-			CGContextTranslateCTM(context, 0, borderSize.height);
-			CGContextScaleCTM(context, 1.0, -1.0);
+			context.translateBy(x: 0, y: borderSize.height);
+			context.scaleBy(x: 1.0, y: -1.0);
 			
 			CTLineDraw(line, context)
 			
-			CGContextRestoreGState(context);
+			context.restoreGState();
 		#endif
 	}
 }

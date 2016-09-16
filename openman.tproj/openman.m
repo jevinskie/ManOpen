@@ -174,6 +174,6 @@ int main (int argc, char * const *argv)
                 [server openName:currFile section:section manPath:manPath forceToFront:forceToFront];
         }
         
-        return 0;      // ...and make main fit the ANSI spec.
+        return 0;
     }
 }

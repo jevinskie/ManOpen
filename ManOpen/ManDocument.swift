@@ -213,7 +213,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			let size = manFont.pointSize
 			var currIndex = 0
 			
-			tryCatchBlock({ () -> Void in
+			tryBlock({ () -> Void in
 				aStorage.beginEditing()
 				
 				while currIndex < aStorage.length {
@@ -253,7 +253,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				}
 				
 				aStorage.endEditing()
-				}, { (localException) -> Void in
+				}, catch: { (localException) -> Void in
 					Swift.print("Exception during formatting: \(localException)")
 			})
 			

@@ -464,10 +464,10 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		registerNameWithRootObject("ManOpenApp", self)
 		
 		PrefPanelController.registerManDefaults()
-		var tmpNibArray: NSArray? = nil
-		Bundle.main.loadNibNamed("DocController", owner: self, topLevelObjects: &tmpNibArray!)
+		var tmpNibArray = NSArray()
+		Bundle.main.loadNibNamed("DocController", owner: self, topLevelObjects: &tmpNibArray)
 		
-		nibObjects = tmpNibArray! as [AnyObject]
+		nibObjects = tmpNibArray as [AnyObject]
 	}
 	
 	required init(coder: NSCoder) {

@@ -133,10 +133,10 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	/// representing an actual file.
 	override var displayName: String! {
 		get {
-		return fileURL != nil ? super.displayName : shortTitle
+			return fileURL != nil ? super.displayName : shortTitle
 		}
 		set {
-			//Do nothing
+			super.displayName = newValue
 		}
 	}
 	

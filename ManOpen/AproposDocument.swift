@@ -46,7 +46,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	override var displayName: String! {
 		get {
-		return title
+			return title
 		}
 		set {
 			//do nothing

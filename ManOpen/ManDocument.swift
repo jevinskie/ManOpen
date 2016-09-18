@@ -44,8 +44,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	@IBOutlet weak var sectionPopup: NSPopUpButton!
 	fileprivate var hasLoaded = false
 	fileprivate var restoreData = [String: AnyObject]()
-	var sections: [String] = [String]()
-	var sectionRanges: [NSRange] = [NSRange]()
+	var sections: [(name: String, range: NSRange)] = [(name: String, range: NSRange)]()
 	
 	var shortTitle = ""
 	var copyURL: URL!
@@ -88,7 +87,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		textView.backgroundColor = defaults.manBackgroundColor
 		textView.textColor = defaults.manTextColor
 		
-		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(10) / Double(NSEC_PER_SEC)) {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(10)) {
 			self.showData()
 		}
 		
@@ -112,7 +111,6 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			
 		default:
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Invalid document type", comment:"Invalid document type")])
-			
 		}
 		
 		// strip extension twice in case it is a e.g. "1.gz" filename
@@ -120,8 +118,8 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		copyURL = url;
 		
 		restoreData = [
-			RestoreFileURL: url as AnyObject,
-			RestoreFileType: typeName as AnyObject];
+			RestoreFileURL: url as NSURL,
+			RestoreFileType: typeName as NSString];
 		
 		if taskData == nil {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data")])
@@ -144,14 +142,14 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		super.init()
 	}
 	
-	convenience init?(name: String, section: String?, manPath: String?, title: String) {
+	convenience init?(name: String, section: String? = nil, manPath: String? = nil, title: String) {
 		self.init()
 		loadDocumentWithName(name, section: section, manPath: manPath, title: title)
 	}
 	
-	fileprivate func loadDocumentWithName(_ name: String, section: String?, manPath: String?, title: String) {
+	fileprivate func loadDocumentWithName(_ name: String, section: String? = nil, manPath: String? = nil, title: String) {
 		let docController = ManDocumentController.shared() as! ManDocumentController
-		var command = docController.manCommandWithManPath(manPath)
+		var command = docController.manCommand(manPath: manPath)
 		fileType = "man"
 		shortTitle = title
 		
@@ -162,9 +160,9 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(title)")
 		}
 		
-		restoreData = [RestoreName: name as AnyObject,
-			RestoreTitle: title as AnyObject,
-			RestoreSection: section as AnyObject? ?? "" as AnyObject]
+		restoreData = [RestoreName: name as NSString,
+			RestoreTitle: title as NSString,
+			RestoreSection: section as NSString? ?? "" as NSString]
 		
 		command += " " + name
 		
@@ -205,15 +203,14 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		}
 		
 		sections.removeAll()
-		sectionRanges.removeAll()
 		
 		if let aStorage = storage {
 			let manager = NSFontManager.shared()
 			let family = manFont.familyName ?? manFont.fontName
 			let size = manFont.pointSize
-			var currIndex = 0
 			
-			tryBlock({ () -> Void in
+			exceptionBlock(try: { () -> Void in
+				var currIndex = 0
 				aStorage.beginEditing()
 				
 				while currIndex < aStorage.length {
@@ -223,7 +220,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 					var isLink = false
 					
 					if font != nil && font!.familyName != "Courier" {
-						self.addSectionHeader(aStorage.mutableString.substring(with: currRange), range: currRange)
+						self.add(sectionHeader: aStorage.mutableString.substring(with: currRange), range: currRange)
 					}
 					
 					isLink = (attribs[NSLinkAttributeName] != nil)
@@ -234,8 +231,8 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 					if (font != nil && font!.pointSize != size) {
 						font = manager.convert(font!, toSize: size)
 					}
-					if (font != nil) {
-						aStorage.addAttribute(NSFontAttributeName, value: font!, range: currRange)
+					if let font = font {
+						aStorage.addAttribute(NSFontAttributeName, value: font, range: currRange)
 					}
 					
 					/*
@@ -283,11 +280,12 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		sectionPopup.isEnabled = sections.count > 0
 		
 		if sectionPopup.isEnabled {
-			sectionPopup.addItems(withTitles: sections)
+			sectionPopup.addItems(withTitles: sections.map({$0.name}))
 		}
 	}
 	
-	func addSectionHeader(_ header: String, range: NSRange) {
+	func add(sectionHeader header1: String, range: NSRange) {
+		let header = header1.trimmingCharacters(in: CharacterSet.newlines)
 		/* Make sure it is a header -- error text sometimes is not Courier, so it gets passed in here. */
 		if header.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil &&
 			header.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil {
@@ -295,12 +293,11 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				var count = 1
 				
 				/* Check for dups (e.g. lesskey(1) ) */
-				while sections.contains(label) {
+				while sections.map({$0.name}).contains(label) {
 					count += 1
 					label = "\(header) [\(count)]"
 				}
-				sections.append(label)
-				sectionRanges.append(range)
+				sections.append((label, range))
 		}
 	}
 	
@@ -349,8 +346,8 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	@IBAction func displaySection(_ sender: AnyObject?) {
 		let section = sectionPopup.indexOfSelectedItem
-		if (section > 0 && section <= sectionRanges.count) {
-			let range = sectionRanges[section - 1]
+		if (section > 0 && section <= sections.count) {
+			let range = sections[section - 1].range
 			textView.scrollRangeToTop(range)
 		}
 	}

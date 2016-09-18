@@ -22,8 +22,10 @@ extension Data {
 	}
 	
 	public var isGzipData: Bool {
-		let compressHeader: [UInt8] = [0o037, 0o235]	// compress(1) header
-		let gzipHeader: [UInt8] = [0o037, 0o213]		// gzip(1) header
+		/// compress(1) header
+		let compressHeader: [UInt8] = [0o037, 0o235]
+		/// gzip(1) header
+		let gzipHeader: [UInt8] = [0o037, 0o213]
 		
 		return starts(with: compressHeader) || starts(with: gzipHeader)
 	}

@@ -142,10 +142,10 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		}
 	}
 	
-	func manCommandWithManPath(_ manPath: String?) -> String {
+	func manCommand(manPath: String? = nil) -> String {
 		var command = MAN_BINARY
 		
-		if let manPath = manPath , !manPath.isEmpty {
+		if let manPath = manPath, !manPath.isEmpty {
 			command += " -M '\(EscapePath(manPath))'"
 		}
 		
@@ -167,6 +167,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		task.arguments = ["-c", command]
 		task.standardOutput = pipe
 		task.standardError = FileHandle.nullDevice
+		task.qualityOfService = .userInitiated
 		task.launch()
 		
 		if maxLength > 0 {
@@ -185,7 +186,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	func manFileForName(_ name: String, section: String? = nil, manPath: String? = nil) -> String? {
-		var command = manCommandWithManPath(manPath)
+		var command = manCommand(manPath: manPath)
 		let spaceString = ""
 		command += " -w \(section ?? spaceString) \(name)"
 		if let data = dataByExecutingCommand(command) {
@@ -492,7 +493,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	@IBAction func openSection(_ sender: AnyObject!) {
-		let aTag = sender.tag
+		let aTag = sender.tag ?? 0
 		if aTag == 0 {
 			openApropos("") // all pages
 		} else if aTag == 20 {
@@ -571,7 +572,7 @@ private func IsSectionWord(_ word: String) -> Bool
 	if word.isEmpty {
 		return false
 	}
-	if CharacterSet.decimalDigits.contains(UnicodeScalar((word as NSString).character(at: 0))!) {
+	if CharacterSet.decimalDigits.contains(word.unicodeScalars.first!) {
 		return true
 	}
 	if word == "n" {

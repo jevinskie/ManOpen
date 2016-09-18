@@ -120,7 +120,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	fileprivate func loadWithString(_ apropos: String, manPath: String, title aTitle: String) {
 		var aapropos = apropos
 		let docController = ManDocumentController.shared() as! ManDocumentController
-		var command = docController.manCommandWithManPath(manPath)
+		var command = docController.manCommand(manPath: manPath)
 		
 		title = aTitle
 		fileType = "apropos"

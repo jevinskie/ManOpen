@@ -10,13 +10,16 @@ import Cocoa
 
 private func GenerateManInfos() -> [ManAppInfo] {
 	var anAppInfo = [ManAppInfo]()
-	let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME as CFString)?.takeRetainedValue() as? [String]
+	guard let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME as NSString)?.takeRetainedValue() as? [String] else {
+		return []
+	}
 	
-	if let allBundleIDs = allBundleIDs {
-		for bundleID in allBundleIDs {
-			anAppInfo.append(ManAppInfo(bundleID: bundleID))
+	for bundleID in allBundleIDs {
+		if let mai = ManAppInfo(bundleID: bundleID) {
+			anAppInfo.append(mai)
 		}
 	}
+	
 	return anAppInfo
 }
 
@@ -33,15 +36,19 @@ final class ManAppInfoArray: NSObject, Sequence {
 	}
 	
 	func makeIterator() -> IndexingIterator<[ManAppInfo]> {
-		return allManViewerApps.makeIterator();
+		return allManViewerApps.makeIterator()
 	}
 	
 	subscript(location: Int) -> ManAppInfo {
 		return allManViewerApps[location]
 	}
 	
-	func addApp(ID id: String, shouldResort sort: Bool = false) {
-		let info = ManAppInfo(bundleID: id)
+	func addApp(identifier id: String, shouldResort sort: Bool = false) {
+		guard let info = ManAppInfo(bundleID: id) else {
+			//NSBeep()
+			//return
+			fatalError("Could not find application with bundle identifier \"\(id)\"")
+		}
 		let contains = allManViewerApps.filter { (anObj) -> Bool in
 			return anObj == info
 		}

@@ -46,7 +46,7 @@ class ManTextView: NSTextView {
 		}
 	}
 	
-	func scrollRangeToTop(_ charRange: NSRange) {
+	func scrollToTop(of charRange: NSRange) {
 		let layout = layoutManager!
 		let glyphRange = layout.glyphRange(forCharacterRange: charRange, actualCharacterRange: nil)
 		var rect = layout.boundingRect(forGlyphRange: glyphRange, in: textContainer!)

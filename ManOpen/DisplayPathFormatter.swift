@@ -14,13 +14,13 @@ private let resHome = (NSHomeDirectory() as NSString).resolvingSymlinksInPath + 
 final class DisplayPathFormatter: Formatter {
 	override func string(for obj: Any?) -> String? {
 		if let aStr = obj as? NSString {
-			var anew = aStr.abbreviatingWithTildeInPath;
+			var anew = aStr.abbreviatingWithTildeInPath
 			
 			/* The above method may not work if the home directory is a symlink, and our path is already resolved */
 			if (anew as NSString).isAbsolutePath {
 				
 				if anew.hasPrefix(resHome) {
-					anew = "~/" + (anew as NSString).substring(from: (resHome as NSString).length)
+					anew.replaceSubrange(anew.range(of: resHome)!, with: "~/")
 				}
 			}
 			
@@ -28,8 +28,6 @@ final class DisplayPathFormatter: Formatter {
 		}
 		return nil;
 	}
-	
-	
 	
 	override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool{
 		obj?.pointee = (string as NSString).expandingTildeInPath as NSString

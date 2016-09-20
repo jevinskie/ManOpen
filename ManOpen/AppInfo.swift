@@ -22,9 +22,9 @@ final class ManAppInfo: Hashable {
 	let bundleID: String
 	lazy var displayName: String = {
 		let url = self.appURL
-		var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url as CFURL!)
+		var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url as NSURL)
 		
-		if (infoDict == nil) {
+		if infoDict == nil {
 			infoDict = Bundle(url: url)!.infoDictionary as NSDictionary?
 		}
 		
@@ -49,10 +49,8 @@ final class ManAppInfo: Hashable {
 	
 	lazy var appURL: URL = {
 		let workSpace = NSWorkspace.shared()
-		if let path = workSpace.absolutePathForApplication(withBundleIdentifier: self.bundleID) {
-			return URL(fileURLWithPath: path)
-		}
-		return URL(fileURLWithPath: "/dev/null")
+		let path = workSpace.absolutePathForApplication(withBundleIdentifier: self.bundleID)!
+		return URL(fileURLWithPath: path)
 		}()
 	
 	func isEqual(_ other: AnyObject!) -> Bool {
@@ -65,8 +63,13 @@ final class ManAppInfo: Hashable {
 		}
 	}
 	
-	init(bundleID aBundleID: String) {
+	init?(bundleID aBundleID: String) {
 		bundleID = aBundleID
+		
+		let workSpace = NSWorkspace.shared()
+		if workSpace.absolutePathForApplication(withBundleIdentifier: aBundleID) == nil {
+			return nil
+		}
 	}
 	
 	var hashValue: Int {

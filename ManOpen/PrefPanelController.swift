@@ -228,7 +228,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			currentAppID = currSetID
 			
 			if appInfos.index(bundleID: currSetID) == nil {
-				appInfos.addApp(ID: currSetID, shouldResort: true)
+				appInfos.addApp(identifier: currSetID, shouldResort: true)
 				resetPopup = true
 			}
 			if resetPopup {

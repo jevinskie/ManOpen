@@ -607,8 +607,6 @@ private func getWordArray(_ string: String) -> [String] {
 		let param = directParameter as! String
 		var section: String? = nil
 		
-		//var aTex: NSStringCompareOptions = .CaseInsensitiveSearch | .AnchoredSearch
-		
 		let paramRange = param.range(of: URL_SCHEME_PREFIX, options: [.caseInsensitive, .anchored])
 		var pageNames = [String]()
 		

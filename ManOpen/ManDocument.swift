@@ -348,7 +348,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		let section = sectionPopup.indexOfSelectedItem
 		if (section > 0 && section <= sections.count) {
 			let range = sections[section - 1].range
-			textView.scrollRangeToTop(range)
+			textView.scrollToTop(of: range)
 		}
 	}
 	

@@ -43,7 +43,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	@IBOutlet weak var openSelectionButton: NSButton!
 	@IBOutlet weak var sectionPopup: NSPopUpButton!
 	fileprivate var hasLoaded = false
-	fileprivate var restoreData = [String: AnyObject]()
+	fileprivate var restoreData = [String: Any]()
 	var sections: [(name: String, range: NSRange)] = [(name: String, range: NSRange)]()
 	
 	var shortTitle = ""
@@ -87,7 +87,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		textView.backgroundColor = defaults.manBackgroundColor
 		textView.textColor = defaults.manTextColor
 		
-		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(10)) {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.milliseconds(10)) {
 			self.showData()
 		}
 		
@@ -118,8 +118,8 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		copyURL = url;
 		
 		restoreData = [
-			RestoreFileURL: url as NSURL,
-			RestoreFileType: typeName as NSString];
+			RestoreFileURL: url,
+			RestoreFileType: typeName];
 		
 		if taskData == nil {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data")])
@@ -160,9 +160,9 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(title)")
 		}
 		
-		restoreData = [RestoreName: name as NSString,
-			RestoreTitle: title as NSString,
-			RestoreSection: section as NSString? ?? "" as NSString]
+		restoreData = [RestoreName: name,
+			RestoreTitle: title,
+			RestoreSection: section ?? ""]
 		
 		command += " " + name
 		

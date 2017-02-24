@@ -20,7 +20,7 @@ func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 
 final class ManAppInfo: Hashable {
 	let bundleID: String
-	lazy var displayName: String = {
+	private(set) lazy var displayName: String = {
 		let url = self.appURL
 		var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url as NSURL)
 		
@@ -30,10 +30,9 @@ final class ManAppInfo: Hashable {
 		
 		var niceName: String = {
 			do {
-				var preNiceStr: AnyObject?
-				try (url as NSURL).getResourceValue(&preNiceStr, forKey: URLResourceKey.localizedNameKey)
-				if let aNiceStr = preNiceStr as? NSString {
-					return aNiceStr as String
+				let resVals = try url.resourceValues(forKeys: [.localizedNameKey])
+				if let aNiceStr = resVals.localizedName {
+					return aNiceStr
 				}
 			} catch _ {}
 			
@@ -47,7 +46,7 @@ final class ManAppInfo: Hashable {
 		return niceName
 		}()
 	
-	lazy var appURL: URL = {
+	private(set) lazy var appURL: URL = {
 		let workSpace = NSWorkspace.shared()
 		let path = workSpace.absolutePathForApplication(withBundleIdentifier: self.bundleID)!
 		return URL(fileURLWithPath: path)

@@ -42,7 +42,7 @@
 "437.label" = "Appearance";
 
 /* Class = "NSTextFieldCell"; title = "If the chosen font does not support bold or italic (for example Monaco), these options may have no effect."; ObjectID = "442"; */
-"442.title" = "If the chosen font does not support bold or italic (for example Monaco), these options may have no effect.";
+"442.title" = "If the chosen font does not support bold or italic (for example, Monaco), these options may have no effect.";
 
 /* Class = "NSButtonCell"; title = "Bold section headers"; ObjectID = "444"; */
 "444.title" = "Bold section headers";

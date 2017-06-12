@@ -29,7 +29,7 @@ final class DisplayPathFormatter: Formatter {
 		return nil;
 	}
 	
-	override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool{
+	override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
 		obj?.pointee = (string as NSString).expandingTildeInPath as NSString
 		
 		return true

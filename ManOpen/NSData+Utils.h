@@ -21,6 +21,6 @@
  * cases is fine, but sometimes not when running under a debugger.  So... this is more to help
  * folks working on the code, rather the users ;-)
  */
-- (nullable NSData *)readDataToEndOfFileIgnoreInterruptAndReturnError:(NSError * __nullable * __null_unspecified)error;
+- (nullable NSData *)readDataToEndOfFileIgnoreInterruptAndReturnError:(NSError * __nullable * __nullable)error;
 
 @end

@@ -102,7 +102,7 @@ class ManTextView: NSTextView {
 			context.setTextDrawingMode(.fill);  //needed?
 			context.setFillColor(gray: 0.0, alpha: 1.0);
 						
-			context.setFont(CGFont(font.fontName as CFString)!)
+			context.setFont(CGFont(font.fontName as NSString)!)
 			context.setFontSize(font.pointSize)
 			let ctfont = CTFontCreateWithName(font.fontName as NSString, font.pointSize, nil)
 			let ctDict = [kCTFontAttributeName as String: ctfont]

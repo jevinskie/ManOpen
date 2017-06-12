@@ -14,7 +14,7 @@ let manFontKey		= "ManFont"
 let manPathKey		= "ManPath"
 let manBackgroundColorKey = "ManBackgroundColor"
 
-private func colorForKey(_ key: String, defaults: UserDefaults = UserDefaults.standard) -> NSColor? {
+private func color(for key: String, defaults: UserDefaults = UserDefaults.standard) -> NSColor? {
 	if let colorData = defaults.data(forKey: key) {
 		return NSUnarchiver.unarchiveObject(with: colorData) as? NSColor
 	}
@@ -29,7 +29,7 @@ internal func dataForColor(_ color: NSColor) -> Data {
 extension UserDefaults {
 	var manTextColor: NSColor {
 		get {
-			return colorForKey(manTextColorKey, defaults: self)!
+			return color(for: manTextColorKey, defaults: self)!
 		}
 		set {
 			self.set(dataForColor(newValue), forKey: manTextColorKey)
@@ -38,7 +38,7 @@ extension UserDefaults {
 	
 	var manLinkColor: NSColor {
 		get {
-			return colorForKey(manLinkColorKey, defaults: self)!
+			return color(for: manLinkColorKey, defaults: self)!
 		}
 		set {
 			self.set(dataForColor(newValue), forKey: manLinkColorKey)
@@ -47,7 +47,7 @@ extension UserDefaults {
 	
 	var manBackgroundColor: NSColor {
 		get {
-			return colorForKey(manBackgroundColorKey, defaults: self)!
+			return color(for: manBackgroundColorKey, defaults: self)!
 		}
 		set {
 			self.set(dataForColor(newValue), forKey: manBackgroundColorKey)

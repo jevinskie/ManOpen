@@ -108,7 +108,7 @@
     static const size_t allocated = 16384;
     unsigned char *bytes = malloc(allocated);
     ssize_t bytesRead;
-    NSMutableData *ourData = [[NSMutableData alloc] init];
+    NSMutableData *ourData = [[NSMutableData alloc] initWithCapacity:allocated];
     
     do {
         do {

@@ -344,13 +344,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		panel.beginSheetModal(for: window!, completionHandler: { (result) -> Void in
 			if result == NSModalResponseOK {
 				let urls = panel.urls 
-				var paths = [String]()
-				
-				for url in urls {
-					if url.isFileURL {
-						paths.append(url.path)
-					}
-				}
+				let paths = urls.map({$0.path})
 				
 				var insertionIndex = self.manPathController.selectionIndex
 				if insertionIndex == NSNotFound {
@@ -401,8 +395,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		if bestType == NSStringPboardType {
 			if let aVar = pb.string(forType: NSStringPboardType) {
-				let bVar = aVar as NSString
-				return (bVar.components(separatedBy: ":") )
+				return aVar.components(separatedBy: ":")
 			}
 		}
 		

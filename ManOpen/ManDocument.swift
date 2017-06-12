@@ -144,10 +144,10 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	convenience init?(name: String, section: String? = nil, manPath: String? = nil, title: String) {
 		self.init()
-		loadDocumentWithName(name, section: section, manPath: manPath, title: title)
+		loadDocument(name: name, section: section, manPath: manPath, title: title)
 	}
 	
-	fileprivate func loadDocumentWithName(_ name: String, section: String? = nil, manPath: String? = nil, title: String) {
+	fileprivate func loadDocument(name: String, section: String? = nil, manPath: String? = nil, title: String) {
 		let docController = ManDocumentController.shared() as! ManDocumentController
 		var command = docController.manCommand(manPath: manPath)
 		fileType = "man"
@@ -407,18 +407,17 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			return
 		}
 		
-		if let restoreInfo = coder.decodeObject(forKey: RestoreWindowDict) as? [String: AnyObject] {
-			if let aRestoreName = restoreInfo[RestoreName] as? String {
-				let section = restoreInfo[RestoreSection] as? String
-				let title = restoreInfo[RestoreTitle] as! String
+		if let restoreInfo = coder.decodeObject(forKey: RestoreWindowDict) as? [String: Any] {
+			if let aRestoreName = restoreInfo[RestoreName] as? String,
+				let section = restoreInfo[RestoreSection] as? String,
+				let title = restoreInfo[RestoreTitle] as? String {
 				let manPath = UserDefaults.standard.manPath
 				
-				loadDocumentWithName(aRestoreName, section: section, manPath: manPath, title: title)
+				loadDocument(name: aRestoreName, section: section, manPath: manPath, title: title)
 				/* Usually, URL-backed documents have been automatically restored already
 				(the copyURL would be set), but just in case... */
-			} else if restoreInfo[RestoreFileURL] != nil && copyURL == nil {
-				let url = restoreInfo[RestoreFileURL] as! URL
-				let type = restoreInfo[RestoreFileType] as! String
+			} else if let url = restoreInfo[RestoreFileURL] as? URL, copyURL == nil,
+				let type = restoreInfo[RestoreFileType] as? String {
 				
 				do {
 					try read(from: url, ofType: type)

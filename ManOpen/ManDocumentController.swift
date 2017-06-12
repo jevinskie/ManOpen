@@ -67,7 +67,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		if force {
 			ensureActive()
 		}
-		openDocumentWithName(name, section: section, manPath: manPath ?? UserDefaults.standard.manPath)
+		openDocument(name: name, section: section, manPath: manPath ?? UserDefaults.standard.manPath)
 	}
 	
 	@objc func openApropos(_ apropos: String, manPath: String? = nil, forceToFront force: Bool = true) {
@@ -293,7 +293,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		return openPanel.runModal()
 	}
 	
-	func documentForTitle(_ title: String) -> NSDocument? {
+	func document(forTitle title: String) -> NSDocument? {
 		for document in documents {
 			if let manDoc = document as? ManDocument {
 				if document.fileURL == nil && manDoc.shortTitle == title {
@@ -325,13 +325,13 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 	
 	@discardableResult
-	func openDocumentWithName(_ name: String, section: String? = nil, manPath: String) -> ManDocument? {
+	func openDocument(name: String, section: String? = nil, manPath: String) -> ManDocument? {
 		var title = name
 		if (section != nil && section!.isEmpty == false) {
 			title = "\(name)(\(section!))"
 		}
 		
-		var document = documentForTitle(title) as? ManDocument
+		var document = self.document(forTitle: title) as? ManDocument
 		if document == nil {
 			document = ManDocument(name: name, section: section, manPath: manPath, title: title)
 			
@@ -354,7 +354,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@discardableResult
 	func openAproposDocument(_ apropos: String, manPath: String) -> AproposDocument? {
 		let title = "Apropos \(apropos)"
-		var document = documentForTitle(title) as? AproposDocument
+		var document = self.document(forTitle: title) as? AproposDocument
 		
 		if document == nil {
 			document = AproposDocument(string: apropos, manPath: manPath, title: title)
@@ -385,7 +385,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			section = word[word.index(after: lp.lowerBound) ..< word.index(before: rp.upperBound)]
 		}
 		
-		return openDocumentWithName(base, section: section, manPath: UserDefaults.standard.manPath)
+		return openDocument(name: base, section: section, manPath: UserDefaults.standard.manPath)
 	}
 	
 	func openString(_ string: String) {

@@ -23,11 +23,9 @@ private func GenerateManInfos() -> [ManAppInfo] {
 	return anAppInfo
 }
 
-final class ManAppInfoArray: NSObject, Sequence {
+final class ManAppInfoArray: Sequence {
 	fileprivate(set) var allManViewerApps = GenerateManInfos()
-	override init() {
-		super.init()
-		
+	init() {
 		sortApps()
 	}
 	

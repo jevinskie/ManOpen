@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftAdditions
 
 let manTextColorKey = "ManTextColor"
 let manLinkColorKey = "ManLinkColor"
@@ -15,7 +16,7 @@ let manPathKey		= "ManPath"
 let manBackgroundColorKey = "ManBackgroundColor"
 
 private func color(for key: String, defaults: UserDefaults = UserDefaults.standard) -> NSColor? {
-	if let colorData = defaults.data(forKey: key) {
+	if let colorData: Data = defaults[key] {
 		return NSUnarchiver.unarchiveObject(with: colorData) as? NSColor
 	}
 	
@@ -32,7 +33,7 @@ extension UserDefaults {
 			return color(for: manTextColorKey, defaults: self)!
 		}
 		set {
-			self.set(dataForColor(newValue), forKey: manTextColorKey)
+			self[manTextColorKey] = dataForColor(newValue)
 		}
 	}
 	
@@ -41,7 +42,7 @@ extension UserDefaults {
 			return color(for: manLinkColorKey, defaults: self)!
 		}
 		set {
-			self.set(dataForColor(newValue), forKey: manLinkColorKey)
+			self[manLinkColorKey] = dataForColor(newValue)
 		}
 	}
 	
@@ -50,21 +51,21 @@ extension UserDefaults {
 			return color(for: manBackgroundColorKey, defaults: self)!
 		}
 		set {
-			self.set(dataForColor(newValue), forKey: manBackgroundColorKey)
+			self[manBackgroundColorKey] = dataForColor(newValue)
 		}
 	}
 	
 	var manPath: String {
 		get {
-			return self.string(forKey: manPathKey)!
+			return self[manPathKey]!
 		}
 		set {
-			self.setValue(newValue, forKey: manPathKey)
+			self[manPathKey] = newValue
 		}
 	}
 	
 	var manFont: NSFont {
-		if let fontString = self.string(forKey: manFontKey) {
+		if let fontString: String = self[manFontKey] {
 			if let spaceRange = fontString.range(of: " ") {
 				func getEndIdx(_ string: String) -> String.Index {
 					let endIdx = string.endIndex

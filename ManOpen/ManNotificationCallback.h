@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-void registerNameWithRootObject(NSString *aname, id aRootObject) NS_SWIFT_NAME(register(name:rootObject:));
+@class ManDocumentController;
+
+@interface ManBridgeCallback : NSObject
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithManDocumentController:(ManDocumentController*)cont;
+
+@end
 
 void tryCatchBlock(NS_NOESCAPE dispatch_block_t aTry, void(NS_NOESCAPE^ __nullable catchBlock)(NSException*)) NS_SWIFT_NAME(exceptionBlock(try:catch:));
 

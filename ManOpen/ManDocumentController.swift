@@ -54,6 +54,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	@IBOutlet weak var openSectionPopup: NSPopUpButton!
 	var startedUp = false
 	fileprivate var nibObjects = [AnyObject]()
+	private var bridge: ManBridgeCallback? = nil
 	
 	func ensureActive() {
 		if !NSApplication.shared().isActive {
@@ -462,7 +463,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		* connecting, we may be able to do this whole thing in main()...
 		*/
 		
-		register(name: "ManOpenApp", rootObject: self)
+		bridge = ManBridgeCallback(manDocumentController: self)
 		
 		PrefPanelController.registerManDefaults()
 		var tmpNibArray = NSArray()
@@ -623,7 +624,7 @@ private func getWordArray(_ string: String) -> [String] {
 				} else {
 					pageNames.append(name)
 					if section != nil {
-						pageNames.append("(\(section))")
+						pageNames.append("(\(String(describing: section)))")
 						section = nil
 					}
 				}

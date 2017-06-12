@@ -7,14 +7,47 @@
 //
 
 #import "ManNotificationCallback.h"
+#import "ManOpenProtocol.h"
+#import "ManOpen-Swift.h"
 
-void registerNameWithRootObject(NSString *aname, id aRootObject)
+@interface ManBridgeCallback () <ManOpen>
+
+@end
+
+@implementation ManBridgeCallback
 {
-	static NSConnection *connection;
-	connection = [NSConnection new];
-	[connection registerName:aname];
-	[connection setRootObject:aRootObject];
+	NSConnection *manConnection;
+	__weak ManDocumentController* docCont;
 }
+
+- (instancetype)initWithManDocumentController:(ManDocumentController*)cont
+{
+	if (self = [super init]) {
+		manConnection = [NSConnection new];
+		[manConnection registerName:@"ManOpenApp"];
+		[manConnection setRootObject:self];
+		docCont = cont;
+	}
+	return self;
+}
+
+- (oneway void)openName:(NSString *)name section:(nullable NSString *)section manPath:(nullable NSString *)manPath forceToFront:(BOOL)force
+{
+	[docCont openName:name section:section manPath:manPath forceToFront:force];
+}
+
+- (oneway void)openApropos:(NSString *)apropos manPath:(nullable NSString *)manPath forceToFront:(BOOL)force
+{
+	
+	[docCont openApropos:apropos manPath:manPath forceToFront:force];
+}
+
+- (oneway void)openFile:(NSString *)filename forceToFront:(BOOL)force
+{
+	[docCont openFile:filename forceToFront:force];
+}
+
+@end
 
 void tryCatchBlock(dispatch_block_t aTry, void(^catchBlock)(NSException*))
 {

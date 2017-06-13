@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ManDocument" customModule="ManOpen" customModuleProvider="target">
@@ -25,7 +26,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="605" height="454"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="380" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" preferredMaxLayoutWidth="380" translatesAutoresizingMaskIntoConstraints="NO" id="10">
                         <rect key="frame" x="74" y="412" width="384" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="left" title="Title" id="62">
                             <font key="font" metaFont="system" size="18"/>
@@ -39,7 +40,7 @@
                             <constraint firstAttribute="width" constant="48" id="cUc-92-zE4"/>
                             <constraint firstAttribute="height" constant="48" id="zCf-Y2-x6P"/>
                         </constraints>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ManOpen" id="63"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSApplicationIcon" id="63"/>
                     </imageView>
                     <button toolTip=" Open selection " translatesAutoresizingMaskIntoConstraints="NO" id="25">
                         <rect key="frame" x="543" y="391" width="44" height="45"/>
@@ -61,15 +62,13 @@
                             <rect key="frame" x="1" y="1" width="603" height="384"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpen" customModuleProvider="target">
+                                <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpen" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="603" height="384"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="603" height="384"/>
                                     <size key="maxSize" width="10000000" height="10000000"/>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="603" height="384"/>
-                                    <size key="maxSize" width="10000000" height="10000000"/>
                                     <connections>
                                         <outlet property="delegate" destination="-2" id="HFX-BN-gAp"/>
                                     </connections>
@@ -125,7 +124,7 @@
         </window>
     </objects>
     <resources>
-        <image name="ManOpen" width="128" height="128"/>
+        <image name="NSApplicationIcon" width="128" height="128"/>
         <image name="helpQMark" width="40" height="40"/>
     </resources>
 </document>

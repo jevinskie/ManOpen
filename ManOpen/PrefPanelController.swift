@@ -87,16 +87,16 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let textDefaultColor = dataForColor(NSColor.textColor)
 		let bgDefaultColor = dataForColor(NSColor.textBackgroundColor)
 		
-		let someDefaults: [String : Any] = [kQuitWhenLastClosed: false,
-		kUseItalics:		false,
-		kUseBold:			true,
-		kNroffCommand:		nroff,
-		manPathKey:			manpath,
-		kKeepPanelsOpen:	false,
-		manTextColorKey:	textDefaultColor,
-		manLinkColorKey:	linkDefaultColor,
-		manBackgroundColorKey:		bgDefaultColor,
-		"NSQuitAlwaysKeepsWindows":	true]
+		let someDefaults: [String : Any] = [kQuitWhenLastClosed:	false,
+		                                    kUseItalics:			false,
+		                                    kUseBold:				true,
+		                                    kNroffCommand:			nroff,
+		                                    manPathKey:				manpath,
+		                                    kKeepPanelsOpen:		false,
+		                                    manTextColorKey:		textDefaultColor,
+		                                    manLinkColorKey:		linkDefaultColor,
+		                                    manBackgroundColorKey:	bgDefaultColor,
+		                                    "NSQuitAlwaysKeepsWindows":	true]
 		
 		userDefaults.register(defaults: someDefaults)
 	}
@@ -223,7 +223,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		if let currSetID = currSetID {
-			var resetPopup = (currentAppID == "") //first time
+			var resetPopup: Bool = (currentAppID == "") //first time
 			
 			currentAppID = currSetID
 			
@@ -269,8 +269,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 				if result == NSModalResponseOK {
 					if let appURL = panel.url {
 						if let appID = Bundle(url: appURL)?.bundleIdentifier {
-						self.setManPageViewer(appID)
-					}
+							self.setManPageViewer(appID)
+						}
 					}
 				}
 				self.setAppPopupToCurrent()
@@ -290,7 +290,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 
 	func saveManPath() {
 		if manPathArray.count > 0 {
-			UserDefaults.standard.set((manPathArray as NSArray).componentsJoined(by: ":"), forKey: manPathKey)
+			UserDefaults.standard.set(manPathArray.joined(separator: ":"), forKey: manPathKey)
 		}
 	}
 	
@@ -386,7 +386,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		return false
 	}
 	
-	func pathsFromPasteboard(_ pb: NSPasteboard) -> [String]? {
+	func paths(from pb: NSPasteboard) -> [String]? {
 		let bestType = pb.availableType(from: [NSFilenamesPboardType, NSStringPboardType])
 		
 		if bestType == NSFilenamesPboardType {
@@ -418,7 +418,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	@IBAction func paste(_ sender: AnyObject!) {
-		let paths = pathsFromPasteboard(NSPasteboard.general())
+		let paths = self.paths(from: NSPasteboard.general())
 		var insertionIndex = manPathController.selectionIndex
 		if insertionIndex == NSNotFound {
 			insertionIndex = manPathArrayPriv.count //add it on the end
@@ -446,7 +446,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			return .move;
 		}
 		
-		if let paths = pathsFromPasteboard(pb) {
+		if let paths = self.paths(from: pb) {
 			for path in paths {
 				if manPathArrayPriv.contains(path) {
 					return .copy
@@ -470,7 +470,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}
 		} else {
-			pathsToAdd = pathsFromPasteboard(pb)
+			pathsToAdd = paths(from: pb)
 		}
 		
 		if let pathsCount = pathsToAdd?.count, pathsCount > 0 {

@@ -330,7 +330,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	@IBAction func saveCurrentWindowSize(_ sender: AnyObject?) {
 		let size = textView.window!.frame.size
-		UserDefaults.standard.set(size.stringValue, forKey: "ManWindowSize")
+		UserDefaults.standard["ManWindowSize"] = size.stringValue
 	}
 	
 	@IBAction func openSelection(_ sender: AnyObject?) {

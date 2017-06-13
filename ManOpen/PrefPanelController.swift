@@ -148,7 +148,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		self.fontFieldFont = font
 		if let font = font {
 			let fontString = "\(font.pointSize) \(font.fontName)"
-			UserDefaults.standard.set(fontString, forKey: manFontKey)
+			UserDefaults.standard[manFontKey] = fontString
 		}
 	}
 	
@@ -290,7 +290,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 
 	func saveManPath() {
 		if manPathArray.count > 0 {
-			UserDefaults.standard.set(manPathArray.joined(separator: ":"), forKey: manPathKey)
+			UserDefaults.standard[manPathKey] = manPathArray.joined(separator: ":")
 		}
 	}
 	

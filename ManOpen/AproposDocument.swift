@@ -84,7 +84,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	}
 	
 	override func windowControllerDidLoadNib(_ aController: NSWindowController) {
-		let aSizeString = UserDefaults.standard.string(forKey: "AproposWindowSize")
+		let aSizeString: String? = UserDefaults.standard["AproposWindowSize"]
 		
 		super.windowControllerDidLoadNib(aController)
 		// Add any code here that needs to be executed once the windowController has loaded the document's window.

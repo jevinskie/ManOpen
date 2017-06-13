@@ -89,7 +89,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	}
 	
 	var useModalPanels: Bool {
-		return !UserDefaults.standard.bool(forKey: kKeepPanelsOpen)
+		return !(UserDefaults.standard[kKeepPanelsOpen]!)
 	}
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
@@ -104,9 +104,9 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	
 	func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
 		if startedUp {
-			return UserDefaults.standard.bool(forKey: "OpenPanelWhenNoWindows")
+			return UserDefaults.standard["OpenPanelWhenNoWindows"] ?? false
 		} else {
-			return UserDefaults.standard.bool(forKey: "OpenPanelOnStartup")
+			return UserDefaults.standard["OpenPanelOnStartup"] ?? false
 		}
 	}
 	
@@ -128,7 +128,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	}
 	
 	override func removeDocument(_ document: NSDocument) {
-		let autoQuit = UserDefaults.standard.bool(forKey: kQuitWhenLastClosed)
+		let autoQuit: Bool = UserDefaults.standard[kQuitWhenLastClosed]!
 		
 		super.removeDocument(document)
 		
@@ -186,7 +186,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		return dataByExecutingCommand(command, extraEnv: ["MANPATH" : manPath])
 	}
 	
-	func manFileForName(_ name: String, section: String? = nil, manPath: String? = nil) -> String? {
+	func manFile(name: String, section: String? = nil, manPath: String? = nil) -> String? {
 		var command = manCommand(manPath: manPath)
 		let spaceString = ""
 		command += " -w \(section ?? spaceString) \(name)"
@@ -335,7 +335,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		if document == nil {
 			document = ManDocument(name: name, section: section, manPath: manPath, title: title)
 			
-			if let filename = manFileForName(name, section: section, manPath: manPath) {
+			if let filename = manFile(name: name, section: section, manPath: manPath) {
 				let afn = (filename as NSString).resolvingSymlinksInPath
 				let fileURL = URL(fileURLWithPath: afn)
 				noteNewRecentDocumentURL(fileURL)

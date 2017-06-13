@@ -351,7 +351,8 @@
 				55C0CF3E19BE07E9009C50D7 /* ManOpenSwift-Bridging-Header.h */,
 				55EBB7991A803DF3001A27BC /* Classes */,
 				553A5B2419BFE86F003D74A9 /* Resources */,
-				D39279420821FFA400376676 /* Subprojects */,
+				D39279430821FFA400376676 /* cat2rtf */,
+				D39279570821FFA400376676 /* cat2html */,
 			);
 			path = ManOpen;
 			sourceTree = "<group>";
@@ -382,20 +383,12 @@
 			isa = PBXGroup;
 			children = (
 				557AFAF91A801CB2008BDF46 /* Vendor */,
-				D39278E40821FFA400376676 /* Subprojects */,
+				55C0CF1519BE07E8009C50D7 /* ManOpen */,
+				D392796A0821FFA400376676 /* openman */,
 				D39279800821FFA400376676 /* Frameworks */,
 				D39278ED0821FFA400376676 /* Products */,
 			);
 			name = ManOpen;
-			sourceTree = "<group>";
-		};
-		D39278E40821FFA400376676 /* Subprojects */ = {
-			isa = PBXGroup;
-			children = (
-				55C0CF1519BE07E8009C50D7 /* ManOpen */,
-				D392796A0821FFA400376676 /* openman */,
-			);
-			name = Subprojects;
 			sourceTree = "<group>";
 		};
 		D39278ED0821FFA400376676 /* Products */ = {
@@ -407,15 +400,6 @@
 				55C0CF1019BE04D8009C50D7 /* ManOpen.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D39279420821FFA400376676 /* Subprojects */ = {
-			isa = PBXGroup;
-			children = (
-				D39279430821FFA400376676 /* cat2rtf */,
-				D39279570821FFA400376676 /* cat2html */,
-			);
-			name = Subprojects;
 			sourceTree = "<group>";
 		};
 		D39279430821FFA400376676 /* cat2rtf */ = {

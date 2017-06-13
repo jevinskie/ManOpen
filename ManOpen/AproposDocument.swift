@@ -213,8 +213,10 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			return
 		}
 		
-		let search: String = coder.decodeObject(forKey: restoreSearchString) as! String
-		let theTitle = coder.decodeObject(forKey: restoreTitle) as! String
+		guard let search = coder.decodeObject(forKey: restoreSearchString) as? String,
+			let theTitle = coder.decodeObject(forKey: restoreTitle) as? String else {
+				return;
+		}
 		let manPath = UserDefaults.standard.manPath
 		
 		loadWithString(search, manPath: manPath, title: theTitle)

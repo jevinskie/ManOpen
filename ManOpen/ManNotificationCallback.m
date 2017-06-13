@@ -31,18 +31,17 @@
 	return self;
 }
 
-- (oneway void)openName:(NSString *)name section:(nullable NSString *)section manPath:(nullable NSString *)manPath forceToFront:(BOOL)force
+- (oneway void)openName:(bycopy NSString *)name section:(bycopy nullable NSString *)section manPath:(bycopy nullable NSString *)manPath forceToFront:(BOOL)force
 {
 	[docCont openName:name section:section manPath:manPath forceToFront:force];
 }
 
-- (oneway void)openApropos:(NSString *)apropos manPath:(nullable NSString *)manPath forceToFront:(BOOL)force
+- (oneway void)openApropos:(bycopy NSString *)apropos manPath:(bycopy nullable NSString *)manPath forceToFront:(BOOL)force
 {
-	
 	[docCont openApropos:apropos manPath:manPath forceToFront:force];
 }
 
-- (oneway void)openFile:(NSString *)filename forceToFront:(BOOL)force
+- (oneway void)openFile:(bycopy NSString *)filename forceToFront:(BOOL)force
 {
 	[docCont openFile:filename forceToFront:force];
 }

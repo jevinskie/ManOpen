@@ -44,7 +44,7 @@ func EscapePath(_ path: String, addSurroundingQuotes: Bool = false) -> String {
 }
 
 @NSApplicationMain
-class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegate {
+class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	@IBOutlet weak var helpScrollView: NSScrollView!
 	@IBOutlet weak var openTextPanel: NSPanel!
 	@IBOutlet weak var aproposPanel: NSPanel!
@@ -285,8 +285,8 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		completionHandler(document, !docAdded, error)
 	}
 	
-	override func reopenDocument(for urlOrNil: URL!, withContentsOf contentsURL: URL, display displayDocument: Bool, completionHandler: (@escaping (NSDocument?, Bool, Error?) -> Void)) {
-		openDocument(withContentsOf: urlOrNil, display: displayDocument, completionHandler: completionHandler)
+	override func reopenDocument(for urlOrNil: URL?, withContentsOf contentsURL: URL, display displayDocument: Bool, completionHandler: (@escaping (NSDocument?, Bool, Error?) -> Void)) {
+		openDocument(withContentsOf: urlOrNil ?? contentsURL, display: displayDocument, completionHandler: completionHandler)
 	}
 	
 	override func runModalOpenPanel(_ openPanel: NSOpenPanel, forTypes types: [String]?) -> Int {
@@ -431,7 +431,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 			}
 		}
 		
-		if (lastWord != nil) {
+		if lastWord != nil {
 			if lastWord.hasSuffix(",") {
 				var lastIndex = lastWord.endIndex
 				lastWord = lastWord[lastWord.startIndex..<lastIndex]
@@ -481,7 +481,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 		var words = getWordArray(aString)
 		
 		/* If the string is of the form "3 printf", arrange it better for our parser.  Requested by Eskimo.  Also accept 'n' as a section */
-		if words.count == 2 && aString.range(of: "(") == nil && IsSectionWord(words[0]) {
+		if words.count == 2 && aString.range(of: "(") == nil && isSectionWord(words[0]) {
 			aString = "\(words[1])(\(words[0]))"
 		}
 		
@@ -568,7 +568,7 @@ class ManDocumentController: NSDocumentController, ManOpen, NSApplicationDelegat
 	}
 }
 
-private func IsSectionWord(_ word: String) -> Bool
+private func isSectionWord(_ word: String) -> Bool
 {
 	if word.isEmpty {
 		return false
@@ -600,13 +600,13 @@ private func getWordArray(_ string: String) -> [String] {
 	return wordArray
 }
 
-@objc(ManOpenURLHandlerCommand) class ManOpenURLHandlerCommand : NSScriptCommand {
+@objc(ManOpenURLHandlerCommand)
+class ManOpenURLHandlerCommand : NSScriptCommand {
 	override func performDefaultImplementation() -> Any? {
 		if directParameter == nil {
 			return nil
 		}
 		let param = directParameter as! String
-		var section: String? = nil
 		
 		let paramRange = param.range(of: URL_SCHEME_PREFIX, options: [.caseInsensitive, .anchored])
 		var pageNames = [String]()
@@ -616,10 +616,11 @@ private func getWordArray(_ string: String) -> [String] {
 			let components = (path as NSString).pathComponents
 			
 			for name in components {
+				var section: String? = nil
 				if name.characters.count == 0 || name == "" {
 					continue
 				}
-				if IsSectionWord(name) {
+				if isSectionWord(name) {
 					section = name
 				} else {
 					pageNames.append(name)

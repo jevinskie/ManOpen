@@ -10,9 +10,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ManOpen <NSObject>
 
-- (oneway void)openName:(NSString *)name section:(nullable NSString *)section manPath:(nullable NSString *)manPath forceToFront:(BOOL)force;
-- (oneway void)openApropos:(NSString *)apropos manPath:(nullable NSString *)manPath forceToFront:(BOOL)force;
-- (oneway void)openFile:(NSString *)filename forceToFront:(BOOL)force;
+- (oneway void)openName:(bycopy NSString *)name section:(bycopy nullable NSString *)section manPath:(bycopy nullable NSString *)manPath forceToFront:(BOOL)force;
+- (oneway void)openApropos:(bycopy NSString *)apropos manPath:(bycopy nullable NSString *)manPath forceToFront:(BOOL)force;
+- (oneway void)openFile:(bycopy NSString *)filename forceToFront:(BOOL)force;
 
 @end
 

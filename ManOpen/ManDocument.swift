@@ -10,12 +10,12 @@ import Cocoa
 import ApplicationServices
 import SwiftAdditions
 
-private let RestoreWindowDict = "RestoreWindowInfo"
-private let RestoreSection    = "Section"
-private let RestoreTitle      = "Title"
-private let RestoreName       = "Name"
-private let RestoreFileURL    = "URL"
-private let RestoreFileType   = "DocType"
+private let RestoreWindowDictKey = "RestoreWindowInfo"
+private let RestoreSectionKey    = "Section"
+private let RestoreTitleKey      = "Title"
+private let RestoreNameKey       = "Name"
+private let RestoreFileURLKey    = "URL"
+private let RestoreFileTypeKey   = "DocType"
 
 private var filterCommand: String {
 	let defaults = UserDefaults.standard
@@ -115,11 +115,10 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		
 		// strip extension twice in case it is a e.g. "1.gz" filename
 		self.shortTitle = ((url.lastPathComponent as NSString).deletingPathExtension as NSString).deletingPathExtension
-		copyURL = url;
+		copyURL = url
 		
-		restoreData = [
-			RestoreFileURL: url,
-			RestoreFileType: typeName];
+		restoreData = [RestoreFileURLKey: url,
+		               RestoreFileTypeKey: typeName]
 		
 		if taskData == nil {
 			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data")])
@@ -153,16 +152,16 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		fileType = "man"
 		shortTitle = title
 		
-		if let section = section , section.characters.count > 0 {
+		if let section = section, section.characters.count > 0 {
 			command += " " + section.lowercased()
 			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(section)/\(title)")
 		} else {
 			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(title)")
 		}
 		
-		restoreData = [RestoreName: name,
-			RestoreTitle: title,
-			RestoreSection: section ?? ""]
+		restoreData = [RestoreNameKey: name,
+			RestoreTitleKey: title,
+			RestoreSectionKey: section ?? ""]
 		
 		command += " " + name
 		
@@ -188,8 +187,8 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			return
 		}
 		
-		if taskData?.isRTFData ?? false {
-			storage = NSTextStorage(rtf: taskData!, documentAttributes: nil)
+		if let taskData = taskData, taskData.isRTFData {
+			storage = NSTextStorage(rtf: taskData, documentAttributes: nil)
 		} else if let taskData = taskData {
 			storage = NSTextStorage(html: taskData, options: [:], documentAttributes: nil)
 		}
@@ -216,22 +215,24 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				while currIndex < aStorage.length {
 					var currRange = NSRange(location: 0, length: 0)
 					var attribs = aStorage.attributes(at: currIndex, effectiveRange: &currRange)
-					var font = attribs[NSFontAttributeName] as? NSFont
+					let font = attribs[NSFontAttributeName] as? NSFont
 					var isLink = false
 					
-					if font != nil && font!.familyName != "Courier" {
+					if let font = font, font.familyName != "Courier" {
+						//Using mutableString so we don't have to do Swift String range conversions.
 						self.add(sectionHeader: aStorage.mutableString.substring(with: currRange), range: currRange)
 					}
 					
 					isLink = (attribs[NSLinkAttributeName] != nil)
 					
-					if (font != nil && (font!.familyName != family)) {
-						font = manager.convert(font!, toFamily: family)
-					}
-					if (font != nil && font!.pointSize != size) {
-						font = manager.convert(font!, toSize: size)
-					}
-					if let font = font {
+					if var font = font {
+						if font.familyName != family {
+							font = manager.convert(font, toFamily: family)
+						}
+						if font.pointSize != size {
+							font = manager.convert(font, toSize: size)
+						}
+						
 						aStorage.addAttribute(NSFontAttributeName, value: font, range: currRange)
 					}
 					
@@ -252,6 +253,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				aStorage.endEditing()
 				}, catch: { (localException) -> Void in
 					Swift.print("Exception during formatting: \(localException)")
+					aStorage.endEditing()
 			})
 			
 			textView.layoutManager?.replaceTextStorage(aStorage)
@@ -397,27 +399,27 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	// MARK: NSWindowRestoration functions
 	override func encodeRestorableState(with coder: NSCoder) {
 		super.encodeRestorableState(with: coder)
-		coder.encode(restoreData, forKey: RestoreWindowDict)
+		coder.encode(restoreData, forKey: RestoreWindowDictKey)
 	}
 	
 	override func restoreState(with coder: NSCoder) {
 		super.restoreState(with: coder)
 		
-		if !coder.containsValue(forKey: RestoreWindowDict) {
+		if !coder.containsValue(forKey: RestoreWindowDictKey) {
 			return
 		}
 		
-		if let restoreInfo = coder.decodeObject(forKey: RestoreWindowDict) as? [String: Any] {
-			if let aRestoreName = restoreInfo[RestoreName] as? String,
-				let section = restoreInfo[RestoreSection] as? String,
-				let title = restoreInfo[RestoreTitle] as? String {
+		if let restoreInfo = coder.decodeObject(forKey: RestoreWindowDictKey) as? [String: Any] {
+			if let aRestoreName = restoreInfo[RestoreNameKey] as? String,
+				let title = restoreInfo[RestoreTitleKey] as? String {
+				let section = restoreInfo[RestoreSectionKey] as? String
 				let manPath = UserDefaults.standard.manPath
 				
 				loadDocument(name: aRestoreName, section: section, manPath: manPath, title: title)
 				/* Usually, URL-backed documents have been automatically restored already
 				(the copyURL would be set), but just in case... */
-			} else if let url = restoreInfo[RestoreFileURL] as? URL, copyURL == nil,
-				let type = restoreInfo[RestoreFileType] as? String {
+			} else if let url = restoreInfo[RestoreFileURLKey] as? URL, copyURL == nil,
+				let type = restoreInfo[RestoreFileTypeKey] as? String {
 				
 				do {
 					try read(from: url, ofType: type)

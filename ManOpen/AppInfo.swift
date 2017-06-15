@@ -20,12 +20,13 @@ func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 
 final class ManAppInfo: Hashable {
 	let bundleID: String
+	
 	private(set) lazy var displayName: String = {
 		let url = self.appURL
-		var infoDict: NSDictionary? = CFBundleCopyInfoDictionaryForURL(url as NSURL)
+		var infoDict: [String: Any]? = CFBundleCopyInfoDictionaryForURL(url as NSURL) as? [String : Any]
 		
 		if infoDict == nil {
-			infoDict = Bundle(url: url)!.infoDictionary as NSDictionary?
+			infoDict = Bundle(url: url)!.infoDictionary
 		}
 		
 		var niceName: String = {

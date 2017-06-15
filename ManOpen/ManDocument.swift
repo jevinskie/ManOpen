@@ -178,87 +178,85 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	func showData() {
 		let defaults = UserDefaults.standard
-		var storage: NSTextStorage? = nil
 		let manFont = defaults.manFont
 		let linkColor = defaults.manLinkColor
 		let textColor = defaults.manTextColor
 		let backgroundColor = defaults.manBackgroundColor
-		if textScroll == nil || hasLoaded {
+		if textScroll == nil /* nib is not yet loaded */ || hasLoaded {
 			return
 		}
 		
-		if let taskData = taskData, taskData.isRTFData {
-			storage = NSTextStorage(rtf: taskData, documentAttributes: nil)
-		} else if let taskData = taskData {
-			storage = NSTextStorage(html: taskData, options: [:], documentAttributes: nil)
-		}
+		let storage: NSTextStorage = {
+			var storage1: NSTextStorage? = nil
+			if let taskData = taskData, taskData.isRTFData {
+				storage1 = NSTextStorage(rtf: taskData, documentAttributes: nil)
+			} else if let taskData = taskData {
+				storage1 = NSTextStorage(html: taskData, options: [:], documentAttributes: nil)
+			}
+			
+			return storage1 ?? NSTextStorage()
+		}()
 		
-		if storage == nil {
-			storage = NSTextStorage()
-		}
-		
-		if storage?.string.rangeOfCharacter(from: CharacterSet.letters) == nil {
-			storage?.mutableString.setString(NSLocalizedString("\nNo manual entry.", comment: "'No manual entry', preceeded by a newline"))
+		if storage.string.rangeOfCharacter(from: CharacterSet.letters) == nil {
+			storage.mutableString.setString(NSLocalizedString("\nNo manual entry.", comment: "'No manual entry', preceeded by a newline"))
 		}
 		
 		sections.removeAll()
 		
-		if let aStorage = storage {
-			let manager = NSFontManager.shared()
-			let family = manFont.familyName ?? manFont.fontName
-			let size = manFont.pointSize
+		let manager = NSFontManager.shared()
+		let family = manFont.familyName ?? manFont.fontName
+		let size = manFont.pointSize
+		
+		exceptionBlock(try: { () -> Void in
+			var currIndex = 0
+			storage.beginEditing()
 			
-			exceptionBlock(try: { () -> Void in
-				var currIndex = 0
-				aStorage.beginEditing()
+			while currIndex < storage.length {
+				var currRange = NSRange(location: 0, length: 0)
+				var attribs = storage.attributes(at: currIndex, effectiveRange: &currRange)
+				let font = attribs[NSFontAttributeName] as? NSFont
+				var isLink = false
 				
-				while currIndex < aStorage.length {
-					var currRange = NSRange(location: 0, length: 0)
-					var attribs = aStorage.attributes(at: currIndex, effectiveRange: &currRange)
-					let font = attribs[NSFontAttributeName] as? NSFont
-					var isLink = false
-					
-					if let font = font, font.familyName != "Courier" {
-						//Using mutableString so we don't have to do Swift String range conversions.
-						self.add(sectionHeader: aStorage.mutableString.substring(with: currRange), range: currRange)
-					}
-					
-					isLink = (attribs[NSLinkAttributeName] != nil)
-					
-					if var font = font {
-						if font.familyName != family {
-							font = manager.convert(font, toFamily: family)
-						}
-						if font.pointSize != size {
-							font = manager.convert(font, toSize: size)
-						}
-						
-						aStorage.addAttribute(NSFontAttributeName, value: font, range: currRange)
-					}
-					
-					/*
-					* Starting in 10.3, there is a -setLinkTextAttributes: method to set these, without having to
-					* determine the ranges ourselves.  However, since we are already iterating all the ranges
-					* for other reasons, may as well keep the old way.
-					*/
-					if isLink {
-						aStorage.addAttribute(NSForegroundColorAttributeName, value: linkColor, range: currRange)
-					} else {
-						aStorage.addAttribute(NSForegroundColorAttributeName, value: textColor, range: currRange)
-					}
-					
-					currIndex = currRange.max
+				if let font = font, font.familyName != "Courier" {
+					//Using mutableString so we don't have to do Swift String range conversions.
+					self.add(sectionHeader: storage.mutableString.substring(with: currRange), range: currRange)
 				}
 				
-				aStorage.endEditing()
-				}, catch: { (localException) -> Void in
-					Swift.print("Exception during formatting: \(localException)")
-					aStorage.endEditing()
-			})
+				isLink = attribs[NSLinkAttributeName] != nil
+				
+				if var font = font {
+					if font.familyName != family {
+						font = manager.convert(font, toFamily: family)
+					}
+					if font.pointSize != size {
+						font = manager.convert(font, toSize: size)
+					}
+					
+					storage.addAttribute(NSFontAttributeName, value: font, range: currRange)
+				}
+				
+				/*
+				* Starting in 10.3, there is a -setLinkTextAttributes: method to set these, without having to
+				* determine the ranges ourselves.  However, since we are already iterating all the ranges
+				* for other reasons, may as well keep the old way.
+				*/
+				if isLink {
+					storage.addAttribute(NSForegroundColorAttributeName, value: linkColor, range: currRange)
+				} else {
+					storage.addAttribute(NSForegroundColorAttributeName, value: textColor, range: currRange)
+				}
+				
+				currIndex = currRange.max
+			}
 			
-			textView.layoutManager?.replaceTextStorage(aStorage)
-			textView.window?.invalidateCursorRects(for: textView)
-		}
+			storage.endEditing()
+		}, catch: { (localException) -> Void in
+			Swift.print("Exception during formatting: \(localException)")
+			storage.endEditing()
+		})
+		
+		textView.layoutManager?.replaceTextStorage(storage)
+		textView.window?.invalidateCursorRects(for: textView)
 		textView.backgroundColor = backgroundColor
 		setupSectionPopup()
 		

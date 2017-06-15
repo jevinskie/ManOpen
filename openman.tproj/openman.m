@@ -35,15 +35,15 @@ int main (int argc, char * const *argv)
     @autoreleasepool {
         NSString          *manPath = nil;
         NSString          *section = nil;
-        NSMutableArray    *files = [NSMutableArray array];
         BOOL              aproposMode = NO;
         BOOL              forceToFront = YES;
         NSInteger         argIndex;
         char              c;
-        NSDistantObject <ManOpen>  *server;
         NSInteger         maxConnectTries;
-        NSInteger          connectCount;
-        
+        NSInteger         connectCount;
+        NSMutableArray<NSString*>   *files = [[NSMutableArray alloc] init];
+        NSDistantObject<ManOpen>    *server;
+
         while ((c = getopt(argc,argv,"hbm:M:f:kaCcw")) != EOF)
         {
             switch(c)
@@ -84,7 +84,7 @@ int main (int argc, char * const *argv)
         
         if (optind < argc && !aproposMode)
         {
-            NSString *tmp = MakeNSStringFromPath(argv[optind]);
+            NSString *tmp = @(argv[optind]);
             
             if (isdigit(argv[optind][0])          ||
                 /* These are configurable in /etc/man.conf; these are just the default strings.  Hm, they are invalid as of Panther. */
@@ -168,10 +168,11 @@ int main (int argc, char * const *argv)
         for (argIndex = optind; argIndex < argc; argIndex++)
         {
             NSString *currFile = MakeNSStringFromPath(argv[argIndex]);
-            if (aproposMode)
+            if (aproposMode) {
                 [server openApropos:currFile manPath:manPath forceToFront:forceToFront];
-            else
+            } else {
                 [server openName:currFile section:section manPath:manPath forceToFront:forceToFront];
+            }
         }
         
         return 0;

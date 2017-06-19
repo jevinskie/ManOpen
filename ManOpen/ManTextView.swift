@@ -83,8 +83,8 @@ class ManTextView: NSTextView {
 		
 		let currPage = NSPrintOperation.current()!.currentPage
 		let pageString = "\(currPage)"
-		let style = NSParagraphStyle.default().mutableCopy() as! NSMutableParagraphStyle
-		var drawAttribs = [String: AnyObject]()
+		let style = NSMutableParagraphStyle()
+		var drawAttribs = [String: Any]()
 		
 		style.alignment = .center
 		drawAttribs[NSParagraphStyleAttributeName] = style
@@ -92,7 +92,7 @@ class ManTextView: NSTextView {
 		#if !USE_CGCONTEXT_FOR_PRINTING
 			let drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
 			
-			(pageString as NSString).draw(in: drawRect, withAttributes: drawAttribs)
+			pageString.draw(in: drawRect, withAttributes: drawAttribs)
 		#else
 			let strWidth = (pageString as NSString).size(withAttributes: drawAttribs).width
 			let point = NSPoint(x: borderSize.width/2 - strWidth/2, y: 20.0)

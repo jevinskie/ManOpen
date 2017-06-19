@@ -53,7 +53,7 @@ final class ManAppInfo: Hashable {
 		return URL(fileURLWithPath: path)
 		}()
 	
-	func isEqual(_ other: AnyObject!) -> Bool {
+	func isEqual(_ other: Any?) -> Bool {
 		if let isAppInfo = other as? ManAppInfo {
 			return self == isAppInfo
 		} else if let isString = other as? String {

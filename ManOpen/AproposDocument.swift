@@ -11,6 +11,7 @@ import SwiftAdditions
 
 private let restoreSearchString = "SearchString"
 private let restoreTitle = "Title"
+private let AproposWindowSizeKey  = "AproposWindowSize"
 
 class AproposDocument: NSDocument, NSTableViewDataSource {
 	@IBOutlet weak var tableView: NSTableView!
@@ -37,27 +38,22 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		return "Apropos"
 	}
 	
-	func parseOutput(_ output: String!) {
+	func parseOutput(_ output: String?) {
 		guard let output = output else {
 			return
 		}
 		
-		let lines: [String] = {
-			var aLines = output.components(separatedBy: "\n")
-			
-			aLines.sort { (lhs, rhs) -> Bool in
-				let toRet = lhs.caseInsensitiveCompare(rhs)
-				return toRet == .orderedAscending
-			}
-			return aLines
-			}()
+		let lines = output.components(separatedBy: "\n").sorted(by: { (lhs, rhs) -> Bool in
+			let toRet = lhs.caseInsensitiveCompare(rhs)
+			return toRet == .orderedAscending
+		})
 		
-		if lines.count == 0 {
+		guard lines.count > 0 else {
 			return
 		}
 		
 		for line in lines {
-			if line.characters.count == 0 {
+			guard line.characters.count > 0 else {
 				continue
 			}
 			
@@ -84,7 +80,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	}
 	
 	override func windowControllerDidLoadNib(_ aController: NSWindowController) {
-		let aSizeString: String? = UserDefaults.standard["AproposWindowSize"]
+		let aSizeString: String? = UserDefaults.standard[AproposWindowSizeKey]
 		
 		super.windowControllerDidLoadNib(aController)
 		// Add any code here that needs to be executed once the windowController has loaded the document's window.
@@ -168,7 +164,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	@IBAction func saveCurrentWindowSize(_ sender: AnyObject?) {
 		let size = tableView.window!.frame.size
-		UserDefaults.standard["AproposWindowSize"] = size.stringValue
+		UserDefaults.standard[AproposWindowSizeKey] = size.stringValue
 	}
 	
 	override init() {

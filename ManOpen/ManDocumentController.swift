@@ -447,7 +447,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	}
 	
 	@IBAction func orderFrontPreferencesPanel(_ sender: AnyObject?) {
-		PrefPanelController.sharedInstance.showWindow(sender)
+		PrefPanelController.shared.showWindow(sender)
 	}
 	
 	@IBAction func runPageLayout(_ sender: AnyObject!) {

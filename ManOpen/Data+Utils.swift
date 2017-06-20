@@ -33,7 +33,6 @@ extension Data {
 	}
 	
 	public var isGzipData: Bool {
-		
 		return starts(with: compressHeader) || starts(with: gzipHeader)
 	}
 	

@@ -25,7 +25,7 @@ let kNroffCommand		= "NroffCommand"
 
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
 
-	static let sharedInstance: PrefPanelController = {
+	static let shared: PrefPanelController = {
 		let toRet = PrefPanelController(windowNibName: "PrefPanel")
 		toRet.shouldCascadeWindows = false
 		NSFontManager.shared().delegate = toRet

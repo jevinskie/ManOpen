@@ -17,6 +17,8 @@ private let RestoreNameKey       = "Name"
 private let RestoreFileURLKey    = "URL"
 private let RestoreFileTypeKey   = "DocType"
 
+private let ManWindowSizeKey = "ManWindowSize"
+
 private var filterCommand: String {
 	let defaults = UserDefaults.standard
 	
@@ -66,7 +68,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	override func windowControllerDidLoadNib(_ aController: NSWindowController) {
 		let defaults = UserDefaults.standard
-		let sizeString = defaults.string(forKey: "ManWindowSize")
+		let sizeString: String? = defaults[ManWindowSizeKey]
 		
 		super.windowControllerDidLoadNib(aController)
 		// Add any code here that needs to be executed once the windowController has loaded the document's window.
@@ -304,7 +306,6 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	func loadManFile(_ filename: String, isGzip: Bool = false) {
 		let defaults = UserDefaults.standard
 		var nroffFormat = defaults.string(forKey: kNroffCommand)!
-		var nroffCommand: String
 		let hasQuote = nroffFormat.range(of: "'%@'") != nil
 		
 		/* If Gzip, change the command into a filter of the output of gzcat.  I'm
@@ -319,7 +320,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			}
 		}
 		
-		nroffCommand = String(format: nroffFormat, EscapePath(filename, addSurroundingQuotes: !hasQuote))
+		let nroffCommand = String(format: nroffFormat, EscapePath(filename, addSurroundingQuotes: !hasQuote))
 		loadCommand(nroffCommand)
 	}
 	
@@ -330,7 +331,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	@IBAction func saveCurrentWindowSize(_ sender: AnyObject?) {
 		let size = textView.window!.frame.size
-		UserDefaults.standard["ManWindowSize"] = size.stringValue
+		UserDefaults.standard[ManWindowSizeKey] = size.stringValue
 	}
 	
 	@IBAction func openSelection(_ sender: AnyObject?) {

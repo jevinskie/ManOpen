@@ -18,7 +18,7 @@ func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 	return toRet == ComparisonResult.orderedSame
 }
 
-final class ManAppInfo: Hashable {
+final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 	let bundleID: String
 	
 	private(set) lazy var displayName: String = {
@@ -86,5 +86,9 @@ final class ManAppInfo: Hashable {
 	
 	func localizedStandardCompare(_ string: ManAppInfo) -> ComparisonResult {
 		return displayName.localizedStandardCompare(string.displayName)
+	}
+	
+	var debugDescription: String {
+		return "\(bundleID), \(displayName)"
 	}
 }

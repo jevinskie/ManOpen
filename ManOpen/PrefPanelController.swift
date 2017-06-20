@@ -24,20 +24,14 @@ let kNroffCommand		= "NroffCommand"
 
 
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
-	private struct Static {
-		static var instance : PrefPanelController? = nil
-	}
-	
-	private static var __once: () = {
-			Static.instance = PrefPanelController(windowNibName: "PrefPanel")
-			Static.instance!.shouldCascadeWindows = false
-			NSFontManager.shared().delegate = Static.instance
-		}()
-	class var sharedInstance: PrefPanelController {
-		_ = PrefPanelController.__once
+
+	static let sharedInstance: PrefPanelController = {
+		let toRet = PrefPanelController(windowNibName: "PrefPanel")
+		toRet.shouldCascadeWindows = false
+		NSFontManager.shared().delegate = toRet
 		
-		return Static.instance!
-	}
+		return toRet
+	}()
 	
 	let appInfos = ManAppInfoArray()
 	fileprivate var manPathArrayPriv = [String]()

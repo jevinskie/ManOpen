@@ -305,7 +305,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	func loadManFile(_ filename: String, isGzip: Bool = false) {
 		let defaults = UserDefaults.standard
-		var nroffFormat = defaults.string(forKey: kNroffCommand)!
+		var nroffFormat: String = defaults[kNroffCommand]!
 		let hasQuote = nroffFormat.range(of: "'%@'") != nil
 		
 		/* If Gzip, change the command into a filter of the output of gzcat.  I'm

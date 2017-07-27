@@ -33,7 +33,7 @@ func EscapePath(_ path: String, addSurroundingQuotes: Bool = false) -> String {
 			}
 		}
 		
-		modPath = newString;
+		modPath = newString
 	}
 	
 	if addSurroundingQuotes {
@@ -359,8 +359,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		if document == nil {
 			document = AproposDocument(string: apropos, manPath: manPath, title: title)
 			
-			if document != nil {
-				addDocument(document!)
+			if let document = document {
+				addDocument(document)
 			}
 			document?.makeWindowControllers()
 		}

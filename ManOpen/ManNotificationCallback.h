@@ -18,6 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-void tryCatchBlock(NS_NOESCAPE dispatch_block_t aTry, void(NS_NOESCAPE^ __nullable catchBlock)(NSException*)) NS_SWIFT_NAME(exceptionBlock(try:catch:));
+void tryCatchBlock(NS_NOESCAPE dispatch_block_t aTry, void(NS_NOESCAPE ^ __nullable catchBlock)(NSException*)) NS_SWIFT_NAME(exceptionBlock(try:catch:));
 
 NS_ASSUME_NONNULL_END

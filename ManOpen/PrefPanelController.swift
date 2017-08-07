@@ -261,7 +261,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			panel.canChooseFiles = true
 			panel.allowedFileTypes = [kUTTypeApplicationBundle as String]
 			panel.beginSheetModal(for: appPopup.window!) { (result) -> Void in
-				if result == NSApplication.ModalResponse.OK {
+				if result == .OK {
 					if let appURL = panel.url {
 						if let appID = Bundle(url: appURL)?.bundleIdentifier {
 							self.setManPageViewer(appID)
@@ -337,7 +337,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		panel.canChooseFiles = false
 		
 		panel.beginSheetModal(for: window!, completionHandler: { (result) -> Void in
-			if result == NSApplication.ModalResponse.OK {
+			if result == .OK {
 				let urls = panel.urls 
 				let paths = urls.map({$0.path})
 				
@@ -399,7 +399,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
 	@IBAction func copy(_ sender: AnyObject!) {
 		let files = pathsAtIndexes(manPathController.selectionIndexes)
-		writePaths(files, toPasteboard: NSPasteboard.general)
+		writePaths(files, toPasteboard: .general)
 	}
 	
 	
@@ -437,7 +437,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		/* If this is a dragging operation in the table itself, show the move icon */
-		if let pbtypes = pb.types , pbtypes.contains(ManPathIndexSetPboardType) && ((info.draggingSource() as AnyObject?) === manPathTableView) {
+		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) && ((info.draggingSource() as AnyObject?) === manPathTableView) {
 			return .move;
 		}
 		

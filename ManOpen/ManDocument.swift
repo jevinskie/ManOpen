@@ -219,7 +219,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			while currIndex < storage.length {
 				var currRange = NSRange(location: 0, length: 0)
 				var attribs = storage.attributes(at: currIndex, effectiveRange: &currRange)
-				let font = attribs[NSAttributedStringKey.font] as? NSFont
+				let font = attribs[.font] as? NSFont
 				var isLink = false
 				
 				if let font = font, font.familyName != "Courier" {

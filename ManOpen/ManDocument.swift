@@ -187,7 +187,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		let linkColor = defaults.manLinkColor
 		let textColor = defaults.manTextColor
 		let backgroundColor = defaults.manBackgroundColor
-		if textScroll == nil /* nib is not yet loaded */ || hasLoaded {
+		guard textScroll != nil /* nib is not yet loaded */ && !hasLoaded else {
 			return
 		}
 		
@@ -227,7 +227,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 					self.add(sectionHeader: storage.mutableString.substring(with: currRange), range: currRange)
 				}
 				
-				isLink = attribs[NSAttributedStringKey.link] != nil
+				isLink = attribs[.link] != nil
 				
 				if var font = font {
 					if font.familyName != family {
@@ -237,7 +237,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 						font = manager.convert(font, toSize: size)
 					}
 					
-					storage.addAttribute(NSAttributedStringKey.font, value: font, range: currRange)
+					storage.addAttribute(.font, value: font, range: currRange)
 				}
 				
 				/*

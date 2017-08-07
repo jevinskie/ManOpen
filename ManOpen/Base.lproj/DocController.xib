@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ManDocumentController" customModule="ManOpen" customModuleProvider="target">
@@ -21,7 +23,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="706" y="439" width="384" height="91"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="9">
                 <rect key="frame" x="0.0" y="0.0" width="384" height="91"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -90,6 +92,9 @@ Gw
                     <constraint firstItem="24" firstAttribute="leading" secondItem="27" secondAttribute="trailing" constant="12" symbolic="YES" id="TRg-uk-Rab"/>
                     <constraint firstAttribute="trailing" secondItem="10" secondAttribute="trailing" constant="20" symbolic="YES" id="WPg-KZ-Vgx"/>
                     <constraint firstItem="27" firstAttribute="width" secondItem="24" secondAttribute="width" id="Z4C-GI-kZE"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="40" secondAttribute="trailing" constant="20" symbolic="YES" id="fYC-PC-Z22"/>
+                    <constraint firstItem="27" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9" secondAttribute="leading" constant="20" symbolic="YES" id="jmf-LL-WgB"/>
+                    <constraint firstItem="27" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="40" secondAttribute="trailing" constant="8" symbolic="YES" id="lIm-bp-UlJ"/>
                     <constraint firstItem="27" firstAttribute="top" secondItem="10" secondAttribute="bottom" constant="8" symbolic="YES" id="m9D-hW-atH"/>
                     <constraint firstItem="10" firstAttribute="leading" secondItem="14" secondAttribute="trailing" constant="8" symbolic="YES" id="ngT-wX-nXV"/>
                     <constraint firstAttribute="trailing" secondItem="24" secondAttribute="trailing" constant="20" symbolic="YES" id="pf0-Ts-qPp"/>
@@ -104,7 +109,7 @@ Gw
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="530" y="673" width="384" height="120"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="23">
                 <rect key="frame" x="0.0" y="0.0" width="384" height="120"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -191,6 +196,7 @@ Gw
                     <constraint firstItem="47" firstAttribute="leading" secondItem="23" secondAttribute="leading" constant="20" symbolic="YES" id="B8z-2j-UJt"/>
                     <constraint firstItem="41" firstAttribute="leading" secondItem="47" secondAttribute="trailing" constant="8" symbolic="YES" id="EQk-Oy-30J"/>
                     <constraint firstItem="17" firstAttribute="baseline" secondItem="6" secondAttribute="baseline" id="F3R-Wa-WNa"/>
+                    <constraint firstItem="21" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="23" secondAttribute="leading" constant="20" symbolic="YES" id="FPL-9w-Iz0"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="21" secondAttribute="trailing" constant="12" symbolic="YES" id="GHl-bT-FVo"/>
                     <constraint firstItem="41" firstAttribute="top" secondItem="6" secondAttribute="bottom" constant="8" id="Q0B-OS-3up"/>
                     <constraint firstAttribute="trailing" secondItem="7" secondAttribute="trailing" constant="20" symbolic="YES" id="REN-Ro-1ja"/>
@@ -212,9 +218,9 @@ Gw
         </window>
         <window title="Help" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="56" userLabel="Help Panel" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="477" y="445" width="490" height="481"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="92" height="10"/>
             <view key="contentView" id="59">
                 <rect key="frame" x="0.0" y="0.0" width="490" height="481"/>
@@ -226,15 +232,13 @@ Gw
                             <rect key="frame" x="0.0" y="0.0" width="490" height="481"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textView editable="NO" findStyle="bar" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" id="57">
+                                <textView editable="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="bar" usesRuler="YES" id="57">
                                     <rect key="frame" x="0.0" y="0.0" width="475" height="481"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="490" height="481"/>
+                                    <size key="minSize" width="475" height="481"/>
                                     <size key="maxSize" width="490" height="10000000"/>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="490" height="481"/>
-                                    <size key="maxSize" width="490" height="10000000"/>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

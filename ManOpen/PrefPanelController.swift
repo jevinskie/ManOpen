@@ -59,7 +59,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let userDefaults = UserDefaults.standard
 		let manager = FileManager.default
 		let nroff = "nroff -mandoc '%@'"
-		var manpath = "/usr/local/man:/usr/share/man"
+		var manpath = "/usr/local/man:/usr/local/share/man:/usr/share/man"
 		
 		
 		if manager.fileExists(atPath: "/sw/share/man") { // fink
@@ -93,6 +93,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		                                    "NSQuitAlwaysKeepsWindows":	true]
 		
 		userDefaults.register(defaults: someDefaults)
+		NSUserDefaultsController.shared.initialValues = someDefaults
 	}
 	
 	fileprivate var fontFieldFont: NSFont! {

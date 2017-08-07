@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,7 +24,7 @@
             <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="289" y="513" width="347" height="364"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="340" height="364"/>
             <view key="contentView" id="418">
                 <rect key="frame" x="0.0" y="0.0" width="347" height="364"/>
@@ -115,6 +116,7 @@
                                     <constraints>
                                         <constraint firstItem="428" firstAttribute="top" secondItem="430" secondAttribute="bottom" constant="8" symbolic="YES" id="NQT-PG-g7B"/>
                                         <constraint firstAttribute="centerX" secondItem="430" secondAttribute="centerX" id="cta-dJ-nc0"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="428" secondAttribute="trailing" constant="20" symbolic="YES" id="enD-Dz-qMV"/>
                                         <constraint firstItem="422" firstAttribute="leading" secondItem="428" secondAttribute="leading" id="fyV-bg-7lJ"/>
                                         <constraint firstItem="422" firstAttribute="leading" secondItem="421" secondAttribute="leading" constant="20" symbolic="YES" id="mVZ-vv-pFL"/>
                                         <constraint firstAttribute="centerX" secondItem="422" secondAttribute="centerX" id="ncr-lv-Ppn"/>
@@ -249,16 +251,20 @@
                                     <constraints>
                                         <constraint firstItem="449" firstAttribute="top" secondItem="439" secondAttribute="bottom" constant="8" symbolic="YES" id="2wf-Fu-GBn"/>
                                         <constraint firstItem="455" firstAttribute="height" secondItem="449" secondAttribute="height" id="4Jl-DG-U9m"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="450" secondAttribute="trailing" constant="20" symbolic="YES" id="6SO-Zz-2ZH"/>
                                         <constraint firstItem="439" firstAttribute="leading" secondItem="452" secondAttribute="leading" id="845-al-Y3E"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="447" secondAttribute="trailing" constant="20" symbolic="YES" id="8Ka-gG-GQu"/>
                                         <constraint firstItem="439" firstAttribute="leading" secondItem="438" secondAttribute="leading" constant="20" symbolic="YES" id="9fd-0l-81v"/>
                                         <constraint firstItem="450" firstAttribute="leading" secondItem="449" secondAttribute="trailing" constant="8" symbolic="YES" id="9iT-xV-Hy1"/>
                                         <constraint firstItem="455" firstAttribute="height" secondItem="452" secondAttribute="height" id="9jg-UA-XZT"/>
                                         <constraint firstItem="456" firstAttribute="centerY" secondItem="455" secondAttribute="centerY" id="HG5-gd-cQz"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="453" secondAttribute="trailing" constant="20" symbolic="YES" id="IDv-hh-L2O"/>
                                         <constraint firstItem="439" firstAttribute="leading" secondItem="455" secondAttribute="leading" id="Qj6-tk-41O"/>
                                         <constraint firstItem="452" firstAttribute="top" secondItem="449" secondAttribute="bottom" constant="1" id="QvM-UO-ui5"/>
                                         <constraint firstAttribute="centerX" secondItem="439" secondAttribute="centerX" id="TQ6-se-2lW"/>
                                         <constraint firstAttribute="centerX" secondItem="441" secondAttribute="centerX" id="WIM-on-71f"/>
                                         <constraint firstItem="439" firstAttribute="leading" secondItem="447" secondAttribute="leading" id="Wfq-Ur-AVa"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="456" secondAttribute="trailing" constant="20" symbolic="YES" id="YZW-h5-RxC"/>
                                         <constraint firstItem="439" firstAttribute="top" secondItem="447" secondAttribute="bottom" constant="8" symbolic="YES" id="Yyj-Rl-sdf"/>
                                         <constraint firstItem="443" firstAttribute="leading" secondItem="438" secondAttribute="leading" constant="20" symbolic="YES" id="dSC-Kc-Dr1"/>
                                         <constraint firstItem="455" firstAttribute="top" secondItem="452" secondAttribute="bottom" constant="1" id="doQ-ed-au8"/>
@@ -403,9 +409,11 @@
                                         <constraint firstAttribute="centerX" secondItem="460" secondAttribute="centerX" id="USb-wc-4TY"/>
                                         <constraint firstItem="470" firstAttribute="leading" secondItem="462" secondAttribute="leading" id="V0q-oS-5Vi"/>
                                         <constraint firstItem="464" firstAttribute="top" secondItem="470" secondAttribute="bottom" constant="8" symbolic="YES" id="Xji-X0-Hqp"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="462" secondAttribute="trailing" constant="20" symbolic="YES" id="ZDG-ux-ngg"/>
                                         <constraint firstAttribute="trailing" secondItem="464" secondAttribute="trailing" constant="20" symbolic="YES" id="c9q-uW-fJY"/>
                                         <constraint firstItem="472" firstAttribute="bottom" secondItem="474" secondAttribute="bottom" id="cer-E4-cRF"/>
                                         <constraint firstItem="472" firstAttribute="height" secondItem="474" secondAttribute="height" id="eOQ-dW-yCT"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="470" secondAttribute="trailing" constant="20" symbolic="YES" id="os2-eB-rzA"/>
                                         <constraint firstItem="470" firstAttribute="leading" secondItem="460" secondAttribute="leading" id="q7S-pW-p6L"/>
                                         <constraint firstAttribute="bottom" secondItem="460" secondAttribute="bottom" constant="20" symbolic="YES" id="rdy-UO-ITS"/>
                                         <constraint firstItem="470" firstAttribute="top" secondItem="459" secondAttribute="top" constant="20" symbolic="YES" id="yHa-3n-vgH"/>

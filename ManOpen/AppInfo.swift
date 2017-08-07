@@ -48,7 +48,7 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 		}()
 	
 	private(set) lazy var appURL: URL = {
-		let workSpace = NSWorkspace.shared()
+		let workSpace = NSWorkspace.shared
 		let path = workSpace.absolutePathForApplication(withBundleIdentifier: self.bundleID)!
 		return URL(fileURLWithPath: path)
 		}()
@@ -66,7 +66,7 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 	init?(bundleID aBundleID: String) {
 		bundleID = aBundleID
 		
-		let workSpace = NSWorkspace.shared()
+		let workSpace = NSWorkspace.shared
 		if workSpace.absolutePathForApplication(withBundleIdentifier: aBundleID) == nil {
 			return nil
 		}

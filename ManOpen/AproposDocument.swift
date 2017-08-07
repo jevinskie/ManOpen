@@ -34,8 +34,8 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		}
 	}
 	
-	override var windowNibName: String {
-		return "Apropos"
+	override var windowNibName: NSNib.Name? {
+		return NSNib.Name(rawValue: "Apropos")
 	}
 	
 	func parseOutput(_ output: String?) {
@@ -72,9 +72,9 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			}
 			
 			if let aDashRange = dashRange {
-				let title = line[line.startIndex ..< aDashRange.lowerBound].trimmingCharacters(in: CharacterSet.whitespaces)
+				let title = String(line[line.startIndex ..< aDashRange.lowerBound]).trimmingCharacters(in: CharacterSet.whitespaces)
 				let adescription = line[aDashRange.upperBound ..< line.endIndex]
-				aproposItems.append((title: title, desc: adescription))
+				aproposItems.append((title: title, desc: String(adescription)))
 			}
 		}
 	}
@@ -115,7 +115,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	fileprivate func loadWithString(_ apropos: String, manPath: String, title aTitle: String) {
 		var aapropos = apropos
-		let docController = ManDocumentController.shared() as! ManDocumentController
+		let docController = ManDocumentController.shared as! ManDocumentController
 		var command = docController.manCommand(manPath: manPath)
 		
 		title = aTitle
@@ -150,7 +150,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		parseOutput(outString)
 	}
 	
-	override func printOperation(withSettings printSettings: [String : Any]) throws -> NSPrintOperation {
+	override func printOperation(withSettings printSettings: [NSPrintInfo.AttributeKey : Any]) throws -> NSPrintOperation {
 		let op = NSPrintOperation(view: tableView, printInfo: NSPrintInfo(dictionary: printSettings))
 		return op
 	}
@@ -158,7 +158,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	@IBAction func openManPages(_ sender: NSTableView?) {
 		if let clickedRow = sender?.clickedRow, clickedRow >= 0 {
 			let manPage = aproposItems[sender!.clickedRow].title
-			(ManDocumentController.shared() as! ManDocumentController).openString(manPage, oneWordOnly: true)
+			(ManDocumentController.shared as! ManDocumentController).openString(manPage, oneWordOnly: true)
 		}
 	}
 	

@@ -19,6 +19,9 @@ private let RestoreFileTypeKey   = "DocType"
 
 private let ManWindowSizeKey = "ManWindowSize"
 
+let ourURL = NSPasteboard.PasteboardType(rawValue: "Apple URL pasteboard type")
+let ourFile = NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")
+
 private var filterCommand: String {
 	let defaults = UserDefaults.standard
 	
@@ -56,10 +59,10 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		return textScroll.contentView.documentView as! ManTextView
 	}
 	
-	override var windowNibName: String {
+	override var windowNibName: NSNib.Name? {
 		// Override returning the nib file name of the document
 		// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-		return "ManPage"
+		return NSNib.Name(rawValue: "ManPage")
 	}
 	
 	override class func canConcurrentlyReadDocuments(ofType typeName: String) -> Bool {
@@ -149,7 +152,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	fileprivate func loadDocument(name: String, section: String? = nil, manPath: String? = nil, title: String) {
-		let docController = ManDocumentController.shared() as! ManDocumentController
+		let docController = ManDocumentController.shared as! ManDocumentController
 		var command = docController.manCommand(manPath: manPath)
 		fileType = "man"
 		shortTitle = title
@@ -171,7 +174,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	func loadCommand(_ command: String) {
-		let docController = ManDocumentController.shared() as! ManDocumentController
+		let docController = ManDocumentController.shared as! ManDocumentController
 		let fullCommand = "\(command) | \(filterCommand)"
 		taskData = docController.dataByExecutingCommand(fullCommand)
 		
@@ -205,7 +208,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		
 		sections.removeAll()
 		
-		let manager = NSFontManager.shared()
+		let manager = NSFontManager.shared
 		let family = manFont.familyName ?? manFont.fontName
 		let size = manFont.pointSize
 		
@@ -216,7 +219,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			while currIndex < storage.length {
 				var currRange = NSRange(location: 0, length: 0)
 				var attribs = storage.attributes(at: currIndex, effectiveRange: &currRange)
-				let font = attribs[NSFontAttributeName] as? NSFont
+				let font = attribs[NSAttributedStringKey.font] as? NSFont
 				var isLink = false
 				
 				if let font = font, font.familyName != "Courier" {
@@ -224,7 +227,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 					self.add(sectionHeader: storage.mutableString.substring(with: currRange), range: currRange)
 				}
 				
-				isLink = attribs[NSLinkAttributeName] != nil
+				isLink = attribs[NSAttributedStringKey.link] != nil
 				
 				if var font = font {
 					if font.familyName != family {
@@ -234,7 +237,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 						font = manager.convert(font, toSize: size)
 					}
 					
-					storage.addAttribute(NSFontAttributeName, value: font, range: currRange)
+					storage.addAttribute(NSAttributedStringKey.font, value: font, range: currRange)
 				}
 				
 				/*
@@ -243,12 +246,12 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				* for other reasons, may as well keep the old way.
 				*/
 				if isLink {
-					storage.addAttribute(NSForegroundColorAttributeName, value: linkColor, range: currRange)
+					storage.addAttribute(.foregroundColor, value: linkColor, range: currRange)
 				} else {
-					storage.addAttribute(NSForegroundColorAttributeName, value: textColor, range: currRange)
+					storage.addAttribute(.foregroundColor, value: textColor, range: currRange)
 				}
 				
-				currIndex = currRange.max
+				currIndex = currRange.upperBound
 			}
 			
 			storage.endEditing()
@@ -338,8 +341,8 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		let selectedRange = textView.selectedRange()
 		
 		if selectedRange.length > 0 {
-			let selectedString = (textView.string! as NSString).substring(with: selectedRange)
-			(ManDocumentController.shared() as! ManDocumentController).openString(selectedString)
+			let selectedString = (textView.string as NSString).substring(with: selectedRange)
+			(ManDocumentController.shared as! ManDocumentController).openString(selectedString)
 		}
 		
 		textView.window?.makeFirstResponder(textView)
@@ -355,29 +358,29 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	@IBAction func copyURL(_ sender: AnyObject?) {
 		if let aCopyURL = copyURL {
-			let pb = NSPasteboard.general()
-			var types = [String]()
+			let pb = NSPasteboard.general
+			var types = [NSPasteboard.PasteboardType]()
 			
-			types.append(NSURLPboardType)
+			types.append(ourURL)
 			if aCopyURL.isFileURL {
-				types.append(NSFilenamesPboardType)
+				types.append(ourFile)
 			}
-			types.append(NSStringPboardType)
+			types.append(.string)
 			pb.declareTypes(types, owner: nil)
 			
 			(aCopyURL as NSURL).write(to: pb)
-			pb.setString("<\(aCopyURL.absoluteString)>", forType: NSStringPboardType)
+			pb.setString("<\(aCopyURL.absoluteString)>", forType: .string)
 			if aCopyURL.isFileURL {
-				pb.setPropertyList([aCopyURL.path], forType: NSFilenamesPboardType)
+				pb.setPropertyList([aCopyURL.path], forType: ourFile)
 			}
 		}
 	}
 	
 	override func runPageLayout(_ sender: Any?) {
-		NSApplication.shared().runPageLayout(sender)
+		NSApplication.shared.runPageLayout(sender)
 	}
 	
-	override func printOperation(withSettings printSettings: [String : Any]) throws -> NSPrintOperation {
+	override func printOperation(withSettings printSettings: [NSPrintInfo.AttributeKey : Any]) throws -> NSPrintOperation {
 		let operation = NSPrintOperation(view: textView, printInfo: NSPrintInfo(dictionary: printSettings))
 		let printInfo = operation.printInfo
 		printInfo.isVerticallyCentered = false

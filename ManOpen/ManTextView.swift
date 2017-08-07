@@ -25,7 +25,7 @@ class ManTextView: NSTextView {
 		while currIndex < (storage?.length ?? 0) {
 			var currRange = NSRange(location: 0, length: 0)
 			var attribs = storage?.attributes(at: currIndex, effectiveRange: &currRange)
-			let isLinkSection = attribs?[NSLinkAttributeName] != nil
+			let isLinkSection = attribs?[NSAttributedStringKey.link] != nil
 			if isLinkSection {
 				
 				let rects: UnsafeBufferPointer<NSRect> = {
@@ -38,11 +38,11 @@ class ManTextView: NSTextView {
 				
 				for aRect in rects {
 					if aRect.intersects(visible) {
-						addCursorRect(aRect, cursor: NSCursor.pointingHand())
+						addCursorRect(aRect, cursor: NSCursor.pointingHand)
 					}
 				}
 			}
-			currIndex = currRange.max;
+			currIndex = currRange.upperBound;
 		}
 	}
 	
@@ -81,14 +81,14 @@ class ManTextView: NSTextView {
 	override func drawPageBorder(with borderSize: NSSize) {
 		let font = UserDefaults.standard.manFont
 		
-		let currPage = NSPrintOperation.current()!.currentPage
+		let currPage = NSPrintOperation.current!.currentPage
 		let pageString = "\(currPage)"
 		let style = NSMutableParagraphStyle()
-		var drawAttribs = [String: Any]()
+		var drawAttribs = [NSAttributedStringKey: Any]()
 		
 		style.alignment = .center
-		drawAttribs[NSParagraphStyleAttributeName] = style
-		drawAttribs[NSFontAttributeName] = font
+		drawAttribs[.paragraphStyle] = style
+		drawAttribs[.font] = font
 		#if !USE_CGCONTEXT_FOR_PRINTING
 			let drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
 			

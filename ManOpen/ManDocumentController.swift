@@ -57,8 +57,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	private var bridge: ManBridgeCallback? = nil
 	
 	func ensureActive() {
-		if !NSApplication.shared().isActive {
-			NSApplication.shared().activate(ignoringOtherApps: true)
+		if !NSApplication.shared.isActive {
+			NSApplication.shared.activate(ignoringOtherApps: true)
 		}
 	}
 	
@@ -94,10 +94,10 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		NSApp.servicesProvider = self
-		openTextPanel.setFrameUsingName("OpenTitlePanel")
-		openTextPanel.setFrameAutosaveName("OpenTitlePanel")
-		aproposPanel.setFrameUsingName("AproposPanel")
-		aproposPanel.setFrameAutosaveName("AproposPanel")
+		openTextPanel.setFrameUsingName(NSWindow.FrameAutosaveName(rawValue: "OpenTitlePanel"))
+		openTextPanel.setFrameAutosaveName(NSWindow.FrameAutosaveName(rawValue: "OpenTitlePanel"))
+		aproposPanel.setFrameUsingName(NSWindow.FrameAutosaveName(rawValue: "AproposPanel"))
+		aproposPanel.setFrameAutosaveName(NSWindow.FrameAutosaveName(rawValue: "AproposPanel"))
 		
 		startedUp = true
 	}
@@ -136,7 +136,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			DispatchQueue.global().async(execute: { () -> Void in
 				usleep(0)
 				DispatchQueue.main.sync(execute: { () -> Void in
-					NSApplication.shared().terminate(self)
+					NSApplication.shared.terminate(self)
 				})
 			})
 			
@@ -290,7 +290,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	}
 	
 	override func runModalOpenPanel(_ openPanel: NSOpenPanel, forTypes types: [String]?) -> Int {
-		return openPanel.runModal()
+		return openPanel.runModal().rawValue
 	}
 	
 	func document(forTitle title: String) -> NSDocument? {
@@ -381,8 +381,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			let lp = lparenRange
 			let rp = rparenRange
 			
-			base = word[word.startIndex ..< lp.lowerBound]
-			section = word[word.index(after: lp.lowerBound) ..< word.index(before: rp.upperBound)]
+			base = String(word[word.startIndex ..< lp.lowerBound])
+			section = String(word[word.index(after: lp.lowerBound) ..< word.index(before: rp.upperBound)])
 		}
 		
 		return openDocument(name: base, section: section, manPath: UserDefaults.standard.manPath)
@@ -398,7 +398,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel"))
 			alert.addButton(withTitle: NSLocalizedString("Continue", comment: "Continue"))
 			let aNum = alert.runModal()
-			if aNum != NSAlertSecondButtonReturn {
+			if aNum != .alertSecondButtonReturn {
 				return
 			}
 		}
@@ -434,7 +434,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		if lastWord != nil {
 			if lastWord.hasSuffix(",") {
 				var lastIndex = lastWord.endIndex
-				lastWord = lastWord[lastWord.startIndex..<lastIndex]
+				lastWord = String(lastWord[lastWord.startIndex..<lastIndex])
 				lastIndex = lastWord.index(before: lastIndex)
 			}
 			openWord(lastWord)
@@ -466,10 +466,10 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		bridge = ManBridgeCallback(manDocumentController: self)
 		
 		PrefPanelController.registerManDefaults()
-		var tmpNibArray = NSArray()
-		Bundle.main.loadNibNamed("DocController", owner: self, topLevelObjects: &tmpNibArray)
+		var tmpNibArray: NSArray? = nil
+		Bundle.main.loadNibNamed(NSNib.Name(rawValue: "DocController"), owner: self, topLevelObjects: &tmpNibArray)
 		
-		nibObjects = tmpNibArray as [AnyObject]
+		nibObjects = tmpNibArray as [AnyObject]? ?? []
 	}
 	
 	required init(coder: NSCoder) {
@@ -511,7 +511,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		openTextField.selectText(self)
 		
 		if useModalPanels {
-			if NSApp.runModal(for: openTextPanel) == NSModalResponseOK {
+			if NSApp.runModal(for: openTextPanel) == NSApplication.ModalResponse.OK {
 				openTitleFromPanel()
 			}
 		} else {
@@ -528,7 +528,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		aproposField.selectText(self)
 		
 		if useModalPanels {
-			if NSApp.runModal(for: aproposPanel) == NSModalResponseOK {
+			if NSApp.runModal(for: aproposPanel) == NSApplication.ModalResponse.OK {
 				openAproposFromPanel()
 			}
 		} else {
@@ -541,8 +541,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			sender.window?.orderOut(self)
 		}
 		
-		if sender.window!.level == NSModalPanelWindowLevel {
-			NSApp.stopModal(withCode: NSModalResponseOK)
+		if sender.window!.level == NSWindow.Level.modalPanel {
+			NSApp.stopModal(withCode: NSApplication.ModalResponse.OK)
 		} else {
 			openAproposFromPanel()
 		}
@@ -553,8 +553,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			sender.window?.orderOut(self)
 		}
 		
-		if sender.window!.level == NSModalPanelWindowLevel {
-			NSApp.stopModal(withCode: NSModalResponseOK)
+		if sender.window!.level == NSWindow.Level.modalPanel {
+			NSApp.stopModal(withCode: NSApplication.ModalResponse.OK)
 		} else {
 			openTitleFromPanel()
 		}
@@ -562,8 +562,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	
 	@IBAction func cancelText(_ sender: NSView!) {
 		sender.window?.orderOut(self)
-		if sender.window!.level == NSModalPanelWindowLevel {
-			NSApp.stopModal(withCode: NSModalResponseCancel)
+		if sender.window!.level == NSWindow.Level.modalPanel {
+			NSApp.stopModal(withCode: NSApplication.ModalResponse.cancel)
 		}
 	}
 }
@@ -632,7 +632,7 @@ class ManOpenURLHandlerCommand : NSScriptCommand {
 			}
 			
 			if pageNames.count > 0 {
-				(ManDocumentController.shared() as! ManDocumentController).openString(pageNames.joined(separator: " "))
+				(ManDocumentController.shared as! ManDocumentController).openString(pageNames.joined(separator: " "))
 			}
 		}
 		

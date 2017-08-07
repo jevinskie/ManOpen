@@ -74,7 +74,7 @@ extension UserDefaults {
 				let size = CGFloat((fontString[fontString.startIndex..<spaceRange.lowerBound] as NSString).floatValue)
 				let endIdx = getEndIdx(fontString)
 				let name = fontString[spaceRange.upperBound..<endIdx]
-				if let font = NSFont(name: name, size: size) {
+				if let font = NSFont(name: String(name), size: size) {
 					return font
 				}
 			}

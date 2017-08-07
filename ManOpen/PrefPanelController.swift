@@ -10,7 +10,7 @@ import Cocoa
 import CoreServices
 
 
-let ManPathIndexSetPboardType = "org.clindberg.ManOpen.ManPathIndexSetType"
+let ManPathIndexSetPboardType = NSPasteboard.PasteboardType(rawValue: "org.clindberg.ManOpen.ManPathIndexSetType")
 let ManPathArrayKey = "manPathArray"
 
 let URL_SCHEME = "x-man-page"
@@ -26,16 +26,16 @@ let kNroffCommand		= "NroffCommand"
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
 
 	static let shared: PrefPanelController = {
-		let toRet = PrefPanelController(windowNibName: "PrefPanel")
+		let toRet = PrefPanelController(windowNibName: NSNib.Name(rawValue: "PrefPanel"))
 		toRet.shouldCascadeWindows = false
-		NSFontManager.shared().delegate = toRet
+		NSFontManager.shared.delegate = toRet
 		
 		return toRet
 	}()
 	
 	let appInfos = ManAppInfoArray()
 	fileprivate var manPathArrayPriv = [String]()
-	dynamic var manPathArray: [String] {
+	@objc dynamic var manPathArray: [String] {
 		get {
 			if manPathArrayPriv.count == 0 {
 				let path = UserDefaults.standard.manPath
@@ -114,7 +114,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
     override func windowDidLoad() {
 		self.shouldCascadeWindows = false
-		NSFontManager.shared().delegate = self
+		NSFontManager.shared.delegate = self
         super.windowDidLoad()
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
@@ -126,8 +126,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 
 	@IBAction func openFontPanel(_ sender: AnyObject!) {
 		self.window?.makeFirstResponder(nil)
-		NSFontManager.shared().setSelectedFont(fontField.font!, isMultiple: false)
-		NSFontPanel.shared().orderFront(sender)
+		NSFontManager.shared.setSelectedFont(fontField.font!, isMultiple: false)
+		NSFontPanel.shared.orderFront(sender)
 	}
 	
 	override func fontManager(_ sender: Any, willIncludeFont fontName: String) -> Bool {
@@ -153,9 +153,9 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		if action == #selector(PrefPanelController.paste(_:)) {
-			let types: NSArray! = NSPasteboard.general().types as NSArray!
+			let types = NSPasteboard.general.types!
 			return manPathController.canInsert &&
-				(types.contains(NSFilenamesPboardType) || types.contains(NSStringPboardType));
+				(types.contains(ourFile) || types.contains(.string));
 		}
 		
 		/* The menu on our app popup may call this validate method ;-) */
@@ -178,7 +178,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
 	func resetAppPopup()  {
 		let apps = appInfos.allManViewerApps
-		let workspace = NSWorkspace.shared()
+		let workspace = NSWorkspace.shared
 		//var i = 0
 		
 		appPopup.removeAllItems()
@@ -260,7 +260,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			panel.canChooseFiles = true
 			panel.allowedFileTypes = [kUTTypeApplicationBundle as String]
 			panel.beginSheetModal(for: appPopup.window!) { (result) -> Void in
-				if result == NSModalResponseOK {
+				if result == NSApplication.ModalResponse.OK {
 					if let appURL = panel.url {
 						if let appID = Bundle(url: appURL)?.bundleIdentifier {
 							self.setManPageViewer(appID)
@@ -275,7 +275,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	// MARK: man paths
 
 	func setUpManPathUI() {
-		manPathTableView.register(forDraggedTypes: [NSFilenamesPboardType, NSStringPboardType, ManPathIndexSetPboardType])
+		manPathTableView.registerForDraggedTypes([ourFile, .string, ManPathIndexSetPboardType])
 		manPathTableView.verticalMotionCanBeginDrag = true
 		// XXX NSDragOperationDelete -- not sure the "poof" drag can show that
 		manPathTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
@@ -336,7 +336,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		panel.canChooseFiles = false
 		
 		panel.beginSheetModal(for: window!, completionHandler: { (result) -> Void in
-			if result == NSModalResponseOK {
+			if result == NSApplication.ModalResponse.OK {
 				let urls = panel.urls 
 				let paths = urls.map({$0.path})
 				
@@ -362,11 +362,11 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
 	@discardableResult
 	func writePaths(_ paths: [String], toPasteboard pb: NSPasteboard) -> Bool {
-		pb.declareTypes([NSStringPboardType], owner: nil)
+		pb.declareTypes([.string], owner: nil)
 		
 		/* This causes an NSLog if one of the paths does not exist. Hm.  May not be worth it. Might let folks drag to Trash etc. as well. */
 		//[pb setPropertyList:paths forType:NSFilenamesPboardType];
-		return pb.setString(paths.joined(separator: ":"), forType: NSStringPboardType)
+		return pb.setString(paths.joined(separator: ":"), forType: .string)
 	}
 	
 	func writeIndexSet(_ set: IndexSet, toPasteboard pb: NSPasteboard) -> Bool {
@@ -381,14 +381,14 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func paths(from pb: NSPasteboard) -> [String]? {
-		let bestType = pb.availableType(from: [NSFilenamesPboardType, NSStringPboardType])
+		let bestType = pb.availableType(from: [ourFile, .string])
 		
-		if bestType == NSFilenamesPboardType {
-			return pb.propertyList(forType: NSFilenamesPboardType) as! [String]!
+		if bestType == ourFile {
+			return pb.propertyList(forType: ourFile) as! [String]!
 		}
 		
-		if bestType == NSStringPboardType {
-			if let aVar = pb.string(forType: NSStringPboardType) {
+		if bestType == .string {
+			if let aVar = pb.string(forType: .string) {
 				return aVar.components(separatedBy: ":")
 			}
 		}
@@ -398,7 +398,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
 	@IBAction func copy(_ sender: AnyObject!) {
 		let files = pathsAtIndexes(manPathController.selectionIndexes)
-		writePaths(files, toPasteboard: NSPasteboard.general())
+		writePaths(files, toPasteboard: NSPasteboard.general)
 	}
 	
 	
@@ -412,7 +412,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	@IBAction func paste(_ sender: AnyObject!) {
-		let paths = self.paths(from: NSPasteboard.general())
+		let paths = self.paths(from: NSPasteboard.general)
 		var insertionIndex = manPathController.selectionIndex
 		if insertionIndex == NSNotFound {
 			insertionIndex = manPathArrayPriv.count //add it on the end
@@ -427,7 +427,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		return writeIndexSet(rowIndexes, toPasteboard: pboard)
 	}
 	
-	func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+	func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
 		let pb = info.draggingPasteboard()
 		
 		/* We only drop between rows */
@@ -451,7 +451,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		return NSDragOperation()
 	}
 	
-	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
 		let pb = info.draggingPasteboard()
 		let dragOp = info.draggingSourceOperationMask()
 		var pathsToAdd: [String]? = [String]()

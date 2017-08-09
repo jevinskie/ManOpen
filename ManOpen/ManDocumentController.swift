@@ -566,6 +566,35 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			NSApp.stopModal(withCode: .cancel)
 		}
 	}
+	
+	// MARK: Methods to do the services entries
+	
+	@objc func openFiles(_ pboard: NSPasteboard, userData: String, error: AutoreleasingUnsafeMutablePointer<NSString?>?) {
+		guard let types = pboard.types else {
+			return
+		}
+		if types.contains(ourFile), let fileArray = pboard.propertyList(forType: ourFile) as? [String] {
+			for tmpPath in fileArray {
+				openDocument(withContentsOf: URL(fileURLWithPath: tmpPath), display: true, completionHandler: { (doc, display, error) in
+					//Swift.print("document: '\(String(describing: doc))', Display: \(display), Error '\(String(describing: error))'")
+				})
+			}
+		}
+	}
+	
+	@objc func openSelection(_ pboard: NSPasteboard, userData: String, error: AutoreleasingUnsafeMutablePointer<NSString?>?) {
+		if let types = pboard.types, types.contains(.string), let pboardString = pboard.string(forType: .string) {
+			openString(pboardString)
+		}
+	}
+	
+	@objc func openApropos(_ pboard: NSPasteboard, userData: String, error: AutoreleasingUnsafeMutablePointer<NSString?>?) {
+		if let types = pboard.types,
+			types.contains(.string),
+			let pboardString = pboard.string(forType: .string) {
+			openApropos(pboardString)
+		}
+	}
 }
 
 private func isSectionWord(_ word: String) -> Bool

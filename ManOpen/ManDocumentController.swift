@@ -632,10 +632,9 @@ private func getWordArray(_ string: String) -> [String] {
 @objc(ManOpenURLHandlerCommand)
 class ManOpenURLHandlerCommand : NSScriptCommand {
 	override func performDefaultImplementation() -> Any? {
-		if directParameter == nil {
+		guard let param = directParameter as? String else {
 			return nil
 		}
-		let param = directParameter as! String
 		
 		let paramRange = param.range(of: URL_SCHEME_PREFIX, options: [.caseInsensitive, .anchored])
 		var pageNames = [String]()
@@ -653,8 +652,8 @@ class ManOpenURLHandlerCommand : NSScriptCommand {
 					section = name
 				} else {
 					pageNames.append(name)
-					if section != nil {
-						pageNames.append("(\(String(describing: section)))")
+					if let bSection = section {
+						pageNames.append("(\(bSection))")
 						section = nil
 					}
 				}

@@ -612,7 +612,7 @@ class ManOpenURLHandlerCommand : NSScriptCommand {
 		var pageNames = [String]()
 		
 		if let aRange = paramRange {
-			let path = param.substring(from: aRange.upperBound)
+			let path = param[aRange.upperBound...]
 			let components = (path as NSString).pathComponents
 			
 			for name in components {

@@ -460,16 +460,16 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) {
 			let indexData = pb.data(forType: ManPathIndexSetPboardType)
-			if let indexData = indexData, (dragOp.intersection(.move) == .move) {
-				removeSet = (NSUnarchiver.unarchiveObject(with: indexData) as! IndexSet)
+			if let indexData = indexData, (dragOp.intersection(.move) == .move), let removeSet2 = NSUnarchiver.unarchiveObject(with: indexData) as? IndexSet {
+				removeSet = removeSet2
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}
 		} else {
 			pathsToAdd = paths(from: pb)
 		}
 		
-		if let pathsCount = pathsToAdd?.count, pathsCount > 0 {
-			addPathDirectories(pathsToAdd!, atIndex: row, removeFirst: removeSet)
+		if let pathsToAdd = pathsToAdd, pathsToAdd.count > 0 {
+			addPathDirectories(pathsToAdd, atIndex: row, removeFirst: removeSet)
 			return true
 		}
 		

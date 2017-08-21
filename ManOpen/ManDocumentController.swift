@@ -295,7 +295,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	func document(forTitle title: String) -> NSDocument? {
 		for document in documents {
 			if let manDoc = document as? ManDocument {
-				if document.fileURL == nil && manDoc.shortTitle == title {
+				if manDoc.shortTitle == title {
 					return manDoc
 				}
 				continue
@@ -438,7 +438,6 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			}
 			openWord(lastWord)
 		}
-		
 	}
 	
 	@IBAction func orderFrontHelpPanel(_ sender: AnyObject!) {

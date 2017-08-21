@@ -62,7 +62,6 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		}
 	}
 	
-	//@objc(openName:section:manPath:forceToFront:) func open(name name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true)
 	@objc func openName(_ name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true) {
 		if force {
 			ensureActive()

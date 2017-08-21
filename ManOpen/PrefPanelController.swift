@@ -136,7 +136,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	override func changeFont(_ sender: Any!) {
-		var font = fontFieldFont;
+		var font = fontFieldFont
 		//NSString *fontString;
 		
 		font = (sender as! NSFontManager).convert(font!)
@@ -156,7 +156,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		if action == #selector(PrefPanelController.paste(_:)) {
 			let types = NSPasteboard.general.types!
 			return manPathController.canInsert &&
-				(types.contains(ourFile) || types.contains(.string));
+				(types.contains(ourFile) || types.contains(.string))
 		}
 		
 		/* The menu on our app popup may call this validate method ;-) */
@@ -261,12 +261,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			panel.canChooseFiles = true
 			panel.allowedFileTypes = [kUTTypeApplicationBundle as String]
 			panel.beginSheetModal(for: appPopup.window!) { (result) -> Void in
-				if result == .OK {
-					if let appURL = panel.url {
-						if let appID = Bundle(url: appURL)?.bundleIdentifier {
-							self.setManPageViewer(appID)
-						}
-					}
+				if result == .OK,
+					let appURL = panel.url,
+					let appID = Bundle(url: appURL)?.bundleIdentifier {
+					self.setManPageViewer(appID)
 				}
 				self.setAppPopupToCurrent()
 			}

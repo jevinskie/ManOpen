@@ -220,14 +220,13 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				var currRange = NSRange(location: 0, length: 0)
 				var attribs = storage.attributes(at: currIndex, effectiveRange: &currRange)
 				let font = attribs[.font] as? NSFont
-				var isLink = false
 				
 				if let font = font, font.familyName != "Courier" {
 					//Using mutableString so we don't have to do Swift String range conversions.
 					self.add(sectionHeader: storage.mutableString.substring(with: currRange), range: currRange)
 				}
 				
-				isLink = attribs[.link] != nil
+				let isLink = attribs[.link] != nil
 				
 				if var font = font {
 					if font.familyName != family {
@@ -292,18 +291,19 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	func add(sectionHeader header1: String, range: NSRange) {
 		let header = header1.trimmingCharacters(in: CharacterSet.newlines)
 		/* Make sure it is a header -- error text sometimes is not Courier, so it gets passed in here. */
-		if header.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil &&
-			header.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil {
-				var label = header
-				var count = 1
-				
-				/* Check for dups (e.g. lesskey(1) ) */
-				while sections.map({$0.name}).contains(label) {
-					count += 1
-					label = "\(header) [\(count)]"
-				}
-				sections.append((label, range))
+		guard header.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil,
+			header.rangeOfCharacter(from: CharacterSet.lowercaseLetters) == nil else {
+				return
 		}
+		var label = header
+		var count = 1
+		
+		/* Check for dups (e.g. lesskey(1) ) */
+		while sections.map({$0.name}).contains(label) {
+			count += 1
+			label = "\(header) [\(count)]"
+		}
+		sections.append((label, range))
 	}
 	
 	func loadManFile(_ filename: String, isGzip: Bool = false) {

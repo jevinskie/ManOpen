@@ -180,7 +180,6 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	func resetAppPopup()  {
 		let apps = appInfos.allManViewerApps
 		let workspace = NSWorkspace.shared
-		//var i = 0
 		
 		appPopup.removeAllItems()
 		appPopup.image = nil
@@ -457,8 +456,9 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		var removeSet: IndexSet? = nil
 		
 		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) {
-			let indexData = pb.data(forType: ManPathIndexSetPboardType)
-			if let indexData = indexData, (dragOp.intersection(.move) == .move), let removeSet2 = NSUnarchiver.unarchiveObject(with: indexData) as? IndexSet {
+			if let indexData = pb.data(forType: ManPathIndexSetPboardType),
+				(dragOp.intersection(.move) == .move),
+				let removeSet2 = NSUnarchiver.unarchiveObject(with: indexData) as? IndexSet {
 				removeSet = removeSet2
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}

@@ -539,7 +539,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			sender.window?.orderOut(self)
 		}
 		
-		if sender.window!.level == NSWindow.Level.modalPanel {
+		if sender.window!.level == .modalPanel {
 			NSApp.stopModal(withCode: .OK)
 		} else {
 			openAproposFromPanel()
@@ -551,7 +551,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			sender.window?.orderOut(self)
 		}
 		
-		if sender.window!.level == NSWindow.Level.modalPanel {
+		if sender.window!.level == .modalPanel {
 			NSApp.stopModal(withCode: .OK)
 		} else {
 			openTitleFromPanel()
@@ -560,7 +560,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	
 	@IBAction func cancelText(_ sender: NSView!) {
 		sender.window?.orderOut(self)
-		if sender.window!.level == NSWindow.Level.modalPanel {
+		if sender.window!.level == .modalPanel {
 			NSApp.stopModal(withCode: .cancel)
 		}
 	}

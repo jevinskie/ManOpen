@@ -350,7 +350,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	@IBAction func displaySection(_ sender: AnyObject?) {
 		let section = sectionPopup.indexOfSelectedItem
-		if (section > 0 && section <= sections.count) {
+		if section > 0 && section <= sections.count {
 			let range = sections[section - 1].range
 			textView.scrollToTop(of: range)
 		}

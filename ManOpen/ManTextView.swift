@@ -25,7 +25,7 @@ class ManTextView: NSTextView {
 		while currIndex < (storage?.length ?? 0) {
 			var currRange = NSRange(location: 0, length: 0)
 			var attribs = storage?.attributes(at: currIndex, effectiveRange: &currRange)
-			let isLinkSection = attribs?[NSAttributedStringKey.link] != nil
+			let isLinkSection = attribs?[.link] != nil
 			if isLinkSection {
 				
 				let rects: UnsafeBufferPointer<NSRect> = {

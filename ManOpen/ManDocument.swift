@@ -183,14 +183,14 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	func showData() {
 		let defaults = UserDefaults.standard
-		let manFont = defaults.manFont
-		let linkColor = defaults.manLinkColor
-		let textColor = defaults.manTextColor
-		let backgroundColor = defaults.manBackgroundColor
 		guard textScroll != nil /* nib is not yet loaded */ && !hasLoaded else {
 			return
 		}
 		
+		let manFont = defaults.manFont
+		let linkColor = defaults.manLinkColor
+		let textColor = defaults.manTextColor
+		let backgroundColor = defaults.manBackgroundColor
 		let storage: NSTextStorage = {
 			var storage1: NSTextStorage? = nil
 			if let taskData = taskData, taskData.isRTFData {

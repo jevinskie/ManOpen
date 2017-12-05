@@ -326,8 +326,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	@discardableResult
 	func openDocument(name: String, section: String? = nil, manPath: String) -> ManDocument? {
 		var title = name
-		if (section != nil && section!.isEmpty == false) {
-			title = "\(name)(\(section!))"
+		if let section = section, section.isEmpty == false {
+			title = "\(name)(\(section))"
 		}
 		
 		var document = self.document(forTitle: title) as? ManDocument
@@ -376,7 +376,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		let lparenRange = word.range(of: "(")
 		let rparenRange = word.range(of: ")")
 		
-		if let lparenRange = lparenRange, let rparenRange = rparenRange , lparenRange.lowerBound < rparenRange.lowerBound {
+		if let lparenRange = lparenRange, let rparenRange = rparenRange, lparenRange.lowerBound < rparenRange.lowerBound {
 			let lp = lparenRange
 			let rp = rparenRange
 			

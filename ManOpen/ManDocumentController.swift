@@ -484,7 +484,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		}
 		
 		/* Append the section if chosen in the popup and not explicity defined in the string */
-		if aString.characters.count > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.range(of: "(") == nil {
+		if aString.count > 0 && openSectionPopup.indexOfSelectedItem > 0 && aString.range(of: "(") == nil {
 			aString += "(\(openSectionPopup.indexOfSelectedItem))"
 		}
 		openString(aString)
@@ -643,7 +643,7 @@ class ManOpenURLHandlerCommand : NSScriptCommand {
 			
 			for name in components {
 				var section: String? = nil
-				if name.characters.count == 0 || name == "" {
+				if name.count == 0 || name == "" {
 					continue
 				}
 				if isSectionWord(name) {

@@ -53,7 +53,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		}
 		
 		for line in lines {
-			guard line.characters.count > 0 else {
+			guard line.count > 0 else {
 				continue
 			}
 			
@@ -122,7 +122,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		fileType = "apropos"
 		
 		/* Searching for a blank string doesn't work anymore... use a catchall regex */
-		if apropos.characters.count == 0 {
+		if apropos.count == 0 {
 			aapropos = "."
 		}
 		searchString = aapropos

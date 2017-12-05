@@ -157,7 +157,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		fileType = "man"
 		shortTitle = title
 		
-		if let section = section, section.characters.count > 0 {
+		if let section = section, section.count > 0 {
 			command += " " + section.lowercased()
 			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(section)/\(title)")
 		} else {

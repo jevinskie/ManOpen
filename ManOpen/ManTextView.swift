@@ -87,37 +87,37 @@ class ManTextView: NSTextView {
 		var drawAttribs = [NSAttributedStringKey: Any]()
 		
 		style.alignment = .center
-		drawAttribs[.paragraphStyle] = style
+		drawAttribs[.paragraphStyle] = style.copy()
 		drawAttribs[.font] = font
 		#if !USE_CGCONTEXT_FOR_PRINTING
 			let drawRect = NSRect(x: 0, y: 0, width: borderSize.width, height: 20 + font.ascender)
 			
 			pageString.draw(in: drawRect, withAttributes: drawAttribs)
 		#else
-			let strWidth = (pageString as NSString).size(withAttributes: drawAttribs).width
+			let strWidth = pageString.size(withAttributes: drawAttribs).width
 			let point = NSPoint(x: borderSize.width/2 - strWidth/2, y: 20.0)
-			let context = NSGraphicsContext.current()!.cgContext
-			context.saveGState();
-			context.textMatrix = CGAffineTransform.identity;
-			context.setTextDrawingMode(.fill);  //needed?
-			context.setFillColor(gray: 0.0, alpha: 1.0);
+			let context = NSGraphicsContext.current!.cgContext
+			context.saveGState()
+			context.textMatrix = CGAffineTransform.identity
+			context.setTextDrawingMode(.fill)  //needed?
+			context.setFillColor(gray: 0.0, alpha: 1.0)
 						
 			context.setFont(CGFont(font.fontName as NSString)!)
 			context.setFontSize(font.pointSize)
 			let ctfont = CTFontCreateWithName(font.fontName as NSString, font.pointSize, nil)
-			let ctDict = [kCTFontAttributeName as String: ctfont]
+			let ctDict: [NSAttributedStringKey: Any] = [NSAttributedStringKey(kCTFontAttributeName as String): ctfont]
 			let attrStr = NSAttributedString(string: pageString, attributes: ctDict)
 			context.textPosition = point
 			let line = CTLineCreateWithAttributedString(attrStr)
 
 			// Core Text uses a reference coordinate system with the origin on the bottom-left
 			// flip the coordinate system before drawing or the text will appear upside down
-			context.translateBy(x: 0, y: borderSize.height);
-			context.scaleBy(x: 1.0, y: -1.0);
+			context.translateBy(x: 0, y: borderSize.height)
+			context.scaleBy(x: 1.0, y: -1.0)
 			
 			CTLineDraw(line, context)
 			
-			context.restoreGState();
+			context.restoreGState()
 		#endif
 	}
 }

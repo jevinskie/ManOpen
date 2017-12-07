@@ -17,14 +17,14 @@ let manBackgroundColorKey = "ManBackgroundColor"
 
 private func color(for key: String, defaults: UserDefaults = UserDefaults.standard) -> NSColor? {
 	if let colorData: Data = defaults[key] {
-		return NSUnarchiver.unarchiveObject(with: colorData) as? NSColor
+		return NSKeyedUnarchiver.unarchiveObject(with: colorData) as? NSColor
 	}
 	
 	return nil
 }
 
 internal func dataForColor(_ color: NSColor) -> Data {
-	return NSArchiver.archivedData(withRootObject: color)
+	return NSKeyedArchiver.archivedData(withRootObject: color)
 }
 
 extension UserDefaults {

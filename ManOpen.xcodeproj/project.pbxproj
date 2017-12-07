@@ -146,6 +146,20 @@
 			remoteGlobalIDString = D38A243A14E4C3FE00F6AFFE;
 			remoteInfo = "cat2html (Tool) (Upgraded)";
 		};
+		55D64C1D1FD8D8B20061878C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5527AC131FAE7CB1009CC7FC;
+			remoteInfo = CoreTextAdditions;
+		};
+		55D64C1F1FD8D8B20061878C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5527AC1B1FAE7CB1009CC7FC;
+			remoteInfo = CoreTextAdditionsTests;
+		};
 		D38A247C14E4C7FC00F6AFFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D39279890821FFA400376676 /* Project object */;
@@ -341,6 +355,8 @@
 				557AFB4A1A801CC8008BDF46 /* ForceFeedbackAdditionsTests.xctest */,
 				55553AF41BC46B8700377516 /* SwiftAudioAdditions.framework */,
 				55553AF61BC46B8700377516 /* SwiftAudioAdditionsTests.xctest */,
+				55D64C1E1FD8D8B20061878C /* CoreTextAdditions.framework */,
+				55D64C201FD8D8B20061878C /* CoreTextAdditionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -661,6 +677,20 @@
 			fileType = wrapper.cfbundle;
 			path = ForceFeedbackAdditionsTests.xctest;
 			remoteRef = 557AFB491A801CC8008BDF46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55D64C1E1FD8D8B20061878C /* CoreTextAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CoreTextAdditions.framework;
+			remoteRef = 55D64C1D1FD8D8B20061878C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55D64C201FD8D8B20061878C /* CoreTextAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CoreTextAdditionsTests.xctest;
+			remoteRef = 55D64C1F1FD8D8B20061878C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

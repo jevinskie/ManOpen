@@ -372,7 +372,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		if writePaths(files, toPasteboard: pb) {
 			pb.addTypes([ManPathIndexSetPboardType], owner: nil)
-			return pb.setData(NSArchiver.archivedData(withRootObject: set), forType: ManPathIndexSetPboardType)
+			return pb.setData(NSKeyedArchiver.archivedData(withRootObject: set), forType: ManPathIndexSetPboardType)
 		}
 		
 		return false
@@ -458,7 +458,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) {
 			if let indexData = pb.data(forType: ManPathIndexSetPboardType),
 				(dragOp.intersection(.move) == .move),
-				let removeSet2 = NSUnarchiver.unarchiveObject(with: indexData) as? IndexSet {
+				let removeSet2 = NSKeyedUnarchiver.unarchiveObject(with: indexData) as? IndexSet {
 				removeSet = removeSet2
 				pathsToAdd = pathsAtIndexes(removeSet!)
 			}

@@ -571,9 +571,9 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		guard let types = pboard.types else {
 			return
 		}
-		if types.contains(ourFile), let fileArray = pboard.propertyList(forType: ourFile) as? [String] {
+		if types.contains(ourFileURL), let fileArray = pboard.propertyList(forType: ourFileURL) as? [URL] {
 			for tmpPath in fileArray {
-				openDocument(withContentsOf: URL(fileURLWithPath: tmpPath), display: true, completionHandler: { (doc, display, error) in
+				openDocument(withContentsOf: tmpPath, display: true, completionHandler: { (doc, display, error) in
 					//Swift.print("document: '\(String(describing: doc))', Display: \(display), Error '\(String(describing: error))'")
 				})
 			}

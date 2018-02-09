@@ -39,6 +39,11 @@ extension UserDefaults {
 	
 	var manLinkColor: NSColor {
 		get {
+			if let newCol = color(for: manLinkColorKey, defaults: self) {
+				return newCol
+			} else {
+				removeObject(forKey: manLinkColorKey)
+			}
 			return color(for: manLinkColorKey, defaults: self)!
 		}
 		set {
@@ -48,6 +53,11 @@ extension UserDefaults {
 	
 	var manBackgroundColor: NSColor {
 		get {
+			if let newCol = color(for: manBackgroundColorKey, defaults: self) {
+				return newCol
+			} else {
+				removeObject(forKey: manBackgroundColorKey)
+			}
 			return color(for: manBackgroundColorKey, defaults: self)!
 		}
 		set {

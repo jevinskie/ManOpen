@@ -6,7 +6,7 @@
 //
 //
 
-import Cocoa
+import Foundation
 
 private let resHome = (NSHomeDirectory() as NSString).resolvingSymlinksInPath + "/"
 

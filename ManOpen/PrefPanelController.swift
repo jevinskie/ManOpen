@@ -156,7 +156,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		if action == #selector(PrefPanelController.paste(_:)) {
 			let types = NSPasteboard.general.types!
 			return manPathController.canInsert &&
-				(types.contains(ourFile) || types.contains(.string))
+				(types.contains(ourFileURL) || types.contains(.string))
 		}
 		
 		/* The menu on our app popup may call this validate method ;-) */
@@ -273,7 +273,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	// MARK: man paths
 
 	func setUpManPathUI() {
-		manPathTableView.registerForDraggedTypes([ourFile, .string, ManPathIndexSetPboardType])
+		manPathTableView.registerForDraggedTypes([ourFileURL, .string, ManPathIndexSetPboardType])
 		manPathTableView.verticalMotionCanBeginDrag = true
 		// XXX NSDragOperationDelete -- not sure the "poof" drag can show that
 		manPathTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
@@ -379,10 +379,10 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func paths(from pb: NSPasteboard) -> [String]? {
-		let bestType = pb.availableType(from: [ourFile, .string])
+		let bestType = pb.availableType(from: [ourFileURL, .string])
 		
-		if bestType == ourFile {
-			return pb.propertyList(forType: ourFile) as! [String]!
+		if bestType == ourFileURL {
+			return (pb.propertyList(forType: ourFileURL) as! [URL]).map({$0.path})
 		}
 		
 		if bestType == .string {

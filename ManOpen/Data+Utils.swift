@@ -46,7 +46,7 @@ extension Data {
 			return false
 		}
 		
-		for byte in self[0..<checklen] {
+		for byte in self[startIndex..<(startIndex+checklen)] {
 			if byte == 0 || (byte & 0x80) != 0 /* !isascii(Int32(byte))*/ {
 				badByteCount += 1
 			}

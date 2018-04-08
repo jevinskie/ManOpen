@@ -20,10 +20,18 @@ private let RestoreFileTypeKey   = "DocType"
 private let ManWindowSizeKey = "ManWindowSize"
 
 var ourURL: NSPasteboard.PasteboardType {
-	return NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String)
+	if #available(OSX 10.13, *) {
+		return NSPasteboard.PasteboardType.URL
+	} else {
+		return NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String)
+	}
 }
 var ourFileURL: NSPasteboard.PasteboardType {
-	return NSPasteboard.PasteboardType(rawValue: kUTTypeFileURL as String)
+	if #available(OSX 10.13, *) {
+		return NSPasteboard.PasteboardType.fileURL
+	} else {
+		return NSPasteboard.PasteboardType(rawValue: kUTTypeFileURL as String)
+	}
 }
 
 private var filterCommand: String {
@@ -64,8 +72,6 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	override var windowNibName: NSNib.Name? {
-		// Override returning the nib file name of the document
-		// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
 		return NSNib.Name(rawValue: "ManPage")
 	}
 	
@@ -78,7 +84,6 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		let sizeString: String? = defaults[ManWindowSizeKey]
 		
 		super.windowControllerDidLoadNib(aController)
-		// Add any code here that needs to be executed once the windowController has loaded the document's window.
 		
 		if let sizeString = sizeString {
 			let windowSize = NSSize(string: sizeString)

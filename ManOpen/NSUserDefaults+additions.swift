@@ -75,15 +75,12 @@ extension UserDefaults {
 	}
 	
 	var manFont: NSFont {
-		if let fontString: String = self[manFontKey] {
-			if let spaceRange = fontString.range(of: " ") {
-				func getEndIdx(_ string: String) -> String.Index {
-					let endIdx = string.endIndex
-					return string.index(before: endIdx)
-				}
-				let size = CGFloat((fontString[fontString.startIndex..<spaceRange.lowerBound] as NSString).floatValue)
-				let endIdx = getEndIdx(fontString)
-				let name = fontString[spaceRange.upperBound..<endIdx]
+		if let fontString: String = self[manFontKey],
+			let spaceRange = fontString.range(of: " ") {
+			let sizeStr = fontString[fontString.startIndex..<spaceRange.lowerBound]
+			if let size1 = CGFloat.NativeType(sizeStr) {
+				let size = CGFloat(floatLiteral: size1)
+				let name = fontString[spaceRange.upperBound..<fontString.endIndex]
 				if let font = NSFont(name: String(name), size: size) {
 					return font
 				}

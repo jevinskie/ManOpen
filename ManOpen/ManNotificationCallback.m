@@ -23,9 +23,7 @@
 - (instancetype)initWithManDocumentController:(ManDocumentController*)cont
 {
 	if (self = [super init]) {
-		manConnection = [NSConnection new];
-		[manConnection registerName:@"ManOpenApp"];
-		[manConnection setRootObject:self];
+		manConnection = [NSConnection serviceConnectionWithName:@"ManOpenApp" rootObject:self];
 		docCont = cont;
 	}
 	return self;

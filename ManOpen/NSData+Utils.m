@@ -105,8 +105,8 @@
 - (NSData *)readDataToEndOfFileIgnoreInterruptAndReturnError:(NSError **)error;
 {
     const int fd = [self fileDescriptor];
-    static const size_t allocated = 16384;
-    unsigned char *bytes = malloc(allocated);
+    static const size_t allocated = 8192;
+    unsigned char *bytes = alloca(allocated);
     ssize_t bytesRead;
     NSMutableData *ourData = [[NSMutableData alloc] initWithCapacity:allocated];
     
@@ -118,7 +118,6 @@
             }
         } while (bytesRead < 0 && ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK)));
     } while (bytesRead > 0);
-    free(bytes);
     
     if (bytesRead < 0) {
         if (error) {

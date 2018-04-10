@@ -6,5 +6,5 @@
 "catgz" = "Compressed Preformatted Man Page";
 "Man Page URL" = "Man Page URL";
 
-NSHumanReadableCopyright = "Copyright © 1999-2004 Carl Lindberg, 2010 Jan Weiß, 2015-2016 C.W. Betts";
+NSHumanReadableCopyright = "Copyright © 1999-2004 Carl Lindberg, 2010 Jan Weiß, 2015-2018 C.W. Betts";
 CFBundleName = "ManOpen";

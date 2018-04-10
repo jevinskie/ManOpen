@@ -255,7 +255,7 @@
 		D39279370821FFA400376676 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		D39279560821FFA400376676 /* cat2rtf.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2rtf.l; sourceTree = "<group>"; usesTabs = 0; };
 		D39279690821FFA400376676 /* cat2html.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2html.l; sourceTree = "<group>"; usesTabs = 0; };
-		D39279770821FFA400376676 /* openman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = openman.m; sourceTree = "<group>"; usesTabs = 0; };
+		D39279770821FFA400376676 /* openman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = openman.m; sourceTree = "<group>"; usesTabs = 0; };
 		D392797F0821FFA400376676 /* openman.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = openman.1; sourceTree = "<group>"; };
 		D39279810821FFA400376676 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		D39279850821FFA400376676 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };

@@ -17,7 +17,7 @@
 @interface NSFileHandle (Utils)
 
 /*!
- * The <code>-[NSData readDataToEndOfFile]</code> method does not deal with \c EINTR errors, which in most
+ * The <code>-[NSFileHandle readDataToEndOfFile]</code> method does not deal with \c EINTR errors, which in most
  * cases is fine, but sometimes not when running under a debugger.  So... this is more to help
  * folks working on the code, rather the users ;-)
  */

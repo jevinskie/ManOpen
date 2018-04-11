@@ -8,6 +8,7 @@
 
 import Cocoa
 import SwiftAdditions
+import zlib
 
 private let MAN_BINARY = "/usr/bin/man"
 //#define MANPATH_FORMAT @" -m '%@'"  // There's a bug in man(1) on OSX and OSXS
@@ -152,10 +153,10 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		return command
 	}
 	
-	func dataByExecutingCommand(_ command: String, maxLength: Int = 0, extraEnv: Dictionary<String, String>? = nil) -> Data? {
+	func dataByExecutingCommand(_ command: String, maxLength: Int = 0, extraEnv: Dictionary<String, String>? = nil) throws -> Data {
 		let pipe = Pipe()
 		let task = Process()
-		var output: Data?
+		var output: Data
 		
 		if let anExtraEnv = extraEnv {
 			var environment = ProcessInfo.processInfo.environment
@@ -174,22 +175,22 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			output = pipe.fileHandleForReading.readData(ofLength: maxLength)
 			task.terminate()
 		} else {
-			output = try? pipe.fileHandleForReading.readDataToEndOfFileIgnoreInterrupt()
+			output = try pipe.fileHandleForReading.readDataToEndOfFileIgnoreInterrupt()
 		}
 		task.waitUntilExit()
 		
 		return output
 	}
 	
-	func dataByExecutingCommand(_ command: String, manPath: String) -> Data? {
-		return dataByExecutingCommand(command, extraEnv: ["MANPATH" : manPath])
+	func dataByExecutingCommand(_ command: String, manPath: String) throws -> Data {
+		return try dataByExecutingCommand(command, extraEnv: ["MANPATH" : manPath])
 	}
 	
 	func manFile(name: String, section: String? = nil, manPath: String? = nil) -> String? {
 		var command = manCommand(manPath: manPath)
 		let spaceString = ""
 		command += " -w \(section ?? spaceString) \(name)"
-		if let data = dataByExecutingCommand(command) {
+		if let data = try? dataByExecutingCommand(command) {
 			if data.count <= 0 {
 				return nil
 			}
@@ -212,7 +213,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		return nil
 	}
 	
-	func typeFromURL(_ url: URL) -> String? {
+	func type(from url: URL) -> String? {
 		let manager = FileManager.default
 		var catType = "cat"
 		var manType = "man"
@@ -241,8 +242,19 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			}
 			
 			if fileHeader.isGzipData {
-				let command = "/usr/bin/gzip -dc '\(EscapePath(url.path))'"
-				fileHeader = dataByExecutingCommand(command, maxLength: Int(maxLength))!
+				if let gzf = url.withUnsafeFileSystemRepresentation({ (path) -> gzFile? in
+					return gzopen(path, "rb")
+				}) {
+					fileHeader = Data(count: Int(maxLength))
+					let newSz = fileHeader.withUnsafeMutableBytes { (dat2: UnsafeMutablePointer<UInt8>) -> Int32 in
+						return gzread(gzf, UnsafeMutableRawPointer(dat2), UInt32(maxLength))
+					}
+					fileHeader.count = Int(newSz)
+					gzclose(gzf)
+				} else {
+					let command = "/usr/bin/gzip -dc '\(EscapePath(url.path))'"
+					fileHeader = try! dataByExecutingCommand(command, maxLength: Int(maxLength))
+				}
 				manType = "mangz"
 				catType = "catgz"
 			}
@@ -264,7 +276,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		
 		var document = self.document(for: standardizedURL)
 		if document == nil {
-			if let type = typeFromURL(standardizedURL) {
+			if let type = type(from: standardizedURL) {
 				do {
 					document = try makeDocument(withContentsOf: standardizedURL, ofType: type)
 					document!.makeWindowControllers()

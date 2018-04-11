@@ -185,7 +185,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	func loadCommand(_ command: String) {
 		let docController = ManDocumentController.shared as! ManDocumentController
 		let fullCommand = "\(command) | \(filterCommand)"
-		taskData = docController.dataByExecutingCommand(fullCommand)
+		taskData = try? docController.dataByExecutingCommand(fullCommand)
 		
 		showData()
 	}

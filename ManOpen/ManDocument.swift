@@ -128,7 +128,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		}
 		
 		// strip extension twice in case it is a e.g. "1.gz" filename
-		self.shortTitle = ((url.lastPathComponent as NSString).deletingPathExtension as NSString).deletingPathExtension
+		self.shortTitle = url.deletingPathExtension().deletingPathExtension().lastPathComponent
 		copyURL = url
 		
 		restoreData = [RestoreFileURLKey: url,

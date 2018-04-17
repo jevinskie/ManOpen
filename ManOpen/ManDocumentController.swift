@@ -63,17 +63,10 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	fileprivate var nibObjects = [AnyObject]()
 	private var bridge: ManBridgeCallback? = nil
 	
-	func ensureActive() {
+	@objc func ensureActive() {
 		if !NSApplication.shared.isActive {
 			NSApplication.shared.activate(ignoringOtherApps: true)
 		}
-	}
-	
-	@objc func openName(_ name: String, section: String? = nil, manPath: String? = nil, forceToFront force: Bool = true) {
-		if force {
-			ensureActive()
-		}
-		openDocument(name: name, section: section, manPath: manPath ?? UserDefaults.standard.manPath)
 	}
 	
 	@objc func openApropos(_ apropos: String, manPath: String? = nil, forceToFront force: Bool = true) {
@@ -82,16 +75,6 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		}
 		
 		openAproposDocument(apropos, manPath: manPath ?? UserDefaults.standard.manPath)
-	}
-	
-	@objc func openFile(_ filename: String, forceToFront force: Bool = true) {
-		if force {
-			ensureActive()
-		}
-		
-		openDocument(withContentsOf: URL(fileURLWithPath: filename), display: true) { (doc, wasOpened, error) -> Void in
-			//What to do??
-		}
 	}
 	
 	var useModalPanels: Bool {
@@ -353,7 +336,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	}
 	
 	/// A parallel for `-openDocumentWithContentsOfFile:` for a specific man page
-	@discardableResult
+	@discardableResult @objc
 	func openDocument(name: String, section: String? = nil, manPath: String) -> ManDocument? {
 		var title = name
 		if let section = section, section.isEmpty == false {
@@ -380,7 +363,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		return document
 	}
 	
-	@discardableResult
+	@discardableResult @objc
 	func openAproposDocument(_ apropos: String, manPath: String) -> AproposDocument? {
 		let title = "Apropos \(apropos)"
 		var document = self.document(forTitle: title) as? AproposDocument
@@ -688,8 +671,23 @@ private func getWordArray(_ string: String) -> [String] {
 	return wordArray
 }
 
+/// On MacOS X, implement our x-man-page: scheme handler
 @objc(ManOpenURLHandlerCommand)
 class ManOpenURLHandlerCommand : NSScriptCommand {
+	/*
+	* Terminal seems to accept URLs of the form x-man-page://ls , which means
+	* the man page name is essentially the "host" portion, and is passed
+	* as an argument to the man(1) command.  The double slash is necessary.
+	* Terminal accepts a path portion as well, and will take the first path
+	* component and add it to the command as a second argument.  Any other
+	* path components are ignored.  Thus, x-man-page://3/printf opens up
+	* printf(3), and x-man-page://printf/ls opens both printf(1) and ls(1).
+	*
+	* We make sure to accept all these forms, and maybe some others.  We'll
+	* use all path components, and not require the "//" portion.  We'll build
+	* up a string and pass it to our -openString:, which wants things like
+	* "printf(3) ls pwd".
+	*/
 	override func performDefaultImplementation() -> Any? {
 		guard let param = directParameter as? String else {
 			return nil

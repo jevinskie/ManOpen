@@ -31,7 +31,10 @@
 
 - (oneway void)openName:(bycopy NSString *)name section:(bycopy nullable NSString *)section manPath:(bycopy nullable NSString *)manPath forceToFront:(BOOL)force
 {
-	[docCont openName:name section:section manPath:manPath forceToFront:force];
+	if (force) {
+		[docCont ensureActive];
+	}
+	[docCont openDocumentWithName:name section:section manPath:manPath];
 }
 
 - (oneway void)openApropos:(bycopy NSString *)apropos manPath:(bycopy nullable NSString *)manPath forceToFront:(BOOL)force
@@ -41,7 +44,12 @@
 
 - (oneway void)openFile:(bycopy NSString *)filename forceToFront:(BOOL)force
 {
-	[docCont openFile:filename forceToFront:force];
+	if (force) {
+		[docCont ensureActive];
+	}
+	[docCont openDocumentWithContentsOfURL:[NSURL fileURLWithPath:filename] display:YES completionHandler:^(NSDocument * _Nullable theDoc, BOOL isNew, NSError * _Nullable error) {
+		// do nothing
+	}];
 }
 
 @end

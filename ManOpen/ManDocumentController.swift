@@ -14,6 +14,12 @@ private let MAN_BINARY = "/usr/bin/man"
 //#define MANPATH_FORMAT @" -m '%@'"  // There's a bug in man(1) on OSX and OSXS
 private let MANPATH_FORMAT = " -M '%@'"
 
+/// We need to make sure we handle all sorts of characters in filenames. The way
+/// to do that is surround the path with ' characters -- but then we have to
+/// escape any `'` characters actually in the string. To do that, you need to add a
+/// `'` to close the quote section, add an escaped `'`, then add another `'` to start
+/// quoting again. Something like '\\'' or '"'"'. E.g.: */foo/bar* -> *'/foo/bar'*,
+/// */foo bar/baz* -> *'/foo bar/baz'*, */Apple's Stuff* -> *'/Apple'\\''s Stuff'*.
 func EscapePath(_ path: String, addSurroundingQuotes: Bool = false) -> String {
 	var modPath = path
 	if path.range(of: "'") != nil {
@@ -94,6 +100,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		NSApp.servicesProvider = self
+		/* Remember window positions, in case they're non-modal */
 		openTextPanel.setFrameUsingName(NSWindow.FrameAutosaveName(rawValue: "OpenTitlePanel"))
 		openTextPanel.setFrameAutosaveName(NSWindow.FrameAutosaveName(rawValue: "OpenTitlePanel"))
 		aproposPanel.setFrameUsingName(NSWindow.FrameAutosaveName(rawValue: "AproposPanel"))
@@ -102,6 +109,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		startedUp = true
 	}
 	
+	/// By default, NSApplication will want to open an untitled document at
+	/// startup and when no windows are open. Check our preferences.
 	func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
 		if startedUp {
 			return UserDefaults.standard["OpenPanelWhenNoWindows"] ?? false
@@ -269,6 +278,13 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		}
 	}
 	
+	/// The super implementation will only call -makeDocument... etc. if the
+	/// file's extension is listed in in the NSTypes section in Info.plist.
+	/// Since we don't want to declare the typical .1, .2, etc. extensions,
+	/// plus the fact that often man pages outside of the typical MANPATH
+	/// directories often have other-than-standard extensions, we override
+	/// completely to avoid that chance, and instead determine the type of
+	/// the file based on contents.
 	override func openDocument(withContentsOf url: URL, display displayDocument: Bool, completionHandler: (@escaping (NSDocument?, Bool, Error?) -> Void)) {
 		let standardizedURL = url.standardized
 		var error: Error? = nil
@@ -300,6 +316,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		openDocument(withContentsOf: urlOrNil ?? contentsURL, display: displayDocument, completionHandler: completionHandler)
 	}
 	
+	/* Ignore the types; man/cat files can have any range of extensions. */
 	override func runModalOpenPanel(_ openPanel: NSOpenPanel, forTypes types: [String]?) -> Int {
 		return openPanel.runModal().rawValue
 	}
@@ -335,6 +352,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		(helpScrollView.contentView.documentView as! NSTextView).readRTFD(fromFile: helpPath!.path)
 	}
 	
+	/// A parallel for `-openDocumentWithContentsOfFile:` for a specific man page
 	@discardableResult
 	func openDocument(name: String, section: String? = nil, manPath: String) -> ManDocument? {
 		var title = name
@@ -381,6 +399,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		return document
 	}
 	
+	/// Parses word for stuff like "*file(3)*" to break out the section, then
+	/// calls `openDocument(name:section:manPath:)` as appropriate.
 	@discardableResult
 	func openWord(_ word: String) -> ManDocument? {
 		var base = word
@@ -417,6 +437,11 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		openString(string, oneWordOnly: false)
 	}
 	
+	/// Breaks string up into words and calls `openWord(_:)` on each one.
+	/// Essentially opens a man page for each word in string, while doing
+	/// some specialized processing as well -- treating "foo (5)" as one
+	/// page, recombining words that nroff hyphenated across lines, and
+	/// ignoring trailing commas.
 	func openString(_ string: String, oneWordOnly oneOnly: Bool) {
 		let scanner = Scanner(string: string)
 		let whitespaceSet = CharacterSet.whitespacesAndNewlines
@@ -431,22 +456,46 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 				if lastWord == nil {
 					if let aWord = aWord {
 						lastWord = aWord as String
+					} else {
+						continue
 					}
+					/* If there was a space between the name and section, join them */
 				} else if aWord!.hasPrefix("(") && aWord!.hasSuffix(")") {
 					openWord(lastWord + (aWord! as String))
 					lastWord = nil
 					if oneOnly {
 						break
 					}
+					/* If (g)nroff hyphenated a word across lines, rejoin them */
+				} else if lastWord.hasSuffix("-") {
+					let lastIndex = lastWord.index(before: lastWord.endIndex)
+					lastWord = String(lastWord[lastWord.startIndex..<lastIndex])
+					if let aWord = aWord as String? {
+						lastWord! += aWord
+					}
+
+				} else {
+					/* SEE ALSO sections often have commas between items, ignore it */
+					if lastWord.hasSuffix(",") {
+						let lastIndex = lastWord.index(before: lastWord.endIndex)
+						lastWord = String(lastWord[lastWord.startIndex..<lastIndex])
+					}
+					openWord(lastWord)
+					lastWord = nil
+					if oneOnly {
+						break
+					}
+					if let aWord = aWord as String? {
+						lastWord = aWord
+					}
 				}
 			}
 		}
 		
-		if lastWord != nil {
+		if var lastWord = lastWord {
 			if lastWord.hasSuffix(",") {
-				var lastIndex = lastWord.endIndex
+				let lastIndex = lastWord.index(before: lastWord.endIndex)
 				lastWord = String(lastWord[lastWord.startIndex..<lastIndex])
-				lastIndex = lastWord.index(before: lastIndex)
 			}
 			openWord(lastWord)
 		}

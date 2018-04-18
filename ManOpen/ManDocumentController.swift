@@ -180,8 +180,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	
 	func manFile(name: String, section: String? = nil, manPath: String? = nil) -> String? {
 		var command = manCommand(manPath: manPath)
-		let spaceString = ""
-		command += " -w \(section ?? spaceString) \(name)"
+		command += " -w \(section ?? "") \(name)"
 		if let data = try? dataByExecutingCommand(command) {
 			if data.count <= 0 {
 				return nil
@@ -391,10 +390,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		let lparenRange = word.range(of: "(")
 		let rparenRange = word.range(of: ")")
 		
-		if let lparenRange = lparenRange, let rparenRange = rparenRange, lparenRange.lowerBound < rparenRange.lowerBound {
-			let lp = lparenRange
-			let rp = rparenRange
-			
+		if let lp = lparenRange, let rp = rparenRange, lp.lowerBound < rp.lowerBound {			
 			base = String(word[word.startIndex ..< lp.lowerBound])
 			section = String(word[word.index(after: lp.lowerBound) ..< word.index(before: rp.upperBound)])
 		}
@@ -663,8 +659,9 @@ private func getWordArray(_ string: String) -> [String] {
 	
 	while !scanner.isAtEnd {
 		var aWord: NSString? = nil
-		if scanner.scanCharacters(from: nonspaceSet, into: &aWord) {
-			wordArray.append(aWord! as String)
+		if scanner.scanCharacters(from: nonspaceSet, into: &aWord),
+			let bWord = aWord as String? {
+			wordArray.append(bWord)
 		}
 	}
 	

@@ -105,7 +105,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 				return;
 			}
 			fontField.font = newValue
-			fontField.stringValue = String(format: "%@ %.1f", newValue.familyName!, newValue.pointSize)
+			fontField.stringValue = String(format: "%@ %.1f", newValue.displayName ?? newValue.fontName, newValue.pointSize)
 		}
 	}
 	

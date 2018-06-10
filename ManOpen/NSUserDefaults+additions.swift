@@ -30,6 +30,11 @@ internal func dataForColor(_ color: NSColor) -> Data {
 extension UserDefaults {
 	var manTextColor: NSColor {
 		get {
+			if let newCol = color(for: manTextColorKey, defaults: self) {
+				return newCol
+			} else {
+				removeObject(forKey: manTextColorKey)
+			}
 			return color(for: manTextColorKey, defaults: self)!
 		}
 		set {

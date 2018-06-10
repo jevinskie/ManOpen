@@ -43,6 +43,7 @@
     if (MATCH("\\\""))   return YES;
     if (MATCH(".\\ "))   return YES;
     if (MATCH("\\.\""))  return YES;  // found this on a joke man page
+    if (MATCH("\\\n.\\\" "))  return YES;  // found this on macptopbm man page
 
     /*
      * Now check for .[letter][letter], and .\" again.  In either case,

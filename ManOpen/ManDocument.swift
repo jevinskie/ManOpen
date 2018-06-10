@@ -160,7 +160,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		loadDocument(name: name, section: section, manPath: manPath, title: title)
 	}
 	
-	fileprivate func loadDocument(name: String, section: String? = nil, manPath: String? = nil, title: String) {
+	private func loadDocument(name: String, section: String? = nil, manPath: String? = nil, title: String) {
 		let docController = ManDocumentController.shared as! ManDocumentController
 		var command = docController.manCommand(manPath: manPath)
 		fileType = "man"

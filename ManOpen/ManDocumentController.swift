@@ -208,9 +208,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		let manager = FileManager.default
 		var catType = "cat"
 		var manType = "man"
-		let attributes = try? manager.attributesOfItem(atPath: (url.path as NSString).resolvingSymlinksInPath)
 		var len: UInt64
-		if let anAttrib = attributes {
+		if let anAttrib = try? manager.attributesOfItem(atPath: (url.path as NSString).resolvingSymlinksInPath) {
 			if let tmplen = anAttrib[FileAttributeKey.size] as? NSNumber {
 				len = tmplen.uint64Value
 			} else {
@@ -219,14 +218,14 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		} else {
 			len = 0
 		}
-		let maxLength = min(150, len)
+		let maxLength = Int(min(150, len))
 		
 		if maxLength == 0 {
 			return catType
 		}
 		
 		if let handle = try? FileHandle(forReadingFrom: url) {
-			var fileHeader = handle.readData(ofLength: Int(maxLength))
+			var fileHeader = handle.readData(ofLength: maxLength)
 			
 			if len > 1000000 {
 				return nil
@@ -236,7 +235,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 				if let gzf = url.withUnsafeFileSystemRepresentation({ (path) -> gzFile? in
 					return gzopen(path, "rb")
 				}) {
-					fileHeader = Data(count: Int(maxLength))
+					fileHeader = Data(count: maxLength)
 					let newSz = fileHeader.withUnsafeMutableBytes { (dat2: UnsafeMutablePointer<UInt8>) -> Int32 in
 						return gzread(gzf, UnsafeMutableRawPointer(dat2), UInt32(maxLength))
 					}
@@ -282,6 +281,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 				} catch let anErr {
 					error = anErr
 				}
+			} else {
+				error = NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSURLErrorKey: url])
 			}
 		}
 		

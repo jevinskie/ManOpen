@@ -103,7 +103,7 @@
  * cases is fine, but sometimes not when running under a debugger.  So... this is more to help
  * folks working on the code, rather the users ;-)
  */
-- (NSData *)readDataToEndOfFileIgnoreInterruptAndReturnError:(NSError **)error;
+- (NSData *)readDataToEndOfFileIgnoreInterruptAndReturnError:(NSError *__autoreleasing  _Nullable *)error
 {
     const int fd = [self fileDescriptor];
     static const size_t allocated = 8192;

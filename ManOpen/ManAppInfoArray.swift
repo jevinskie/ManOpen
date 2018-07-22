@@ -13,6 +13,7 @@ private func GenerateManInfos() -> [ManAppInfo] {
 	guard let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME as NSString)?.takeRetainedValue() as? [String] else {
 		return []
 	}
+	anAppInfo.reserveCapacity(allBundleIDs.count)
 	
 	for bundleID in allBundleIDs {
 		if let mai = ManAppInfo(bundleID: bundleID) {
@@ -66,9 +67,9 @@ final class ManAppInfoArray: Sequence {
 		}
 	}
 	
-	func index(bundleID: String!) -> Int? {
-		if bundleID == nil {
-			return nil;
+	func index(bundleID: String?) -> Int? {
+		guard let bundleID = bundleID else {
+			return nil
 		}
 		
 		for (i, obj) in allManViewerApps.enumerated() {

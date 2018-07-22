@@ -96,13 +96,13 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		NSUserDefaultsController.shared.initialValues = someDefaults
 	}
 	
-	fileprivate var fontFieldFont: NSFont! {
+	fileprivate var fontFieldFont: NSFont? {
 		get {
 			return fontField.font
 		}
 		set {
-			if newValue == nil {
-				return;
+			guard let newValue = newValue else {
+				return
 			}
 			fontField.font = newValue
 			fontField.stringValue = String(format: "%@ %.1f", newValue.displayName ?? newValue.fontName, newValue.pointSize)
@@ -136,15 +136,17 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	override func changeFont(_ sender: Any!) {
-		var font = fontFieldFont
+		guard var font = fontFieldFont,
+			let sender = sender as? NSFontManager else {
+			NSSound.beep()
+			return
+		}
 		//NSString *fontString;
 		
-		font = (sender as! NSFontManager).convert(font!)
+		font = sender.convert(font)
 		self.fontFieldFont = font
-		if let font = font {
-			let fontString = "\(font.pointSize) \(font.fontName)"
-			UserDefaults.standard[manFontKey] = fontString
-		}
+		let fontString = "\(font.pointSize) \(font.fontName)"
+		UserDefaults.standard[manFontKey] = fontString
 	}
 	
 	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {

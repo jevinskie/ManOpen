@@ -85,8 +85,8 @@ extension UserDefaults {
 			let sizeStr = fontString[fontString.startIndex..<spaceRange.lowerBound]
 			if let size1 = CGFloat.NativeType(sizeStr) {
 				let size = CGFloat(floatLiteral: size1)
-				let name = fontString[spaceRange.upperBound..<fontString.endIndex]
-				if let font = NSFont(name: String(name), size: size) {
+				let name = String(fontString[spaceRange.upperBound..<fontString.endIndex])
+				if let font = NSFont(name: name, size: size) {
 					return font
 				}
 			}

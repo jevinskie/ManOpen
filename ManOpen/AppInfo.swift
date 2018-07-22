@@ -83,6 +83,10 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 		return displayName.localizedStandardCompare(string.displayName)
 	}
 	
+	func localizedCaseInsensitiveCompare(_ string: ManAppInfo) -> ComparisonResult {
+		return displayName.localizedCaseInsensitiveCompare(string.displayName)
+	}
+	
 	var debugDescription: String {
 		return "\(bundleID), \(displayName)"
 	}

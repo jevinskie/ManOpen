@@ -151,7 +151,9 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
 	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
 		let action = menuItem.action
-		if ((action == #selector(PrefPanelController.cut(_:))) || (action == #selector(PrefPanelController.copy(_:))) || (action == #selector(PrefPanelController.delete(_:)))) {
+		if (action == #selector(PrefPanelController.cut(_:))) ||
+			(action == #selector(PrefPanelController.copy(_:))) ||
+			(action == #selector(PrefPanelController.delete(_:))) {
 			return manPathController.canRemove
 		}
 		
@@ -459,7 +461,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) {
 			if let indexData = pb.data(forType: ManPathIndexSetPboardType),
-				(dragOp.intersection(.move) == .move),
+				dragOp.contains(.move),
 				let removeSet2 = NSKeyedUnarchiver.unarchiveObject(with: indexData) as? IndexSet {
 				removeSet = removeSet2
 				pathsToAdd = pathsAtIndexes(removeSet!)

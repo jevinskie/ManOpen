@@ -60,9 +60,9 @@ final class ManAppInfoArray: Sequence {
 		}
 	}
 	
-	func sortApps() {
+	private func sortApps() {
 		allManViewerApps.sort { (lhs, rhs) -> Bool in
-			let toRet = lhs.displayName.localizedCaseInsensitiveCompare(rhs.displayName)
+			let toRet = lhs.localizedCaseInsensitiveCompare(rhs)
 			return ComparisonResult.orderedAscending == toRet
 		}
 	}

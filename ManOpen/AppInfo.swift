@@ -8,11 +8,6 @@
 
 import Cocoa
 
-func ==(lhs: ManAppInfo, rhs: ManAppInfo) -> Bool {
-	let toRet = lhs.bundleID.caseInsensitiveCompare(rhs.bundleID)
-	return toRet == ComparisonResult.orderedSame
-}
-
 func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 	let toRet = lhs.bundleID.caseInsensitiveCompare(rhs)
 	return toRet == ComparisonResult.orderedSame
@@ -90,5 +85,10 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 	
 	var debugDescription: String {
 		return "\(bundleID), \(displayName)"
+	}
+	
+	static func ==(lhs: ManAppInfo, rhs: ManAppInfo) -> Bool {
+		let toRet = lhs.bundleID.caseInsensitiveCompare(rhs.bundleID)
+		return toRet == ComparisonResult.orderedSame
 	}
 }

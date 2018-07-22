@@ -24,7 +24,8 @@ private func GenerateManInfos() -> [ManAppInfo] {
 }
 
 final class ManAppInfoArray: Sequence {
-	fileprivate(set) var allManViewerApps = GenerateManInfos()
+	private(set) var allManViewerApps = GenerateManInfos()
+	
 	init() {
 		sortApps()
 	}

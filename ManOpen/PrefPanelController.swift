@@ -34,7 +34,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}()
 	
 	let appInfos = ManAppInfoArray()
-	fileprivate var manPathArrayPriv = [String]()
+	private var manPathArrayPriv = [String]()
 	@objc dynamic var manPathArray: [String] {
 		get {
 			if manPathArrayPriv.count == 0 {
@@ -48,7 +48,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			saveManPath()
 		}
 	}
-	fileprivate var currentAppID = ""
+	private var currentAppID = ""
 	@IBOutlet weak var manPathController: NSArrayController!
 	@IBOutlet weak var manPathTableView: NSTableView!
 	@IBOutlet weak var fontField: NSTextField!

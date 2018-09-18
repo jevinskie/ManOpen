@@ -124,7 +124,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			loadCatFile(url.path, isGzip: true)
 			
 		default:
-			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo:
+			throw CocoaError(.fileReadCorruptFile, userInfo:
 				[NSLocalizedDescriptionKey: NSLocalizedString("Invalid document type", comment:"Invalid document type"),
 				 NSURLErrorKey: url])
 		}
@@ -137,7 +137,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		               RestoreFileTypeKey: typeName]
 		
 		if taskData == nil {
-			throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo:
+			throw CocoaError(.fileReadUnknown, userInfo:
 				[NSLocalizedDescriptionKey: NSLocalizedString("Could not read manual data", comment: "Could not read manual data"),
 				 NSURLErrorKey: url])
 		}

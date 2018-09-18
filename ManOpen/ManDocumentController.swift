@@ -282,7 +282,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 					error = anErr
 				}
 			} else {
-				error = NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: [NSURLErrorKey: url])
+				error = CocoaError(.fileReadUnknown, userInfo: [NSURLErrorKey: url])
 			}
 		}
 		

@@ -67,12 +67,8 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 		}
 	}
 	
-	var hashValue: Int {
-		return bundleID.lowercased().hashValue
-	}
-	
-	var hash: Int {
-		return self.hashValue
+	func hash(into hasher: inout Hasher) {
+		bundleID.lowercased().hash(into: &hasher)
 	}
 	
 	func compare(_ string: ManAppInfo) -> ComparisonResult {

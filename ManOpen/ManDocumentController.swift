@@ -84,10 +84,10 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		NSApp.servicesProvider = self
 		/* Remember window positions, in case they're non-modal */
-		openTextPanel.setFrameUsingName(NSWindow.FrameAutosaveName(rawValue: "OpenTitlePanel"))
-		openTextPanel.setFrameAutosaveName(NSWindow.FrameAutosaveName(rawValue: "OpenTitlePanel"))
-		aproposPanel.setFrameUsingName(NSWindow.FrameAutosaveName(rawValue: "AproposPanel"))
-		aproposPanel.setFrameAutosaveName(NSWindow.FrameAutosaveName(rawValue: "AproposPanel"))
+		openTextPanel.setFrameUsingName("OpenTitlePanel")
+		openTextPanel.setFrameAutosaveName("OpenTitlePanel")
+		aproposPanel.setFrameUsingName("AproposPanel")
+		aproposPanel.setFrameAutosaveName("AproposPanel")
 		
 		startedUp = true
 	}
@@ -506,7 +506,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		
 		PrefPanelController.registerManDefaults()
 		var tmpNibArray: NSArray? = nil
-		Bundle.main.loadNibNamed(NSNib.Name(rawValue: "DocController"), owner: self, topLevelObjects: &tmpNibArray)
+		Bundle.main.loadNibNamed("DocController", owner: self, topLevelObjects: &tmpNibArray)
 		
 		nibObjects = tmpNibArray as [AnyObject]? ?? []
 	}

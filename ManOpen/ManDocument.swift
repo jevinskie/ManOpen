@@ -72,7 +72,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	override var windowNibName: NSNib.Name? {
-		return NSNib.Name(rawValue: "ManPage")
+		return "ManPage"
 	}
 	
 	override class func canConcurrentlyReadDocuments(ofType typeName: String) -> Bool {
@@ -398,7 +398,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		let printInfo = operation.printInfo
 		printInfo.isVerticallyCentered = false
 		printInfo.isHorizontallyCentered = true
-		printInfo.horizontalPagination = .fitPagination
+		printInfo.horizontalPagination = .fit
 		
 		return operation
 	}

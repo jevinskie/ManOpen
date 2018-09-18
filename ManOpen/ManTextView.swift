@@ -84,7 +84,7 @@ class ManTextView: NSTextView {
 		let currPage = NSPrintOperation.current!.currentPage
 		let pageString = "\(currPage)"
 		let style = NSMutableParagraphStyle()
-		var drawAttribs = [NSAttributedStringKey: Any]()
+		var drawAttribs = [NSAttributedString.Key: Any]()
 		
 		style.alignment = .center
 		drawAttribs[.paragraphStyle] = style.copy()

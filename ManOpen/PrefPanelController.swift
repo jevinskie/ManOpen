@@ -26,7 +26,7 @@ let kNroffCommand		= "NroffCommand"
 class PrefPanelController: NSWindowController, NSTableViewDataSource {
 
 	static let shared: PrefPanelController = {
-		let toRet = PrefPanelController(windowNibName: NSNib.Name(rawValue: "PrefPanel"))
+		let toRet = PrefPanelController(windowNibName: "PrefPanel")
 		toRet.shouldCascadeWindows = false
 		NSFontManager.shared.delegate = toRet
 		
@@ -135,7 +135,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		return (sender as! NSFontManager).fontNamed(fontName, hasTraits: .fixedPitchFontMask)
 	}
 	
-	override func changeFont(_ sender: Any!) {
+	func changeFont(_ sender: Any!) {
 		guard var font = fontFieldFont,
 			let sender = sender as? NSFontManager else {
 			NSSound.beep()
@@ -149,7 +149,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		UserDefaults.standard[manFontKey] = fontString
 	}
 	
-	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+	func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
 		let action = menuItem.action
 		if (action == #selector(PrefPanelController.cut(_:))) ||
 			(action == #selector(PrefPanelController.copy(_:))) ||
@@ -430,7 +430,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-		let pb = info.draggingPasteboard()
+		let pb = info.draggingPasteboard
 		
 		/* We only drop between rows */
 		if dropOperation == .above {
@@ -438,7 +438,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		/* If this is a dragging operation in the table itself, show the move icon */
-		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) && ((info.draggingSource() as AnyObject?) === manPathTableView) {
+		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) && ((info.draggingSource as AnyObject?) === manPathTableView) {
 			return .move;
 		}
 		
@@ -454,8 +454,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	}
 	
 	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
-		let pb = info.draggingPasteboard()
-		let dragOp = info.draggingSourceOperationMask()
+		let pb = info.draggingPasteboard
+		let dragOp = info.draggingSourceOperationMask
 		var pathsToAdd: [String]? = [String]()
 		var removeSet: IndexSet? = nil
 		

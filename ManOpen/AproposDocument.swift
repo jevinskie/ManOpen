@@ -35,7 +35,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	}
 	
 	override var windowNibName: NSNib.Name? {
-		return NSNib.Name(rawValue: "Apropos")
+		return "Apropos"
 	}
 	
 	func parseOutput(_ output: String?) {

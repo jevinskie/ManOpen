@@ -582,7 +582,7 @@
 				LastUpgradeCheck = 0930;
 				TargetAttributes = {
 					55C0CEEF19BE04D8009C50D7 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -893,7 +893,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ManOpen;
 				WRAPPER_EXTENSION = app;
 			};
@@ -912,7 +912,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ManOpen;
 				WRAPPER_EXTENSION = app;
 			};

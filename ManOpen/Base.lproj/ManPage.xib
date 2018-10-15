@@ -23,11 +23,11 @@
             <rect key="contentRect" x="141" y="361" width="605" height="454"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="302" height="218"/>
-            <view key="contentView" wantsLayer="YES" id="9">
+            <view key="contentView" id="9">
                 <rect key="frame" x="0.0" y="0.0" width="605" height="454"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <visualEffectView wantsLayer="YES" appearanceType="inheritedVibrantLight" alphaValue="0.80000000000000004" blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="jn1-ui-9ut">
+                    <visualEffectView wantsLayer="YES" appearanceType="inheritedVibrantLight" alphaValue="0.80000000000000004" blendingMode="behindWindow" material="titlebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="jn1-ui-9ut">
                         <rect key="frame" x="0.0" y="378" width="605" height="76"/>
                     </visualEffectView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="10">

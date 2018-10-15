@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,17 +17,20 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="documentWindow" frameAutosaveName="DocumentFrame" titlebarAppearsTransparent="YES" id="13" userLabel="Window1">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="documentWindow" frameAutosaveName="DocumentFrame" titlebarAppearsTransparent="YES" id="13" userLabel="Window1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="141" y="361" width="605" height="454"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="302" height="218"/>
-            <view key="contentView" id="9">
+            <view key="contentView" wantsLayer="YES" id="9">
                 <rect key="frame" x="0.0" y="0.0" width="605" height="454"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="380" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                    <visualEffectView wantsLayer="YES" appearanceType="inheritedVibrantLight" alphaValue="0.80000000000000004" blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="jn1-ui-9ut">
+                        <rect key="frame" x="0.0" y="378" width="605" height="76"/>
+                    </visualEffectView>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="10">
                         <rect key="frame" x="74" y="399" width="384" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="left" title="Title" id="62">
                             <font key="font" metaFont="system" size="18"/>
@@ -59,29 +62,29 @@
                     </button>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnW-DY-KgJ">
                         <rect key="frame" x="0.0" y="0.0" width="605" height="378"/>
-                        <clipView key="contentView" copiesOnScroll="NO" id="7dm-xg-Oeo">
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="7dm-xg-Oeo">
                             <rect key="frame" x="1" y="1" width="603" height="376"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" verticallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpen" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="603" height="376"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <size key="minSize" width="603" height="376"/>
                                     <size key="maxSize" width="10000000" height="10000000"/>
-                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
                                         <outlet property="delegate" destination="-2" id="HFX-BN-gAp"/>
                                     </connections>
                                 </textView>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="mJG-7p-W92">
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="mJG-7p-W92">
                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="deh-ox-tjw">
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="deh-ox-tjw">
                             <rect key="frame" x="588" y="1" width="16" height="376"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -104,6 +107,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="21" firstAttribute="leading" secondItem="9" secondAttribute="leading" constant="20" symbolic="YES" id="2B5-UA-ibx"/>
+                    <constraint firstItem="jn1-ui-9ut" firstAttribute="leading" secondItem="9" secondAttribute="leading" id="3N1-1F-U4i"/>
+                    <constraint firstItem="cnW-DY-KgJ" firstAttribute="top" secondItem="jn1-ui-9ut" secondAttribute="bottom" id="CDU-yx-AkX"/>
                     <constraint firstItem="cnW-DY-KgJ" firstAttribute="leading" secondItem="9" secondAttribute="leading" id="EGX-YK-YIz"/>
                     <constraint firstAttribute="trailing" secondItem="25" secondAttribute="trailing" constant="20" symbolic="YES" id="IpH-DH-3Ul"/>
                     <constraint firstItem="cnW-DY-KgJ" firstAttribute="top" secondItem="21" secondAttribute="bottom" constant="8" symbolic="YES" id="LpS-Z3-yAz"/>
@@ -111,7 +116,9 @@
                     <constraint firstItem="cnW-DY-KgJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="25" secondAttribute="bottom" constant="8" symbolic="YES" id="Ra0-8M-qMm"/>
                     <constraint firstItem="25" firstAttribute="top" secondItem="9" secondAttribute="top" constant="20" symbolic="YES" id="STy-M2-Klr"/>
                     <constraint firstItem="45" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="8" symbolic="YES" id="Tnf-lO-wUW"/>
+                    <constraint firstAttribute="trailing" secondItem="jn1-ui-9ut" secondAttribute="trailing" id="UwF-py-iEY"/>
                     <constraint firstItem="25" firstAttribute="leading" secondItem="45" secondAttribute="trailing" constant="8" symbolic="YES" id="VFF-EG-1bI"/>
+                    <constraint firstItem="jn1-ui-9ut" firstAttribute="top" secondItem="9" secondAttribute="top" id="ZIw-gu-IRD"/>
                     <constraint firstItem="10" firstAttribute="centerY" secondItem="21" secondAttribute="centerY" id="alO-ED-TtI"/>
                     <constraint firstItem="10" firstAttribute="leading" secondItem="21" secondAttribute="trailing" constant="8" symbolic="YES" id="nHc-xV-nbZ"/>
                     <constraint firstItem="45" firstAttribute="centerY" secondItem="25" secondAttribute="centerY" id="rjO-Zx-uz5"/>
@@ -119,10 +126,15 @@
                     <constraint firstAttribute="trailing" secondItem="cnW-DY-KgJ" secondAttribute="trailing" id="zJh-u1-xBR"/>
                 </constraints>
             </view>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="boolean" keyPath="opaque" value="NO"/>
+                <userDefinedRuntimeAttribute type="boolean" keyPath="movableByWindowBackground" value="YES"/>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="delegate" destination="-2" id="19j-iP-JbH"/>
                 <outlet property="initialFirstResponder" destination="c9g-sk-2DN" id="Lcf-u6-1xi"/>
             </connections>
+            <point key="canvasLocation" x="138.5" y="158"/>
         </window>
     </objects>
     <resources>

@@ -517,7 +517,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	
 	func openTitleFromPanel() {
 		var aString = openTextField.stringValue
-		var words = getWordArray(aString)
+		let words = getWordArray(aString)
 		
 		/* If the string is of the form "3 printf", arrange it better for our parser.  Requested by Eskimo.  Also accept 'n' as a section */
 		if words.count == 2 && aString.range(of: "(") == nil && isSectionWord(words[0]) {

@@ -231,10 +231,10 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			
 			while currIndex < storage.length {
 				var currRange = NSRange(location: 0, length: 0)
-				var attribs = storage.attributes(at: currIndex, effectiveRange: &currRange)
+				let attribs = storage.attributes(at: currIndex, effectiveRange: &currRange)
 				let font = attribs[.font] as? NSFont
 				
-				if let font = font, font.familyName != "Courier" {
+				if let font1 = font, font1.familyName != "Courier" {
 					//Using mutableString so we don't have to do Swift String range conversions.
 					self.add(sectionHeader: storage.mutableString.substring(with: currRange), range: currRange)
 				}

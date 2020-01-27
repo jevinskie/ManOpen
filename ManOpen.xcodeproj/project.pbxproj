@@ -27,6 +27,7 @@
 		55182E0E19C0BAC10016128A /* AproposDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */; };
 		55182E0F19C0BAC70016128A /* ManDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A5B2219BFE811003D74A9 /* ManDocument.swift */; };
 		55182E1019C0BACA0016128A /* ManDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */; };
+		5527B64623DE733D00DF1BB2 /* ManOpen.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 5527B64523DE733D00DF1BB2 /* ManOpen.sdef */; };
 		553A5B2519BFEDD7003D74A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E802A1188237F000037AF6 /* Cocoa.framework */; };
 		553A5B2619BFEDF6003D74A9 /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FA0821FFA400376676 /* NSData+Utils.m */; };
 		5567E0561A7D615E005013B3 /* ManNotificationCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 5567E0551A7D615E005013B3 /* ManNotificationCallback.m */; };
@@ -39,8 +40,6 @@
 		55838C0919C0B59600FFEDDE /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838BFF19C0AD2900FFEDDE /* AppInfo.swift */; };
 		55838C0B19C0B61700FFEDDE /* ManAppInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */; };
 		55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
-		55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
-		55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
 		55C0CEF819BE04D8009C50D7 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D39279350821FFA400376676 /* Credits.rtf */; };
 		55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
 		55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
@@ -62,6 +61,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5527B64123DE72CA00DF1BB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558DC050217D04830022E081;
+			remoteInfo = QuartzAdditions;
+		};
+		5527B64323DE72CA00DF1BB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558DC058217D04840022E081;
+			remoteInfo = QuartzAdditionsTests;
+		};
 		55553AF31BC46B8700377516 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
@@ -206,6 +219,7 @@
 
 /* Begin PBXFileReference section */
 		5516ECE71A7CA21200760214 /* ManTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManTextView.swift; sourceTree = "<group>"; };
+		5527B64523DE733D00DF1BB2 /* ManOpen.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ManOpen.sdef; sourceTree = "<group>"; };
 		553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AproposDocument.swift; sourceTree = "<group>"; };
 		553A5B2219BFE811003D74A9 /* ManDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManDocument.swift; sourceTree = "<group>"; };
 		5553E1FF1881F2CA003C2DBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Help.rtf; sourceTree = "<group>"; };
@@ -244,14 +258,12 @@
 		55E802A1188237F000037AF6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		55E802A3188237FA00037AF6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		55EEBEC71D8B71DC00DDBF3F /* Data+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Utils.swift"; sourceTree = "<group>"; };
-		55F13AB515103C1E0095B5A9 /* en */ = {isa = PBXFileReference; explicitFileType = text.plist.scriptTerminology; name = en; path = en.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A243814E4C3FE00F6AFFE /* cat2rtf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2rtf; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A244414E4C3FE00F6AFFE /* cat2html */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2html; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A245114E4C3FE00F6AFFE /* openman */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = openman; sourceTree = BUILT_PRODUCTS_DIR; };
 		D39278FA0821FFA400376676 /* NSData+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Utils.m"; sourceTree = "<group>"; usesTabs = 0; };
 		D39279070821FFA400376676 /* ManOpenProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManOpenProtocol.h; sourceTree = "<group>"; usesTabs = 0; };
 		D39279090821FFA400376676 /* NSData+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; usesTabs = 0; };
-		D392792F0821FFA400376676 /* ManOpen.scriptSuite */ = {isa = PBXFileReference; explicitFileType = text.plist.scriptSuite; path = ManOpen.scriptSuite; sourceTree = "<group>"; };
 		D39279370821FFA400376676 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		D39279560821FFA400376676 /* cat2rtf.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2rtf.l; sourceTree = "<group>"; usesTabs = 0; };
 		D39279690821FFA400376676 /* cat2html.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2html.l; sourceTree = "<group>"; usesTabs = 0; };
@@ -303,8 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				5553E21E1881F83E003C2DBF /* Images.xcassets */,
-				D392792F0821FFA400376676 /* ManOpen.scriptSuite */,
-				55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */,
+				5527B64523DE733D00DF1BB2 /* ManOpen.sdef */,
 				D39279350821FFA400376676 /* Credits.rtf */,
 				5553E1FE1881F2C2003C2DBF /* Help.rtf */,
 				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,
@@ -357,6 +368,8 @@
 				55553AF61BC46B8700377516 /* SwiftAudioAdditionsTests.xctest */,
 				55D64C1E1FD8D8B20061878C /* CoreTextAdditions.framework */,
 				55D64C201FD8D8B20061878C /* CoreTextAdditionsTests.xctest */,
+				5527B64223DE72CA00DF1BB2 /* QuartzAdditions.framework */,
+				5527B64423DE72CA00DF1BB2 /* QuartzAdditionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -588,7 +601,7 @@
 			};
 			buildConfigurationList = D38A23BC14E38E1E00F6AFFE /* Build configuration list for PBXProject "ManOpen" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownPlatforms = (
 				macos,
@@ -623,6 +636,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		5527B64223DE72CA00DF1BB2 /* QuartzAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = QuartzAdditions.framework;
+			remoteRef = 5527B64123DE72CA00DF1BB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5527B64423DE72CA00DF1BB2 /* QuartzAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = QuartzAdditionsTests.xctest;
+			remoteRef = 5527B64323DE72CA00DF1BB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		55553AF41BC46B8700377516 /* SwiftAudioAdditions.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -702,9 +729,8 @@
 			files = (
 				55C0CF4519BE07E9009C50D7 /* Apropos.xib in Resources */,
 				557AFB521A8032FA008BDF46 /* InfoPlist.strings in Resources */,
+				5527B64623DE733D00DF1BB2 /* ManOpen.sdef in Resources */,
 				55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */,
-				55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */,
-				55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */,
 				55C0CF4719BE07E9009C50D7 /* ManOpen.xib in Resources */,
 				55C0CEF819BE04D8009C50D7 /* Credits.rtf in Resources */,
 				55C0CF4819BE07E9009C50D7 /* ManPage.xib in Resources */,
@@ -859,14 +885,6 @@
 				55C0CF6619BE08B6009C50D7 /* en */,
 			);
 			name = PrefPanel.xib;
-			sourceTree = "<group>";
-		};
-		55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55F13AB515103C1E0095B5A9 /* en */,
-			);
-			name = ManOpen.scriptTerminology;
 			sourceTree = "<group>";
 		};
 		D39279350821FFA400376676 /* Credits.rtf */ = {

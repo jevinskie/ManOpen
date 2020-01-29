@@ -18,7 +18,7 @@ private let MANPATH_FORMAT = " -M '%@'"
 /// to do that is surround the path with ' characters -- but then we have to
 /// escape any `'` characters actually in the string. To do that, you need to add a
 /// `'` to close the quote section, add an escaped `'`, then add another `'` to start
-/// quoting again. Something like '\\'' or '"'"'. E.g.: */foo/bar* -> *'/foo/bar'*,
+/// quoting again. Something like '\'' or '"'"'. E.g.: */foo/bar* -> *'/foo/bar'*,
 /// */foo bar/baz* -> *'/foo bar/baz'*, */Apple's Stuff* -> *'/Apple'\\''s Stuff'*.
 func EscapePath(_ path: String, addSurroundingQuotes: Bool = false) -> String {
 	var modPath = path
@@ -60,7 +60,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	@IBOutlet weak var openTextField: NSTextField!
 	@IBOutlet weak var openSectionPopup: NSPopUpButton!
 	var startedUp = false
-	fileprivate var nibObjects = [AnyObject]()
+	private var nibObjects = [AnyObject]()
 	private var bridge: ManBridgeCallback? = nil
 	
 	@objc func ensureActive() {

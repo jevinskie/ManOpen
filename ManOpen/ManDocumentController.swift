@@ -20,7 +20,7 @@ private let MANPATH_FORMAT = " -M '%@'"
 /// `'` to close the quote section, add an escaped `'`, then add another `'` to start
 /// quoting again. Something like '\'' or '"'"'. E.g.: */foo/bar* -> *'/foo/bar'*,
 /// */foo bar/baz* -> *'/foo bar/baz'*, */Apple's Stuff* -> *'/Apple'\\''s Stuff'*.
-func EscapePath(_ path: String, addSurroundingQuotes: Bool = false) -> String {
+func escapePath(_ path: String, addSurroundingQuotes: Bool = false) -> String {
 	var modPath = path
 	if path.range(of: "'") != nil {
 		var newString = ""
@@ -139,7 +139,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		var command = MAN_BINARY
 		
 		if let manPath = manPath, !manPath.isEmpty {
-			command += " -M '\(EscapePath(manPath))'"
+			command += " -M '\(escapePath(manPath))'"
 		}
 		
 		return command
@@ -236,13 +236,13 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 					return gzopen(path, "rb")
 				}) {
 					fileHeader = Data(count: maxLength)
-					let newSz = fileHeader.withUnsafeMutableBytes { (dat2: UnsafeMutablePointer<UInt8>) -> Int32 in
-						return gzread(gzf, UnsafeMutableRawPointer(dat2), UInt32(maxLength))
+					let newSz = fileHeader.withUnsafeMutableBytes { (_ dat2: UnsafeMutableRawBufferPointer) -> Int32 in
+						return gzread(gzf, dat2.baseAddress, UInt32(dat2.count))
 					}
 					fileHeader.count = Int(newSz)
 					gzclose(gzf)
 				} else {
-					let command = "/usr/bin/gzip -dc '\(EscapePath(url.path))'"
+					let command = "/usr/bin/gzip -dc '\(escapePath(url.path))'"
 					fileHeader = try! dataByExecutingCommand(command, maxLength: Int(maxLength))
 				}
 				manType = "mangz"

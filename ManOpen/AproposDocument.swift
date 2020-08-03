@@ -136,7 +136,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		// [command appendString:@" -k"];
 		command = "/usr/bin/apropos"
 		
-		command += " \(EscapePath(aapropos, addSurroundingQuotes: true))"
+		command += " \(escapePath(aapropos, addSurroundingQuotes: true))"
 		guard let output = try? docController.dataByExecutingCommand(command, manPath: manPath) else {
 			parseOutput("")
 

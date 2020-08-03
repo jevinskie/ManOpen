@@ -592,7 +592,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					55C0CEEF19BE04D8009C50D7 = {
 						LastSwiftMigration = 1130;
@@ -1120,6 +1120,7 @@
 		D38A244F14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
@@ -1131,6 +1132,7 @@
 		D38A245014E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";

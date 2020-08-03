@@ -42,7 +42,7 @@ private var filterCommand: String {
 	let tool = "cat2rtf"
 	var command = Bundle.main.path(forResource: tool, ofType: nil)!
 	
-	command = EscapePath(command, addSurroundingQuotes: true)
+	command = escapePath(command, addSurroundingQuotes: true)
 	command += " -lH" // generate links, mark headers
 	if defaults.bool(forKey: kUseItalics) {
 		command += " -i"
@@ -336,13 +336,13 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			}
 		}
 		
-		let nroffCommand = String(format: nroffFormat, EscapePath(filename, addSurroundingQuotes: !hasQuote))
+		let nroffCommand = String(format: nroffFormat, escapePath(filename, addSurroundingQuotes: !hasQuote))
 		loadCommand(nroffCommand)
 	}
 	
 	func loadCatFile(_ filename: String, isGzip: Bool = false) {
 		let binary = isGzip ? "/usr/bin/gzip -dc" : "/bin/cat"
-		loadCommand("\(binary) '\(EscapePath(filename, addSurroundingQuotes: false))'")
+		loadCommand("\(binary) '\(escapePath(filename, addSurroundingQuotes: false))'")
 	}
 	
 	@IBAction func saveCurrentWindowSize(_ sender: AnyObject?) {

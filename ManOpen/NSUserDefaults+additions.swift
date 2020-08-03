@@ -17,14 +17,24 @@ let manBackgroundColorKey = "ManBackgroundColor"
 
 private func color(for key: String, defaults: UserDefaults = UserDefaults.standard) -> NSColor? {
 	if let colorData: Data = defaults[key] {
-		return NSKeyedUnarchiver.unarchiveObject(with: colorData) as? NSColor
+		if #available(OSX 10.13, *) {
+			if let dat1 = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: colorData) {
+				return dat1
+			}
+		} else {
+			return NSKeyedUnarchiver.unarchiveObject(with: colorData) as? NSColor
+		}
 	}
 	
 	return nil
 }
 
 internal func dataForColor(_ color: NSColor) -> Data {
-	return NSKeyedArchiver.archivedData(withRootObject: color)
+	if #available(OSX 10.13, *) {
+		return try! NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: true)
+	} else {
+		return NSKeyedArchiver.archivedData(withRootObject: color)
+	}
 }
 
 extension UserDefaults {

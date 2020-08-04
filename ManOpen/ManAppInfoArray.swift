@@ -8,7 +8,7 @@
 
 import Cocoa
 
-private func GenerateManInfos() -> [ManAppInfo] {
+private func generateManInfos() -> [ManAppInfo] {
 	var anAppInfo = [ManAppInfo]()
 	guard let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME as NSString)?.takeRetainedValue() as? [String] else {
 		return []
@@ -25,7 +25,7 @@ private func GenerateManInfos() -> [ManAppInfo] {
 }
 
 final class ManAppInfoArray: Sequence {
-	private(set) var allManViewerApps = GenerateManInfos()
+	private(set) var allManViewerApps = generateManInfos()
 	
 	init() {
 		sortApps()
@@ -63,7 +63,7 @@ final class ManAppInfoArray: Sequence {
 	private func sortApps() {
 		allManViewerApps.sort { (lhs, rhs) -> Bool in
 			let toRet = lhs.localizedCaseInsensitiveCompare(rhs)
-			return ComparisonResult.orderedAscending == toRet
+			return toRet == .orderedAscending
 		}
 	}
 	

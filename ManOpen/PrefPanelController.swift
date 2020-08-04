@@ -8,10 +8,11 @@
 
 import Cocoa
 import CoreServices
+import SwiftAdditions
 
 
-let ManPathIndexSetPboardType = NSPasteboard.PasteboardType(rawValue: "org.clindberg.ManOpen.ManPathIndexSetType")
-let ManPathArrayKey = "manPathArray"
+let manPathIndexSetPboardType = NSPasteboard.PasteboardType(rawValue: "org.clindberg.ManOpen.ManPathIndexSetType")
+let manPathArrayKey = "manPathArray"
 
 let URL_SCHEME = "x-man-page"
 let URL_SCHEME_PREFIX = URL_SCHEME + ":"
@@ -277,7 +278,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	// MARK: man paths
 
 	func setUpManPathUI() {
-		manPathTableView.registerForDraggedTypes([ourFileURL, .string, ManPathIndexSetPboardType])
+		manPathTableView.registerForDraggedTypes([ourFileURL, .string, manPathIndexSetPboardType])
 		manPathTableView.verticalMotionCanBeginDrag = true
 		// XXX NSDragOperationDelete -- not sure the "poof" drag can show that
 		manPathTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
@@ -303,7 +304,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		var insertIndex = atIndex
 		
-		self.willChangeValue(forKey: ManPathArrayKey)
+		self.willChangeValue(forKey: manPathArrayKey)
 		if let removeIndexesUn = removeIndexes {
 			var numBeforeInsertion = 0
 			
@@ -326,7 +327,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 			insertIndex += 1
 		}
 		
-		self.didChangeValue(forKey: ManPathArrayKey)
+		self.didChangeValue(forKey: manPathArrayKey)
 		saveManPath()
 	}
 	
@@ -375,8 +376,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let files = pathsAtIndexes(set)
 		
 		if writePaths(files, toPasteboard: pb) {
-			pb.addTypes([ManPathIndexSetPboardType], owner: nil)
-			return pb.setData(NSKeyedArchiver.archivedData(withRootObject: set), forType: ManPathIndexSetPboardType)
+			pb.addTypes([manPathIndexSetPboardType], owner: nil)
+			return pb.setData(NSKeyedArchiver.archivedData(withRootObject: set), forType: manPathIndexSetPboardType)
 		}
 		
 		return false
@@ -438,7 +439,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 		
 		/* If this is a dragging operation in the table itself, show the move icon */
-		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) && ((info.draggingSource as AnyObject?) === manPathTableView) {
+		if let pbtypes = pb.types, pbtypes.contains(manPathIndexSetPboardType) && ((info.draggingSource as AnyObject?) === manPathTableView) {
 			return .move;
 		}
 		
@@ -459,8 +460,8 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		var pathsToAdd: [String]? = [String]()
 		var removeSet: IndexSet? = nil
 		
-		if let pbtypes = pb.types, pbtypes.contains(ManPathIndexSetPboardType) {
-			if let indexData = pb.data(forType: ManPathIndexSetPboardType),
+		if let pbtypes = pb.types, pbtypes.contains(manPathIndexSetPboardType) {
+			if let indexData = pb.data(forType: manPathIndexSetPboardType),
 				dragOp.contains(.move),
 				let removeSet2 = NSKeyedUnarchiver.unarchiveObject(with: indexData) as? IndexSet {
 				removeSet = removeSet2

@@ -49,10 +49,7 @@ final class ManAppInfoArray: Sequence {
 			//return
 			fatalError("Could not find application with bundle identifier \"\(id)\"")
 		}
-		let contains = allManViewerApps.filter { (anObj) -> Bool in
-			return anObj == info
-		}
-		if contains.count == 0 {
+		if !allManViewerApps.contains(info) {
 			allManViewerApps.append(info)
 			if sort {
 				sortApps()

@@ -97,7 +97,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		NSUserDefaultsController.shared.initialValues = someDefaults
 	}
 	
-	fileprivate var fontFieldFont: NSFont? {
+	private var fontFieldFont: NSFont? {
 		get {
 			return fontField.font
 		}
@@ -110,7 +110,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		}
 	}
 	
-	fileprivate func setUpDefaultManViewerApp() {
+	private func setUpDefaultManViewerApp() {
 		resetCurrentApp()
 	}
 	
@@ -136,7 +136,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		return (sender as! NSFontManager).fontNamed(fontName, hasTraits: .fixedPitchFontMask)
 	}
 	
-	func changeFont(_ sender: Any!) {
+	@objc func changeFont(_ sender: Any!) {
 		guard var font = fontFieldFont,
 			let sender = sender as? NSFontManager else {
 			NSSound.beep()

@@ -19,7 +19,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 	
 	var title: String = ""
 	var searchString: String = ""
-	fileprivate var aproposItems: [(title: String, desc: String)] = []
+	private var aproposItems: [(title: String, desc: String)] = []
 	
 	override class func canConcurrentlyReadDocuments(ofType typeName: String) -> Bool {
 		return true
@@ -113,7 +113,7 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 		throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
 	}
 	
-	fileprivate func loadWithString(_ apropos: String, manPath: String, title aTitle: String) {
+	private func loadWithString(_ apropos: String, manPath: String, title aTitle: String) {
 		var aapropos = apropos
 		let docController = ManDocumentController.shared as! ManDocumentController
 		var command = docController.manCommand(manPath: manPath)

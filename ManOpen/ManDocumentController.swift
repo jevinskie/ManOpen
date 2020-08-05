@@ -209,7 +209,10 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		var catType = "cat"
 		var manType = "man"
 		var len: UInt64
-		if let anAttrib = try? manager.attributesOfItem(atPath: (url.path as NSString).resolvingSymlinksInPath) {
+		if let theAttribs = try? url.resolvingSymlinksInPath().resourceValues(forKeys: [.fileSizeKey]),
+			let aSize = theAttribs.fileSize {
+			len = UInt64(aSize)
+		} else if let anAttrib = try? manager.attributesOfItem(atPath: url.resolvingSymlinksInPath().path) {
 			if let tmplen = anAttrib[FileAttributeKey.size] as? NSNumber {
 				len = tmplen.uint64Value
 			} else {

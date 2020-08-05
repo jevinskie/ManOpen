@@ -59,15 +59,15 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	@IBOutlet weak var titleStringField: NSTextField!
 	@IBOutlet weak var openSelectionButton: NSButton!
 	@IBOutlet weak var sectionPopup: NSPopUpButton!
-	fileprivate var hasLoaded = false
-	fileprivate var restoreData = [String: Any]()
+	private var hasLoaded = false
+	private var restoreData = [String: Any]()
 	var sections: [(name: String, range: NSRange)] = [(name: String, range: NSRange)]()
 	
 	var shortTitle = ""
 	var copyURL: URL?
 	var taskData: Data?
 	
-	fileprivate var textView: ManTextView {
+	private var textView: ManTextView {
 		return textScroll.contentView.documentView as! ManTextView
 	}
 	

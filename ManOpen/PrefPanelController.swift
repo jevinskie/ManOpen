@@ -387,7 +387,15 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		let bestType = pb.availableType(from: [ourFileURL, .string])
 		
 		if bestType == ourFileURL {
-			return (pb.propertyList(forType: ourFileURL) as! [URL]).map({$0.path})
+			if let pbos = pb.readObjects(forClasses: [NSURL.self], options: [.urlReadingFileURLsOnly: true]) as? [URL] {
+				return pbos.map({$0.path})
+			}
+			guard let plo = pb.propertyList(forType: ourFileURL),
+				  let strVal = plo as? String,
+				  let urlVal = URL(string: strVal) else {
+				return nil
+			}
+			return [urlVal.path]
 		}
 		
 		if bestType == .string {
@@ -445,7 +453,7 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		
 		if let paths = self.paths(from: pb) {
 			for path in paths {
-				if manPathArrayPriv.contains(path) {
+				if !manPathArrayPriv.contains(path) {
 					return .copy
 				}
 			}

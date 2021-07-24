@@ -352,9 +352,10 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	
 	@IBAction func openSelection(_ sender: AnyObject?) {
 		let selectedRange = textView.selectedRange()
+		let str = textView.string
 		
-		if selectedRange.length > 0 {
-			let selectedString = (textView.string as NSString).substring(with: selectedRange)
+		if selectedRange.length > 0, let rang = Range(selectedRange, in: str) {
+			let selectedString = String(str[rang])
 			(ManDocumentController.shared as! ManDocumentController).openString(selectedString)
 		}
 		

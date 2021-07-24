@@ -89,6 +89,6 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 	
 	static func ==(lhs: ManAppInfo, rhs: ManAppInfo) -> Bool {
 		let toRet = lhs.bundleID.caseInsensitiveCompare(rhs.bundleID)
-		return toRet == ComparisonResult.orderedSame
+		return toRet == .orderedSame
 	}
 }

@@ -24,7 +24,7 @@ final class DisplayPathFormatter: Formatter {
 				}
 			}
 			
-			return anew;
+			return anew
 		}
 		return nil;
 	}

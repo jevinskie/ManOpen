@@ -38,11 +38,11 @@ class ManTextView: NSTextView {
 				
 				for aRect in rects {
 					if aRect.intersects(visible) {
-						addCursorRect(aRect, cursor: NSCursor.pointingHand)
+						addCursorRect(aRect, cursor: .pointingHand)
 					}
 				}
 			}
-			currIndex = currRange.upperBound;
+			currIndex = currRange.upperBound
 		}
 	}
 	

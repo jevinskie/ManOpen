@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,17 +21,17 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="141" y="361" width="605" height="454"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <value key="minSize" type="size" width="302" height="218"/>
             <view key="contentView" id="9">
                 <rect key="frame" x="0.0" y="0.0" width="605" height="454"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <visualEffectView wantsLayer="YES" appearanceType="inheritedVibrantLight" alphaValue="0.80000000000000004" blendingMode="behindWindow" material="titlebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="jn1-ui-9ut">
+                    <visualEffectView wantsLayer="YES" alphaValue="0.80000000000000004" blendingMode="behindWindow" material="titlebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="jn1-ui-9ut">
                         <rect key="frame" x="0.0" y="378" width="605" height="76"/>
                     </visualEffectView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="10">
-                        <rect key="frame" x="74" y="399" width="384" height="22"/>
+                        <rect key="frame" x="74" y="400" width="390" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="left" title="Title" id="62">
                             <font key="font" metaFont="system" size="18"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -47,7 +47,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSApplicationIcon" id="63"/>
                     </imageView>
                     <button toolTip=" Open selection " translatesAutoresizingMaskIntoConstraints="NO" id="25">
-                        <rect key="frame" x="543" y="391" width="44" height="45"/>
+                        <rect key="frame" x="542" y="390" width="46" height="47"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="DBq-iQ-6v7"/>
                             <constraint firstAttribute="width" constant="40" id="VBy-Pn-Y2B"/>
@@ -66,7 +66,7 @@
                             <rect key="frame" x="1" y="1" width="603" height="376"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" verticallyResizable="YES" findStyle="panel" allowsDocumentBackgroundColorChange="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpen" customModuleProvider="target">
+                                <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" verticallyResizable="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsDocumentBackgroundColorChange="YES" allowsNonContiguousLayout="YES" linkDetection="YES" dataDetection="YES" id="c9g-sk-2DN" customClass="ManTextView" customModule="ManOpen" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="603" height="376"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -90,7 +90,7 @@
                         </scroller>
                     </scrollView>
                     <popUpButton horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="45">
-                        <rect key="frame" x="461" y="402" width="79" height="22"/>
+                        <rect key="frame" x="466" y="402" width="75" height="22"/>
                         <popUpButtonCell key="cell" type="push" title="Section:" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" borderStyle="border" inset="2" pullsDown="YES" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="49" id="65">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -138,7 +138,7 @@
         </window>
     </objects>
     <resources>
-        <image name="NSApplicationIcon" width="128" height="128"/>
+        <image name="NSApplicationIcon" width="32" height="32"/>
         <image name="helpQMark" width="40" height="40"/>
     </resources>
 </document>

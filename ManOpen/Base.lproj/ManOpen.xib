@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -233,23 +233,23 @@
                                     <items>
                                         <menuItem title="Find…" tag="1" keyEquivalent="f" id="358">
                                             <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="391"/>
+                                                <action selector="performTextFinderAction:" target="-1" id="9Eu-9S-bqB"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Find Next" tag="2" keyEquivalent="g" id="359">
                                             <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="392"/>
+                                                <action selector="performTextFinderAction:" target="-1" id="Y4x-nu-syW"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Find Previous" tag="3" keyEquivalent="G" id="362">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                             <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="393"/>
+                                                <action selector="performTextFinderAction:" target="-1" id="Lln-KT-naZ"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Use Selection for Find" tag="7" keyEquivalent="e" id="360">
                                             <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="394"/>
+                                                <action selector="performTextFinderAction:" target="-1" id="ilk-uO-akN"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Jump to Selection" keyEquivalent="j" id="361">
@@ -301,6 +301,7 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="58" y="-36"/>
         </menu>
         <customObject id="54" userLabel="ManDocumentController" customClass="ManDocumentController" customModule="ManOpen" customModuleProvider="target"/>
         <customObject id="199" userLabel="Font Manager" customClass="NSFontManager"/>

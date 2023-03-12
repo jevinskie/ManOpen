@@ -51,6 +51,8 @@
 		55C0CF4719BE07E9009C50D7 /* ManOpen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */; };
 		55C0CF4819BE07E9009C50D7 /* ManPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF1E19BE07E9009C50D7 /* ManPage.xib */; };
 		55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */; };
+		55C2F39429BE70D6005E41EC /* FoundationAdditions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55C2F38529BE704D005E41EC /* FoundationAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55C2F39529BE72F8005E41EC /* FoundationAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C2F38529BE704D005E41EC /* FoundationAdditions.framework */; };
 		55EEBEC81D8B71DC00DDBF3F /* Data+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEBEC71D8B71DC00DDBF3F /* Data+Utils.swift */; };
 		D38A244914E4C3FE00F6AFFE /* openman.m in Sources */ = {isa = PBXBuildFile; fileRef = D39279770821FFA400376676 /* openman.m */; settings = {ATTRIBUTES = (); }; };
 		D38A244B14E4C3FE00F6AFFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
@@ -74,6 +76,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 558DC058217D04840022E081;
 			remoteInfo = QuartzAdditionsTests;
+		};
+		553D143B2733C2DD00D1F2B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5518F05A251D5D6600528AED;
+			remoteInfo = SIMDAdditions;
+		};
+		553D143D2733C2DD00D1F2B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5518F062251D5D6600528AED;
+			remoteInfo = SIMDAdditionsTests;
 		};
 		55553AF31BC46B8700377516 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -117,20 +133,6 @@
 			remoteGlobalIDString = 55706D991A1EC2440000FD93;
 			remoteInfo = SwiftIOKitAdditionsTests;
 		};
-		557AFB471A801CC8008BDF46 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55403A011A745003007A488E;
-			remoteInfo = ForceFeedbackAdditions;
-		};
-		557AFB491A801CC8008BDF46 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55403A0B1A745003007A488E;
-			remoteInfo = ForceFeedbackAdditionsTests;
-		};
 		557AFB4D1A801CD8008BDF46 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
@@ -158,6 +160,62 @@
 			proxyType = 1;
 			remoteGlobalIDString = D38A243A14E4C3FE00F6AFFE;
 			remoteInfo = "cat2html (Tool) (Upgraded)";
+		};
+		55C2F38429BE704D005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5560389426BF2CC800CD1984;
+			remoteInfo = FoundationAdditions;
+		};
+		55C2F38629BE704D005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5560389C26BF2CC800CD1984;
+			remoteInfo = FoundationAdditionsTests;
+		};
+		55C2F38829BE704D005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55BE4B2D270BC16600100A7D;
+			remoteInfo = TISAdditions;
+		};
+		55C2F38A29BE704D005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55BE4B36270BC16600100A7D;
+			remoteInfo = TISAdditionsTests;
+		};
+		55C2F38C29BE704D005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 559E68CF273FC0D90030C3DB;
+			remoteInfo = UTTypeOSTypes;
+		};
+		55C2F38E29BE704D005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 559E68D8273FC0DA0030C3DB;
+			remoteInfo = UTTypeOSTypesTests;
+		};
+		55C2F39029BE704D005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 554FE7A828C74A3400418258;
+			remoteInfo = ColorSyncHelpers;
+		};
+		55C2F39229BE704D005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 554FE7AF28C74A3400418258;
+			remoteInfo = ColorSyncHelpersTests;
 		};
 		55D64C1D1FD8D8B20061878C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -189,6 +247,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55C2F39429BE70D6005E41EC /* FoundationAdditions.framework in Embed Frameworks */,
 				557AFB4C1A801CD8008BDF46 /* SwiftAdditions.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -278,10 +337,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */,
+				55C2F39529BE72F8005E41EC /* FoundationAdditions.framework in Frameworks */,
+				55C0CF0919BE04D8009C50D7 /* AppKit.framework in Frameworks */,
 				557AFB4B1A801CD8008BDF46 /* SwiftAdditions.framework in Frameworks */,
 				553A5B2519BFEDD7003D74A9 /* Cocoa.framework in Frameworks */,
-				55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */,
-				55C0CF0919BE04D8009C50D7 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,14 +422,22 @@
 				557AFB421A801CC8008BDF46 /* SwiftAdditionsTests.xctest */,
 				557AFB441A801CC8008BDF46 /* SwiftIOKitAdditions.framework */,
 				557AFB461A801CC8008BDF46 /* SwiftIOKitAdditionsTests.xctest */,
-				557AFB481A801CC8008BDF46 /* ForceFeedbackAdditions.framework */,
-				557AFB4A1A801CC8008BDF46 /* ForceFeedbackAdditionsTests.xctest */,
 				55553AF41BC46B8700377516 /* SwiftAudioAdditions.framework */,
 				55553AF61BC46B8700377516 /* SwiftAudioAdditionsTests.xctest */,
 				55D64C1E1FD8D8B20061878C /* CoreTextAdditions.framework */,
 				55D64C201FD8D8B20061878C /* CoreTextAdditionsTests.xctest */,
 				5527B64223DE72CA00DF1BB2 /* QuartzAdditions.framework */,
 				5527B64423DE72CA00DF1BB2 /* QuartzAdditionsTests.xctest */,
+				553D143C2733C2DD00D1F2B4 /* SIMDAdditions.framework */,
+				553D143E2733C2DD00D1F2B4 /* SIMDAdditionsTests.xctest */,
+				55C2F38529BE704D005E41EC /* FoundationAdditions.framework */,
+				55C2F38729BE704D005E41EC /* FoundationAdditionsTests.xctest */,
+				55C2F38929BE704D005E41EC /* TISAdditions.framework */,
+				55C2F38B29BE704D005E41EC /* TISAdditionsTests.xctest */,
+				55C2F38D29BE704D005E41EC /* UTTypeOSTypes.framework */,
+				55C2F38F29BE704D005E41EC /* UTTypeOSTypesTests.xctest */,
+				55C2F39129BE704D005E41EC /* ColorSyncHelpers.framework */,
+				55C2F39329BE704D005E41EC /* ColorSyncHelpersTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -592,7 +660,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					55C0CEEF19BE04D8009C50D7 = {
 						LastSwiftMigration = 1130;
@@ -650,6 +718,20 @@
 			remoteRef = 5527B64323DE72CA00DF1BB2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		553D143C2733C2DD00D1F2B4 /* SIMDAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SIMDAdditions.framework;
+			remoteRef = 553D143B2733C2DD00D1F2B4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		553D143E2733C2DD00D1F2B4 /* SIMDAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SIMDAdditionsTests.xctest;
+			remoteRef = 553D143D2733C2DD00D1F2B4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		55553AF41BC46B8700377516 /* SwiftAudioAdditions.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -692,18 +774,60 @@
 			remoteRef = 557AFB451A801CC8008BDF46 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		557AFB481A801CC8008BDF46 /* ForceFeedbackAdditions.framework */ = {
+		55C2F38529BE704D005E41EC /* FoundationAdditions.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ForceFeedbackAdditions.framework;
-			remoteRef = 557AFB471A801CC8008BDF46 /* PBXContainerItemProxy */;
+			path = FoundationAdditions.framework;
+			remoteRef = 55C2F38429BE704D005E41EC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		557AFB4A1A801CC8008BDF46 /* ForceFeedbackAdditionsTests.xctest */ = {
+		55C2F38729BE704D005E41EC /* FoundationAdditionsTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ForceFeedbackAdditionsTests.xctest;
-			remoteRef = 557AFB491A801CC8008BDF46 /* PBXContainerItemProxy */;
+			path = FoundationAdditionsTests.xctest;
+			remoteRef = 55C2F38629BE704D005E41EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55C2F38929BE704D005E41EC /* TISAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TISAdditions.framework;
+			remoteRef = 55C2F38829BE704D005E41EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55C2F38B29BE704D005E41EC /* TISAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TISAdditionsTests.xctest;
+			remoteRef = 55C2F38A29BE704D005E41EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55C2F38D29BE704D005E41EC /* UTTypeOSTypes.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = UTTypeOSTypes.framework;
+			remoteRef = 55C2F38C29BE704D005E41EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55C2F38F29BE704D005E41EC /* UTTypeOSTypesTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UTTypeOSTypesTests.xctest;
+			remoteRef = 55C2F38E29BE704D005E41EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55C2F39129BE704D005E41EC /* ColorSyncHelpers.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ColorSyncHelpers.framework;
+			remoteRef = 55C2F39029BE704D005E41EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55C2F39329BE704D005E41EC /* ColorSyncHelpersTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ColorSyncHelpersTests.xctest;
+			remoteRef = 55C2F39229BE704D005E41EC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		55D64C1E1FD8D8B20061878C /* CoreTextAdditions.framework */ = {
@@ -903,9 +1027,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
 				CODE_SIGN_IDENTITY = "-";
+				CURRENT_PROJECT_VERSION = 3.0.2;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß";
+				INFOPLIST_KEY_NSMainNibFile = ManOpen;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 3.0.2;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -922,9 +1052,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
 				CODE_SIGN_IDENTITY = "-";
+				CURRENT_PROJECT_VERSION = 3.0.2;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß";
+				INFOPLIST_KEY_NSMainNibFile = ManOpen;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 3.0.2;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -960,6 +1096,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1022,6 +1159,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1076,6 +1214,7 @@
 		D38A243614E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
@@ -1087,6 +1226,7 @@
 		D38A243714E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
@@ -1098,6 +1238,7 @@
 		D38A244214E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
@@ -1109,6 +1250,7 @@
 		D38A244314E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";

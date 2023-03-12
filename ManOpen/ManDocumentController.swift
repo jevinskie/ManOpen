@@ -8,6 +8,7 @@
 
 import Cocoa
 import SwiftAdditions
+import FoundationAdditions
 import zlib
 
 private let MAN_BINARY = "/usr/bin/man"

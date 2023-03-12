@@ -24,12 +24,11 @@ let kQuitWhenLastClosed	= "QuitWhenLastClosed"
 let kNroffCommand		= "NroffCommand"
 
 
-class PrefPanelController: NSWindowController, NSTableViewDataSource {
+class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSource {
 
 	static let shared: PrefPanelController = {
 		let toRet = PrefPanelController(windowNibName: "PrefPanel")
 		toRet.shouldCascadeWindows = false
-		NSFontManager.shared.delegate = toRet
 		
 		return toRet
 	}()
@@ -116,7 +115,6 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 	
     override func windowDidLoad() {
 		self.shouldCascadeWindows = false
-		NSFontManager.shared.delegate = self
         super.windowDidLoad()
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
@@ -136,9 +134,9 @@ class PrefPanelController: NSWindowController, NSTableViewDataSource {
 		return (sender as! NSFontManager).fontNamed(fontName, hasTraits: .fixedPitchFontMask)
 	}
 	
-	@objc func changeFont(_ sender: Any!) {
+	func changeFont(_ sender: NSFontManager?) {
 		guard var font = fontFieldFont,
-			let sender = sender as? NSFontManager else {
+			let sender else {
 			NSSound.beep()
 			return
 		}

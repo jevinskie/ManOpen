@@ -62,7 +62,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	@IBOutlet weak var openSectionPopup: NSPopUpButton!
 	var startedUp = false
 	private var nibObjects = [AnyObject]()
-	private var bridge: ManBridgeCallback? = nil
+	private var messagePort: CFMessagePort?
 	
 	@objc func ensureActive() {
 		if !NSApplication.shared.isActive {
@@ -263,10 +263,10 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		}
 	}
 	
-	/// The super implementation will only call -makeDocument... etc. if the
+	/// The super implementation will only call `-makeDocument...`, etc. if the
 	/// file's extension is listed in in the NSTypes section in Info.plist.
 	/// Since we don't want to declare the typical .1, .2, etc. extensions,
-	/// plus the fact that often man pages outside of the typical MANPATH
+	/// plus the fact that often man pages outside of the typical `MANPATH`
 	/// directories often have other-than-standard extensions, we override
 	/// completely to avoid that chance, and instead determine the type of
 	/// the file based on contents.
@@ -500,13 +500,58 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	override init() {
 		super.init()
 		
-		/*
-		* Set ourselves up for DO connections.  I do it here so it's done as
-		* early as possible.  If the command-line tool still has problems
-		* connecting, we may be able to do this whole thing in main()...
-		*/
+		var context = CFMessagePortContext()
 		
-		bridge = ManBridgeCallback(manDocumentController: self)
+		// Set ourselves up for connections from the command line tool. Originally, this app used DO, but DO is deprecated, and even if it wasn't, it doesn't work in the sandbox. But Mach ports work, so we use that instead.
+		// If anyone other than me is building this, then you will need to replace my developer group ID with your own below. And you'll probably need to make the same change in the app group in the entitlements as well.
+		context.info = Unmanaged.passUnretained(self).toOpaque()
+		messagePort = CFMessagePortCreateLocal(nil, "8D98N325TG.org.clindberg.ManOpen.MachIPC" as CFString, { port, messageID, data, context -> Unmanaged<CFData>? in
+			guard let context, let data = data as Data? else {
+				return nil
+			}
+			let ourself = Unmanaged<ManDocumentController>.fromOpaque(context).takeUnretainedValue()
+			do {
+				guard let commands = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, NSArray.self, NSString.self, NSNumber.self], from: data) as? [String: Any] else {
+					return nil
+				}
+				
+				let manPath = (commands["ManPath"] as? String) ?? UserDefaults.standard.manPath
+				let apropos = (commands["Apropos"] as? Bool) ?? false
+				let files = commands["Files"] as? [String]
+				let namesAndSections = commands["NamesAndSections"] as? [[String: String]]
+				
+				if let files {
+					for file in files {
+						ourself.openDocument(withContentsOf: URL(fileURLWithPath: file), display: true) { document, wasOpen, error in
+							// Do Nothing
+						}
+					}
+				}
+				
+				if let namesAndSections {
+					for nameAndSection in namesAndSections {
+						guard let name = nameAndSection["Name"] else {
+							continue
+						}
+						if apropos {
+							ourself.openApropos(name, manPath: manPath, forceToFront: false)
+						} else {
+							ourself.openDocument(name: name, section: nameAndSection["Section"], manPath: manPath)
+						}
+					}
+				}
+				
+			} catch {
+				print("Encountered error decoding Message Port data: \(error)")
+			}
+			return nil
+		}, &context, nil)
+		
+		// don't crash if creating a message port didn't work
+		if let messagePort {
+			let messagePortRLS = CFMessagePortCreateRunLoopSource(nil, messagePort, 0)
+			CFRunLoopAddSource(CFRunLoopGetMain(), messagePortRLS, CFRunLoopMode.commonModes)
+		}
 		
 		PrefPanelController.registerManDefaults()
 		var tmpNibArray: NSArray? = nil

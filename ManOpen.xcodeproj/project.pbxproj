@@ -32,14 +32,14 @@
 		553A5B2619BFEDF6003D74A9 /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FA0821FFA400376676 /* NSData+Utils.m */; };
 		5567E0561A7D615E005013B3 /* ManNotificationCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 5567E0551A7D615E005013B3 /* ManNotificationCallback.m */; };
 		557AFAF61A800C4F008BDF46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 557AFAF81A800C4F008BDF46 /* Localizable.strings */; };
-		557AFB4B1A801CD8008BDF46 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557AFB401A801CC8008BDF46 /* SwiftAdditions.framework */; };
-		557AFB4C1A801CD8008BDF46 /* SwiftAdditions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 557AFB401A801CC8008BDF46 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		557AFB521A8032FA008BDF46 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 557AFB541A8032FA008BDF46 /* InfoPlist.strings */; };
 		55838C0719C0AF8B00FFEDDE /* DisplayPathFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */; };
 		55838C0819C0AF9100FFEDDE /* NSUserDefaults+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */; };
 		55838C0919C0B59600FFEDDE /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838BFF19C0AD2900FFEDDE /* AppInfo.swift */; };
 		55838C0B19C0B61700FFEDDE /* ManAppInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */; };
 		55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
+		55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
+		55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
 		55C0CEF819BE04D8009C50D7 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D39279350821FFA400376676 /* Credits.rtf */; };
 		55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
 		55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
@@ -133,13 +133,6 @@
 			remoteGlobalIDString = 55706D991A1EC2440000FD93;
 			remoteInfo = SwiftIOKitAdditionsTests;
 		};
-		557AFB4D1A801CD8008BDF46 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
 		557AFB551A8036A8008BDF46 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D39279890821FFA400376676 /* Project object */;
@@ -217,6 +210,13 @@
 			remoteGlobalIDString = 554FE7AF28C74A3400418258;
 			remoteInfo = ColorSyncHelpersTests;
 		};
+		55C2F3AC29BED381005E41EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5560389326BF2CC800CD1984;
+			remoteInfo = FoundationAdditions;
+		};
 		55D64C1D1FD8D8B20061878C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */;
@@ -248,7 +248,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				55C2F39429BE70D6005E41EC /* FoundationAdditions.framework in Embed Frameworks */,
-				557AFB4C1A801CD8008BDF46 /* SwiftAdditions.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,11 +316,13 @@
 		55E802A1188237F000037AF6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		55E802A3188237FA00037AF6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		55EEBEC71D8B71DC00DDBF3F /* Data+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Utils.swift"; sourceTree = "<group>"; };
+		55F13AB515103C1E0095B5A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptTerminology; name = en; path = en.lproj/ManOpen.scriptTerminology; sourceTree = "<group>"; };
 		D38A243814E4C3FE00F6AFFE /* cat2rtf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2rtf; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A244414E4C3FE00F6AFFE /* cat2html */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cat2html; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38A245114E4C3FE00F6AFFE /* openman */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = openman; sourceTree = BUILT_PRODUCTS_DIR; };
 		D39278FA0821FFA400376676 /* NSData+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Utils.m"; sourceTree = "<group>"; usesTabs = 0; };
 		D39279090821FFA400376676 /* NSData+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; usesTabs = 0; };
+		D392792F0821FFA400376676 /* ManOpen.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptSuite; path = ManOpen.scriptSuite; sourceTree = "<group>"; };
 		D39279370821FFA400376676 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		D39279560821FFA400376676 /* cat2rtf.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2rtf.l; sourceTree = "<group>"; usesTabs = 0; };
 		D39279690821FFA400376676 /* cat2html.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = cat2html.l; sourceTree = "<group>"; usesTabs = 0; };
@@ -339,7 +340,6 @@
 				55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */,
 				55C2F39529BE72F8005E41EC /* FoundationAdditions.framework in Frameworks */,
 				55C0CF0919BE04D8009C50D7 /* AppKit.framework in Frameworks */,
-				557AFB4B1A801CD8008BDF46 /* SwiftAdditions.framework in Frameworks */,
 				553A5B2519BFEDD7003D74A9 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,16 +373,18 @@
 		553A5B2419BFE86F003D74A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5553E21E1881F83E003C2DBF /* Images.xcassets */,
-				5527B64523DE733D00DF1BB2 /* ManOpen.sdef */,
-				D39279350821FFA400376676 /* Credits.rtf */,
-				5553E1FE1881F2C2003C2DBF /* Help.rtf */,
-				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,
-				55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */,
-				557AFAF81A800C4F008BDF46 /* Localizable.strings */,
-				557AFB541A8032FA008BDF46 /* InfoPlist.strings */,
 				55C0CF1819BE07E8009C50D7 /* Apropos.xib */,
+				D39279350821FFA400376676 /* Credits.rtf */,
 				55C0CF1A19BE07E8009C50D7 /* DocController.xib */,
+				5553E1FE1881F2C2003C2DBF /* Help.rtf */,
+				5553E21E1881F83E003C2DBF /* Images.xcassets */,
+				55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */,
+				557AFB541A8032FA008BDF46 /* InfoPlist.strings */,
+				557AFAF81A800C4F008BDF46 /* Localizable.strings */,
+				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,
+				D392792F0821FFA400376676 /* ManOpen.scriptSuite */,
+				55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */,
+				5527B64523DE733D00DF1BB2 /* ManOpen.sdef */,
 				55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */,
 				55C0CF1E19BE07E9009C50D7 /* ManPage.xib */,
 				55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */,
@@ -590,9 +592,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				55C2F3AD29BED381005E41EC /* PBXTargetDependency */,
 				55C0CEF019BE04D8009C50D7 /* PBXTargetDependency */,
 				55C0CEF219BE04D8009C50D7 /* PBXTargetDependency */,
-				557AFB4E1A801CD8008BDF46 /* PBXTargetDependency */,
 			);
 			name = ManOpen;
 			productInstallPath = "$(HOME)/Apps";
@@ -859,7 +861,9 @@
 				55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */,
 				55C0CF4619BE07E9009C50D7 /* DocController.xib in Resources */,
 				557AFAF61A800C4F008BDF46 /* Localizable.strings in Resources */,
+				55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */,
 				55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */,
+				55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,11 +916,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		557AFB4E1A801CD8008BDF46 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 557AFB4D1A801CD8008BDF46 /* PBXContainerItemProxy */;
-		};
 		557AFB561A8036A8008BDF46 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 55C0CEEF19BE04D8009C50D7 /* ManOpen */;
@@ -931,6 +930,11 @@
 			isa = PBXTargetDependency;
 			target = D38A243A14E4C3FE00F6AFFE /* cat2html */;
 			targetProxy = 55C0CEF319BE04D8009C50D7 /* PBXContainerItemProxy */;
+		};
+		55C2F3AD29BED381005E41EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FoundationAdditions;
+			targetProxy = 55C2F3AC29BED381005E41EC /* PBXContainerItemProxy */;
 		};
 		D38A247D14E4C7FC00F6AFFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1009,6 +1013,14 @@
 			name = PrefPanel.xib;
 			sourceTree = "<group>";
 		};
+		55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55F13AB515103C1E0095B5A9 /* en */,
+			);
+			name = ManOpen.scriptTerminology;
+			sourceTree = "<group>";
+		};
 		D39279350821FFA400376676 /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1025,7 +1037,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
 				CODE_SIGN_IDENTITY = "-";
-				CURRENT_PROJECT_VERSION = 3.0.2;
+				CURRENT_PROJECT_VERSION = 3.1.0;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1036,7 +1048,7 @@
 				INFOPLIST_KEY_NSMainNibFile = ManOpen;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 3.0.2;
+				MARKETING_VERSION = 3.1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1053,7 +1065,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
 				CODE_SIGN_IDENTITY = "-";
-				CURRENT_PROJECT_VERSION = 3.0.2;
+				CURRENT_PROJECT_VERSION = 3.1.0;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1064,7 +1076,7 @@
 				INFOPLIST_KEY_NSMainNibFile = ManOpen;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 3.0.2;
+				MARKETING_VERSION = 3.1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1275,8 +1287,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				CURRENT_PROJECT_VERSION = 3.0.0;
 				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
@@ -1288,8 +1302,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				CURRENT_PROJECT_VERSION = 3.0.0;
 				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;

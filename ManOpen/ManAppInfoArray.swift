@@ -7,16 +7,26 @@
 //
 
 import Cocoa
+import CoreServices
 
 private func generateManInfos() -> [ManAppInfo] {
 	var anAppInfo = [ManAppInfo]()
-	guard let allBundleIDs = LSCopyAllHandlersForURLScheme(URL_SCHEME as NSString)?.takeRetainedValue() as? [String] else {
+	var components = URLComponents()
+	components.scheme = URL_SCHEME
+	components.host = "man"
+	let allBundleURLs: [URL]?
+	if #available(macOS 12.0, *) {
+		allBundleURLs = NSWorkspace.shared.urlsForApplications(toOpen: components.url!)
+	} else {
+		allBundleURLs = LSCopyApplicationURLsForURL(components.url! as NSURL, .viewer)?.takeRetainedValue() as? [URL]
+	}
+	guard let allBundleURLs else {
 		return []
 	}
-	anAppInfo.reserveCapacity(allBundleIDs.count)
+	anAppInfo.reserveCapacity(allBundleURLs.count)
 	
-	for bundleID in allBundleIDs {
-		if let mai = ManAppInfo(bundleID: bundleID) {
+	for bundleURL in allBundleURLs {
+		if let mai = ManAppInfo(url: bundleURL) {
 			anAppInfo.append(mai)
 		}
 	}
@@ -64,7 +74,7 @@ final class ManAppInfoArray: Sequence {
 		}
 	}
 	
-	func index(bundleID: String?) -> Int? {
+	func firstIndex(withBundleID bundleID: String?) -> Int? {
 		guard let bundleID = bundleID else {
 			return nil
 		}
@@ -77,4 +87,17 @@ final class ManAppInfoArray: Sequence {
 		
 		return nil
 	}
+	
+	func indexes(withBundleID bundleID: String) -> IndexSet {
+		var idxSet = IndexSet()
+		
+		for (i, obj) in allManViewerApps.enumerated() {
+			if obj == bundleID {
+				idxSet.insert(i)
+			}
+		}
+		
+		return idxSet
+	}
+
 }

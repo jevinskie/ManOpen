@@ -173,7 +173,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 	// MARK: DefaultManApp
 	
 	func setAppPopupToCurrent() {
-		let currIndex = appInfos.index(bundleID: currentAppID) ?? 0
+		let currIndex = appInfos.firstIndex(withBundleID: currentAppID) ?? 0
 		
 		if currIndex < appPopup.numberOfItems {
 			appPopup.selectItem(at: currIndex)
@@ -190,10 +190,15 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 		for (i, info) in appInfos.enumerated() {
 			let image = workspace.icon(forFile: info.appURL.path).copy() as! NSImage
 			let niceName = info.displayName
-			let displayName = niceName
-			//var num = 2
+			var displayName = niceName
+			var num = 2
 			
 			appPopup.addItem(withTitle: displayName)
+			while (appPopup.itemArray.count - 1) < i {
+				displayName = "\(niceName)-\(num)"
+				appPopup.addItem(withTitle: displayName)
+				num += 1
+			}
 			
 			image.size = NSSize(width: 16, height: 16)
 			appPopup.item(at: i)?.image = image
@@ -224,7 +229,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 			
 			currentAppID = currSetID
 			
-			if appInfos.index(bundleID: currSetID) == nil {
+			if appInfos.firstIndex(withBundleID: currSetID) == nil {
 				appInfos.addApp(identifier: currSetID, shouldResort: true)
 				resetPopup = true
 			}

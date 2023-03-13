@@ -42,11 +42,7 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 		return niceName
 		}()
 	
-	private(set) lazy var appURL: URL = {
-		let workSpace = NSWorkspace.shared
-		let path = workSpace.absolutePathForApplication(withBundleIdentifier: self.bundleID)!
-		return URL(fileURLWithPath: path)
-		}()
+	let appURL: URL
 	
 	func isEqual(_ other: Any?) -> Bool {
 		if let isAppInfo = other as? ManAppInfo {
@@ -58,17 +54,30 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 		}
 	}
 	
-	init?(bundleID aBundleID: String) {
-		bundleID = aBundleID
-		
-		let workSpace = NSWorkspace.shared
-		if workSpace.absolutePathForApplication(withBundleIdentifier: aBundleID) == nil {
+	convenience init?(bundleID aBundleID: String) {
+		guard let bundURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: aBundleID) else {
 			return nil
 		}
+		self.init(url: bundURL)
+	}
+
+	init?(url: URL) {
+		appURL = url
+		
+		guard let ident = Bundle(url: url)?.bundleIdentifier else {
+			return nil
+		}
+		bundleID = ident
 	}
 	
 	func hash(into hasher: inout Hasher) {
-		bundleID.lowercased().hash(into: &hasher)
+		guard let ident = try? appURL.resourceValues(forKeys: [.fileResourceIdentifierKey]).fileResourceIdentifier else {
+			bundleID.lowercased().hash(into: &hasher)
+			return
+		}
+		// sssh... fileResourceIdentifiers are secretly NSData objects
+		let ident2 = ident as! NSData
+		(ident2 as Data).hash(into: &hasher)
 	}
 	
 	func compare(_ string: ManAppInfo) -> ComparisonResult {

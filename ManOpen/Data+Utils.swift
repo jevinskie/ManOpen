@@ -17,9 +17,10 @@ private var gzipHeader: [UInt8] {
 	return [0o037, 0o213]
 }
 //let arr = "{\\rtf".cString(using: String.Encoding.ascii)!.map({UInt8($0)})
-private var rtfStart: [UInt8] {
-	return [0x7B, 0x5C, 0x72, 0x74, 0x66]
-}
+private let rtfStart: Data = {
+	let preDat: [UInt8] = [0x7B, 0x5C, 0x72, 0x74, 0x66]
+	return Data(preDat)
+}()
 
 extension Data {
 	/// Checks the data to see if it looks like the start of an nroff file.

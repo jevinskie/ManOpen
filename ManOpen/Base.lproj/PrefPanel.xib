@@ -167,9 +167,9 @@
                                             </constraints>
                                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <binding destination="476" name="value" keyPath="values.ManTextColor" id="509">
+                                                <binding destination="476" name="value" keyPath="values.ManTextColor" id="84o-Ed-faw">
                                                     <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                                        <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -186,9 +186,9 @@
                                             <rect key="frame" x="17" y="64" width="59" height="35"/>
                                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <binding destination="476" name="value" keyPath="values.ManLinkColor" id="508">
+                                                <binding destination="476" name="value" keyPath="values.ManLinkColor" id="U1M-wV-K5f">
                                                     <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                                        <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -205,9 +205,9 @@
                                             <rect key="frame" x="17" y="32" width="59" height="35"/>
                                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <binding destination="476" name="value" keyPath="values.ManBackgroundColor" id="507">
+                                                <binding destination="476" name="value" keyPath="values.ManBackgroundColor" id="eLf-bp-oXh">
                                                     <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                                        <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -306,7 +306,7 @@
                                             <rect key="frame" x="20" y="98" width="261" height="160"/>
                                             <clipView key="contentView" id="yhs-IU-Tdc">
                                                 <rect key="frame" x="1" y="1" width="259" height="158"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="14" id="465">
                                                         <rect key="frame" x="0.0" y="0.0" width="259" height="158"/>
@@ -315,7 +315,7 @@
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn editable="NO" width="247" minWidth="40" maxWidth="1000" id="466">
+                                                            <tableColumn editable="NO" width="218" minWidth="40" maxWidth="1000" id="466">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>

@@ -17,13 +17,21 @@ let manBackgroundColorKey = "ManBackgroundColor"
 
 private func color(for key: String, defaults: UserDefaults = UserDefaults.standard) -> NSColor? {
 	if let colorData: Data = defaults[key] {
+		var colorRet: NSColor? = nil
 		if #available(OSX 10.13, *) {
 			if let dat1 = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: colorData) {
-				return dat1
+				colorRet = dat1
 			}
 		} else {
-			return NSKeyedUnarchiver.unarchiveObject(with: colorData) as? NSColor
+			colorRet = NSKeyedUnarchiver.unarchiveObject(with: colorData) as? NSColor
 		}
+		if colorRet == nil {
+			if let colorRet1 = NSUnarchiver.unarchiveObject(with: colorData) as? NSColor {
+				colorRet = colorRet1
+				defaults[key] = dataForColor(colorRet1)
+			}
+		}
+		return colorRet
 	}
 	
 	return nil

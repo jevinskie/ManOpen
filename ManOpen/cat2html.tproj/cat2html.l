@@ -154,7 +154,7 @@
     static void emitUnicode(unsigned charNum)
     {
         char entityBuf[20];
-        sprintf(entityBuf, "&#x%x;", charNum);
+        snprintf(entityBuf, sizeof(entityBuf), "&#x%x;", charNum);
         emitRaw(entityBuf);
     }
 

@@ -37,6 +37,7 @@
 		55838C0819C0AF9100FFEDDE /* NSUserDefaults+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */; };
 		55838C0919C0B59600FFEDDE /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838BFF19C0AD2900FFEDDE /* AppInfo.swift */; };
 		55838C0B19C0B61700FFEDDE /* ManAppInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */; };
+		55B7910729BFC13400E018E9 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55B7910929BFC13400E018E9 /* ServicesMenu.strings */; };
 		55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
 		55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
 		55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
@@ -294,6 +295,7 @@
 		55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManAppInfoArray.swift; sourceTree = "<group>"; };
 		55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayPathFormatter.swift; sourceTree = "<group>"; };
 		55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+additions.swift"; sourceTree = "<group>"; };
+		55B7910829BFC13400E018E9 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManDocumentController.swift; sourceTree = "<group>"; };
 		55C0CF1019BE04D8009C50D7 /* ManOpen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C0CF1919BE07E8009C50D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Apropos.xib; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */,
 				55C0CF1E19BE07E9009C50D7 /* ManPage.xib */,
 				55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */,
+				55B7910929BFC13400E018E9 /* ServicesMenu.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -864,6 +867,7 @@
 				55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */,
 				55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */,
 				55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */,
+				55B7910729BFC13400E018E9 /* ServicesMenu.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,6 +970,14 @@
 				557AFB531A8032FA008BDF46 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		55B7910929BFC13400E018E9 /* ServicesMenu.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55B7910829BFC13400E018E9 /* en */,
+			);
+			name = ServicesMenu.strings;
 			sourceTree = "<group>";
 		};
 		55C0CF1819BE07E8009C50D7 /* Apropos.xib */ = {

@@ -8,7 +8,7 @@
 
 import Cocoa
 import CoreServices
-import SwiftAdditions
+import FoundationAdditions
 
 
 let manPathIndexSetPboardType = NSPasteboard.PasteboardType(rawValue: "org.clindberg.ManOpen.ManPathIndexSetType")

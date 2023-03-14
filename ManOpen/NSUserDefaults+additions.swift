@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import SwiftAdditions
+import FoundationAdditions
 
 let manTextColorKey = "ManTextColor"
 let manLinkColorKey = "ManLinkColor"

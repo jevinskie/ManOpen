@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import SwiftAdditions
+import FoundationAdditions
 #if USE_CGCONTEXT_FOR_PRINTING
 import CoreText
 #endif

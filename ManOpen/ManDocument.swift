@@ -8,7 +8,7 @@
 
 import Cocoa
 import ApplicationServices
-import SwiftAdditions
+import FoundationAdditions
 
 private let RestoreWindowDictKey = "RestoreWindowInfo"
 private let RestoreSectionKey    = "Section"

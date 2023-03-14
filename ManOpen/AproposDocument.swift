@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import SwiftAdditions
+import FoundationAdditions
 
 private let restoreSearchString = "SearchString"
 private let restoreTitle = "Title"

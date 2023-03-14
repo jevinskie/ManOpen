@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import SwiftAdditions
 import FoundationAdditions
 import zlib
 

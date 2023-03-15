@@ -94,7 +94,7 @@
 		</dict>
 	</array>
 	<key>CFBundleGetInfoString</key>
-	<string>ManOpen 3.0.2 © 2012 Carl Lindberg, 2010 Jan Weiß</string>
+	<string>ManOpen $(MARKETING_VERSION) © 2012 Carl Lindberg, 2010 Jan Weiß</string>
 	<key>CFBundleSignature</key>
 	<string>MnOp</string>
 	<key>CFBundleURLTypes</key>
@@ -122,7 +122,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>ManOpen/Open Man File</string>
+				<string>Open File in ManOpen</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>openFiles</string>
@@ -150,7 +150,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>ManOpen/Open Man Selection</string>
+				<string>Open man Page in ManOpen</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>openSelection</string>
@@ -178,7 +178,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>ManOpen/Apropos Selection</string>
+				<string>Search man Page Index in ManOpen</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>openApropos</string>

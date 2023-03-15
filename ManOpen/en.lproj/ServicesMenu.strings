@@ -6,6 +6,6 @@
   
 */
 
-"ManOpen/Open Man File" = "Open File in ManOpen";
-"ManOpen/Open Man Selection" = "Open man Page in ManOpen";
-"ManOpen/Apropos Selection" = "Search man Page Index in ManOpen";
+"Open File in ManOpen" = "Open File in ManOpen";
+"Open man Page in ManOpen" = "Open man Page in ManOpen";
+"Search man Page Index in ManOpen" = "Search man Page Index in ManOpen";

@@ -15,6 +15,7 @@ func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 
 final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 	let bundleID: String
+	let appURL: URL
 	
 	private(set) lazy var displayName: String = {
 		let url = self.appURL
@@ -41,8 +42,6 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 		
 		return niceName
 		}()
-	
-	let appURL: URL
 	
 	func isEqual(_ other: Any?) -> Bool {
 		if let isAppInfo = other as? ManAppInfo {
@@ -72,12 +71,12 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 	
 	func hash(into hasher: inout Hasher) {
 		guard let ident = try? appURL.resourceValues(forKeys: [.fileResourceIdentifierKey]).fileResourceIdentifier else {
-			bundleID.lowercased().hash(into: &hasher)
+			hasher.combine(bundleID.lowercased())
 			return
 		}
 		// sssh... fileResourceIdentifiers are secretly NSData objects
 		let ident2 = ident as! NSData
-		(ident2 as Data).hash(into: &hasher)
+		hasher.combine(ident2)
 	}
 	
 	func compare(_ string: ManAppInfo) -> ComparisonResult {

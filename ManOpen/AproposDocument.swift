@@ -72,7 +72,8 @@ class AproposDocument: NSDocument, NSTableViewDataSource {
 			}
 			
 			if let aDashRange = dashRange {
-				let title = String(line[line.startIndex ..< aDashRange.lowerBound]).trimmingCharacters(in: CharacterSet.whitespaces)
+				let preTitle = line[line.startIndex ..< aDashRange.lowerBound]
+				let title = preTitle.trimmingCharacters(in: .whitespaces)
 				let adescription = line[aDashRange.upperBound ..< line.endIndex]
 				aproposItems.append((title: title, desc: String(adescription)))
 			}

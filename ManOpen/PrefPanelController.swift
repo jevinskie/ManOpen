@@ -24,7 +24,7 @@ let kQuitWhenLastClosed	= "QuitWhenLastClosed"
 let kNroffCommand		= "NroffCommand"
 
 
-class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSource {
+class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSource, NSMenuItemValidation {
 
 	static let shared: PrefPanelController = {
 		let toRet = PrefPanelController(windowNibName: "PrefPanel")
@@ -56,7 +56,6 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 	@IBOutlet weak var appPopup: NSPopUpButton!
 	
 	class func registerManDefaults() {
-		let userDefaults = UserDefaults.standard
 		let manager = FileManager.default
 		let nroff = "nroff -mandoc '%@'"
 		var manpath = "/usr/local/man:/usr/local/share/man:/usr/share/man"
@@ -77,7 +76,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 		}
 
 		
-		let linkDefaultColor = dataForColor(NSColor(srgbRed: 0.10, green: 0.10, blue: 1.0, alpha: 1.0))
+		let linkDefaultColor = dataForColor(NSColor.systemBlue)
 		let textDefaultColor = dataForColor(NSColor.textColor)
 		let bgDefaultColor = dataForColor(NSColor.textBackgroundColor)
 		
@@ -92,7 +91,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 		                                    manBackgroundColorKey:	bgDefaultColor,
 		                                    "NSQuitAlwaysKeepsWindows":	true]
 		
-		userDefaults.register(defaults: someDefaults)
+		UserDefaults.standard.register(defaults: someDefaults)
 		NSUserDefaultsController.shared.initialValues = someDefaults
 	}
 	
@@ -146,6 +145,10 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 		self.fontFieldFont = font
 		let fontString = "\(font.pointSize) \(font.fontName)"
 		UserDefaults.standard[manFontKey] = fontString
+	}
+	
+	func validModesForFontPanel(_ fontPanel: NSFontPanel) -> NSFontPanel.ModeMask {
+		return [.face, .size, .collection]
 	}
 	
 	func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
@@ -482,7 +485,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 			pathsToAdd = paths(from: pb)
 		}
 		
-		if let pathsToAdd = pathsToAdd, pathsToAdd.count > 0 {
+		if let pathsToAdd, pathsToAdd.count > 0 {
 			addPathDirectories(pathsToAdd, atIndex: row, removeFirst: removeSet)
 			return true
 		}

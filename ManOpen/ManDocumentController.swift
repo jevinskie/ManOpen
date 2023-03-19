@@ -660,7 +660,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		guard let types = pboard.types else {
 			return
 		}
-		if types.contains(ourFileURL), let fileArray = pboard.propertyList(forType: ourFileURL) as? [URL] {
+		if types.contains(ourFileURL),
+		   let fileArray = pboard.readObjects(forClasses: [NSURL.self], options: [.urlReadingFileURLsOnly: true]) as? [URL] {
 			for tmpPath in fileArray {
 				openDocument(withContentsOf: tmpPath, display: true, completionHandler: { (doc, display, error) in
 					//Swift.print("document: '\(String(describing: doc))', Display: \(display), Error '\(String(describing: error))'")
@@ -670,7 +671,9 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	}
 	
 	@objc func openSelection(_ pboard: NSPasteboard, userData: String, error: AutoreleasingUnsafeMutablePointer<NSString?>?) {
-		if let types = pboard.types, types.contains(.string), let pboardString = pboard.string(forType: .string) {
+		if let types = pboard.types,
+		   types.contains(.string),
+		   let pboardString = pboard.string(forType: .string) {
 			openString(pboardString)
 		}
 	}
@@ -746,9 +749,9 @@ class ManOpenURLHandlerCommand : NSScriptCommand {
 			let path = param[aRange.upperBound...]
 			let components = (path as NSString).pathComponents
 			
+			var section: String? = nil
 			for name in components {
-				var section: String? = nil
-				if name.count == 0 || name == "" {
+				if name.count == 0 || name == "" || name == "/" {
 					continue
 				}
 				if isSectionWord(name) {

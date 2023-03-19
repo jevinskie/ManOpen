@@ -99,5 +99,4 @@ final class ManAppInfoArray: Sequence {
 		
 		return idxSet
 	}
-
 }

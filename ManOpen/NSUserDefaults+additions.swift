@@ -110,6 +110,10 @@ extension UserDefaults {
 			}
 		}
 		
-		return NSFont.userFixedPitchFont(ofSize: 12.0)! // Monaco, or Menlo
+		if #available(macOS 10.15, *) {
+			return NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
+		} else {
+			return NSFont.userFixedPitchFont(ofSize: 12.0)! // Monaco, or Menlo
+		}
 	}
 }

@@ -172,7 +172,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		
 		if let section = section, section.count > 0 {
 			command += " " + section.lowercased()
-			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(section)/\(title)")
+			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(section)/\(name)")
 		} else {
 			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(title)")
 		}
@@ -225,6 +225,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		let family = manFont.familyName ?? manFont.fontName
 		let size = manFont.pointSize
 		
+		// MARK: Iterate over data
 		exceptionBlock(try: { () -> Void in
 			var currIndex = 0
 			storage.beginEditing()
@@ -240,6 +241,29 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				}
 				
 				let isLink = attribs[.link] != nil
+				//Convert link to something that Terminal likes.
+				//TODO: put this in cat2rtf!
+				if let link = attribs[.link] as? URL,
+				   let components = URLComponents(url: link, resolvingAgainstBaseURL: false),
+				   components.scheme == URL_SCHEME {
+					let path = components.path
+					var comp2 = URLComponents()
+					comp2.scheme = URL_SCHEME
+					if let fp = path.range(of: "("),
+					   let lp = path.range(of: ")") {
+						comp2.host = String(path[fp.upperBound ..< lp.lowerBound])
+						comp2.path = "/" + String(path[path.startIndex ..< fp.lowerBound])
+					} else {
+						var path2 = path
+						if path2.hasPrefix("/") {
+							path2.removeFirst()
+						}
+						comp2.host = path2
+					}
+					if let newURL = comp2.url {
+						storage.addAttribute(.link, value: newURL, range: currRange)
+					}
+				}
 				
 				if var font = font {
 					if font.familyName != family {
@@ -265,10 +289,9 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				
 				currIndex = currRange.upperBound
 			}
-			
-			storage.endEditing()
 		}, catch: { (localException) -> Void in
 			Swift.print("Exception during formatting: \(localException)")
+		}, finally: {
 			storage.endEditing()
 		})
 		

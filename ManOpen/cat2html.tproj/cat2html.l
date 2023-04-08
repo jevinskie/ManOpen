@@ -335,7 +335,7 @@ _\010{ALLBUTUL}        {
 
 %%
 
-static void usage() {
+static void usage(void) {
 
     fprintf(stderr,"Usage: cat2html [-il] [<filename>]\n"
         "\tTranslate output of (g)nroff to HTML. If no\n"

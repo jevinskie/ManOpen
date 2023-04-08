@@ -374,7 +374,7 @@ _\010{ALLBUTUL}        {
 
 %%
 
-static void usage() {
+static void usage(void) {
 
     fprintf(stderr,"Usage: cat2rtf [-gil] [-s <num>| -S] [<filename>]\n"
         "\tTranslate output of (g)nroff to RTF. If no\n"

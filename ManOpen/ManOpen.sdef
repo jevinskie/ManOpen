@@ -154,6 +154,7 @@
 	</suite>
 	<suite name="ManOpen Commands" code="Mopn" description="Commands to handle a URL">
 		<command name="GetURL" code="GURLGURL" description="Opens an x-man-page: URL">
+			<cocoa class="ManOpenURLHandlerCommand"/>
 			<direct-parameter type="specifier" description="the object for the command"/>
 		</command>
 	</suite>

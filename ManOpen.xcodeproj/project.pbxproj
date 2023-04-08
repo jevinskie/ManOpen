@@ -39,8 +39,6 @@
 		55838C0B19C0B61700FFEDDE /* ManAppInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */; };
 		55B7910729BFC13400E018E9 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55B7910929BFC13400E018E9 /* ServicesMenu.strings */; };
 		55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
-		55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D392792F0821FFA400376676 /* ManOpen.scriptSuite */; };
-		55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */; };
 		55C0CEF819BE04D8009C50D7 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D39279350821FFA400376676 /* Credits.rtf */; };
 		55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
 		55C0CF0819BE04D8009C50D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39279810821FFA400376676 /* Foundation.framework */; };
@@ -864,9 +862,7 @@
 				55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */,
 				55C0CF4619BE07E9009C50D7 /* DocController.xib in Resources */,
 				557AFAF61A800C4F008BDF46 /* Localizable.strings in Resources */,
-				55C0CEF619BE04D8009C50D7 /* ManOpen.scriptSuite in Resources */,
 				55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */,
-				55C0CEF719BE04D8009C50D7 /* ManOpen.scriptTerminology in Resources */,
 				55B7910729BFC13400E018E9 /* ServicesMenu.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

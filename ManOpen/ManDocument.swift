@@ -40,7 +40,7 @@ private var filterCommand: String {
 	/* HTML parser in tiger got slow... RTF is faster, and is usable now that it supports hyperlinks */
 	//let tool = "cat2html"
 	let tool = "cat2rtf"
-	var command = Bundle.main.path(forResource: tool, ofType: nil)!
+	var command = Bundle.main.path(forAuxiliaryExecutable: tool)!
 	
 	command = escapePath(command, addSurroundingQuotes: true)
 	command += " -lH" // generate links, mark headers

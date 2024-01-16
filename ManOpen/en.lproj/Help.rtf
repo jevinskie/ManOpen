@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2708
+{\rtf1\ansi\ansicpg1252\cocoartf2759
 \cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fmodern\fcharset0 CourierNewPSMT;
 }
 {\colortbl;\red255\green255\blue255;}
@@ -73,7 +73,7 @@ The nroff formatting command used for opening nroff-source files can be specifie
 Finally, the list of paths searched for manual pages can be specified.  By default, these are the standard system path plus the typical path for third-party pages; more paths can be added if necessary.  Drag and drop to change the order of the path, and use the \'93+\'94 button or drag folders from Finder to add more.  Copy and paste of colon-separated paths is also supported. These paths will be passed to the man(1) command using the -M flag.\
 \pard\tx532\tx1065\tx1601\tx2135\tx2667\tx3202\tx3736\tx4270\tx4802\tx5337\pardirnatural\partightenfactor0
 \cf0 \
-ManOpen supports the \'93x-man-page\'94 URL scheme that was introduced by Apple in MacOS X 10.3 (Panther), where Terminal.app handles it by invoking man(1) in a new window.  This is used when hyperlinks like {\field{\*\fldinst{HYPERLINK "x-man-page://ls"}}{\fldrslt x-man-page://ls}} are opened.  ManOpen also supports this scheme by opening a new window.  It also includes a preference to set the default application, similar to the Web Browser preference in Safari.app.  If this isn\'92t changed, Terminal.app will continue to be the application used.\
+ManOpen supports the \'93x-man-page\'94 URL scheme that was introduced by Apple in Mac OS X 10.3 (Panther), where Terminal.app handles it by invoking man(1) in a new window.  This is used when hyperlinks like {\field{\*\fldinst{HYPERLINK "x-man-page://ls"}}{\fldrslt x-man-page://ls}} are opened.  ManOpen also supports this scheme by opening a new window.  It also includes a preference to set the default application, similar to the Web Browser preference in Safari.app.  If this isn\'92t changed, Terminal.app will continue to be the application used.\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
@@ -83,7 +83,7 @@ ManOpen supports the \'93x-man-page\'94 URL scheme that was introduced by Apple 
 \pard\tx532\tx1065\tx1601\tx2135\tx2667\tx3202\tx3736\tx4270\tx4802\tx5337\pardirnatural\partightenfactor0
 \cf0 There is an \'93openman\'94 command-line tool provided in this package.  This has a syntax similar to the man(1) command, but it messages the ManOpen application to display the pages there.  To install the tool, put it somewhere in the standard Unix $PATH, such as /usr/local/bin.  It is further documented in its man page.\
 \
-Starting with MacOS X 10.2, /usr/local/bin is no longer in the default $PATH, so you\'92ll need to add it yourself.  If you use tcsh, in your ~/.[t]cshrc file, add the line:\
+Starting with Mac OS X 10.2, /usr/local/bin is no longer in the default $PATH, so you\'92ll need to add it yourself.  If you use tcsh, in your ~/.[t]cshrc file, add the line:\
 \
 \pard\tx532\tx1065\tx1601\tx2135\tx2667\tx3202\tx3736\tx4270\tx4802\tx5337\pardirnatural\partightenfactor0
 
@@ -99,7 +99,7 @@ If you use tcsh as your shell, you can set openman\'92s completion settings to b
 \pard\tx532\tx1065\tx1601\tx2135\tx2667\tx3202\tx3736\tx4270\tx4802\tx5337\pardirnatural\partightenfactor0
 
 \f1 \cf0 \
-Starting with MacOS X 10.2, the completion for man(1) isn\'92t set up by default.  You can add a similar entry for \'91man\'92, or look at the files in /usr/share/tcsh/examples to re-enable the old default setup.\
+Starting with Mac OS X 10.2, the completion for man(1) isn\'92t set up by default.  You can add a similar entry for \'91man\'92, or look at the files in /usr/share/tcsh/examples to re-enable the old default setup.\
 \
 For bash(1) users, you can get nearly the same behavior.  Add the following to ~/.bashrc:\
 \
@@ -115,7 +115,7 @@ For bash(1) users, you can get nearly the same behavior.  Add the following to ~
 \pard\tx532\tx1065\tx1601\tx2135\tx2667\tx3202\tx3736\tx4270\tx4802\tx5337\pardirnatural\partightenfactor0
 
 \f1\b0\fs24 \cf0 \
-As of macOS 13 \'93Ventura\'94, nroff(1) has been removed and replaced with mandoc(1). Opening man pages will fail unless you point to a custom nroff(1) provided by MacPorts, Homebrew, or built from scratch, or replace nroff(1) with mandoc(1). Note that use of mandoc(1) in replacement of nroff(1) for ManOpen is undocumented. \
+As of macOS 13 \'93Ventura\'94, nroff(1) has been removed and replaced with mandoc(1). Opening man pages will fail unless you point to a custom nroff(1) provided by MacPorts, Homebrew, or built from scratch, or replace nroff(1) with mandoc(1). Note that the use of mandoc(1) as a replacement of nroff(1) for ManOpen is untested.\
 \
 \pard\tx532\tx1065\tx1601\tx2135\tx2667\tx3202\tx3736\tx4270\tx4802\tx5337\fi532\pardirnatural\partightenfactor0
 

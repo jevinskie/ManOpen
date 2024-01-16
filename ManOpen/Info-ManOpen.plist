@@ -196,5 +196,7 @@
 	</array>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>OSAScriptingDefinition</key>
+	<string>ManOpen.sdef</string>
 </dict>
 </plist>

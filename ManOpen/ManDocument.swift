@@ -246,7 +246,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				if let link = attribs[.link] as? URL,
 				   let components = URLComponents(url: link, resolvingAgainstBaseURL: false),
 				   components.scheme == URL_SCHEME {
-					let path = components.path
+					let path = components.host ?? components.path
 					var comp2 = URLComponents()
 					comp2.scheme = URL_SCHEME
 					if let fp = path.range(of: "("),

@@ -42,7 +42,12 @@ int main (int argc, char * const *argv)
         NSInteger         maxConnectTries = 8;
         NSInteger         connectCount = 0;
         CFErrorRef        lsError = NULL;
-        NSArray           *manOpenURLs = CFBridgingRelease(LSCopyApplicationURLsForBundleIdentifier(CFSTR("org.clindberg.ManOpen"), &lsError));
+        NSArray           *manOpenURLs;
+        if (@available(macOS 12.0, *)) {
+            manOpenURLs = [[NSWorkspace sharedWorkspace] URLsForApplicationsWithBundleIdentifier:@"org.clindberg.ManOpen"];
+        } else {
+            manOpenURLs = CFBridgingRelease(LSCopyApplicationURLsForBundleIdentifier(CFSTR("org.clindberg.ManOpen"), &lsError));
+        }
         NSMutableDictionary *distributedDictionary = [[NSMutableDictionary alloc] init];
         NSMutableArray    *namesAndSections = [[NSMutableArray alloc] init];
         CFMessagePortRef  remotePort;
@@ -203,6 +208,6 @@ int main (int argc, char * const *argv)
         
         // Once we've got all our data together, send the message to the app. The message ID below is intentional, because I feel like I went mental writing this (it was my third attempt at replacing the original DO code).
         status = CFMessagePortSendRequest(remotePort, 5150, (CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:distributedDictionary requiringSecureCoding:YES error:NULL], 10.0, 10.0, NULL, NULL);
-        return 0;
+        return status == kCFMessagePortSuccess ? EXIT_SUCCESS : EXIT_FAILURE;
     }
 }

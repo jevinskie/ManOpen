@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -31,13 +31,13 @@
 		553A5B2519BFEDD7003D74A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E802A1188237F000037AF6 /* Cocoa.framework */; };
 		553A5B2619BFEDF6003D74A9 /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D39278FA0821FFA400376676 /* NSData+Utils.m */; };
 		5567E0561A7D615E005013B3 /* ManNotificationCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 5567E0551A7D615E005013B3 /* ManNotificationCallback.m */; };
-		557AFAF61A800C4F008BDF46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 557AFAF81A800C4F008BDF46 /* Localizable.strings */; };
-		557AFB521A8032FA008BDF46 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 557AFB541A8032FA008BDF46 /* InfoPlist.strings */; };
 		55838C0719C0AF8B00FFEDDE /* DisplayPathFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */; };
 		55838C0819C0AF9100FFEDDE /* NSUserDefaults+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */; };
 		55838C0919C0B59600FFEDDE /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838BFF19C0AD2900FFEDDE /* AppInfo.swift */; };
 		55838C0B19C0B61700FFEDDE /* ManAppInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */; };
-		55B7910729BFC13400E018E9 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55B7910929BFC13400E018E9 /* ServicesMenu.strings */; };
+		559147912B5666080084B53A /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 559147902B5666080084B53A /* InfoPlist.xcstrings */; };
+		559147932B5666080084B53A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 559147922B5666080084B53A /* Localizable.xcstrings */; };
+		559147952B5666080084B53A /* ServicesMenu.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 559147942B5666080084B53A /* ServicesMenu.xcstrings */; };
 		55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5553E21E1881F83E003C2DBF /* Images.xcassets */; };
 		55C0CEF819BE04D8009C50D7 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D39279350821FFA400376676 /* Credits.rtf */; };
 		55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5553E1FE1881F2C2003C2DBF /* Help.rtf */; };
@@ -286,14 +286,19 @@
 		5553E226188214B9003C2DBF /* cat2rtf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cat2rtf-Info.plist"; sourceTree = "<group>"; };
 		5567E0541A7D615E005013B3 /* ManNotificationCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManNotificationCallback.h; sourceTree = "<group>"; };
 		5567E0551A7D615E005013B3 /* ManNotificationCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManNotificationCallback.m; sourceTree = "<group>"; };
-		557AFAF71A800C4F008BDF46 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		557AFB151A801CB2008BDF46 /* SwiftAdditions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftAdditions.xcodeproj; path = SwiftAdditions/SwiftAdditions.xcodeproj; sourceTree = "<group>"; };
-		557AFB531A8032FA008BDF46 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55838BFF19C0AD2900FFEDDE /* AppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		55838C0A19C0B61700FFEDDE /* ManAppInfoArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManAppInfoArray.swift; sourceTree = "<group>"; };
+		559147762B5666080084B53A /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Apropos.xcstrings; sourceTree = "<group>"; };
+		5591478C2B5666080084B53A /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/PrefPanel.xcstrings; sourceTree = "<group>"; };
+		5591478D2B5666080084B53A /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/DocController.xcstrings; sourceTree = "<group>"; };
+		5591478E2B5666080084B53A /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ManOpen.xcstrings; sourceTree = "<group>"; };
+		5591478F2B5666080084B53A /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ManPage.xcstrings; sourceTree = "<group>"; };
+		559147902B5666080084B53A /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		559147922B5666080084B53A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		559147942B5666080084B53A /* ServicesMenu.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = ServicesMenu.xcstrings; sourceTree = "<group>"; };
 		55A5E74419BE0BFA00BF2597 /* DisplayPathFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayPathFormatter.swift; sourceTree = "<group>"; };
 		55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+additions.swift"; sourceTree = "<group>"; };
-		55B7910829BFC13400E018E9 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		55B880BA19BEB80E0026FCF9 /* ManDocumentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManDocumentController.swift; sourceTree = "<group>"; };
 		55C0CF1019BE04D8009C50D7 /* ManOpen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManOpen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C0CF1919BE07E8009C50D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Apropos.xib; sourceTree = "<group>"; };
@@ -305,11 +310,6 @@
 		55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "ManOpen-nextstep.tiff"; sourceTree = "<group>"; };
 		55C0CF3E19BE07E9009C50D7 /* ManOpenSwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ManOpenSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefPanelController.swift; sourceTree = "<group>"; };
-		55C0CF6219BE0894009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Apropos.strings; sourceTree = "<group>"; };
-		55C0CF6319BE08A8009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DocController.strings; sourceTree = "<group>"; };
-		55C0CF6419BE08AC009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManOpen.strings; sourceTree = "<group>"; };
-		55C0CF6519BE08B0009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ManPage.strings; sourceTree = "<group>"; };
-		55C0CF6619BE08B6009C50D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefPanel.strings; sourceTree = "<group>"; };
 		55E8029B188237D600037AF6 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55E8029C188237D600037AF6 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55E8029F188237E000037AF6 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
@@ -379,8 +379,8 @@
 				5553E1FE1881F2C2003C2DBF /* Help.rtf */,
 				5553E21E1881F83E003C2DBF /* Images.xcassets */,
 				55C0CF3519BE07E9009C50D7 /* Info-ManOpen.plist */,
-				557AFB541A8032FA008BDF46 /* InfoPlist.strings */,
-				557AFAF81A800C4F008BDF46 /* Localizable.strings */,
+				559147902B5666080084B53A /* InfoPlist.xcstrings */,
+				559147922B5666080084B53A /* Localizable.xcstrings */,
 				55C0CF3A19BE07E9009C50D7 /* ManOpen-nextstep.tiff */,
 				D392792F0821FFA400376676 /* ManOpen.scriptSuite */,
 				55F13AB615103C1E0095B5A9 /* ManOpen.scriptTerminology */,
@@ -388,7 +388,7 @@
 				55C0CF1C19BE07E8009C50D7 /* ManOpen.xib */,
 				55C0CF1E19BE07E9009C50D7 /* ManPage.xib */,
 				55C0CF2019BE07E9009C50D7 /* PrefPanel.xib */,
-				55B7910929BFC13400E018E9 /* ServicesMenu.strings */,
+				559147942B5666080084B53A /* ServicesMenu.xcstrings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -669,7 +669,7 @@
 				};
 			};
 			buildConfigurationList = D38A23BC14E38E1E00F6AFFE /* Build configuration list for PBXProject "ManOpen" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownPlatforms = (
@@ -852,8 +852,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				559147912B5666080084B53A /* InfoPlist.xcstrings in Resources */,
+				559147952B5666080084B53A /* ServicesMenu.xcstrings in Resources */,
 				55C0CF4519BE07E9009C50D7 /* Apropos.xib in Resources */,
-				557AFB521A8032FA008BDF46 /* InfoPlist.strings in Resources */,
 				5527B64623DE733D00DF1BB2 /* ManOpen.sdef in Resources */,
 				55C0CEF519BE04D8009C50D7 /* Images.xcassets in Resources */,
 				55C0CF4719BE07E9009C50D7 /* ManOpen.xib in Resources */,
@@ -861,9 +862,8 @@
 				55C0CF4819BE07E9009C50D7 /* ManPage.xib in Resources */,
 				55C0CEF919BE04D8009C50D7 /* Help.rtf in Resources */,
 				55C0CF4619BE07E9009C50D7 /* DocController.xib in Resources */,
-				557AFAF61A800C4F008BDF46 /* Localizable.strings in Resources */,
 				55C0CF4919BE07E9009C50D7 /* PrefPanel.xib in Resources */,
-				55B7910729BFC13400E018E9 /* ServicesMenu.strings in Resources */,
+				559147932B5666080084B53A /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -952,35 +952,11 @@
 			name = Help.rtf;
 			sourceTree = "<group>";
 		};
-		557AFAF81A800C4F008BDF46 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				557AFAF71A800C4F008BDF46 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		557AFB541A8032FA008BDF46 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				557AFB531A8032FA008BDF46 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		55B7910929BFC13400E018E9 /* ServicesMenu.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55B7910829BFC13400E018E9 /* en */,
-			);
-			name = ServicesMenu.strings;
-			sourceTree = "<group>";
-		};
 		55C0CF1819BE07E8009C50D7 /* Apropos.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				55C0CF1919BE07E8009C50D7 /* Base */,
-				55C0CF6219BE0894009C50D7 /* en */,
+				559147762B5666080084B53A /* mul */,
 			);
 			name = Apropos.xib;
 			sourceTree = "<group>";
@@ -989,7 +965,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				55C0CF1B19BE07E8009C50D7 /* Base */,
-				55C0CF6319BE08A8009C50D7 /* en */,
+				5591478D2B5666080084B53A /* mul */,
 			);
 			name = DocController.xib;
 			sourceTree = "<group>";
@@ -998,7 +974,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				55C0CF1D19BE07E9009C50D7 /* Base */,
-				55C0CF6419BE08AC009C50D7 /* en */,
+				5591478E2B5666080084B53A /* mul */,
 			);
 			name = ManOpen.xib;
 			sourceTree = "<group>";
@@ -1007,7 +983,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				55C0CF1F19BE07E9009C50D7 /* Base */,
-				55C0CF6519BE08B0009C50D7 /* en */,
+				5591478F2B5666080084B53A /* mul */,
 			);
 			name = ManPage.xib;
 			sourceTree = "<group>";
@@ -1016,7 +992,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				55C0CF2119BE07E9009C50D7 /* Base */,
-				55C0CF6619BE08B6009C50D7 /* en */,
+				5591478C2B5666080084B53A /* mul */,
 			);
 			name = PrefPanel.xib;
 			sourceTree = "<group>";
@@ -1055,12 +1031,17 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß";
 				INFOPLIST_KEY_NSMainNibFile = ManOpen;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MARKETING_VERSION = 3.1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = ManOpen;
@@ -1083,12 +1064,17 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß";
 				INFOPLIST_KEY_NSMainNibFile = ManOpen;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MARKETING_VERSION = 3.1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "ManOpen/ManOpenSwift-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = ManOpen;
@@ -1150,6 +1136,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
@@ -1213,10 +1200,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};

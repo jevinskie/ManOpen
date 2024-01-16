@@ -1,0 +1,269 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "5.title" : {
+      "comment" : "Class = \"NSWindow\"; title = \"Apropos\"; ObjectID = \"5\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Apropos"
+          }
+        }
+      }
+    },
+    "18.title" : {
+      "comment" : "Class = \"NSWindow\"; title = \"Open Man Page\"; ObjectID = \"18\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open Man Page"
+          }
+        }
+      }
+    },
+    "43.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"1 - User Commands\"; ObjectID = \"43\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1 - User Commands"
+          }
+        }
+      }
+    },
+    "44.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"2 - System Calls\"; ObjectID = \"44\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "2 - System Calls"
+          }
+        }
+      }
+    },
+    "45.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Any\"; ObjectID = \"45\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Any"
+          }
+        }
+      }
+    },
+    "46.title" : {
+      "comment" : "Class = \"NSMenu\"; title = \"OtherViews\"; ObjectID = \"46\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "OtherViews"
+          }
+        }
+      }
+    },
+    "48.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"3 - Library Calls\"; ObjectID = \"48\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "3 - Library Calls"
+          }
+        }
+      }
+    },
+    "49.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"4 - Special Files\"; ObjectID = \"49\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "4 - Special Files"
+          }
+        }
+      }
+    },
+    "50.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"5 - File Formats\"; ObjectID = \"50\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "5 - File Formats"
+          }
+        }
+      }
+    },
+    "51.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"6 - Games\"; ObjectID = \"51\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "6 - Games"
+          }
+        }
+      }
+    },
+    "52.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"7 - Macros and Conventions\"; ObjectID = \"52\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "7 - Macros and Conventions"
+          }
+        }
+      }
+    },
+    "53.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"8 - Administrative Commands\"; ObjectID = \"53\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "8 - Administrative Commands"
+          }
+        }
+      }
+    },
+    "54.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"9 - Kernel Interface\"; ObjectID = \"54\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "9 - Kernel Interface"
+          }
+        }
+      }
+    },
+    "56.title" : {
+      "comment" : "Class = \"NSWindow\"; title = \"Help\"; ObjectID = \"56\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Help"
+          }
+        }
+      }
+    },
+    "64.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"List pages about:\"; ObjectID = \"64\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "List pages about:"
+          }
+        }
+      }
+    },
+    "65.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Apropos\"; ObjectID = \"65\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Apropos"
+          }
+        }
+      }
+    },
+    "66.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Cancel\"; ObjectID = \"66\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "67.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"`Apropos' lists man pages whose summaries contain the given text\"; ObjectID = \"67\";",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "‘Apropos’ lists man pages whose summaries contain the given text"
+          }
+        }
+      }
+    },
+    "76.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Open\"; ObjectID = \"76\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open"
+          }
+        }
+      }
+    },
+    "77.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Open man page:\"; ObjectID = \"77\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open man page:"
+          }
+        }
+      }
+    },
+    "78.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Cancel\"; ObjectID = \"78\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "80.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Section:\"; ObjectID = \"80\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Section:"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

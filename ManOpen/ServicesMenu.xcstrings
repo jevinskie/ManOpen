@@ -1,0 +1,40 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Open File in ManOpen" : {
+      "comment" : "ServicesMenu.strings\n  ManOpen\n\n  Created by Nick Zitzmann on 2/28/21.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open File in ManOpen"
+          }
+        }
+      }
+    },
+    "Open man Page in ManOpen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open man Page in ManOpen"
+          }
+        }
+      }
+    },
+    "Search man Page Index in ManOpen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search man Page Index in ManOpen"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

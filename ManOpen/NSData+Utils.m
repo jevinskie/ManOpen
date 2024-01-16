@@ -70,7 +70,7 @@
 
 - (BOOL)isRTFData
 {
-    const char *header = "{\\rtf";
+    static const char header[] = "{\\rtf";
     return [self hasPrefixBytes:header length:strlen(header)];
 }
 
@@ -109,7 +109,7 @@
     static const size_t allocated = 8192;
     unsigned char *bytes = alloca(allocated);
     ssize_t bytesRead;
-    NSMutableData *ourData = [[NSMutableData alloc] initWithCapacity:allocated];
+    NSMutableData *ourData = [[NSMutableData alloc] initWithCapacity:allocated*4];
     
     do {
         do {

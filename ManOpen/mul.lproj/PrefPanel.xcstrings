@@ -1,0 +1,340 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "417.title" : {
+      "comment" : "Class = \"NSWindow\"; title = \"Preferences\"; ObjectID = \"417\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Preferences"
+          }
+        }
+      }
+    },
+    "420.label" : {
+      "comment" : "Class = \"NSTabViewItem\"; label = \"General\"; ObjectID = \"420\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "General"
+          }
+        }
+      }
+    },
+    "424.title" : {
+      "comment" : "Class = \"NSMenu\"; title = \"OtherViews\"; ObjectID = \"424\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "OtherViews"
+          }
+        }
+      }
+    },
+    "425.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Item2\"; ObjectID = \"425\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Item2"
+          }
+        }
+      }
+    },
+    "426.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Item1\"; ObjectID = \"426\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Item1"
+          }
+        }
+      }
+    },
+    "427.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Item3\"; ObjectID = \"427\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Item3"
+          }
+        }
+      }
+    },
+    "429.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Default Man Page Viewer:\"; ObjectID = \"429\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Default Man Page Viewer:"
+          }
+        }
+      }
+    },
+    "431.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Quit when last window is closed\"; ObjectID = \"431\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Quit when last window is closed"
+          }
+        }
+      }
+    },
+    "432.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Keep Title/Apropos panels open\"; ObjectID = \"432\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Keep Title/Apropos panels open"
+          }
+        }
+      }
+    },
+    "433.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Open Title panel on startup\"; ObjectID = \"433\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open Title panel on startup"
+          }
+        }
+      }
+    },
+    "434.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Open Title panel when no windows\"; ObjectID = \"434\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open Title panel when no windows"
+          }
+        }
+      }
+    },
+    "435.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Save windows on quit\"; ObjectID = \"435\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Save windows on quit"
+          }
+        }
+      }
+    },
+    "436.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Quit when last window is closed\"; ObjectID = \"436\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Quit when last window is closed"
+          }
+        }
+      }
+    },
+    "437.label" : {
+      "comment" : "Class = \"NSTabViewItem\"; label = \"Appearance\"; ObjectID = \"437\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Appearance"
+          }
+        }
+      }
+    },
+    "442.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"If the chosen font does not support bold or italic (for example Monaco), these options may have no effect.\"; ObjectID = \"442\";",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the chosen font does not support bold or italic (for example, Monaco), these options may have no effect."
+          }
+        }
+      }
+    },
+    "444.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Bold section headers\"; ObjectID = \"444\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Bold section headers"
+          }
+        }
+      }
+    },
+    "445.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Use italics instead of underline\"; ObjectID = \"445\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Use italics instead of underline"
+          }
+        }
+      }
+    },
+    "446.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Check\"; ObjectID = \"446\";",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check"
+          }
+        }
+      }
+    },
+    "448.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Change font...\"; ObjectID = \"448\";",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change font…"
+          }
+        }
+      }
+    },
+    "451.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Text color\"; ObjectID = \"451\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Text color"
+          }
+        }
+      }
+    },
+    "454.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Link color\"; ObjectID = \"454\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Link color"
+          }
+        }
+      }
+    },
+    "457.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Background color\"; ObjectID = \"457\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Background color"
+          }
+        }
+      }
+    },
+    "458.label" : {
+      "comment" : "Class = \"NSTabViewItem\"; label = \"Advanced\"; ObjectID = \"458\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Advanced"
+          }
+        }
+      }
+    },
+    "463.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Nroff command\"; ObjectID = \"463\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Nroff command"
+          }
+        }
+      }
+    },
+    "467.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Text Cell\"; ObjectID = \"467\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Text Cell"
+          }
+        }
+      }
+    },
+    "471.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Man search paths:\"; ObjectID = \"471\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Man search paths:"
+          }
+        }
+      }
+    },
+    "472.ibShadowedToolTip" : {
+      "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Create an account\"; ObjectID = \"472\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Create an account"
+          }
+        }
+      }
+    },
+    "474.ibShadowedToolTip" : {
+      "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Remove an account\"; ObjectID = \"474\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Remove an account"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

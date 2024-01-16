@@ -17,9 +17,9 @@ private var gzipHeader: [UInt8] {
 	return [0o037, 0o213]
 }
 //let rtfStart = "{\\rtf".data(using: String.Encoding.ascii)!
-private let rtfStart: Data = {
+private let rtfStart: [UInt8] = {
 	let preDat: [UInt8] = [0x7B, 0x5C, 0x72, 0x74, 0x66]
-	return Data(preDat)
+	return preDat
 }()
 
 extension Data {

@@ -265,7 +265,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 					}
 				}
 				
-				if var font = font {
+				if var font {
 					if font.familyName != family {
 						font = manager.convert(font, toFamily: family)
 					}

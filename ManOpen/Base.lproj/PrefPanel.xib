@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -104,7 +104,7 @@
                                                 <action selector="chooseNewApp:" target="-2" id="491"/>
                                             </connections>
                                         </popUpButton>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="156" translatesAutoresizingMaskIntoConstraints="NO" id="428">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="156" translatesAutoresizingMaskIntoConstraints="NO" id="428">
                                             <rect key="frame" x="18" y="158" width="160" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="left" title="Default Man Page Viewer:" id="429">
                                                 <font key="font" metaFont="system"/>
@@ -130,7 +130,7 @@
                                     <rect key="frame" x="10" y="33" width="301" height="302"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="261" translatesAutoresizingMaskIntoConstraints="NO" id="441">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="261" translatesAutoresizingMaskIntoConstraints="NO" id="441">
                                             <rect key="frame" x="20" y="205" width="261" height="26"/>
                                             <textFieldCell key="cell" alignment="left" title="If the chosen font does not support bold or italic (for example Monaco), these options may have no effect." id="442">
                                                 <font key="font" metaFont="system" size="10"/>
@@ -138,7 +138,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="439">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="439">
                                             <rect key="frame" x="20" y="137" width="261" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="A8a-th-a5D"/>
@@ -174,7 +174,7 @@
                                                 </binding>
                                             </connections>
                                         </colorWell>
-                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="450">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="450">
                                             <rect key="frame" x="79" y="106" width="64" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Text color" id="451">
                                                 <font key="font" metaFont="system"/>
@@ -193,7 +193,7 @@
                                                 </binding>
                                             </connections>
                                         </colorWell>
-                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="453">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="453">
                                             <rect key="frame" x="79" y="74" width="64" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Link color" id="454">
                                                 <font key="font" metaFont="system"/>
@@ -212,7 +212,7 @@
                                                 </binding>
                                             </connections>
                                         </colorWell>
-                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="456">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="456">
                                             <rect key="frame" x="79" y="42" width="111" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Background color" id="457">
                                                 <font key="font" metaFont="system"/>
@@ -283,7 +283,7 @@
                                     <rect key="frame" x="10" y="33" width="301" height="302"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="460">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="460">
                                             <rect key="frame" x="20" y="20" width="261" height="19"/>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="461">
                                                 <font key="font" size="12" name="Helvetica"/>
@@ -294,7 +294,7 @@
                                                 <binding destination="476" name="value" keyPath="values.NroffCommand" id="512"/>
                                             </connections>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="462">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="462">
                                             <rect key="frame" x="18" y="47" width="99" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Nroff command" id="463">
                                                 <font key="font" metaFont="system"/>
@@ -357,7 +357,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
-                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="470">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="470">
                                             <rect key="frame" x="18" y="266" width="116" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Man search paths:" id="471">
                                                 <font key="font" metaFont="system"/>
@@ -365,22 +365,22 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button toolTip="Create an account" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="472">
+                                        <button toolTip="Add a search path" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="472">
                                             <rect key="frame" x="20" y="70" width="22" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="22" id="X6N-eN-D7W"/>
-                                                <constraint firstAttribute="height" constant="19" id="gmv-j2-rxP"/>
-                                            </constraints>
                                             <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="473">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="22" id="X6N-eN-D7W"/>
+                                                <constraint firstAttribute="height" constant="19" id="gmv-j2-rxP"/>
+                                            </constraints>
                                             <connections>
                                                 <action selector="addPathFromPanel:" target="-2" id="493"/>
                                                 <outlet property="nextKeyView" destination="474" id="490"/>
                                             </connections>
                                         </button>
-                                        <button toolTip="Remove an account" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="474">
+                                        <button toolTip="Remove a search path" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="474">
                                             <rect key="frame" x="41" y="70" width="22" height="21"/>
                                             <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="475">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

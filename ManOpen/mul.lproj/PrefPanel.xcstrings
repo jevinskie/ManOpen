@@ -312,25 +312,25 @@
       }
     },
     "472.ibShadowedToolTip" : {
-      "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Create an account\"; ObjectID = \"472\";",
+      "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Add a search path\"; ObjectID = \"472\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Create an account"
+            "value" : "Add a search path"
           }
         }
       }
     },
     "474.ibShadowedToolTip" : {
-      "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Remove an account\"; ObjectID = \"474\";",
+      "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Remove a search path\"; ObjectID = \"474\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Remove an account"
+            "value" : "Remove a search path"
           }
         }
       }

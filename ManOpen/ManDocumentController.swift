@@ -190,9 +190,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 			var len = data.count
 			let ptr = (data as NSData).bytes
 			
-			let newlinePtr = memchr(ptr, 0x0A, len) // 0A is == '\n'
-			
-			if let newlinePtr = newlinePtr {
+			// 0A is == '\n'
+			if let newlinePtr = memchr(ptr, 0x0A, len) {
 				len = ptr.distance(to: newlinePtr)
 			}
 			

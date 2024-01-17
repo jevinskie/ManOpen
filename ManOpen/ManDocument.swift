@@ -191,10 +191,12 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		let backgroundColor = defaults.manBackgroundColor
 		let storage: NSTextStorage = {
 			var storage1: NSTextStorage? = nil
-			if let taskData = taskData, taskData.isRTFData {
-				storage1 = NSTextStorage(rtf: taskData, documentAttributes: nil)
-			} else if let taskData = taskData {
-				storage1 = NSTextStorage(html: taskData, options: [:], documentAttributes: nil)
+			if let taskData {
+				if taskData.isRTFData {
+					storage1 = NSTextStorage(rtf: taskData, documentAttributes: nil)
+				} else {
+					storage1 = NSTextStorage(html: taskData, options: [:], documentAttributes: nil)
+				}
 			}
 			
 			return storage1 ?? NSTextStorage()

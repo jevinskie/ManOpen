@@ -13,7 +13,7 @@ func ==(lhs: ManAppInfo, rhs: String) -> Bool {
 	return toRet == ComparisonResult.orderedSame
 }
 
-final class ManAppInfo: Hashable, CustomDebugStringConvertible {
+final class ManAppInfo: Hashable, CustomDebugStringConvertible, CustomStringConvertible {
 	let bundleID: String
 	let appURL: URL
 	
@@ -93,6 +93,10 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible {
 	
 	var debugDescription: String {
 		return "\(bundleID), \(displayName)"
+	}
+	
+	var description: String {
+		return displayName
 	}
 	
 	static func ==(lhs: ManAppInfo, rhs: ManAppInfo) -> Bool {

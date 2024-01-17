@@ -660,7 +660,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		guard let types = pboard.types else {
 			return
 		}
-		if types.contains(ourFileURL),
+		if types.contains(.fileURL),
 		   let fileArray = pboard.readObjects(forClasses: [NSURL.self], options: [.urlReadingFileURLsOnly: true]) as? [URL] {
 			for tmpPath in fileArray {
 				openDocument(withContentsOf: tmpPath, display: true, completionHandler: { (doc, display, error) in

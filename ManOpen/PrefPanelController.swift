@@ -162,7 +162,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 		if action == #selector(PrefPanelController.paste(_:)) {
 			let types = NSPasteboard.general.types!
 			return manPathController.canInsert &&
-				(types.contains(ourFileURL) || types.contains(.string))
+			(types.contains(.fileURL) || types.contains(.string))
 		}
 		
 		/* The menu on our app popup may call this validate method ;-) */
@@ -284,7 +284,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 	// MARK: man paths
 
 	func setUpManPathUI() {
-		manPathTableView.registerForDraggedTypes([ourFileURL, .string, manPathIndexSetPboardType])
+		manPathTableView.registerForDraggedTypes([.fileURL, .string, manPathIndexSetPboardType])
 		manPathTableView.verticalMotionCanBeginDrag = true
 		// XXX NSDragOperationDelete -- not sure the "poof" drag can show that
 		manPathTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
@@ -390,13 +390,13 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 	}
 	
 	func paths(from pb: NSPasteboard) -> [String]? {
-		let bestType = pb.availableType(from: [ourFileURL, .string])
+		let bestType = pb.availableType(from: [.fileURL, .string])
 		
-		if bestType == ourFileURL {
+		if bestType == .fileURL {
 			if let pbos = pb.readObjects(forClasses: [NSURL.self], options: [.urlReadingFileURLsOnly: true]) as? [URL] {
 				return pbos.map({$0.path})
 			}
-			guard let plo = pb.propertyList(forType: ourFileURL),
+			guard let plo = pb.propertyList(forType: .fileURL),
 				  let strVal = plo as? String,
 				  let urlVal = URL(string: strVal) else {
 				return nil

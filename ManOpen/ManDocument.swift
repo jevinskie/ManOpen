@@ -19,21 +19,6 @@ private let RestoreFileTypeKey   = "DocType"
 
 private let ManWindowSizeKey = "ManWindowSize"
 
-var ourURL: NSPasteboard.PasteboardType {
-	if #available(OSX 10.13, *) {
-		return NSPasteboard.PasteboardType.URL
-	} else {
-		return NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String)
-	}
-}
-var ourFileURL: NSPasteboard.PasteboardType {
-	if #available(OSX 10.13, *) {
-		return NSPasteboard.PasteboardType.fileURL
-	} else {
-		return NSPasteboard.PasteboardType(rawValue: kUTTypeFileURL as String)
-	}
-}
-
 private var filterCommand: String {
 	let defaults = UserDefaults.standard
 	
@@ -398,9 +383,9 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			let pb = NSPasteboard.general
 			var types = [NSPasteboard.PasteboardType]()
 			
-			types.append(ourURL)
+			types.append(.URL)
 			if aCopyURL.isFileURL {
-				types.append(ourFileURL)
+				types.append(.fileURL)
 			}
 			types.append(.string)
 			pb.declareTypes(types, owner: nil)
@@ -408,7 +393,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 			(aCopyURL as NSURL).write(to: pb)
 			pb.setString("<\(aCopyURL.absoluteString)>", forType: .string)
 			if aCopyURL.isFileURL {
-				pb.setPropertyList([aCopyURL], forType: ourFileURL)
+				pb.setPropertyList([aCopyURL], forType: .fileURL)
 			}
 		}
 	}

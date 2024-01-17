@@ -31,8 +31,8 @@ func escapePath(_ path: String, addSurroundingQuotes: Bool = false) -> String {
 		while !scanner.isAtEnd {
 			var betweenString: NSString? = nil
 			if scanner.scanUpTo("'", into: &betweenString) {
-				if let aBetweenString = betweenString {
-					newString += aBetweenString as String
+				if let betweenString {
+					newString += betweenString as String
 				}
 				if scanner.scanString("'", into: nil) {
 					newString += "'\\''"
@@ -138,7 +138,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	func manCommand(manPath: String? = nil) -> String {
 		var command = MAN_BINARY
 		
-		if let manPath = manPath, !manPath.isEmpty {
+		if let manPath, !manPath.isEmpty {
 			command += " -M '\(escapePath(manPath))'"
 		}
 		
@@ -150,9 +150,9 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		let task = Process()
 		var output: Data
 		
-		if let anExtraEnv = extraEnv {
+		if let extraEnv {
 			var environment = ProcessInfo.processInfo.environment
-			environment += anExtraEnv
+			environment += extraEnv
 			task.environment = environment
 		}
 		
@@ -341,7 +341,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 	@discardableResult @objc
 	func openDocument(name: String, section: String? = nil, manPath: String) -> ManDocument? {
 		var title = name
-		if let section = section, section.isEmpty == false {
+		if let section, section.isEmpty == false {
 			title = "\(name)(\(section))"
 		}
 		
@@ -373,7 +373,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		if document == nil {
 			document = AproposDocument(string: apropos, manPath: manPath, title: title)
 			
-			if let document = document {
+			if let document {
 				addDocument(document)
 			}
 			document?.makeWindowControllers()
@@ -436,7 +436,7 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 		while !scanner.isAtEnd {
 			if scanner.scanCharacters(from: nonwhitespaceSet, into: &aWord) {
 				if lastWord == nil {
-					if let aWord = aWord {
+					if let aWord {
 						lastWord = aWord as String
 					} else {
 						continue
@@ -467,8 +467,8 @@ class ManDocumentController: NSDocumentController, NSApplicationDelegate {
 					if oneOnly {
 						break
 					}
-					if let aWord = aWord as String? {
-						lastWord = aWord
+					if let aWord {
+						lastWord = aWord as String
 					}
 				}
 			}

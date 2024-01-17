@@ -36,7 +36,7 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 			return url.lastPathComponent
 			}()
 		
-		if let adict = infoDict, let appVersion = adict["CFBundleShortVersionString"] as? String {
+		if let infoDict, let appVersion = infoDict["CFBundleShortVersionString"] as? String {
 			niceName = "\(niceName) (\(appVersion))"
 		}
 		
@@ -70,12 +70,12 @@ final class ManAppInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 	}
 	
 	func hash(into hasher: inout Hasher) {
-		guard let ident = try? appURL.resourceValues(forKeys: [.fileResourceIdentifierKey]).fileResourceIdentifier else {
+		guard let ident = try? appURL.resourceValues(forKeys: [.fileResourceIdentifierKey]).fileResourceIdentifier,
+			  // sssh... fileResourceIdentifiers are secretly NSData objects
+			  let ident2 = ident as? NSData else {
 			hasher.combine(bundleID.lowercased())
 			return
 		}
-		// sssh... fileResourceIdentifiers are secretly NSData objects
-		let ident2 = ident as! NSData
 		hasher.combine(ident2)
 	}
 	

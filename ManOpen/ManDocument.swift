@@ -70,7 +70,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		
 		super.windowControllerDidLoadNib(aController)
 		
-		if let sizeString = sizeString {
+		if let sizeString {
 			let windowSize = NSSize(string: sizeString)
 			let window = textView.window!
 			var frame = window.frame
@@ -155,7 +155,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 		fileType = "man"
 		shortTitle = title
 		
-		if let section = section, section.count > 0 {
+		if let section, section.count > 0 {
 			command += " " + section.lowercased()
 			copyURL = URL(string: URL_SCHEME_PREFIX + "//\(section)/\(name)")
 		} else {
@@ -222,7 +222,7 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 				let attribs = storage.attributes(at: currIndex, effectiveRange: &currRange)
 				let font = attribs[.font] as? NSFont
 				
-				if let font1 = font, font1.familyName != "Courier" {
+				if let font, font.familyName != "Courier" {
 					//Using mutableString so we don't have to do Swift String range conversions.
 					self.add(sectionHeader: storage.mutableString.substring(with: currRange), range: currRange)
 				}
@@ -381,21 +381,21 @@ final class ManDocument: NSDocument, NSWindowDelegate {
 	}
 	
 	@IBAction func copyURL(_ sender: AnyObject?) {
-		if let aCopyURL = copyURL {
+		if let copyURL {
 			let pb = NSPasteboard.general
 			var types = [NSPasteboard.PasteboardType]()
 			
 			types.append(.URL)
-			if aCopyURL.isFileURL {
+			if copyURL.isFileURL {
 				types.append(.fileURL)
 			}
 			types.append(.string)
 			pb.declareTypes(types, owner: nil)
 			
-			(aCopyURL as NSURL).write(to: pb)
-			pb.setString("<\(aCopyURL.absoluteString)>", forType: .string)
-			if aCopyURL.isFileURL {
-				pb.setPropertyList([aCopyURL], forType: .fileURL)
+			(copyURL as NSURL).write(to: pb)
+			pb.setString("<\(copyURL.absoluteString)>", forType: .string)
+			if copyURL.isFileURL {
+				pb.setPropertyList([copyURL], forType: .fileURL)
 			}
 		}
 	}

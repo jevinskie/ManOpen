@@ -7,7 +7,6 @@ func XCManPaths() -> Array<String> {
                 xc_manpaths.remove(at: xc_manpaths.lastIndex(of: xcmp)!)
             }
         }
-        print("xc_manpaths: \(xc_manpaths)")
         return xc_manpaths
     } else {
         return []

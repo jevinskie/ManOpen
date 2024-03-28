@@ -22,6 +22,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		096320E52BB5E47800CDE0F8 /* xcselect-helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 096320E42BB5E47800CDE0F8 /* xcselect-helper.m */; };
+		096320E72BB5EB0900CDE0F8 /* libxcselect.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 096320E62BB5EB0900CDE0F8 /* libxcselect.tbd */; };
+		096320E92BB5ED7500CDE0F8 /* XCSelectHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096320E82BB5ED7500CDE0F8 /* XCSelectHelper.swift */; };
 		5516ECE81A7CA21200760214 /* ManTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5516ECE71A7CA21200760214 /* ManTextView.swift */; };
 		55182E0D19C0B8E30016128A /* PrefPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */; };
 		55182E0E19C0BAC10016128A /* AproposDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */; };
@@ -275,6 +278,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		096320E32BB5E47800CDE0F8 /* xcselect-helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "xcselect-helper.h"; sourceTree = "<group>"; };
+		096320E42BB5E47800CDE0F8 /* xcselect-helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "xcselect-helper.m"; sourceTree = "<group>"; };
+		096320E62BB5EB0900CDE0F8 /* libxcselect.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxcselect.tbd; path = usr/lib/libxcselect.tbd; sourceTree = SDKROOT; };
+		096320E82BB5ED7500CDE0F8 /* XCSelectHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCSelectHelper.swift; sourceTree = "<group>"; };
 		5516ECE71A7CA21200760214 /* ManTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManTextView.swift; sourceTree = "<group>"; };
 		5527B64523DE733D00DF1BB2 /* ManOpen.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ManOpen.sdef; sourceTree = "<group>"; };
 		553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AproposDocument.swift; sourceTree = "<group>"; };
@@ -339,6 +346,7 @@
 				55C2F39529BE72F8005E41EC /* FoundationAdditions.framework in Frameworks */,
 				55C0CF0919BE04D8009C50D7 /* AppKit.framework in Frameworks */,
 				553A5B2519BFEDD7003D74A9 /* Cocoa.framework in Frameworks */,
+				096320E72BB5EB0900CDE0F8 /* libxcselect.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +477,9 @@
 				D39278FA0821FFA400376676 /* NSData+Utils.m */,
 				55B078E419BE946500586F4C /* NSUserDefaults+additions.swift */,
 				55C0CF4319BE07E9009C50D7 /* PrefPanelController.swift */,
+				096320E32BB5E47800CDE0F8 /* xcselect-helper.h */,
+				096320E42BB5E47800CDE0F8 /* xcselect-helper.m */,
+				096320E82BB5ED7500CDE0F8 /* XCSelectHelper.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -562,6 +573,7 @@
 		D39279800821FFA400376676 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				096320E62BB5EB0900CDE0F8 /* libxcselect.tbd */,
 				55E802A3188237FA00037AF6 /* CoreData.framework */,
 				55E802A1188237F000037AF6 /* Cocoa.framework */,
 				55E8029F188237E000037AF6 /* ApplicationServices.framework */,
@@ -658,7 +670,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					55C0CEEF19BE04D8009C50D7 = {
 						LastSwiftMigration = 1130;
@@ -879,7 +891,9 @@
 				55182E0F19C0BAC70016128A /* ManDocument.swift in Sources */,
 				55182E0E19C0BAC10016128A /* AproposDocument.swift in Sources */,
 				553A5B2619BFEDF6003D74A9 /* NSData+Utils.m in Sources */,
+				096320E92BB5ED7500CDE0F8 /* XCSelectHelper.swift in Sources */,
 				55182E0D19C0B8E30016128A /* PrefPanelController.swift in Sources */,
+				096320E52BB5E47800CDE0F8 /* xcselect-helper.m in Sources */,
 				55182E1019C0BACA0016128A /* ManDocumentController.swift in Sources */,
 				55838C0919C0B59600FFEDDE /* AppInfo.swift in Sources */,
 				5516ECE81A7CA21200760214 /* ManTextView.swift in Sources */,
@@ -1009,10 +1023,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.1.1;
 				DEAD_CODE_STRIPPING = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				DEVELOPMENT_TEAM = ZK96P738ZR;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ManOpen;
@@ -1028,6 +1045,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1042,10 +1060,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.1.1;
 				DEAD_CODE_STRIPPING = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				DEVELOPMENT_TEAM = ZK96P738ZR;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ManOpen;
@@ -1061,6 +1082,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1074,7 +1096,6 @@
 		D38A23AA14E38E1E00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1110,7 +1131,6 @@
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
@@ -1127,7 +1147,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = NO;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				SDKROOT = macosx;
@@ -1139,7 +1159,6 @@
 		D38A23AB14E38E1E00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1191,7 +1210,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1204,7 +1223,6 @@
 			buildSettings = {
 				DEAD_CODE_STRIPPING = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SECTORDER_FLAGS = "";
 			};
 			name = Debug;
 		};
@@ -1213,91 +1231,106 @@
 			buildSettings = {
 				DEAD_CODE_STRIPPING = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SECTORDER_FLAGS = "";
 			};
 			name = Release;
 		};
 		D38A243614E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 2.2;
 				DEAD_CODE_STRIPPING = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				DEVELOPMENT_TEAM = ZK96P738ZR;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1993 Harald Schlangmann, 1999-2012 Carl Lindberg, 2010 Jan Weiß";
 				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		D38A243714E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 2.2;
 				DEAD_CODE_STRIPPING = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				DEVELOPMENT_TEAM = ZK96P738ZR;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1993 Harald Schlangmann, 1999-2012 Carl Lindberg, 2010 Jan Weiß";
 				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 		D38A244214E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 2.1;
 				DEAD_CODE_STRIPPING = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				DEVELOPMENT_TEAM = ZK96P738ZR;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1993 Harald Schlangmann, 1999-2012 Carl Lindberg, 2010 Jan Weiß";
 				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		D38A244314E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 2.1;
 				DEAD_CODE_STRIPPING = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				DEVELOPMENT_TEAM = ZK96P738ZR;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/cat2html.tproj/cat2html-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1993 Harald Schlangmann, 1999-2012 Carl Lindberg, 2010 Jan Weiß";
 				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 		D38A244F14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 3.0.0;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = ZK96P738ZR;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß";
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 			};
 			name = Debug;
@@ -1305,16 +1338,20 @@
 		D38A245014E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 3.0.0;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = ZK96P738ZR;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß";
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.clindberg.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 			};
 			name = Release;

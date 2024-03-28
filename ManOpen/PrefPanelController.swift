@@ -40,6 +40,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 			if manPathArrayPriv.count == 0 {
 				let path = UserDefaults.standard.manPath
 				manPathArrayPriv = path.components(separatedBy: ":")
+                manPathArrayPriv.append(contentsOf: XCManPaths())
 			}
 			return manPathArrayPriv
 		}
@@ -67,6 +68,9 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 		if manager.fileExists(atPath: "/opt/local/share/man") {  //macports
 			manpath = "/opt/local/share/man:" + manpath
 		}
+        if manager.fileExists(atPath: "/opt/homebrew/share/man") {  // arm64 homebrew
+            manpath = "/opt/homebrew/share/man:" + manpath
+        }
 		if manager.fileExists(atPath: "/opt/X11/share/man") {
 			manpath += ":/opt/X11/share/man"
 		} else if manager.fileExists(atPath: "/usr/X11/share/man") {
@@ -286,6 +290,7 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 	func setUpManPathUI() {
 		manPathTableView.registerForDraggedTypes([.fileURL, .string, manPathIndexSetPboardType])
 		manPathTableView.verticalMotionCanBeginDrag = true
+        manPathTableView.sizeLastColumnToFit()
 		// XXX NSDragOperationDelete -- not sure the "poof" drag can show that
 		manPathTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
 		manPathTableView.setDraggingSourceOperationMask([.copy, .move, .private], forLocal: true)
@@ -293,7 +298,16 @@ class PrefPanelController: NSWindowController, NSFontChanging, NSTableViewDataSo
 
 	func saveManPath() {
 		if manPathArray.count > 0 {
-			UserDefaults.standard[manPathKey] = manPathArray.joined(separator: ":")
+            var cleanedManPathArray = manPathArray
+            let xcManPaths = XCManPaths()
+            for xcManPath in xcManPaths {
+                while cleanedManPathArray.contains(xcManPath) {
+                    cleanedManPathArray.remove(at: cleanedManPathArray.firstIndex(of: xcManPath)!)
+                }
+            }
+            if cleanedManPathArray.count > 0 {
+                UserDefaults.standard[manPathKey] = cleanedManPathArray.joined(separator: ":")
+            }
 		}
 	}
 	

@@ -79,7 +79,7 @@ extension UserDefaults {
 	
 	var manPath: String {
 		get {
-			return self[manPathKey]!
+            return self[manPathKey]!
 		}
 		set {
 			self[manPathKey] = newValue

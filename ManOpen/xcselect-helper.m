@@ -1,5 +1,6 @@
 #import "xcselect-helper.h"
 
+#include <os/log.h>
 
 typedef void * xcselect_manpaths;
 
@@ -18,6 +19,7 @@ NSArray<NSString *> *xcselect_helper_get_manpaths(void) {
     NSMutableArray<NSString *> *res = [NSMutableArray arrayWithCapacity:num_paths];
     for (uint32_t i = 0; i < num_paths; ++i) {
         res[i] = [NSString stringWithUTF8String:xcselect_manpaths_get_path(manpaths, i)];
+        os_log_error(OS_LOG_DEFAULT, "xc manpath found: %{public}s", res[i].UTF8String);
     }
     xcselect_manpaths_free(manpaths);
     return res;

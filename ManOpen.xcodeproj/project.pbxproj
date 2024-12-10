@@ -282,6 +282,9 @@
 		096320E42BB5E47800CDE0F8 /* xcselect-helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "xcselect-helper.m"; sourceTree = "<group>"; };
 		096320E62BB5EB0900CDE0F8 /* libxcselect.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxcselect.tbd; path = usr/lib/libxcselect.tbd; sourceTree = SDKROOT; };
 		096320E82BB5ED7500CDE0F8 /* XCSelectHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCSelectHelper.swift; sourceTree = "<group>"; };
+		096320EB2BB5FD0C00CDE0F8 /* ManOpen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManOpen.entitlements; sourceTree = "<group>"; };
+		096321012BB5FD0F00CDE0F8 /* cat2rtf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = cat2rtf.entitlements; sourceTree = "<group>"; };
+		096321022BB5FD1200CDE0F8 /* openman.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = openman.entitlements; sourceTree = SOURCE_ROOT; };
 		5516ECE71A7CA21200760214 /* ManTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManTextView.swift; sourceTree = "<group>"; };
 		5527B64523DE733D00DF1BB2 /* ManOpen.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ManOpen.sdef; sourceTree = "<group>"; };
 		553A5B2019BFE7E3003D74A9 /* AproposDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AproposDocument.swift; sourceTree = "<group>"; };
@@ -451,6 +454,7 @@
 		55C0CF1519BE07E8009C50D7 /* ManOpen */ = {
 			isa = PBXGroup;
 			children = (
+				096320EB2BB5FD0C00CDE0F8 /* ManOpen.entitlements */,
 				55C0CF3E19BE07E9009C50D7 /* ManOpenSwift-Bridging-Header.h */,
 				55EBB7991A803DF3001A27BC /* Classes */,
 				553A5B2419BFE86F003D74A9 /* Resources */,
@@ -487,6 +491,7 @@
 		D39278DB0821FF9D00376676 /* ManOpen */ = {
 			isa = PBXGroup;
 			children = (
+				096321012BB5FD0F00CDE0F8 /* cat2rtf.entitlements */,
 				557AFAF91A801CB2008BDF46 /* Vendor */,
 				55C0CF1519BE07E8009C50D7 /* ManOpen */,
 				D392796A0821FFA400376676 /* openman */,
@@ -546,6 +551,7 @@
 		D392796A0821FFA400376676 /* openman */ = {
 			isa = PBXGroup;
 			children = (
+				096321022BB5FD1200CDE0F8 /* openman.entitlements */,
 				D39279760821FFA400376676 /* Other Sources */,
 				D39279790821FFA400376676 /* Supporting Files */,
 			);
@@ -1023,13 +1029,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
+				CODE_SIGN_ENTITLEMENTS = ManOpen/ManOpen.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.1.1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = ZK96P738ZR;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ManOpen;
@@ -1060,13 +1067,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ManOpen;
+				CODE_SIGN_ENTITLEMENTS = ManOpen/ManOpen.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.1.1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = ZK96P738ZR;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/Info-ManOpen.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ManOpen;
@@ -1237,13 +1245,14 @@
 		D38A243614E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = cat2rtf.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 2.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = ZK96P738ZR;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1993 Harald Schlangmann, 1999-2012 Carl Lindberg, 2010 Jan Weiß";
@@ -1257,13 +1266,14 @@
 		D38A243714E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = cat2rtf.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 2.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = ZK96P738ZR;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ManOpen/cat2rtf.tproj/cat2rtf-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1993 Harald Schlangmann, 1999-2012 Carl Lindberg, 2010 Jan Weiß";
@@ -1317,13 +1327,14 @@
 		D38A244F14E4C3FE00F6AFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = openman.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 3.0.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = ZK96P738ZR;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß";
@@ -1338,13 +1349,14 @@
 		D38A245014E4C3FE00F6AFFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = openman.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 3.0.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = ZK96P738ZR;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "openman.tproj/openman-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 1999-2012 Carl Lindberg, 2010 Jan Weiß";
